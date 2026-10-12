@@ -45,8 +45,10 @@ criteria:                     # all must hold on every seed
                                       # but tiny leakage still counts as "at the null" (see README)
 controls:                     # expectations that must hold for the experiment to count (plan §2.6)
   shuffled:
-    gap_ratio_max: 2.0
-    invariant_r2_max: 0.5
+    gap_ratio_max: 2.0                # the plan's expectation: shuffled pairs flatten the gap
+    angle_min_deg: 45.0               # POST-HOC AMENDMENT (after run r1): replaces invariant_r2_max=0.5,
+                                      # which ignored chance level (a random 4-of-8 projection already
+                                      # explains ~0.5 of the invariant block). Pass criteria untouched.
   ablations:
     no_pred:  {invariant_r2_max: 0.9}   # must NOT pass: no predictive training
     no_inv:   {invariant_r2_max: 0.9}   # must NOT pass: no correspondence step

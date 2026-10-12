@@ -1,0 +1,59 @@
+{
+ "git": "8fe29a5",
+ "main": {
+  "per_seed": [
+   {
+    "seed": 0,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   },
+   {
+    "seed": 1,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   },
+   {
+    "seed": 2,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   },
+   {
+    "seed": 3,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   },
+   {
+    "seed": 4,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   }
+  ],
+  "criteria": {
+   "invariant_r2": true,
+   "angle": true,
+   "gap_ratio": true,
+   "leakage": true,
+   "PASS": true
+  }
+ },
+ "controls": {
+  "shuffled": true,
+  "no_pred": true,
+  "no_inv": true
+ }
+}

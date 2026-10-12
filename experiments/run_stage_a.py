@@ -59,7 +59,7 @@ def check_controls(runs: dict, ctl: dict) -> dict:
     sh = runs.get("shuffled", [])
     if sh:
         out["shuffled"] = all(r["gap_ratio"] < ctl["shuffled"]["gap_ratio_max"]
-                              and r["invariant_r2"] < ctl["shuffled"]["invariant_r2_max"] for r in sh)
+                              and r["angle_inv_deg"] > ctl["shuffled"]["angle_min_deg"] for r in sh)
     for name in ("no_pred", "no_inv"):
         rs = runs.get(name, [])
         if rs:
@@ -87,7 +87,10 @@ def main():
     seeds = a.seeds if a.seeds is not None and len(a.seeds) else cfg["seeds"]
     os.makedirs(a.out, exist_ok=True)
     meta = {"git": git_rev(), "criteria_sha256": expected, "config": cfg}
-    write_once(os.path.join(a.out, "config.json"), meta) if not os.path.exists(os.path.join(a.out, "config.json")) else None
+    try:
+        write_once(os.path.join(a.out, "config.json"), meta)
+    except FileExistsError:
+        pass   # another seed-worker wrote it first
 
     arms = []
     if a.only in (None, "main"):

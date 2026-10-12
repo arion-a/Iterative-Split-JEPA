@@ -18,7 +18,9 @@ encoder:
   lr: 3.0e-3
   reg: hinge                  # paper uses SIGReg 1e-6; hinge used here
   var_weight: 1.0e-2
-  cov_weight: 0.0
+  cov_weight: 0.04            # debug round 1 amendment (recipe, not criteria): hinge alone permits rank
+                              # collapse; VICReg-style decorrelation (authors' robot value) is required.
+  stop_grad: true             # stop-gradient on the prediction target; without it the encoder collapses
 
 split:
   num_whiten: 30000

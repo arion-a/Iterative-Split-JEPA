@@ -1,1 +1,41 @@
 step     0  loss=7.7475e-01
+step   500  loss=2.6486e-01
+step  1000  loss=2.6041e-01
+step  1500  loss=2.6632e-01
+step  2000  loss=2.5578e-01
+step  2500  loss=2.5553e-01
+step  3000  loss=2.5440e-01
+step  3500  loss=2.5079e-01
+step  4000  loss=2.4880e-01
+step  4500  loss=2.5119e-01
+step  5000  loss=2.6050e-01
+step  5500  loss=2.4360e-01
+step  6000  loss=2.5135e-01
+step  6500  loss=2.6508e-01
+step  7000  loss=2.6132e-01
+step  7500  loss=2.4771e-01
+step  8000  loss=2.4698e-01
+step  8500  loss=2.5188e-01
+step  9000  loss=2.4625e-01
+step  9500  loss=2.4416e-01
+step  9999  loss=2.5065e-01
+{
+  "seed": 3,
+  "lejepa": {
+    "global_r2": 0.9962019920349121,
+    "invariant_r2": 0.958217978477478,
+    "variant_r2": 0.9560211896896362,
+    "a12_fro": 0.39115676283836365,
+    "a21_fro": 0.3950473368167877,
+    "block_purity": 0.9613163471221924
+  },
+  "splitjepa": {
+    "global_r2": 0.9962019920349121,
+    "invariant_r2": 0.9969313740730286,
+    "variant_r2": 0.9953542351722717,
+    "a12_fro": 0.0035040804650634527,
+    "a21_fro": 0.020800266414880753,
+    "block_purity": 0.9999443292617798
+  }
+}
+wrote /home/user/Iterative-Split-JEPA/runs/stage_a/reference/seed=3.json

@@ -1,17 +1,33 @@
 {
  "updated_note": "Edited by hand at the end of each stage; the page builder reads it.",
  "stages": [
-  {"id": "A", "name": "One split with a trained encoder", "status": "done",
+  {
+   "id": "A",
+   "name": "One split with a trained encoder",
+   "status": "done",
    "question": "Does the paper's single split work in our own code?",
-   "result": "Yes. Passes on all 5 seeds. Waiting on a yes to run the authors' own script as a cross-check."},
-  {"id": "B", "name": "Split a second time", "status": "next",
+   "result": "Yes. Passes on all 5 seeds. The authors' own script also run: our numbers are close to theirs (about 0.01 lower on R\u00b2)."
+  },
+  {
+   "id": "B",
+   "name": "Split a second time",
+   "status": "next",
    "question": "Can the invariant block be split again?",
-   "result": "Not started. This is the core new claim of the project."},
-  {"id": "C", "name": "Deeper ladder and scaling", "status": "later",
+   "result": "Not started. This is the core new claim of the project."
+  },
+  {
+   "id": "C",
+   "name": "Deeper ladder and scaling",
+   "status": "later",
    "question": "How many levels hold up, and does error shrink with more data?",
-   "result": "Not started."},
-  {"id": "D", "name": "Does it help?", "status": "later",
+   "result": "Not started."
+  },
+  {
+   "id": "D",
+   "name": "Does it help?",
+   "status": "later",
    "question": "Does the ladder beat other methods at the same cost?",
-   "result": "Not started."}
+   "result": "Not started."
+  }
  ]
 }

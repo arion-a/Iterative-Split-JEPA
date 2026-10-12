@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 26 entries, head d48139201d2f
+Chain status at render time: **VALID** — 27 entries, head 0bbc095c7400
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -445,5 +445,35 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Built the plain-language log page and the helpers that feed it.
 
 **How.** experiments/build_log_page.py renders only entries that carry a 'plain' block; experiments/restate_log_plain.py re-explained the first 14 entries; run_stage_a.py now writes its own plain rows; explog/stages.json holds the stage tracker.
+
+---
+
+## #26 · run · stage A · plan §6
+`0bbc095c740069c0` ← `d48139201d2f567a` · recorded 2026-10-12T23:25:41+00:00 · ref commit a8d65ec of the authors' repo
+
+**What.** Ran the authors' own simulation script, unmodified, on seeds 0-4.
+
+**How.** simulation/run.py from github.com/splitjepa/splitjepa.github.io (commit a8d65ec), CPU, 10,000 training steps, run as published after your approval.
+
+**Output.**
+```json
+{
+ "summary": [
+  "Paper's SplitJEPA, run by the authors' script, 5 seeds (ours in brackets):",
+  "invariant_r2 0.9980 ± 0.0014  [ours 0.9889 ± 0.0028]",
+  "variant_r2 0.9974 ± 0.0018  [ours 0.9889 ± 0.0030]",
+  "global_r2 0.9977 ± 0.0016  [ours 0.9890 ± 0.0028]",
+  "a12_fro 0.0034 ± 0.0020  [ours 0.0075 ± 0.0024]",
+  "a21_fro 0.0233 ± 0.0027  [ours 0.0223 ± 0.0043]",
+  "block_purity 0.99993 ± 0.00002  [ours 0.99993 ± 0.00003]",
+  "Paper's LeJEPA baseline (no spectral head), same script:",
+  "invariant_r2 0.9619 ± 0.0327 (ours without spectral head: 0.486 ± 0.080)",
+  "a12_fro 0.3292 ± 0.2138, a21_fro 0.3314 ± 0.2159 (ours: about 1.42)",
+  "global_r2 0.9977 ± 0.0016 (identical to SplitJEPA, as in the paper)"
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_a/reference/seed=0.json` (sha256 badfd60662); `runs/stage_a/reference/seed=1.json` (sha256 9ec5c853d0); `runs/stage_a/reference/seed=2.json` (sha256 858eadef53); `runs/stage_a/reference/seed=3.json` (sha256 77cf34ce3a); `runs/stage_a/reference/seed=4.json` (sha256 aa95a144a8)
 
 ---

@@ -31,3 +31,10 @@ Use `OMP_NUM_THREADS=1` when running several seeds in parallel.
 ## Status
 
 See `docs/stage_a_results.md` for the Stage A record. Stages B-D are not implemented yet.
+
+## The experiment log
+
+* Live page (updated at the end of every step): https://claude.ai/artifact/VtJDac1VU3bgXipNJiKiRE
+* Source of truth: `explog/chain.jsonl` (append-only, hash-chained; `python -m isj.explog verify`).
+* Rebuild the page: `python experiments/build_log_page.py`, then republish `explog/log_page.html`.
+* Stage status (done / next / later) is edited by hand in `explog/stages.json` at the end of each stage.

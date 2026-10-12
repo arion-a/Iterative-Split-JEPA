@@ -75,8 +75,14 @@ def append(kind: str, what: str, *, stage: str | None = None, step: str | None =
            outputs: dict | None = None, artifact_paths: list[str] | None = None,
            interpretation: str | None = None, verdict: str | None = None,
            event_time: str | None = None, event_ref: str | None = None,
-           retroactive: bool = False, path: str = DEFAULT_PATH) -> dict:
-    """Atomically append one entry (safe for concurrent writers via an exclusive file lock)."""
+           retroactive: bool = False, plain: dict | None = None, restates: list[int] | None = None,
+           path: str = DEFAULT_PATH) -> dict:
+    """Atomically append one entry (safe for concurrent writers via an exclusive file lock).
+
+    `plain` is the human-facing version shown on the log page:
+    {"did": str, "output": [str, ...], "relevance": str, "stage": "A", "verdict": "pass|fail|info|blocked"}.
+    `restates` lists earlier chain indices this entry re-explains in plain language.
+    """
     assert kind in KINDS, kind
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "a+", encoding="utf-8") as f:
@@ -96,6 +102,10 @@ def append(kind: str, what: str, *, stage: str | None = None, step: str | None =
                 "event_time": event_time, "event_ref": event_ref,
                 "retroactive": retroactive, "git": git_state(),
             }
+            if plain is not None:
+                body["plain"] = plain
+            if restates:
+                body["restates"] = restates
             body["hash"] = entry_hash(body)
             f.seek(0, os.SEEK_END)
             f.write(canonical(body) + "\n")

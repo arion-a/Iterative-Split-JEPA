@@ -28,6 +28,23 @@ ARM_MEANING = {
 }
 
 
+def paper_lines(rs: list[dict]) -> list[str]:
+    """Mean +/- std over seeds, under the paper's metric names."""
+    import statistics as st
+
+    def ms(f, nd):
+        v = [f(r) for r in rs]
+        return f"{st.mean(v):.{nd}f} ± {st.stdev(v):.{nd}f}" if len(v) > 1 else f"{v[0]:.{nd}f}"
+
+    return [f"invariant_r2 {ms(lambda r: r['invariant_r2'], 3)}  (paper about 0.998)",
+            f"variant_r2 {ms(lambda r: r['variant_r2'], 3)}  (paper about 0.997)",
+            f"global_r2 {ms(lambda r: r['global_r2'], 3)}  (paper about 0.998)",
+            f"a12_fro {ms(lambda r: r['leak_norms']['inv_from_var_fro'], 4)}  (paper 0.003)",
+            f"a21_fro {ms(lambda r: r['leak_norms']['var_from_inv_fro'], 4)}  (paper 0.024)",
+            f"block_purity {ms(lambda r: r['leak_norms']['block_purity'], 5)}  (paper about 0.99993)",
+            f"Also: angle {ms(lambda r: r['angle_inv_deg'], 2)} degrees, gap ratio {ms(lambda r: r['gap_ratio'], 0)}."]
+
+
 def criteria_hash(cfg) -> str:
     return hashlib.sha256(json.dumps(cfg["criteria"], sort_keys=True).encode()).hexdigest()
 
@@ -113,7 +130,11 @@ def main():
         outputs={"criteria_sha256": expected, "seeds": seeds, "overrides": a.set,
                  "coupling": cfg["world"]["coupling_strength"], "obs_dim": cfg["world"]["obs_dim"]},
         artifact_paths=[a.config],
-        interpretation="Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).")
+        interpretation="Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).",
+        plain={"title": f"Stage A run started ({a.out})", "stage": "A", "verdict": "info",
+               "did": f"Started a Stage A run on seeds {seeds}" + (f" with changes {a.set}" if a.set else "") + ". The pass numbers were checked against their locked fingerprint first.",
+               "output": ["Running. Results appear in the next row."],
+               "relevance": "Part of testing whether the paper's single split works in our code (Stage A)."})
 
     arms = []
     if a.only in (None, "main"):
@@ -153,7 +174,11 @@ def main():
             artifact_paths=[os.path.join(a.out, "report.json")],
             interpretation=("Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. "
                             "FAIL -> debug round (max 3) then halt and publish the negative." ),
-            verdict=verdict)
+            verdict=verdict,
+            plain={"title": f"Stage A result: {verdict}", "stage": "A", "verdict": verdict.lower(),
+                   "did": f"Finished the Stage A run on seeds {seeds} and scored it with the paper's metrics.",
+                   "output": paper_lines(runs["main"]) + [f"Controls (should fail): {'all behaved' if all(report['controls'].values()) else 'SOME DID NOT behave: ' + str(report['controls'])}."],
+                   "relevance": "A pass means the paper's single split works in our code, so Stage B (splitting a second time) can start. A fail means debugging, up to the plan's three-round limit."})
     print(json.dumps({k: v for k, v in report.items() if k != "main"} |
                      ({"main_criteria": report["main"]["criteria"]} if "main" in report else {}), indent=1))
 

@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 14 entries, head bdd406aeb3af
+Chain status at render time: **VALID** — 26 entries, head d48139201d2f
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -337,5 +337,113 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** CORRECTION to entry #5 (and to my earlier chat summary): I said the first failure was the network collapsing onto a single direction. That mechanism was not measured. What was measured: without the correlation penalty the run fails (slow-block R2 0.43, 7 of 8 output directions still active); with it, it works (R2 0.99). Why the penalty helps is a hypothesis, not a finding.
 
 **Bearing on objectives O1, OP.** The fix is empirically supported; the explanation is untested. Do not cite 'rank collapse' as established in any write-up unless a rank check is added.
+
+---
+
+## #14 · note (retroactive) · stage - · plan §—
+`8fd4750d720e4350` ← `bdd406aeb3af495b` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Reading and rules
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #15 · note (retroactive) · stage core · plan §—
+`35adf1ea7707201b` ← `8fd4750d720e4350` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Maths-only core test
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #16 · note (retroactive) · stage A · plan §—
+`ae11ef51472fc261` ← `35adf1ea7707201b` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Stage A built
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #17 · note (retroactive) · stage A · plan §—
+`9dafd55e76e3af63` ← `ae11ef51472fc261` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: First run: failed
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #18 · note (retroactive) · stage A · plan §—
+`91e2edf0415ed9da` ← `9dafd55e76e3af63` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Diagnosing the failure
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #19 · note (retroactive) · stage A · plan §—
+`a26dccfbc359d071` ← `91e2edf0415ed9da` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Fix applied, rules unchanged
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #20 · note (retroactive) · stage A · plan §—
+`f25d04b7241be2ed` ← `a26dccfbc359d071` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Main result: Stage A passes
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #21 · note (retroactive) · stage A · plan §—
+`1b3723851d86a751` ← `f25d04b7241be2ed` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Controls: they fail as they should
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #22 · note (retroactive) · stage A · plan §—
+`80cc306cdf87a4a9` ← `1b3723851d86a751` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Control rule corrected (disclosed)
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #23 · note (retroactive) · stage A · plan §—
+`5cd11ec699720a32` ← `80cc306cdf87a4a9` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Harder worlds
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #24 · note (retroactive) · stage A · plan §—
+`e5f4f87c619c3392` ← `5cd11ec699720a32` · recorded 2026-10-12T22:41:07+00:00
+
+**What.** Plain-language restatement: Paper's own simulation: waiting for you
+
+**Bearing on objectives OP.** Restates earlier chain entries in plain language; figures recomputed from run files.
+
+---
+
+## #25 · implementation · stage log · plan §—
+`d48139201d2f567a` ← `e5f4f87c619c3392` · recorded 2026-10-12T22:43:08+00:00
+
+**What.** Built the plain-language log page and the helpers that feed it.
+
+**How.** experiments/build_log_page.py renders only entries that carry a 'plain' block; experiments/restate_log_plain.py re-explained the first 14 entries; run_stage_a.py now writes its own plain rows; explog/stages.json holds the stage tracker.
 
 ---

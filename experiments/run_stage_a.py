@@ -16,7 +16,16 @@ import sys
 
 import yaml
 
+from isj import explog
 from isj.stage_a import run_stage_a
+
+ARM_MEANING = {
+    "main": "Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.",
+    "shuffled": "Control for O1 (plan §2.6 ii): destroying correspondences must flatten the gap; if it did not, the main-arm split would not be attributable to the correspondences.",
+    "no_pred": "Ablation for O1: without predictive training the representation should not recover the latents.",
+    "no_inv": "Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).",
+    "no_var": "Ablation for O1: without variance reg + ZCA the difference spectrum is not interpretable.",
+}
 
 
 def criteria_hash(cfg) -> str:
@@ -74,6 +83,7 @@ def main():
     ap.add_argument("--seeds", type=int, nargs="*")
     ap.add_argument("--only", choices=["main", "controls"], default=None)
     ap.add_argument("--set", nargs="*", default=[], help="override, e.g. world.coupling_strength=1.0")
+    ap.add_argument("--no-log", action="store_true", help="do not append to explog/chain.jsonl")
     a = ap.parse_args()
 
     cfg = yaml.safe_load(open(a.config))
@@ -92,6 +102,19 @@ def main():
     except FileExistsError:
         pass   # another seed-worker wrote it first
 
+    def log(*args, **kw):
+        if not a.no_log:
+            explog.append(*args, **kw)
+
+    log("run", f"Stage A run set started: {a.out}, seeds {seeds}, overrides {a.set or 'none'}",
+        stage="A", step="4.1", objectives=["O1", "OP"],
+        how="experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, "
+            "difference-moment split on 30k matched pairs, probe on disjoint latents)",
+        outputs={"criteria_sha256": expected, "seeds": seeds, "overrides": a.set,
+                 "coupling": cfg["world"]["coupling_strength"], "obs_dim": cfg["world"]["obs_dim"]},
+        artifact_paths=[a.config],
+        interpretation="Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).")
+
     arms = []
     if a.only in (None, "main"):
         arms.append(("main", "none", "none"))
@@ -108,6 +131,12 @@ def main():
             r = run_stage_a(cfg, s, ablation=abl, control=ctl)
             write_once(path, r)
             runs.setdefault(name, []).append(r)
+            log("run", f"Stage A arm={name} seed={s} finished",
+                stage="A", step="4.1", objectives=["O1"],
+                outputs={k: (round(r[k], 5) if isinstance(r[k], float) else r[k]) for k in
+                         ("invariant_r2", "variant_r2", "global_r2", "angle_inv_deg", "angle_var_deg",
+                          "gap_ratio", "selected_d", "leak_r2_max", "leak_any_significant", "seconds")},
+                artifact_paths=[path], interpretation=ARM_MEANING[name])
             print(f"{name:9s} seed={s} inv_r2={r['invariant_r2']:.3f} angle={r['angle_inv_deg']:.2f} "
                   f"gap={r['gap_ratio']:.1f} leak_r2={r['leak_r2_max']:.4f} ({r['seconds']}s)", flush=True)
     report = {"git": meta["git"]}
@@ -116,6 +145,15 @@ def main():
     report["controls"] = check_controls(runs, cfg["controls"])
     with open(os.path.join(a.out, "report.json"), "w") as f:
         json.dump(report, f, indent=1)
+    if "main" in report:
+        verdict = "PASS" if report["main"]["criteria"]["PASS"] else "FAIL"
+        log("result", f"Stage A aggregate over seeds {seeds}: main arm {verdict}; controls {report['controls']}",
+            stage="A", step="4.1", objectives=["O1", "OP"],
+            outputs={"criteria": report["main"]["criteria"], "controls": report["controls"]},
+            artifact_paths=[os.path.join(a.out, "report.json")],
+            interpretation=("Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. "
+                            "FAIL -> debug round (max 3) then halt and publish the negative." ),
+            verdict=verdict)
     print(json.dumps({k: v for k, v in report.items() if k != "main"} |
                      ({"main_criteria": report["main"]["criteria"]} if "main" in report else {}), indent=1))
 

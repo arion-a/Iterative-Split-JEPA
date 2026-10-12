@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "iterative-splitjepa-exp"
+version = "0.1.0"
+description = "Experimental harness for iterative SplitJEPA (hierarchical, correspondence-driven invariant/variant splits)"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "torch", "pyyaml"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: statistical / training tests that take more than a few seconds"]

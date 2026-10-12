@@ -1,0 +1,51 @@
+# Stage A — engine reproduction on a trained encoder (plan §4.1, §6).
+# `criteria` is copied from the plan and FROZEN: experiments/run_stage_a.py refuses to run if its
+# sha256 differs from `criteria_sha256`. Change a criterion only by a dated amendment to the plan.
+stage: A
+plan_ref: "experimental_plan §4.1 (revision with delta_s=0.05, five per-rung criteria)"
+
+world:
+  block_dims: [4, 4]          # block 1 = variant (fast), block 2 = invariant (slow)
+  rho: 0.5
+  coupling_layers: 4
+  coupling_strength: 0.5      # sweep 0.5-2.0 via --coupling
+  obs_dim: 16                 # our choice (plan §6); authors use 8 (= d). Ablate with --obs-dim 8
+
+encoder:
+  hidden: 64                  # MLP obs -> 64 -> 64 -> d, GELU
+  steps: 8000                 # paper: 10000, adjusted for CPU
+  batch_size: 256
+  lr: 3.0e-3
+  reg: hinge                  # paper uses SIGReg 1e-6; hinge used here
+  var_weight: 1.0e-2
+  cov_weight: 0.0
+
+split:
+  num_whiten: 30000
+  zca_eps: 1.0e-5
+  num_pairs: 30000
+  probe_train: 15000
+  probe_test: 5000
+  gamma_min_frac: 0.1         # gap rule threshold as a fraction of lambda_1 (reported only)
+
+significance:
+  alpha: 0.01                 # permutation null, Holm correction
+  n_perm: 1000
+
+seeds: [0, 1, 2, 3, 4]
+
+criteria:                     # all must hold on every seed
+  invariant_r2_min: 0.9
+  angle_max_deg: 5.0
+  gap_ratio_min: 10.0
+  leakage_not_significant: true       # Holm-corrected permutation test, alpha above
+  leakage_r2_floor: 0.01              # AMENDMENT-PENDING: effect-size floor under which a significant
+                                      # but tiny leakage still counts as "at the null" (see README)
+controls:                     # expectations that must hold for the experiment to count (plan §2.6)
+  shuffled:
+    gap_ratio_max: 2.0
+    invariant_r2_max: 0.5
+  ablations:
+    no_pred:  {invariant_r2_max: 0.9}   # must NOT pass: no predictive training
+    no_inv:   {invariant_r2_max: 0.9}   # must NOT pass: no correspondence step
+    no_var:   {note: "recorded, no hard expectation (authors report larger covariance error)"}

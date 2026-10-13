@@ -3,3 +3,7 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
   "min_std": float(h.std(0).min())})
 0.1 1 0.833 5 8.8 8.8
 0.4 1 0.833 5 8.5 8.8
+0.6 1 0.822 5 8.5 9.3
+0.8 1 0.766 6 8.4 10.6
+1.0 1 0.683 12 8.3 82.4
+1.5 1 0.481 9 8.4 79.5

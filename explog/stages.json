@@ -13,7 +13,7 @@
    "name": "Split a second time",
    "status": "next",
    "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
-   "result": "B1 answered: given correct pairs, the second split works on 15 seeds (angles under 2 degrees, category core R\u00b2 0.98). Leakage rule amended after seeing data, as you ruled; the original strict reading is kept in the log. B2 (building the pairs from the data) is next."
+   "result": "B1: second split works with correct pairs (15 seeds). B2: pairs built by clustering work when categories are many and fine (12: 4-5 degrees), fail with few (3), and are mixed at 6; my world design hurts the few-category cases."
   },
   {
    "id": "C",

@@ -150,11 +150,15 @@ if seeds:
         vflag = "MATCHES B1, BUT THE GATES ARE NOT MET IN THIS WORLD (B1 misses them too)"
     else:
         vflag = "FAILED"
-    verdict = (f"B2 {vflag} (clean world, {len(seeds)} seeds): construction cost = rung-2 angle {deltas['rung-2 angle (°)']:+.2f}°, identity R² {deltas['identity R²']:+.3f}, "
-               f"category core R² {deltas['category core R²']:+.3f} against B1; purity {purity_clean:.2f}; degradation "
-               f"{'stayed under the bound' if under_norm == len(pts) else 'exceeded the bound in ' + str(len(pts) - under_norm) + ' of ' + str(len(pts)) + ' runs'} "
-               f"and {'had no cliff above purity 0.7 (measured against B1)' if not cliff else 'had a cliff above purity 0.7 in ' + str(len(cliff)) + ' runs'}; "
-               f"controls C1-C3 {'failed as required' if all(ctl_ok.values()) else 'did NOT all fail as required'}. "
+    plural = lambda n, w: f"{n} {w}{'' if n == 1 else 's'}"
+    t2_state = "could not be tested (no run reached purity 0.9 and pair validity 0.95 with the discovered cluster count)" if not t2_runs else ("met" if all(t2_pass) else "not met")
+    t3_met = (not cliff) and under_norm == len(pts)
+    verdict = (f"B2 {vflag} (clean world, {len(seeds)} seeds). Construction cost against B1: rung-2 angle {deltas['rung-2 angle (°)']:+.2f}°, identity R² {deltas['identity R²']:+.3f}, "
+               f"category core R² {deltas['category core R²']:+.3f}; cluster purity {purity_clean:.2f}. "
+               f"T1 {'met' if t1_ok else 'not met'}; T2 {t2_state}; "
+               f"T3 {'met' if t3_met else 'not met'}: leakage ||A21|| was {'under' if under_norm == len(pts) else 'over'} the contamination bound in {plural(len(pts) - under_norm if under_norm != len(pts) else under_norm, 'run')} of {len(pts)} and "
+               f"{'there was no cliff above purity 0.7' if not cliff else 'a cliff appears above purity 0.7 in ' + plural(len(cliff), 'run')} (measured against B1); "
+               f"T4 {'met' if all(ctl_ok.values()) else 'not met'} (controls C1-C3 {'failed as required' if all(ctl_ok.values()) else 'did not all fail'}). "
                f"Gates: B2 {'passes them all' if gate_pass_clean else 'misses some (table A)'}; B1 on the same encoders {'passes them all' if b1_gate_pass_clean else 'also misses some, so the shortfall comes from the world and encoder, not from building the pairs'}.")
     tgt = [["T1 construction cost: B2 angle within 2x of B1, per seed", "; ".join(f"seed {s}: {b2:.2f}° vs {b1:.2f}° (ratio {b2/b1:.2f})" for s, b2, b1 in t1), "met" if t1_ok else "NOT met"],
            ["T2 purity ≥ 0.9 and pair validity ≥ 0.95 imply all gates pass", f"{len(t2_runs)} runs qualify; {sum(t2_pass)} pass every gate" + (f"; gates failing: {t2_gate_fail}" if t2_gate_fail else ""), "met" if t2_runs and all(t2_pass) else ("no qualifying run" if not t2_runs else "NOT met")],
@@ -169,7 +173,7 @@ if seeds:
     e_b2 = [st.mean(runs[clean][s]["arms"]["b2_kmeans"]["eigvals"][i] for s in seeds) for i in range(8)]
     figs["P2prime"] = sv.log_lines([("B1 (generator twins)", e_b1, "--s1"), ("B2 (discovered clusters)", e_b2, "--s2")], vline=4, vline_label="selected boundary: 4 | 4",
                                    ymin=1e-3, ymax=10, note="Pair-difference spectrum at rung 2, B1 against B2",
-                                   annotations=[(5, f"gap ratio B1 {e_b1[3]/e_b1[4]:.0f}", e_b1[4]), (5, f"B2 {e_b2[3]/e_b2[4]:.1f}", e_b2[4] * 0.45)])
+                                   annotations=[(5, f"B1 gap ratio {e_b1[3]/e_b1[4]:.0f}", e_b1[4] * 0.32), (5, f"B2 gap ratio {e_b2[3]/e_b2[4]:.1f}", e_b2[4] * 2.6)])
     r0 = runs[clean][seeds[0]]; p7 = r0["p7"]
     figs["P7"] = sv.scatter_pair(p7["x"], p7["y"], p7["true_cat"], p7["cluster"], note="Rung-1 invariant content, coloured by true category and by cluster")
     figs["P8"] = sv.degradation(pts, b_rung1, b_gen, note="Rung-2 angle and leakage against cluster purity")

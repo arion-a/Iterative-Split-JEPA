@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 178 entries, head b1366657559d
+Chain status at render time: **VALID** — 219 entries, head 3782f45374a8
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -4363,5 +4363,914 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `runs/stage_b1/rescore_amended_leakage_rule.json` (sha256 4e9519fcb8); `experiments/rescore_b1.py` (sha256 0d724785a6)
+
+---
+
+## #178 · run · stage B · plan §4.2
+`0200caadc4d272ea` ← `b1366657559dce18` · recorded 2026-10-13T11:42:49+00:00
+
+**What.** Stage B2 K=3 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.999,
+ "generator_angle": 2.47,
+ "kmeans_angle": 89.56,
+ "label_angle": 80.09,
+ "random_angle": 79.55
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K3_seed2.json` (sha256 441152e952)
+
+---
+
+## #179 · run · stage B · plan §4.2
+`e9c42230fda23107` ← `0200caadc4d272ea` · recorded 2026-10-13T11:42:51+00:00
+
+**What.** Stage B2 K=3 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.778,
+ "generator_angle": 1.63,
+ "kmeans_angle": 60.07,
+ "label_angle": 76.62,
+ "random_angle": 65.79
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K3_seed0.json` (sha256 943dc39f50)
+
+---
+
+## #180 · run · stage B · plan §4.2
+`a6b9b99ebb2d1850` ← `e9c42230fda23107` · recorded 2026-10-13T11:42:51+00:00
+
+**What.** Stage B2 K=3 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.844,
+ "generator_angle": 1.54,
+ "kmeans_angle": 77.1,
+ "label_angle": 69.7,
+ "random_angle": 89.86
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K3_seed1.json` (sha256 18d71c3e5c)
+
+---
+
+## #181 · run · stage B · plan §4.2
+`ba33bf1b63381892` ← `a6b9b99ebb2d1850` · recorded 2026-10-13T11:46:16+00:00
+
+**What.** Stage B2 K=6 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.801,
+ "generator_angle": 1.9,
+ "kmeans_angle": 17.76,
+ "label_angle": 2.24,
+ "random_angle": 73.61
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K6_seed2.json` (sha256 7c358e13ac)
+
+---
+
+## #182 · run · stage B · plan §4.2
+`90f49a8292255e92` ← `ba33bf1b63381892` · recorded 2026-10-13T11:46:16+00:00
+
+**What.** Stage B2 K=6 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.645,
+ "generator_angle": 1.26,
+ "kmeans_angle": 19.87,
+ "label_angle": 16.97,
+ "random_angle": 84.4
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K6_seed1.json` (sha256 eead3b14ac)
+
+---
+
+## #183 · run · stage B · plan §4.2
+`00377e457c492c21` ← `90f49a8292255e92` · recorded 2026-10-13T11:46:18+00:00
+
+**What.** Stage B2 K=6 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.813,
+ "generator_angle": 1.77,
+ "kmeans_angle": 6.55,
+ "label_angle": 3.18,
+ "random_angle": 69.78
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K6_seed0.json` (sha256 e73cf5da2a)
+
+---
+
+## #184 · run · stage B · plan §4.2
+`45cba0e856a1c7c5` ← `00377e457c492c21` · recorded 2026-10-13T11:49:53+00:00
+
+**What.** Stage B2 K=12 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.457,
+ "generator_angle": 1.58,
+ "kmeans_angle": 4.01,
+ "label_angle": 1.89,
+ "random_angle": 80.34
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K12_seed2.json` (sha256 edd43d609d)
+
+---
+
+## #185 · run · stage B · plan §4.2
+`28bc9459530b7e12` ← `45cba0e856a1c7c5` · recorded 2026-10-13T11:49:53+00:00
+
+**What.** Stage B2 K=12 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.525,
+ "generator_angle": 3.04,
+ "kmeans_angle": 4.17,
+ "label_angle": 3.31,
+ "random_angle": 88.92
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K12_seed1.json` (sha256 fc778844df)
+
+---
+
+## #186 · run · stage B · plan §4.2
+`3eb67250d9d9269d` ← `28bc9459530b7e12` · recorded 2026-10-13T11:49:56+00:00
+
+**What.** Stage B2 K=12 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.584,
+ "generator_angle": 1.72,
+ "kmeans_angle": 4.85,
+ "label_angle": 1.8,
+ "random_angle": 89.85
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K12_seed0.json` (sha256 4651f9b1fd)
+
+---
+
+## #187 · result · stage B · plan §4.2
+`27091336096d88ef` ← `3eb67250d9d9269d` · recorded 2026-10-13T11:51:20+00:00
+
+**What.** B2 ran: pairs built by k-means can give a working second split when categories are many and fine (K=12, 4-5 degrees), but not when few (K=3) or in between (K=6).
+
+**How.** 3 category counts x 3 seeds; one encoder per run; four ways to build rung-2 pairs on the same encoder (generator twins, same-true-category pairs, k-means pairs, random). Mean rung-2 angle in degrees (generator / true-category / k-means / random): K=3: 1.9 / 75.5 / 75.6 / 78.4; K=6: 1.7 / 7.5 / 14.7 / 75.9; K=12: 2.1 / 2.3 / 4.3 / 86.4. Mean k-means purity: 0.87 / 0.75 / 0.52.
+
+**Output.**
+```json
+{
+ "K12": {
+  "angles_generator": [
+   1.7,
+   3.0,
+   1.6
+  ],
+  "angles_kmeans": [
+   4.8,
+   4.2,
+   4.0
+  ],
+  "angles_true_category": [
+   1.8,
+   3.3,
+   1.9
+  ],
+  "purity": [
+   0.584,
+   0.525,
+   0.457
+  ]
+ },
+ "K3": {
+  "angles_generator": [
+   1.6,
+   1.5,
+   2.5
+  ],
+  "angles_kmeans": [
+   60.1,
+   77.1,
+   89.6
+  ],
+  "angles_true_category": [
+   76.6,
+   69.7,
+   80.1
+  ],
+  "purity": [
+   0.778,
+   0.844,
+   0.999
+  ]
+ },
+ "K6": {
+  "angles_generator": [
+   1.8,
+   1.3,
+   1.9
+  ],
+  "angles_kmeans": [
+   6.5,
+   19.9,
+   17.8
+  ],
+  "angles_true_category": [
+   3.2,
+   17.0,
+   2.2
+  ],
+  "purity": [
+   0.813,
+   0.645,
+   0.801
+  ]
+ }
+}
+```
+
+**Artifacts.** `runs/stage_b2/r1/K12_seed0.json` (sha256 4651f9b1fd); `runs/stage_b2/r1/K12_seed1.json` (sha256 fc778844df); `runs/stage_b2/r1/K12_seed2.json` (sha256 edd43d609d); `runs/stage_b2/r1/K3_seed0.json` (sha256 943dc39f50); `runs/stage_b2/r1/K3_seed1.json` (sha256 18d71c3e5c); `runs/stage_b2/r1/K3_seed2.json` (sha256 441152e952) … +3 more
+
+---
+
+## #188 · plan · stage log · plan §—
+`7eadeb4dff97e864` ← `27091336096d88ef` · recorded 2026-10-13T11:53:42+00:00
+
+**What.** Added REPORTING.md and TARGETS.md to the repo (verbatim) and wrote the plan for incorporating them.
+
+**How.** docs/REPORTING.md and docs/TARGETS.md are your files unchanged; docs/REPORTING_IMPLEMENTATION.md has the requirement-by-requirement status, comparison against the paper, eight points that need your decision, and the build order. Nothing built yet.
+
+**Artifacts.** `docs/REPORTING.md` (sha256 83c1784ccd); `docs/TARGETS.md` (sha256 1be00ab153); `docs/REPORTING_IMPLEMENTATION.md` (sha256 f8c90ec23e)
+
+---
+
+## #189 · plan · stage B · plan §4.2
+`a80e630eca0ddb5d` ← `7eadeb4dff97e864` · recorded 2026-10-13T12:11:33+00:00
+
+**What.** B2 rerun with a fixed world and the six paper metrics. First B2 run (r1) kept as legacy.
+
+**How.** Fix: cluster centres are laid out so every one of the 4 category directions has equal between-cluster spread (needs more than 4 categories), so no direction holds only within-cluster jitter. New sweep: 6, 12, 24 categories x 3 seeds, one encoder per run. Every run now records global R2, invariant R2, variant R2, a12/a21 (raw and normalized) and block purity, plus how close paired samples are in category space. Results go to runs/stage_b2/r2; r1 stays as a legacy record (its 3-category runs were not a valid test). No pass numbers are locked; results are read sensibly against B1.
+
+**Output.**
+```json
+{
+ "output_dir": "runs/stage_b2/r2",
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "sweep": [
+  6,
+  12,
+  24
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b2.yaml` (sha256 de2bfdda09)
+
+---
+
+## #190 · run · stage B · plan §4.2
+`c32652a4cd1372f5` ← `a80e630eca0ddb5d` · recorded 2026-10-13T12:15:15+00:00
+
+**What.** Stage B2 K=6 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 1.0,
+ "generator_angle": 1.3,
+ "kmeans_angle": 1.27,
+ "label_angle": 1.3,
+ "random_angle": 80.49
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K6_seed2.json` (sha256 c39b52eefc)
+
+---
+
+## #191 · run · stage B · plan §4.2
+`6db7e639dd1059d1` ← `c32652a4cd1372f5` · recorded 2026-10-13T12:15:15+00:00
+
+**What.** Stage B2 K=6 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.833,
+ "generator_angle": 1.2,
+ "kmeans_angle": 2.23,
+ "label_angle": 1.34,
+ "random_angle": 82.98
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K6_seed1.json` (sha256 778fc3f679)
+
+---
+
+## #192 · run · stage B · plan §4.2
+`30d575f2be7ff3f1` ← `6db7e639dd1059d1` · recorded 2026-10-13T12:15:17+00:00
+
+**What.** Stage B2 K=6 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.835,
+ "generator_angle": 1.53,
+ "kmeans_angle": 1.67,
+ "label_angle": 1.65,
+ "random_angle": 74.17
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K6_seed0.json` (sha256 db543a7663)
+
+---
+
+## #193 · run · stage B · plan §4.2
+`4f45adc90890b845` ← `30d575f2be7ff3f1` · recorded 2026-10-13T12:18:51+00:00
+
+**What.** Stage B2 K=12 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.558,
+ "generator_angle": 1.68,
+ "kmeans_angle": 2.27,
+ "label_angle": 2.27,
+ "random_angle": 89.36
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K12_seed1.json` (sha256 673855cfd9)
+
+---
+
+## #194 · run · stage B · plan §4.2
+`b853bfb6018a5105` ← `4f45adc90890b845` · recorded 2026-10-13T12:18:52+00:00
+
+**What.** Stage B2 K=12 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.584,
+ "generator_angle": 1.84,
+ "kmeans_angle": 2.29,
+ "label_angle": 2.0,
+ "random_angle": 87.45
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K12_seed0.json` (sha256 04a18acb52)
+
+---
+
+## #195 · run · stage B · plan §4.2
+`a2d82e0da2d98e7b` ← `b853bfb6018a5105` · recorded 2026-10-13T12:18:52+00:00
+
+**What.** Stage B2 K=12 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.519,
+ "generator_angle": 1.15,
+ "kmeans_angle": 4.07,
+ "label_angle": 1.35,
+ "random_angle": 74.35
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K12_seed2.json` (sha256 f68806b407)
+
+---
+
+## #196 · run · stage B · plan §4.2
+`7f48b357d34531e1` ← `a2d82e0da2d98e7b` · recorded 2026-10-13T12:22:38+00:00
+
+**What.** Stage B2 K=24 seed=2 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.363,
+ "generator_angle": 1.37,
+ "kmeans_angle": 3.21,
+ "label_angle": 1.47,
+ "random_angle": 83.97
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K24_seed2.json` (sha256 0982985f59)
+
+---
+
+## #197 · run · stage B · plan §4.2
+`85763e6e68b8d0ac` ← `7f48b357d34531e1` · recorded 2026-10-13T12:22:39+00:00
+
+**What.** Stage B2 K=24 seed=1 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.396,
+ "generator_angle": 1.74,
+ "kmeans_angle": 6.73,
+ "label_angle": 1.82,
+ "random_angle": 87.36
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K24_seed1.json` (sha256 956d05ff66)
+
+---
+
+## #198 · run · stage B · plan §4.2
+`d6efb68f1d8399c7` ← `85763e6e68b8d0ac` · recorded 2026-10-13T12:22:40+00:00
+
+**What.** Stage B2 K=24 seed=0 finished
+
+**Output.**
+```json
+{
+ "cluster_purity": 0.331,
+ "generator_angle": 1.66,
+ "kmeans_angle": 2.97,
+ "label_angle": 1.76,
+ "random_angle": 88.46
+}
+```
+
+**Artifacts.** `runs/stage_b2/r2/K24_seed0.json` (sha256 43da5bd601)
+
+---
+
+## #199 · plan · stage B · plan §4.2
+`942abfb6fdb0900a` ← `d6efb68f1d8399c7` · recorded 2026-10-13T12:26:43+00:00
+
+**What.** Formal B2 (docs/B2.md) targets locked; run launched: sigma_cat sweep x 3 seeds, one encoder per run.
+
+**How.** World: 6 categories x 20 identities x 2 textures, all Gaussian inside (my reading of the spec, docs/B2_IMPLEMENTATION.md). Gates = B1's frozen criteria incl. its amended leakage floor. Targets T1-T4 and controls C1-C4 frozen in configs/stage_b2_spec.yaml (hash in stage_b2_spec.targets.sha256). Arms on one encoder per run: B1 generator twins, B2 k-means with discovered cluster count, oracle-count k-means, perfect-label pairs, C1 cross-cluster, C2 variant-block clusters, C3 singleton, C4 shuffled. Results to results/B2/, one line per run in docs/STATUS.md. A 300-step code check (not a result) confirmed the wiring.
+
+**Output.**
+```json
+{
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "sigma_cat_sweep": [
+  0.1,
+  0.4,
+  0.6,
+  0.8,
+  1.0,
+  1.5
+ ],
+ "targets": {
+  "T1_construction_cost": {
+   "applies_to": "clean world (sigma_cat = clean_sigma_cat)",
+   "max_ratio": 2.0,
+   "rule": "per seed, B2 (discovered-count k-means) rung-2 angle <= 2 x the B1 (generator twins) rung-2 angle, same encoder and seed"
+  },
+  "T2_purity_threshold": {
+   "pair_validity_min": 0.95,
+   "purity_min": 0.9,
+   "rule": "every run with cluster purity >= 0.9 and pair validity >= 0.95 passes all gates"
+  },
+  "T3_graceful_degradation": {
+   "angle_limit_deg": 5.0,
+   "bound": "||A21||_rung2 <= ||A21||_rung1 x (1 + 2 x misgroup rate)  (monograph section 10; the sqrt form is also drawn)",
+   "purity_floor_for_no_cliff": 0.7,
+   "rule": "across the sigma_cat sweep, rung-2 angle and ||A21|| grow smoothly with misgroup rate; no run with purity >= 0.7 has a rung-2 angle above 5 deg; measured ||A21|| stays below the contamination bound"
+  },
+  "T4_loud_failure": {
+   "C1_cross_cluster": {
+    "angle_min_deg": 10.0,
+    "rule": "split must not identify identity: rung-2 angle above 10 deg, and the pair-validity check fires (validity below 0.95)"
+   },
+   "C2_variant_clusters": {
+    "angle_min_deg": 10.0,
+    "rule": "must fail: rung-2 angle above 10 deg"
+   },
+   "C3_singleton": {
+    "rule": "no valid pairs exist, so the rank check fires (zero pairs)"
+   },
+   "C4_shuffled": {
+    "rule": "recorded, no required outcome"
+   }
+  }
+ }
+}
+```
+
+**Artifacts.** `configs/stage_b2_spec.yaml` (sha256 cb806eed90); `docs/B2.md` (sha256 5f6fb137b3); `docs/B2_IMPLEMENTATION.md` (sha256 c1f64ebef8)
+
+---
+
+## #200 · run · stage B · plan §4.2
+`a772ffb010765197` ← `942abfb6fdb0900a` · recorded 2026-10-13T12:30:48+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.62,
+ "angle_b2": 11.71,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.1/2.json` (sha256 e96f30aeeb)
+
+---
+
+## #201 · run · stage B · plan §4.2
+`e2132e87aa3ae69e` ← `a772ffb010765197` · recorded 2026-10-13T12:30:52+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.67,
+ "angle_b2": 14.37,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.1/0.json` (sha256 67326a627a)
+
+---
+
+## #202 · run · stage B · plan §4.2
+`5cb265280259a7dc` ← `e2132e87aa3ae69e` · recorded 2026-10-13T12:30:54+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.77,
+ "angle_b2": 8.84,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.1/1.json` (sha256 659d18f30b)
+
+---
+
+## #203 · run · stage B · plan §4.2
+`b5d6e3a38f0288e2` ← `5cb265280259a7dc` · recorded 2026-10-13T12:32:48+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.07,
+ "angle_b2": 11.4,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.4/2.json` (sha256 36049ce668)
+
+---
+
+## #204 · run · stage B · plan §4.2
+`9af80a2693818ce7` ← `b5d6e3a38f0288e2` · recorded 2026-10-13T12:32:54+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.42,
+ "angle_b2": 10.65,
+ "k_found": 6,
+ "purity": 0.96
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.4/0.json` (sha256 a11a87e115)
+
+---
+
+## #205 · run · stage B · plan §4.2
+`14e3434fdc3666dc` ← `9af80a2693818ce7` · recorded 2026-10-13T12:32:55+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.54,
+ "angle_b2": 8.81,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.4/1.json` (sha256 d0c63007fa)
+
+---
+
+## #206 · run · stage B · plan §4.2
+`3c142cc807fb0014` ← `14e3434fdc3666dc` · recorded 2026-10-13T12:34:50+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.8,
+ "angle_b2": 12.17,
+ "k_found": 5,
+ "purity": 0.814
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.6/2.json` (sha256 97680d3372)
+
+---
+
+## #207 · run · stage B · plan §4.2
+`04eafc21f92f379a` ← `3c142cc807fb0014` · recorded 2026-10-13T12:34:55+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.2,
+ "angle_b2": 13.69,
+ "k_found": 6,
+ "purity": 0.851
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.6/0.json` (sha256 e44d0cbff8)
+
+---
+
+## #208 · run · stage B · plan §4.2
+`e7042cd827569709` ← `04eafc21f92f379a` · recorded 2026-10-13T12:34:57+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.49,
+ "angle_b2": 9.33,
+ "k_found": 5,
+ "purity": 0.822
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.6/1.json` (sha256 8aec28caa6)
+
+---
+
+## #209 · run · stage B · plan §4.2
+`409ee894f4222344` ← `e7042cd827569709` · recorded 2026-10-13T12:37:01+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.17,
+ "angle_b2": 18.42,
+ "k_found": 7,
+ "purity": 0.767
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.8/0.json` (sha256 da79a117e1)
+
+---
+
+## #210 · run · stage B · plan §4.2
+`e6c25e0bd1af0ede` ← `409ee894f4222344` · recorded 2026-10-13T12:37:03+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.71,
+ "angle_b2": 34.55,
+ "k_found": 12,
+ "purity": 0.782
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.8/2.json` (sha256 5b925b0606)
+
+---
+
+## #211 · run · stage B · plan §4.2
+`9f1e43acf8f1c521` ← `e6c25e0bd1af0ede` · recorded 2026-10-13T12:37:07+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.38,
+ "angle_b2": 10.6,
+ "k_found": 6,
+ "purity": 0.766
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_0.8/1.json` (sha256 5cdd82f216)
+
+---
+
+## #212 · run · stage B · plan §4.2
+`64155201093fe02d` ← `9f1e43acf8f1c521` · recorded 2026-10-13T12:39:19+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.1,
+ "angle_b2": 49.26,
+ "k_found": 11,
+ "purity": 0.699
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.0/0.json` (sha256 21d8818a42)
+
+---
+
+## #213 · run · stage B · plan §4.2
+`d62c2d15171f64ae` ← `64155201093fe02d` · recorded 2026-10-13T12:39:20+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.78,
+ "angle_b2": 50.76,
+ "k_found": 11,
+ "purity": 0.696
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.0/2.json` (sha256 f879425935)
+
+---
+
+## #214 · run · stage B · plan §4.2
+`f15113197e454f74` ← `d62c2d15171f64ae` · recorded 2026-10-13T12:39:27+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.3,
+ "angle_b2": 82.39,
+ "k_found": 12,
+ "purity": 0.683
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.0/1.json` (sha256 387eff3a91)
+
+---
+
+## #215 · run · stage B · plan §4.2
+`967e4343b125e10e` ← `f15113197e454f74` · recorded 2026-10-13T12:41:31+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.09,
+ "angle_b2": 82.13,
+ "k_found": 12,
+ "purity": 0.57
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.5/0.json` (sha256 a5bbc8f923)
+
+---
+
+## #216 · run · stage B · plan §4.2
+`e6818748062c4c65` ← `967e4343b125e10e` · recorded 2026-10-13T12:41:34+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.55,
+ "angle_b2": 89.63,
+ "k_found": 9,
+ "purity": 0.523
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.5/2.json` (sha256 43571b8ca7)
+
+---
+
+## #217 · run · stage B · plan §4.2
+`99fdc66490f46430` ← `e6818748062c4c65` · recorded 2026-10-13T12:41:38+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.36,
+ "angle_b2": 79.46,
+ "k_found": 9,
+ "purity": 0.481
+}
+```
+
+**Artifacts.** `results/B2/sigma_cat_1.5/1.json` (sha256 a3849cb5c0)
+
+---
+
+## #218 · result · stage B · plan §4.2
+`3782f45374a8709c` ← `99fdc66490f46430` · recorded 2026-10-13T12:43:44+00:00
+
+**What.** Formal B2 finished (18 runs): construction costs little, but the world is too hard for the gates and past purity ~0.8 the split breaks.
+
+**How.** results/B2 (6 spread values x 3 seeds), report at results/B2/REPORT.md and docs/b2_results.html. Gates are B1's; B1 on the same encoders misses them too.
+
+**Output.**
+```json
+{
+ "T1": "met (ratios 1.35, 1.01, 1.01)",
+ "T2": "could not be tested (discovered count merges two categories, purity 0.83)",
+ "T3": "not met: angle jumps below purity ~0.8 (11.7 deg at 0.83, 21 at 0.77, 61 at 0.69, 84 at 0.52); ||A21|| over the contamination bound in 18 of 18 runs",
+ "T4": "met (C1-C3 fail as required)"
+}
+```
+
+**Artifacts.** `results/B2/REPORT.md` (sha256 224ad4cedd); `docs/b2_results.html` (sha256 67466ee6fb)
 
 ---

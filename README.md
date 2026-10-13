@@ -43,4 +43,5 @@ See `docs/stage_a_results.md` for the Stage A record. Stages B-D are not impleme
 
 * `docs/REPORTING.md`: the standard report every stage must produce (gate table, the paper's six metrics, fixed figures P1-P6, verdict and controls).
 * `docs/TARGETS.md`: how far our numbers are from the paper's.
+* `docs/B2.md`, `docs/B2_IMPLEMENTATION.md`: the B2 spec and how it is implemented; results in `results/B2/REPORT.md`.
 * `docs/REPORTING_IMPLEMENTATION.md`: what of these is already incorporated, what is missing, and the build order.

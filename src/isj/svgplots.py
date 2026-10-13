@@ -102,44 +102,43 @@ def scatter_pair(x, y, true_cat, cluster, note=""):
 
 
 def degradation(points, bound_a21_rung1, gen_a21, note=""):
-    """P8: left rung-2 angle vs purity; right ||A21|| vs purity with the contamination-bound lines.
+    """P8: rung-2 angle and ||A21|| against cluster purity (both log scale), with the contamination-bound lines.
     points = [(purity, angle_deg, a21, sigma, seed)]"""
-    H, L, T, B = 300, 50, 26, 44
+    H, L, T, B = 310, 56, 26, 46
     pw = (W - 30) / 2
     xmin, xmax = 0.3, 1.0
     o = [_open(H, note)]
 
-    def panel(p, title, ymax, yticks, ylab, valf, lines, limit=None, limit_label=""):
+    def panel(p, title, ylo, yhi, yticks, fmt, valf, lines, limit=None, limit_label=""):
         x0 = 10 + p * (pw + 10)
         px = lambda v: x0 + L + (xmax - v) / (xmax - xmin) * (pw - L - 12)          # purity 1.0 on the left
-        py = lambda v: T + (1 - min(v, ymax) / ymax) * (H - T - B)
+        a, b = math.log10(ylo), math.log10(yhi)
+        py = lambda v: T + (1 - (math.log10(min(max(v, ylo), yhi)) - a) / (b - a)) * (H - T - B)
         out = [f'<text x="{x0 + pw/2:.1f}" y="16" class="lab" text-anchor="middle">{E(title)}</text>']
         for t in yticks:
-            out.append(f'<line x1="{x0+L}" x2="{x0+pw-12}" y1="{py(t):.1f}" y2="{py(t):.1f}" class="grid"/><text x="{x0+L-6}" y="{py(t)+4:.1f}" class="tick" text-anchor="end">{t:g}</text>')
+            out.append(f'<line x1="{x0+L}" x2="{x0+pw-12}" y1="{py(t):.1f}" y2="{py(t):.1f}" class="grid"/><text x="{x0+L-6}" y="{py(t)+4:.1f}" class="tick" text-anchor="end">{fmt(t)}</text>')
         for t in (1.0, 0.8, 0.6, 0.4):
             out.append(f'<text x="{px(t):.1f}" y="{H-B+16}" class="tick" text-anchor="middle">{t:g}</text>')
         out.append(f'<text x="{x0 + (L+pw-12)/2:.1f}" y="{H-8}" class="tick" text-anchor="middle">cluster purity (1.0 = perfect)</text>')
         out.append(f'<line x1="{px(0.7):.1f}" x2="{px(0.7):.1f}" y1="{T}" y2="{H-B}" class="limit"/><text x="{px(0.7)-4:.1f}" y="{T+12}" class="tick" text-anchor="end">purity 0.7</text>')
         if limit is not None:
             out.append(f'<line x1="{x0+L}" x2="{x0+pw-12}" y1="{py(limit):.1f}" y2="{py(limit):.1f}" class="limit"/><text x="{x0+pw-14}" y="{py(limit)-5:.1f}" class="tick" text-anchor="end">{E(limit_label)}</text>')
-        for label, f, col in lines:
+        for k, (label, f, col) in enumerate(lines):
             pts = " ".join(f"{px(pu):.1f},{py(f(pu)):.1f}" for pu in [1.0 - i * 0.01 for i in range(71)])
             out.append(f'<polyline points="{pts}" fill="none" style="stroke:var({col})" stroke-width="2"/>')
-            out.append(f'<text x="{px(0.45):.1f}" y="{py(f(0.45))-6:.1f}" class="tick" text-anchor="middle">{E(label)}</text>')
+            ly = T + 14 + 16 * k
+            out.append(f'<line x1="{x0+L+8}" x2="{x0+L+26}" y1="{ly+20}" y2="{ly+20}" style="stroke:var({col})" stroke-width="2"/><text x="{x0+L+32}" y="{ly+24}" class="tick">{E(label)}</text>')
         for pt in points:
             out.append(f'<circle cx="{px(pt[0]):.1f}" cy="{py(valf(pt)):.1f}" r="4.5" class="dot" style="fill:var(--s1)" tabindex="0" '
-                       f'{tip(f"spread {pt[3]}, seed {pt[4]}: purity {pt[0]:.2f}, {ylab} {valf(pt):.3f}")}/>')
+                       f'{tip(f"spread {pt[3]}, seed {pt[4]}: purity {pt[0]:.2f}, {valf(pt):.3f}")}/>')
         out.append(f'<line x1="{x0+L}" x2="{x0+pw-12}" y1="{H-B}" y2="{H-B}" class="axis"/>')
         return "".join(out)
 
-    amax = max([p[1] for p in points] + [6]) * 1.15
-    o.append(panel(0, "Rung-2 angle (degrees)", amax, [0, 5, 10, 20, 40, 80][:max(3, 1 + sum(1 for t in [5, 10, 20, 40, 80] if t < amax))], "angle",
-                   lambda p: p[1], [], limit=5, limit_label="limit 5°"))
-    amax2 = max([p[2] for p in points] + [bound_a21_rung1 * 2.5]) * 1.1
-    step = 0.02 if amax2 < 0.15 else 0.05
-    ticks = [round(i * step, 3) for i in range(int(amax2 / step) + 1)]
-    o.append(panel(1, "Leakage ||A21|| at rung 2", amax2, ticks, "||A21||", lambda p: p[2],
-                   [("bound", lambda pu: bound_a21_rung1 * (1 + 2 * (1 - pu)), "--s2"), ("bound (square-root form)", lambda pu: bound_a21_rung1 * math.sqrt(1 + 2 * (1 - pu)), "--s3")]))
+    o.append(panel(0, "Rung-2 angle (degrees, log scale)", 1, 100, [1, 2, 5, 10, 20, 50, 100], lambda t: f"{t:g}", lambda p: p[1], [], limit=5, limit_label="limit 5°"))
+    o.append(panel(1, "Leakage ||A21|| at rung 2 (log scale)", 0.01, 3, [0.01, 0.03, 0.1, 0.3, 1, 3], lambda t: f"{t:g}", lambda p: p[2],
+                   [("bound", lambda pu: bound_a21_rung1 * (1 + 2 * (1 - pu)), "--s2"),
+                    ("bound, square-root form", lambda pu: bound_a21_rung1 * math.sqrt(1 + 2 * (1 - pu)), "--s3"),
+                    ("B1 twins at rung 2", lambda pu: gen_a21, "--mut")]))
     o.append("</svg>")
     return "".join(o)
 

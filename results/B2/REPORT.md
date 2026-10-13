@@ -1,8 +1,8 @@
 # B2 report (docs/B2.md format)
 
-**Verdict.** B2 MATCHES B1, BUT THE GATES ARE NOT MET IN THIS WORLD (B1 misses them too) (clean world, 3 seeds): construction cost = rung-2 angle +1.28°, identity R² -0.006, category core R² -0.004 against B1; purity 0.83; degradation exceeded the bound in 2 of 3 runs and had no cliff above purity 0.7 (measured against B1); controls C1-C3 failed as required. Gates: B2 misses some (table A); B1 on the same encoders also misses some, so the shortfall comes from the world and encoder, not from building the pairs.
+**Verdict.** B2 MATCHES B1, BUT THE GATES ARE NOT MET IN THIS WORLD (B1 misses them too) (clean world, 3 seeds). Construction cost against B1: rung-2 angle +1.28°, identity R² -0.006, category core R² -0.004; cluster purity 0.83. T1 met; T2 could not be tested (no run reached purity 0.9 and pair validity 0.95 with the discovered cluster count); T3 not met: leakage ||A21|| was over the contamination bound in 18 runs of 18 and a cliff appears above purity 0.7 in 1 run (measured against B1); T4 met (controls C1-C3 failed as required). Gates: B2 misses some (table A); B1 on the same encoders also misses some, so the shortfall comes from the world and encoder, not from building the pairs.
 
-Runs: 3 (spread values [0.1], seeds [0, 1, 2]). Spec: `docs/B2.md`. Clean world: spread 0.1. B1 here means the generator twins on the same encoder and seed. Gates are B1's frozen criteria, including B1's leakage floor that was decided after seeing B1 data.
+Runs: 18 (spread values [0.1, 0.4, 0.6, 0.8, 1.0, 1.5], seeds [0, 1, 2]). Spec: `docs/B2.md`. Clean world: spread 0.1. B1 here means the generator twins on the same encoder and seed. Gates are B1's frozen criteria, including B1's leakage floor that was decided after seeing B1 data.
 
 ## A. Gate table (B2, clean world)
 
@@ -69,14 +69,19 @@ For reference, B1 on the same world and encoders:
 |---|---|---|
 | T1 construction cost: B2 angle within 2x of B1, per seed | seed 0: 14.37° vs 10.67° (ratio 1.35); seed 1: 8.84° vs 8.77° (ratio 1.01); seed 2: 11.71° vs 11.62° (ratio 1.01) | met |
 | T2 purity ≥ 0.9 and pair validity ≥ 0.95 imply all gates pass | 0 runs qualify; 0 pass every gate | no qualifying run |
-| T3 smooth degradation, no cliff above purity 0.7, leakage under the bound | 3 runs above purity 0.7 have angle > 5° (absolute), 0 are also more than twice B1's angle (relative); ||A21|| under the bound in 1 of 3 runs (square-root form: 0) | see figure P8 |
+| T3 smooth degradation, no cliff above purity 0.7, leakage under the bound | 12 runs above purity 0.7 have angle > 5° (absolute), 1 are also more than twice B1's angle (relative); ||A21|| under the bound in 0 of 18 runs (square-root form: 0) | see figure P8 |
 | T4 controls C1-C3 fail as required | C1 yes, C2 yes, C3 yes | met |
 
 ### Degradation across the spread sweep (all runs)
 
 | Spread σ_cat | Purity | Misgroup rate | Rung-2 angle B1 (°) | Rung-2 angle B2 (°) | ||A21|| B2 | Bound on ||A21|| | Runs passing all gates |
 |---|---|---|---|---|---|---|---|
-| 0.1 | 0.83 ± 0.00 | 0.17 ± 0.00 | 10.4 ± 1.4 | 11.6 ± 2.8 | 0.1408 ± 0.0556 | 0.1043 | 0 of 3 |
+| 0.1 | 0.83 ± 0.00 | 0.17 ± 0.00 | 10.4 ± 1.4 | 11.6 ± 2.8 | 0.1408 ± 0.0556 | 0.0541 | 0 of 3 |
+| 0.4 | 0.88 ± 0.07 | 0.12 ± 0.07 | 10.0 ± 1.3 | 10.3 ± 1.3 | 0.1167 ± 0.0191 | 0.0508 | 0 of 3 |
+| 0.6 | 0.83 ± 0.02 | 0.17 ± 0.02 | 9.8 ± 1.2 | 11.7 ± 2.2 | 0.1837 ± 0.0406 | 0.0545 | 0 of 3 |
+| 0.8 | 0.77 ± 0.01 | 0.23 ± 0.01 | 9.8 ± 1.2 | 21.2 ± 12.2 | 0.4065 ± 0.2305 | 0.0592 | 0 of 3 |
+| 1.0 | 0.69 ± 0.01 | 0.31 ± 0.01 | 9.7 ± 1.3 | 60.8 ± 18.7 | 0.9840 ± 0.0431 | 0.0656 | 0 of 3 |
+| 1.5 | 0.52 ± 0.04 | 0.48 ± 0.04 | 9.7 ± 1.2 | 83.7 ± 5.3 | 1.6417 ± 0.1662 | 0.0793 | 0 of 3 |
 
 ## Controls
 

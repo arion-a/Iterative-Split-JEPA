@@ -13,7 +13,7 @@
    "name": "Split a second time",
    "status": "next",
    "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
-   "result": "B1: second split works with correct pairs (15 seeds). B2: pairs built by clustering work when categories are many and fine (12: 4-5 degrees), fail with few (3), and are mixed at 6; my world design hurts the few-category cases."
+   "result": "B1: second split works with correct pairs (15 seeds). B2 (spec run, 18 runs): pairs built from clusters cost little (angle +1.3 deg vs B1) when clusters are right, but the world is too hard for the gates (B1 misses them too) and the split breaks below purity ~0.8."
   },
   {
    "id": "C",

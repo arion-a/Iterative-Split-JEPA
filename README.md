@@ -38,3 +38,9 @@ See `docs/stage_a_results.md` for the Stage A record. Stages B-D are not impleme
 * Source of truth: `explog/chain.jsonl` (append-only, hash-chained; `python -m isj.explog verify`).
 * Rebuild the page: `python experiments/build_log_page.py`, then republish `explog/log_page.html`.
 * Stage status (done / next / later) is edited by hand in `explog/stages.json` at the end of each stage.
+
+## Reporting standard and targets
+
+* `docs/REPORTING.md`: the standard report every stage must produce (gate table, the paper's six metrics, fixed figures P1-P6, verdict and controls).
+* `docs/TARGETS.md`: how far our numbers are from the paper's.
+* `docs/REPORTING_IMPLEMENTATION.md`: what of these is already incorporated, what is missing, and the build order.

@@ -233,3 +233,96 @@ class MixtureBlockWorld(BlockWorld):
 
     def random_pairs(self, n):
         return self.sample(n), self.sample(n)
+
+
+@dataclass
+class HierarchicalMixtureWorld(BlockWorld):
+    """The B2 world (docs/B2.md): categories contain identities, identities contain textures, every
+    level a tight Gaussian cluster. 6 category centres; per category `n_identities` identity centres;
+    per identity `n_textures` texture centres. A sample picks (category, identity, texture) and adds
+    Gaussian jitter at each level: z3 = category centre + sigma_cat * noise, z2 = identity centre +
+    sigma_id * noise, z1 = texture centre + sigma_tex * noise. Blocks: [texture, identity, category].
+    Dynamics: each label persists with the block's rho (else redrawn), each jitter follows an AR(1).
+    """
+
+    n_categories: int = 6
+    n_identities: int = 20
+    n_textures: int = 2
+    sigma_cat: float = 0.3          # within-category spread; the separation knob (unit between-category spread)
+    sigma_id: float = 0.3
+    sigma_tex: float = 0.3
+    cat_c: torch.Tensor = field(init=False, repr=False, default=None)
+    id_c: torch.Tensor = field(init=False, repr=False, default=None)
+    tex_c: torch.Tensor = field(init=False, repr=False, default=None)
+
+    def __post_init__(self):
+        super().__post_init__()
+        assert self.n_blocks == 3
+        d1, d2, d3 = self.block_dims
+        K, I, T = self.n_categories, self.n_identities, self.n_textures
+        assert K > d3, "need more categories than category-block directions"
+        g = _gen(self.seed + 4242)
+        c = torch.randn(K, d3, generator=g)
+        c = c - c.mean(0)
+        vals, vecs = torch.linalg.eigh(c.T @ c / K)
+        self.cat_c = c @ (vecs * vals.rsqrt()) @ vecs.T         # isotropic between-category spread
+        self.id_c = torch.randn(K, I, d2, generator=g)
+        self.tex_c = torch.randn(K, I, T, d1, generator=g)
+
+    def _build(self, cat, ident, tex, j1, j2, j3):
+        z1 = self.tex_c[cat, ident, tex] + self.sigma_tex * j1
+        z2 = self.id_c[cat, ident] + self.sigma_id * j2
+        z3 = self.cat_c[cat] + self.sigma_cat * j3
+        return torch.cat([z1, z2, z3], dim=1)
+
+    def _draw(self, n, cat=None, ident=None, tex=None):
+        d1, d2, d3 = self.block_dims
+        g = self._g
+        cat = torch.randint(0, self.n_categories, (n,), generator=g) if cat is None else cat
+        ident = torch.randint(0, self.n_identities, (n,), generator=g) if ident is None else ident
+        tex = torch.randint(0, self.n_textures, (n,), generator=g) if tex is None else tex
+        j = [torch.randn(n, d, generator=g) for d in (d1, d2, d3)]
+        return cat, ident, tex, j
+
+    def sample_with_labels(self, n, cat=None, ident=None, tex=None):
+        cat, ident, tex, j = self._draw(n, cat, ident, tex)
+        return self._build(cat, ident, tex, *j), {"cat": cat, "ident": ident, "tex": tex}
+
+    def sample(self, n):
+        return self.sample_with_labels(n)[0]
+
+    def transition_pairs(self, n):
+        cat, ident, tex, j = self._draw(n)
+        z0 = self._build(cat, ident, tex, *j)
+        r1, r2, r3 = self.rhos
+        g = self._g
+        keep3 = torch.rand(n, generator=g) < r3
+        cat2 = torch.where(keep3, cat, torch.randint(0, self.n_categories, (n,), generator=g))
+        keep2 = (torch.rand(n, generator=g) < r2) & (cat2 == cat)
+        ident2 = torch.where(keep2, ident, torch.randint(0, self.n_identities, (n,), generator=g))
+        keep1 = (torch.rand(n, generator=g) < r1) & (ident2 == ident) & (cat2 == cat)
+        tex2 = torch.where(keep1, tex, torch.randint(0, self.n_textures, (n,), generator=g))
+        ar = lambda x, r: r * x + math.sqrt(1 - r**2) * torch.randn(x.shape, generator=g)
+        z1 = self._build(cat2, ident2, tex2, ar(j[0], r1), ar(j[1], r2), ar(j[2], r3))
+        return z0, z1
+
+    def correspondence_pairs(self, n, k, rank=None):
+        """Generator twins: share every block slower than k EXACTLY (same labels and jitter)."""
+        assert rank is None
+        u, lab = self.sample_with_labels(n)
+        if k == 1:
+            v, _ = self.sample_with_labels(n, cat=lab["cat"], ident=lab["ident"])
+            v[:, 4:] = u[:, 4:]
+        else:
+            v, _ = self.sample_with_labels(n, cat=lab["cat"])
+            v[:, 8:] = u[:, 8:]
+        return u, v
+
+    def label_pairs(self, n):
+        """Perfect-clustering pairs: same true category, everything else independent."""
+        u, lab = self.sample_with_labels(n)
+        v, _ = self.sample_with_labels(n, cat=lab["cat"])
+        return u, v
+
+    def random_pairs(self, n):
+        return self.sample(n), self.sample(n)

@@ -3,3 +3,4 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
   "min_std": float(h.std(0).min())})
 6 2 1.0 {'generator': 1.3, 'label': 1.3, 'kmeans': 1.3, 'random': 80.5}
 12 2 0.519 {'generator': 1.1, 'label': 1.3, 'kmeans': 4.1, 'random': 74.3}
+24 2 0.363 {'generator': 1.4, 'label': 1.5, 'kmeans': 3.2, 'random': 84.0}

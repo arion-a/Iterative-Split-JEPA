@@ -158,3 +158,11 @@ def rank_deficient(m: torch.Tensor, n: int, bound: float, delta: float = 0.01) -
     lam_min = float(torch.linalg.eigvalsh(m.double()).min())
     return lam_min <= bound**2 * math.sqrt(2 * math.log(1 / delta) / n)
 
+
+
+def rank_monitor(fit: RungFit, delta: float = 0.01) -> dict:
+    """Rank-completeness monitor (decision D9): lambda_min of the pair-difference moment on the estimated variant subspace
+    against the monograph's section-10 noise floor B^2 sqrt(2 log(1/delta) / n). pass = the pairs vary every variant direction."""
+    lam = float(fit.eigvals[fit.d_k - 1])
+    thr = fit.max_sq_diff * math.sqrt(2 * math.log(1 / delta) / fit.n_pairs)
+    return {"lambda_min": lam, "threshold": thr, "pass": lam > thr, "n_pairs": fit.n_pairs}

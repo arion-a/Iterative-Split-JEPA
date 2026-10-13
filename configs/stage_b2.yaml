@@ -7,11 +7,12 @@ world:
   rhos: [0.2, 0.7, 0.95]
   sigma: 0.3                       # within-category spread; each category is Gaussian inside itself
   centre_scale: 1.0
+  isotropic_centres: true          # r2 fix: every category direction gets equal between-cluster spread (needs K > 4)
   coupling_layers: 4
   coupling_strength: 0.5
   obs_dim: null
 sweep:
-  n_categories: [3, 6, 12]         # how clean the clusters are depends on this
+  n_categories: [6, 12, 24]        # r2 sweep; r1 used [3, 6, 12], but 3 categories cannot fill a 4-direction block
 encoder:                           # same recipe as B1 (paper's mirror encoder + objective)
   arch: inverse_coupling
   objective: lejepa

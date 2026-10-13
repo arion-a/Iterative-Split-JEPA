@@ -169,13 +169,23 @@ class MixtureBlockWorld(BlockWorld):
     n_categories: int = 6
     sigma: float = 0.3
     centre_scale: float = 1.0
+    isotropic_centres: bool = True      # every category direction gets equal between-cluster spread (needs K > d3)
     centres: torch.Tensor = field(init=False, repr=False, default=None)
 
     def __post_init__(self):
         super().__post_init__()
         assert self.n_blocks == 3
         g = _gen(self.seed + 999)
-        self.centres = self.centre_scale * torch.randn(self.n_categories, self.block_dims[2], generator=g)
+        c = torch.randn(self.n_categories, self.block_dims[2], generator=g)
+        if self.isotropic_centres:
+            # K centres can only spread over K-1 directions; a category block with more directions than that
+            # would have directions that hold nothing but within-cluster jitter (whitening then inflates it).
+            assert self.n_categories > self.block_dims[2], "need more categories than category-block directions"
+            c = c - c.mean(0)
+            cov = c.T @ c / self.n_categories
+            vals, vecs = torch.linalg.eigh(cov)
+            c = c @ (vecs * vals.rsqrt()) @ vecs.T          # empirical between-cluster covariance = identity
+        self.centres = self.centre_scale * c
 
     def _cat(self, n, labels=None):
         if labels is None:

@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 177 entries, head 7bcbd7605a6a
+Chain status at render time: **VALID** — 178 entries, head b1366657559d
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -4341,5 +4341,27 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `runs/stage_b1/more_seeds/main_seed10.json` (sha256 aa34127d27); `runs/stage_b1/more_seeds/main_seed11.json` (sha256 b7e4650230); `runs/stage_b1/more_seeds/main_seed12.json` (sha256 bec8d13395); `runs/stage_b1/more_seeds/main_seed13.json` (sha256 d31a7511d2); `runs/stage_b1/more_seeds/main_seed14.json` (sha256 f184b932da); `runs/stage_b1/more_seeds/main_seed3.json` (sha256 b8c6835e09) … +6 more
+
+---
+
+## #177 · decision · stage B · plan §4.2
+`b1366657559dce18` ← `7bcbd7605a6a7acb` · recorded 2026-10-13T11:33:26+00:00
+
+**What.** Ruling (from you): B1 is not a fail. The strict leakage rule is amended, after seeing the data, to an effect-size floor of R2 below 0.01 (floor proposed by Claude, changeable).
+
+**How.** Original locked rule (strict permutation test, no floor) mechanically flagged a tiny leakage (R2 0.0003-0.0006) on 4 of 30 rung-checks, so the registered run's computed verdict was FAIL. That record is NOT altered. Your ruling: the effect is negligible and B1 is not a fail. Amended rule: every off-diagonal held-out R2 below 0.01; every other locked criterion unchanged. Applied by re-scoring the existing 15 seeds (experiments/rescore_b1.py); no rerun. This is a post-hoc amendment and is reported as such.
+
+**Output.**
+```json
+{
+ "amended_rule_reading": "all criteria hold on all 15 seeds",
+ "floor": 0.01,
+ "max_offdiag_leak_R2_magnitude_over_15_seeds": 0.0014,
+ "original_locked_rule_reading": "flagged 4 of 30 rung-checks; computed verdict FAIL",
+ "rule_decided": "after seeing data"
+}
+```
+
+**Artifacts.** `runs/stage_b1/rescore_amended_leakage_rule.json` (sha256 4e9519fcb8); `experiments/rescore_b1.py` (sha256 0d724785a6)
 
 ---

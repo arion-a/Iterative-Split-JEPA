@@ -2,3 +2,4 @@
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   "min_std": float(h.std(0).min())})
 0.1 0 0.835 5 10.7 14.4
+0.4 0 0.96 6 10.4 10.7

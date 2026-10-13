@@ -156,3 +156,70 @@ class LinearRepresentation:
     def true_block(self, k: int) -> torch.Tensor:
         """Orthonormal basis (D x d_k) of block k's image in representation space."""
         return self.U[:, self.world.block_slice(k)]
+
+
+@dataclass
+class MixtureBlockWorld(BlockWorld):
+    """Three blocks (texture, identity, category). Texture and identity are Gaussian AR(1) as before.
+    The category block is a mixture of `n_categories` clusters, each Gaussian inside itself:
+    z3 = centre[label] + sigma * noise. Dynamics: the label persists with probability rho_3 (else is
+    redrawn uniformly) and the within-cluster jitter follows an AR(1) with the same rho_3.
+    """
+
+    n_categories: int = 6
+    sigma: float = 0.3
+    centre_scale: float = 1.0
+    centres: torch.Tensor = field(init=False, repr=False, default=None)
+
+    def __post_init__(self):
+        super().__post_init__()
+        assert self.n_blocks == 3
+        g = _gen(self.seed + 999)
+        self.centres = self.centre_scale * torch.randn(self.n_categories, self.block_dims[2], generator=g)
+
+    def _cat(self, n, labels=None):
+        if labels is None:
+            labels = torch.randint(0, self.n_categories, (n,), generator=self._g)
+        jitter = self.sigma * torch.randn(n, self.block_dims[2], generator=self._g)
+        return self.centres[labels] + jitter, labels, jitter
+
+    def sample_with_labels(self, n, labels=None):
+        d1, d2, _ = self.block_dims
+        z12 = torch.randn(n, d1 + d2, generator=self._g)
+        z3, labels, _ = self._cat(n, labels)
+        return torch.cat([z12, z3], dim=1), labels
+
+    def sample(self, n):
+        return self.sample_with_labels(n)[0]
+
+    def transition_pairs(self, n):
+        d1, d2, _ = self.block_dims
+        rho = self._rho_vec()
+        z12 = torch.randn(n, d1 + d2, generator=self._g)
+        z3, lab, jit = self._cat(n)
+        eps12 = torch.randn(n, d1 + d2, generator=self._g)
+        r3 = self.rhos[2]
+        stay = torch.rand(n, generator=self._g) < r3
+        lab2 = torch.where(stay, lab, torch.randint(0, self.n_categories, (n,), generator=self._g))
+        jit2 = r3 * jit + math.sqrt(1 - r3**2) * self.sigma * torch.randn(n, self.block_dims[2], generator=self._g)
+        z3b = self.centres[lab2] + jit2
+        z12b = rho[: d1 + d2] * z12 + torch.sqrt(1 - rho[: d1 + d2] ** 2) * eps12
+        return torch.cat([z12, z3], 1), torch.cat([z12b, z3b], 1)
+
+    def correspondence_pairs(self, n, k, rank=None):
+        """Generator-made twins: share every block slower than k EXACTLY (same label and jitter)."""
+        assert rank is None
+        u, v = self.sample(n), self.sample(n)
+        for j in range(k + 1, self.n_blocks + 1):
+            sl = self.block_slice(j)
+            v[:, sl] = u[:, sl]
+        return u, v
+
+    def label_pairs(self, n):
+        """Perfect-clustering pairs: same true category, independent jitter, identity and texture."""
+        u, lab = self.sample_with_labels(n)
+        v, _ = self.sample_with_labels(n, labels=lab)
+        return u, v
+
+    def random_pairs(self, n):
+        return self.sample(n), self.sample(n)

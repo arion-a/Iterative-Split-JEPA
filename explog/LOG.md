@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 133 entries, head 43d90c3957d1
+Chain status at render time: **VALID** — 135 entries, head 142a0ecf6a43
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -3234,5 +3234,86 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `docs/stage_b1_design.md` (sha256 b0ba82a4b7)
+
+---
+
+## #133 · plan · stage B · plan §4.2
+`04aac591fe614c84` ← `43d90c3957d1641a` · recorded 2026-10-13T05:27:21+00:00
+
+**What.** Stage B1 pass numbers locked, with your two additions. Nothing built or run yet.
+
+**How.** configs/stage_b1.yaml criteria block; fingerprint in configs/stage_b1.criteria.sha256. You approved the draft design ('all fine') with two additions: keep separate speeds and treat a texture-only variant_r2 failure as a located risk; gate on the category core (last 4 directions) reaching invariant_r2 above 0.9.
+
+**Output.**
+```json
+{
+ "controls": {
+  "must_fail": {
+   "rank1_rung2": {
+    "rung1_angle_max_deg": 5.0,
+    "rung2_angle_min_deg": 10.0
+   },
+   "shuffled_rung2": {
+    "rung2_angle_min_deg": 45.0,
+    "rung2_gap_ratio_max": 2.0
+   }
+  },
+  "recorded_no_expectation": [
+   "no_inv",
+   "no_pred",
+   "no_var"
+  ]
+ },
+ "criteria": {
+  "core_invariant_r2_min": 0.9,
+  "gap_ratio_min": 10.0,
+  "leakage": "no significant off-diagonal at the permutation null (Holm, alpha 0.01), each rung; strict",
+  "located_risk_rule": "ADDED: if the ONLY criterion that fails (on any seed) is rung-1 variant_r2 (texture), the verdict is PASS_WITH_LOCATED_RISK and it is logged as the located risk (separate speeds + the paper's alignment objective squash the fast block), not as a B1 failure. Any other failure is FAIL.",
+  "nesting_angle_max_deg": 5.0,
+  "rank_test": "smallest eigenvalue of the variant block's pair-difference moment is above the monograph's rank-deficiency bound B^2*sqrt(2 log(1/delta)/n), delta 0.01, at each rung",
+  "rung_angle_max_deg": 5.0,
+  "variant_r2_min": 0.9
+ },
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "seeds": [
+  0,
+  1,
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d); `docs/stage_b1_design.md` (sha256 b0ba82a4b7)
+
+---
+
+## #134 · implementation · stage B · plan §4.2
+`142a0ecf6a433510` ← `04aac591fe614c84` · recorded 2026-10-13T05:29:20+00:00
+
+**What.** Built the Stage B1 pipeline, runner and verdict-rule tests. No registered run has been launched.
+
+**How.** src/isj/stage_b1.py (pipeline + locked verdict rule), experiments/run_stage_b1.py, tests/test_stage_b1_eval.py. A 300-step code-path check (seed 0, nothing saved) confirmed the pipeline runs end to end; it is NOT a result.
+
+**Output.**
+```json
+{
+ "code_path_check_300_steps_not_a_result": {
+  "core_invariant_r2": 0.966,
+  "main_angles_deg": [
+   1.5,
+   2.4
+  ],
+  "no_inv_angles": [
+   47.2,
+   31.5
+  ],
+  "rank1_rung2_angle": 79.2,
+  "shuffled_rung2_angle": 52.3
+ },
+ "tests": "20 pass (6 new, covering the located-risk rule and the category-core gate)"
+}
+```
+
+**Artifacts.** `src/isj/stage_b1.py` (sha256 f65492948f); `experiments/run_stage_b1.py` (sha256 0865d374e3); `docs/stage_b1_design.md` (sha256 0e092e7cd4)
 
 ---

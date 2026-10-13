@@ -1,7 +1,7 @@
-# Stage B1 — design (draft, nothing built, pass numbers not yet locked)
+# Stage B1 — design (approved with two additions; pass numbers locked in configs/stage_b1.yaml)
 
-Written in plain words, using the paper's terms. Read it, change what you want, and only then
-will the pass numbers be locked and anything be built.
+Written in plain words, using the paper's terms. Approved by you ("all fine") with two additions,
+marked ADDED below. The pass numbers are locked; their fingerprint is in `configs/stage_b1.criteria.sha256`.
 
 ## What B1 asks
 
@@ -52,13 +52,18 @@ Measured against the truth on fresh data (15,000 to fit, 5,000 to test), as in S
 | What | Paper's name or the plan's | Pass if |
 | --- | --- | --- |
 | each rung's recovered block vs the true block | angle (plan) | below 5 degrees, both rungs |
-| how well the true block can be read from the recovered block | `variant_r2` per rung; `invariant_r2` for the final core | above 0.9 |
+| how well the true block can be read from the recovered block | `variant_r2` per rung | above 0.9 |
+| ADDED: the category core (the last 4 directions left after both splits) vs the true category | `invariant_r2` | above 0.9 |
 | leakage between blocks | `a12_fro`, `a21_fro`, `block_purity` | reported next to the paper's values; no significant leakage by the permutation test (Holm, alpha 0.01) |
 | rung 2's block lies inside what rung 1 left | nesting angle (plan) | below 5 degrees |
 | how sharply the split separates | gap ratio (plan) | above 10 at each rung |
 | pairs vary every variant direction | smallest eigenvalue of the pair-difference matrix | clearly above zero at each rung |
 
 3 seeds. A pass means every line holds on every seed.
+
+**ADDED: located-risk rule.** Separate speeds stay (0.2 / 0.7 / 0.95), so the fast-block squash risk
+stays visible. If the only line that fails, on any seed, is texture's `variant_r2` at rung 1, the verdict is
+"pass with located risk" and it is logged as the located risk, not as a B1 failure. Any other failure is a FAIL.
 
 ## Controls
 
@@ -76,7 +81,7 @@ Recorded, with no pass-or-fail expectation:
 
 ## Cost and stopping
 
-About 10 minutes of computing for all arms (3 seeds). If a line fails, we report where and why. We
+About 15 minutes of computing for all arms (3 seeds, 18 runs, run side by side). If a line fails, we report where and why. We
 do not keep adjusting until it passes.
 
 ## Risks, said plainly
@@ -90,10 +95,10 @@ do not keep adjusting until it passes.
 3. **Strict leakage test.** On a trained encoder it could fire on tiny leakage. In Stage A it
    never did.
 
-## Settings I need you to confirm
+## Settings (confirmed)
 
-1. Block sizes 4 / 4 / 4 and three levels?
-2. Separate speeds 0.2 / 0.7 / 0.95, or one speed like the paper?
-3. Leave the hidden cross-cutting factor for after the basic split passes?
-4. Keep the leakage rule strict, with no tolerance floor?
-5. Are the pass numbers above right?
+1. Block sizes 4 / 4 / 4, three levels.
+2. Separate speeds 0.2 / 0.7 / 0.95.
+3. The hidden cross-cutting factor is deferred to a follow-up world.
+4. Leakage rule strict, no tolerance floor.
+5. Pass numbers as above, with the two additions.

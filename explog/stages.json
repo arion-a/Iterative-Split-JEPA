@@ -13,7 +13,7 @@
    "name": "Split a second time",
    "status": "next",
    "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
-   "result": "B1 ran: locked verdict FAIL on one line (strict leakage test, one seed, effect 0.0003). Everything else passed. Waiting on your decision."
+   "result": "B1: registered verdict FAIL (strict leakage rule). Replication on 12 more seeds: everything else passes; a tiny leakage (R2 up to 0.0006) recurs. Waiting on your decision on the leakage rule."
   },
   {
    "id": "C",

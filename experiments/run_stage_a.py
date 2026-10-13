@@ -172,14 +172,15 @@ def main():
     if "main" in runs:
         report["main"] = evaluate(runs["main"], cfg["criteria"])
     report["controls"] = check_controls(runs, cfg["controls"])
-    with open(os.path.join(a.out, "report.json"), "w") as f:
-        json.dump(report, f, indent=1)
+    import datetime as _dt
+    report_path = os.path.join(a.out, f"report_{_dt.datetime.now(_dt.timezone.utc):%Y%m%dT%H%M%S%f}.json")
+    write_once(report_path, report)   # unique name: parallel seed-workers must not overwrite each other
     if "main" in report:
         verdict = "PASS" if report["main"]["criteria"]["PASS"] else "FAIL"
         log("result", f"Stage A aggregate over seeds {seeds}: main arm {verdict}; controls {report['controls']}",
             stage="A", step="4.1", objectives=["O1", "OP"],
             outputs={"criteria": report["main"]["criteria"], "controls": report["controls"]},
-            artifact_paths=[os.path.join(a.out, "report.json")],
+            artifact_paths=[report_path],
             interpretation=("Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. "
                             "FAIL -> debug round (max 3) then halt and publish the negative." ),
             verdict=verdict,

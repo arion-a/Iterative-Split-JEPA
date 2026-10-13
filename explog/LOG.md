@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 115 entries, head 0759d8207d0e
+Chain status at render time: **VALID** — 116 entries, head 055c18da4a1d
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -2908,5 +2908,14 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
  "nominal_angle_40k": "1.5-1.6"
 }
 ```
+
+---
+
+## #115 · note · stage log · plan §—
+`055c18da4a1d2658` ← `0759d8207d0ecaef` · recorded 2026-10-13T01:01:40+00:00
+
+**What.** Integrity housekeeping: 21 earlier references to report.json files are declared superseded.
+
+**How.** Five parallel seed-workers each rewrote the same derived report.json in their run folder, so earlier fingerprints of it went stale. The per-seed result files (the evidence) are unchanged, and every number quoted in the log was computed from them. The runner now writes a uniquely named, never-overwritten report per invocation.
 
 ---

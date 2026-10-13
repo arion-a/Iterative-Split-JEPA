@@ -76,6 +76,7 @@ def append(kind: str, what: str, *, stage: str | None = None, step: str | None =
            interpretation: str | None = None, verdict: str | None = None,
            event_time: str | None = None, event_ref: str | None = None,
            retroactive: bool = False, plain: dict | None = None, restates: list[int] | None = None,
+           known_stale: list[list] | None = None,
            path: str = DEFAULT_PATH) -> dict:
     """Atomically append one entry (safe for concurrent writers via an exclusive file lock).
 
@@ -106,6 +107,8 @@ def append(kind: str, what: str, *, stage: str | None = None, step: str | None =
                 body["plain"] = plain
             if restates:
                 body["restates"] = restates
+            if known_stale:
+                body["known_stale"] = known_stale   # [[entry_index, path], ...] declared superseded
             body["hash"] = entry_hash(body)
             f.seek(0, os.SEEK_END)
             f.write(canonical(body) + "\n")
@@ -128,14 +131,18 @@ def verify(path: str = DEFAULT_PATH, check_artifacts: bool = True) -> tuple[bool
         if entry_hash(e) != e["hash"]:
             return False, f"entry {i}: content hash mismatch (entry was altered)"
         prev = e["hash"]
+    declared = {(i, p) for e in entries for i, p in e.get("known_stale", [])}
+    n_declared = 0
     if check_artifacts:
         for e in entries:
             for a in e["artifacts"]:
-                if not os.path.exists(a["path"]):
-                    return False, f"entry {e['index']}: artifact missing: {a['path']}"
-                if file_digest(a["path"]) != a["sha256"]:
-                    return False, f"entry {e['index']}: artifact changed since logged: {a['path']}"
-    return True, f"{len(entries)} entries, head {prev[:12]}"
+                changed = (not os.path.exists(a["path"])) or file_digest(a["path"]) != a["sha256"]
+                if changed and (e["index"], a["path"]) in declared:
+                    n_declared += 1
+                elif changed:
+                    return False, f"entry {e['index']}: artifact changed or missing since logged: {a['path']}"
+    extra = f", {n_declared} declared-superseded artifact references" if n_declared else ""
+    return True, f"{len(entries)} entries, head {prev[:12]}{extra}"
 
 
 def render(path: str = DEFAULT_PATH, out: str = os.path.join("explog", "LOG.md")) -> str:

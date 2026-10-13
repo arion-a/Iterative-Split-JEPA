@@ -18,6 +18,17 @@ ms = lambda v, nd=2: f"{st.mean(v):.{nd}f} ± {st.stdev(v):.{nd}f}" if len(v) > 
 tab = lambda h, rows: "\n".join(["| " + " | ".join(h) + " |", "|" + "---|" * len(h)] + ["| " + " | ".join(str(c) for c in r) + " |" for r in rows])
 yn = lambda b: "yes" if b else "**NO**"
 
+def amend(rs, floor=0.01):
+    """B1's amended leakage rule (docs/stage_b1_design + rescore_b1.py): significant only if an off-diagonal |R2| >= floor."""
+    for r in rs:
+        for x in r["rungs"]:
+            x["max_leak_abs_r2"] = max(abs(x["leak_r2"]["rest->own"]), abs(x["leak_r2"]["own->rest"]))
+            x["leak_any_significant"] = x["max_leak_abs_r2"] >= floor
+    return rs
+
+for _rs in (b1n, b1old):
+    amend(_rs)
+
 def b2_as_b1(r, arm):
     a = r["arms"][arm]
     return {"rungs": [r["rung1"], a], "nesting_angle_deg": a["nesting_angle_deg"], "core_invariant_r2": a["core_invariant_r2"]}
@@ -30,7 +41,7 @@ GATES = [("Rung 1 angle (texture)", "below 5°", "rung1_angle", lambda r: r["run
          ("**Nesting angle** (gate definition: span of true identity+category images)", "below 5°", "nesting", lambda r: r["nesting_angle_deg"], 2),
          ("Gap ratio, rung 1", "above 10", "rung1_gap", lambda r: r["rungs"][0]["gap_ratio"], 1),
          ("Gap ratio, rung 2", "above 10", "rung2_gap", lambda r: r["rungs"][1]["gap_ratio"], 1),
-         ("Leakage (no significant off-diagonal, B1 rule)", "none", "leakage", lambda r: float(max(x.get("max_leak_abs_r2", 0) for x in r["rungs"])), 4),
+         ("Leakage, largest off-diagonal |R²| (B1 amended rule)", "below 0.01", "leakage", lambda r: float(max(x.get("max_leak_abs_r2", 0) for x in r["rungs"])), 4),
          ("Rank check (statistical test)", "passes", "rank_test", lambda r: float(not any(x["rank_deficient"] for x in r["rungs"])), 0)]
 
 def gate_table(rs):

@@ -1,0 +1,51 @@
+{
+ "per_seed": [
+  {
+   "seed": 0,
+   "rung1_angle": true,
+   "rung2_angle": true,
+   "rung1_variant_r2": true,
+   "rung2_variant_r2": true,
+   "core_invariant_r2": true,
+   "nesting": true,
+   "rung1_gap": true,
+   "rung2_gap": true,
+   "leakage": false,
+   "rank_test": true
+  },
+  {
+   "seed": 1,
+   "rung1_angle": true,
+   "rung2_angle": true,
+   "rung1_variant_r2": true,
+   "rung2_variant_r2": true,
+   "core_invariant_r2": true,
+   "nesting": true,
+   "rung1_gap": true,
+   "rung2_gap": true,
+   "leakage": true,
+   "rank_test": true
+  },
+  {
+   "seed": 2,
+   "rung1_angle": true,
+   "rung2_angle": true,
+   "rung1_variant_r2": true,
+   "rung2_variant_r2": true,
+   "core_invariant_r2": true,
+   "nesting": true,
+   "rung1_gap": true,
+   "rung2_gap": true,
+   "leakage": true,
+   "rank_test": true
+  }
+ ],
+ "failing_criteria": [
+  "leakage"
+ ],
+ "verdict": "FAIL",
+ "controls": {
+  "shuffled_rung2": true,
+  "rank1_rung2": true
+ }
+}

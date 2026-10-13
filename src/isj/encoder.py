@@ -122,7 +122,7 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
             views = h.reshape(2, cfg.batch_size, -1)
             l_pred = (views.mean(0) - views).square().mean()
             l_reg = cfg.sigreg_weight * sig(h)
-            loss = (1 - cfg.sigreg_weight) * l_pred + l_reg
+            loss = (1 - cfg.sigreg_weight) * cfg.pred_weight * l_pred + l_reg
             opt.zero_grad()
             loss.backward()
             opt.step()

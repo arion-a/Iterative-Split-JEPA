@@ -100,6 +100,7 @@ def main():
     ap.add_argument("--seeds", type=int, nargs="*")
     ap.add_argument("--only", choices=["main", "controls"], default=None)
     ap.add_argument("--set", nargs="*", default=[], help="override, e.g. world.coupling_strength=1.0")
+    ap.add_argument("--arms", nargs="*", help="explicit arm names to run, e.g. main no_inv")
     ap.add_argument("--no-plain", action="store_true", help="log to the chain but add no plain-language rows")
     ap.add_argument("--no-log", action="store_true", help="do not append to explog/chain.jsonl")
     a = ap.parse_args()
@@ -145,6 +146,10 @@ def main():
     if a.only in (None, "controls"):
         arms += [("shuffled", "none", "shuffled"), ("no_pred", "no_pred", "none"),
                  ("no_inv", "no_inv", "none"), ("no_var", "no_var", "none")]
+    if a.arms:
+        every = [("main", "none", "none"), ("shuffled", "none", "shuffled"), ("no_pred", "no_pred", "none"),
+                 ("no_inv", "no_inv", "none"), ("no_var", "no_var", "none")]
+        arms = [t for t in every if t[0] in a.arms]
     runs: dict[str, list] = {}
     for name, abl, ctl in arms:
         for s in seeds:

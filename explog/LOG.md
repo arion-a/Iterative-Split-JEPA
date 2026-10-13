@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 27 entries, head 0bbc095c7400
+Chain status at render time: **VALID** — 115 entries, head 0759d8207d0e
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -475,5 +475,2438 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `runs/stage_a/reference/seed=0.json` (sha256 badfd60662); `runs/stage_a/reference/seed=1.json` (sha256 9ec5c853d0); `runs/stage_a/reference/seed=2.json` (sha256 858eadef53); `runs/stage_a/reference/seed=3.json` (sha256 77cf34ce3a); `runs/stage_a/reference/seed=4.json` (sha256 aa95a144a8)
+
+---
+
+## #27 · plan · stage A · plan §6
+`3582ebceda02ec1f` ← `0bbc095c740069c0` · recorded 2026-10-13T00:29:24+00:00
+
+**What.** Encoder-recipe ablations for Stage A: find where our ~0.01 gap in invariant_r2 (ours 0.989, authors' script 0.998) comes from.
+
+**How.** Five variants x 5 seeds, main arm only, one change at a time from our Stage A config (see config overrides in run directories runs/stage_a/enc_*).
+
+**Output.**
+```json
+{
+ "reading_rule": "A variant 'explains' the gap if its mean invariant_r2 closes at least half of the 0.009 difference to 0.998; judged on 5-seed means.",
+ "variants": [
+  "obs_dim 8",
+  "steps 10000",
+  "obs_dim 8 + steps 10000",
+  "paper objective (alignment+SIGReg) on our generic network, obs_dim 8",
+  "authors-style mirror encoder (own reimplementation) + paper objective, obs_dim 8, 10000 steps"
+ ]
+}
+```
+
+---
+
+## #28 · run · stage A · plan §4.1
+`dd0ef666b6424650` ← `3582ebceda02ec1f` · recorded 2026-10-13T00:30:57+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8, seeds [1], overrides ['world.obs_dim=8']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #29 · run · stage A · plan §4.1
+`ccefb07dc6670313` ← `dd0ef666b6424650` · recorded 2026-10-13T00:30:57+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8, seeds [3], overrides ['world.obs_dim=8']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #30 · run · stage A · plan §4.1
+`9ae606ea7ae402a2` ← `ccefb07dc6670313` · recorded 2026-10-13T00:30:58+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8, seeds [2], overrides ['world.obs_dim=8']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #31 · run · stage A · plan §4.1
+`31086b0813eda53c` ← `9ae606ea7ae402a2` · recorded 2026-10-13T00:30:58+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8, seeds [0], overrides ['world.obs_dim=8']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #32 · run · stage A · plan §4.1
+`af0ab2016a5a8073` ← `31086b0813eda53c` · recorded 2026-10-13T00:30:58+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8, seeds [4], overrides ['world.obs_dim=8']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #33 · run · stage A · plan §4.1
+`cc5ca91ada1935e4` ← `af0ab2016a5a8073` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A arm=main seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.83205,
+ "angle_var_deg": 0.29255,
+ "gap_ratio": 114.65996,
+ "global_r2": 0.99041,
+ "invariant_r2": 0.99139,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00057,
+ "seconds": 45.8,
+ "selected_d": 4,
+ "variant_r2": 0.98925
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/main_seed4.json` (sha256 15d873f8dd)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #34 · result · stage A · plan §4.1
+`a7b667b58d6a8715` ← `cc5ca91ada1935e4` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A aggregate over seeds [4]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/report.json` (sha256 d95206c59b)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #35 · run · stage A · plan §4.1
+`31c10fd09334f1fa` ← `a7b667b58d6a8715` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.12516,
+ "angle_var_deg": 0.62604,
+ "gap_ratio": 69.60754,
+ "global_r2": 0.98766,
+ "invariant_r2": 0.98611,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00032,
+ "seconds": 46.7,
+ "selected_d": 4,
+ "variant_r2": 0.98909
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/main_seed1.json` (sha256 f6082b5224)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #36 · result · stage A · plan §4.1
+`5223849cc505cd6a` ← `31c10fd09334f1fa` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A aggregate over seeds [1]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/report.json` (sha256 5ce7ba5288)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #37 · run · stage A · plan §4.1
+`0300616554f870ff` ← `5223849cc505cd6a` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.34807,
+ "angle_var_deg": 0.45388,
+ "gap_ratio": 75.28947,
+ "global_r2": 0.99007,
+ "invariant_r2": 0.98945,
+ "leak_any_significant": false,
+ "leak_r2_max": -2e-05,
+ "seconds": 46.4,
+ "selected_d": 4,
+ "variant_r2": 0.99032
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/main_seed0.json` (sha256 af3ba357eb)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #38 · result · stage A · plan §4.1
+`724b125f33b62e10` ← `0300616554f870ff` · recorded 2026-10-13T00:31:44+00:00
+
+**What.** Stage A aggregate over seeds [0]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/report.json` (sha256 80f7ee23cd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #39 · run · stage A · plan §4.1
+`59707818dde8bc40` ← `724b125f33b62e10` · recorded 2026-10-13T00:31:45+00:00
+
+**What.** Stage A arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.88821,
+ "angle_var_deg": 0.21206,
+ "gap_ratio": 112.47668,
+ "global_r2": 0.99174,
+ "invariant_r2": 0.99193,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00117,
+ "seconds": 47.1,
+ "selected_d": 4,
+ "variant_r2": 0.99149
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/main_seed2.json` (sha256 7809f9c5c5)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #40 · result · stage A · plan §4.1
+`f7ecc4abaee7d728` ← `59707818dde8bc40` · recorded 2026-10-13T00:31:45+00:00
+
+**What.** Stage A aggregate over seeds [2]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/report.json` (sha256 9468f63ffd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #41 · run · stage A · plan §4.1
+`8a687c1fb778e9c1` ← `f7ecc4abaee7d728` · recorded 2026-10-13T00:31:45+00:00
+
+**What.** Stage A arm=main seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.03726,
+ "angle_var_deg": 0.20559,
+ "gap_ratio": 102.89003,
+ "global_r2": 0.99045,
+ "invariant_r2": 0.99089,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00029,
+ "seconds": 47.6,
+ "selected_d": 4,
+ "variant_r2": 0.98994
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/main_seed3.json` (sha256 80811b1de0)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #42 · result · stage A · plan §4.1
+`e46fe0df4535d4c7` ← `8a687c1fb778e9c1` · recorded 2026-10-13T00:31:45+00:00
+
+**What.** Stage A aggregate over seeds [3]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8/report.json` (sha256 0ec1179517)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #43 · run · stage A · plan §4.1
+`ec8bbeeeae081c61` ← `e46fe0df4535d4c7` · recorded 2026-10-13T00:31:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_steps10k, seeds [3], overrides ['encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 16,
+ "overrides": [
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #44 · run · stage A · plan §4.1
+`104f3b2a7945122a` ← `ec8bbeeeae081c61` · recorded 2026-10-13T00:31:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_steps10k, seeds [1], overrides ['encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 16,
+ "overrides": [
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #45 · run · stage A · plan §4.1
+`d50973e0cb18f1d3` ← `104f3b2a7945122a` · recorded 2026-10-13T00:31:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_steps10k, seeds [2], overrides ['encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 16,
+ "overrides": [
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #46 · run · stage A · plan §4.1
+`851c81d1ec634fcc` ← `d50973e0cb18f1d3` · recorded 2026-10-13T00:31:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_steps10k, seeds [0], overrides ['encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 16,
+ "overrides": [
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #47 · run · stage A · plan §4.1
+`04c913ac1798cad3` ← `851c81d1ec634fcc` · recorded 2026-10-13T00:31:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_steps10k, seeds [4], overrides ['encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 16,
+ "overrides": [
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #48 · run · stage A · plan §4.1
+`7cf4ee6f9e70adab` ← `04c913ac1798cad3` · recorded 2026-10-13T00:32:44+00:00
+
+**What.** Stage A arm=main seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.22046,
+ "angle_var_deg": 0.28432,
+ "gap_ratio": 81.72709,
+ "global_r2": 0.98877,
+ "invariant_r2": 0.98916,
+ "leak_any_significant": false,
+ "leak_r2_max": 4e-05,
+ "seconds": 56.1,
+ "selected_d": 4,
+ "variant_r2": 0.98825
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/main_seed4.json` (sha256 2788ae0884)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #49 · result · stage A · plan §4.1
+`39a93862a823f8af` ← `7cf4ee6f9e70adab` · recorded 2026-10-13T00:32:44+00:00
+
+**What.** Stage A aggregate over seeds [4]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/report.json` (sha256 d95206c59b)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #50 · run · stage A · plan §4.1
+`f0c8603e0557c576` ← `39a93862a823f8af` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A arm=main seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.9663,
+ "angle_var_deg": 0.2859,
+ "gap_ratio": 119.36984,
+ "global_r2": 0.9922,
+ "invariant_r2": 0.99277,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.0009,
+ "seconds": 56.7,
+ "selected_d": 4,
+ "variant_r2": 0.99154
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/main_seed3.json` (sha256 41f587156a)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #51 · result · stage A · plan §4.1
+`254b7ddda55a185b` ← `f0c8603e0557c576` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A aggregate over seeds [3]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/report.json` (sha256 0ec1179517)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #52 · run · stage A · plan §4.1
+`115a71c9ad0401e0` ← `254b7ddda55a185b` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.49231,
+ "angle_var_deg": 0.38169,
+ "gap_ratio": 62.02815,
+ "global_r2": 0.98837,
+ "invariant_r2": 0.98714,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00029,
+ "seconds": 57.0,
+ "selected_d": 4,
+ "variant_r2": 0.9894
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/main_seed1.json` (sha256 320e58f1ab)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #53 · result · stage A · plan §4.1
+`f6ca7c6760d7decb` ← `115a71c9ad0401e0` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A aggregate over seeds [1]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/report.json` (sha256 5ce7ba5288)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #54 · run · stage A · plan §4.1
+`d1b8f5c34679aae6` ← `f6ca7c6760d7decb` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.12365,
+ "angle_var_deg": 0.17769,
+ "gap_ratio": 117.80727,
+ "global_r2": 0.99276,
+ "invariant_r2": 0.99265,
+ "leak_any_significant": false,
+ "leak_r2_max": 1e-05,
+ "seconds": 57.3,
+ "selected_d": 4,
+ "variant_r2": 0.99266
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/main_seed2.json` (sha256 82c17d5a2e)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #55 · result · stage A · plan §4.1
+`50e0d39f8977be57` ← `d1b8f5c34679aae6` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A aggregate over seeds [2]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/report.json` (sha256 9468f63ffd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #56 · run · stage A · plan §4.1
+`538b216083b46bf7` ← `50e0d39f8977be57` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.96482,
+ "angle_var_deg": 0.27837,
+ "gap_ratio": 95.07519,
+ "global_r2": 0.99119,
+ "invariant_r2": 0.98996,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00108,
+ "seconds": 57.4,
+ "selected_d": 4,
+ "variant_r2": 0.99228
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/main_seed0.json` (sha256 9c6a91ab19)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #57 · result · stage A · plan §4.1
+`6d3edb6d5c2ff49a` ← `538b216083b46bf7` · recorded 2026-10-13T00:32:45+00:00
+
+**What.** Stage A aggregate over seeds [0]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_steps10k/report.json` (sha256 80f7ee23cd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #58 · run · stage A · plan §4.1
+`af32ed52d5cb25c6` ← `6d3edb6d5c2ff49a` · recorded 2026-10-13T00:32:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8_steps10k, seeds [1], overrides ['world.obs_dim=8', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #59 · run · stage A · plan §4.1
+`ec44254513c24663` ← `af32ed52d5cb25c6` · recorded 2026-10-13T00:32:48+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8_steps10k, seeds [2], overrides ['world.obs_dim=8', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #60 · run · stage A · plan §4.1
+`5682c9d60d6e4134` ← `ec44254513c24663` · recorded 2026-10-13T00:32:49+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8_steps10k, seeds [3], overrides ['world.obs_dim=8', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #61 · run · stage A · plan §4.1
+`bc432c79b57465a8` ← `5682c9d60d6e4134` · recorded 2026-10-13T00:32:49+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8_steps10k, seeds [4], overrides ['world.obs_dim=8', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #62 · run · stage A · plan §4.1
+`2b063ec1960b8606` ← `bc432c79b57465a8` · recorded 2026-10-13T00:32:49+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_obs8_steps10k, seeds [0], overrides ['world.obs_dim=8', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #63 · run · stage A · plan §4.1
+`5f123dd124a41737` ← `2b063ec1960b8606` · recorded 2026-10-13T00:33:58+00:00
+
+**What.** Stage A arm=main seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.07112,
+ "angle_var_deg": 0.21902,
+ "gap_ratio": 137.67907,
+ "global_r2": 0.99241,
+ "invariant_r2": 0.99291,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00083,
+ "seconds": 69.4,
+ "selected_d": 4,
+ "variant_r2": 0.99175
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/main_seed3.json` (sha256 c54aef7c11)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #64 · result · stage A · plan §4.1
+`f3bfc417be8a3b79` ← `5f123dd124a41737` · recorded 2026-10-13T00:33:58+00:00
+
+**What.** Stage A aggregate over seeds [3]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/report.json` (sha256 0ec1179517)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #65 · run · stage A · plan §4.1
+`08e9e2bc32b40af5` ← `f3bfc417be8a3b79` · recorded 2026-10-13T00:33:58+00:00
+
+**What.** Stage A arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.87656,
+ "angle_var_deg": 0.42428,
+ "gap_ratio": 83.66134,
+ "global_r2": 0.99108,
+ "invariant_r2": 0.99046,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00098,
+ "seconds": 69.7,
+ "selected_d": 4,
+ "variant_r2": 0.99156
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/main_seed0.json` (sha256 d0f4b553b4)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #66 · result · stage A · plan §4.1
+`10c232370f437fd0` ← `08e9e2bc32b40af5` · recorded 2026-10-13T00:33:58+00:00
+
+**What.** Stage A aggregate over seeds [0]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/report.json` (sha256 80f7ee23cd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #67 · run · stage A · plan §4.1
+`d99395b8a5a22ab5` ← `10c232370f437fd0` · recorded 2026-10-13T00:33:59+00:00
+
+**What.** Stage A arm=main seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.14151,
+ "angle_var_deg": 0.2693,
+ "gap_ratio": 136.58002,
+ "global_r2": 0.99219,
+ "invariant_r2": 0.99299,
+ "leak_any_significant": false,
+ "leak_r2_max": 2e-05,
+ "seconds": 69.9,
+ "selected_d": 4,
+ "variant_r2": 0.99127
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/main_seed4.json` (sha256 9b8e2143bd)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #68 · result · stage A · plan §4.1
+`26d4195acafe6ae3` ← `d99395b8a5a22ab5` · recorded 2026-10-13T00:33:59+00:00
+
+**What.** Stage A aggregate over seeds [4]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/report.json` (sha256 d95206c59b)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #69 · run · stage A · plan §4.1
+`473bd4701f67747d` ← `26d4195acafe6ae3` · recorded 2026-10-13T00:33:59+00:00
+
+**What.** Stage A arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.22914,
+ "angle_var_deg": 0.41631,
+ "gap_ratio": 79.21165,
+ "global_r2": 0.98932,
+ "invariant_r2": 0.98807,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00029,
+ "seconds": 70.3,
+ "selected_d": 4,
+ "variant_r2": 0.99044
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/main_seed1.json` (sha256 17bd5ed5f0)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #70 · result · stage A · plan §4.1
+`6d40776a821e0ef1` ← `473bd4701f67747d` · recorded 2026-10-13T00:33:59+00:00
+
+**What.** Stage A aggregate over seeds [1]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/report.json` (sha256 5ce7ba5288)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #71 · run · stage A · plan §4.1
+`68e771c64a353fb2` ← `6d40776a821e0ef1` · recorded 2026-10-13T00:34:00+00:00
+
+**What.** Stage A arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.97306,
+ "angle_var_deg": 0.20922,
+ "gap_ratio": 148.47128,
+ "global_r2": 0.993,
+ "invariant_r2": 0.99363,
+ "leak_any_significant": false,
+ "leak_r2_max": 1e-05,
+ "seconds": 71.7,
+ "selected_d": 4,
+ "variant_r2": 0.9922
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/main_seed2.json` (sha256 76bda6b9b4)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #72 · result · stage A · plan §4.1
+`034aca2fb978ace5` ← `68e771c64a353fb2` · recorded 2026-10-13T00:34:00+00:00
+
+**What.** Stage A aggregate over seeds [2]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_obs8_steps10k/report.json` (sha256 9468f63ffd)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #73 · run · stage A · plan §4.1
+`1b4c38412909bd40` ← `034aca2fb978ace5` · recorded 2026-10-13T00:34:04+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_lejepa_mlp, seeds [3], overrides ['world.obs_dim=8', 'encoder.objective=lejepa']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.objective=lejepa"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #74 · run · stage A · plan §4.1
+`212c5b678a2374e9` ← `1b4c38412909bd40` · recorded 2026-10-13T00:34:04+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_lejepa_mlp, seeds [0], overrides ['world.obs_dim=8', 'encoder.objective=lejepa']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.objective=lejepa"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #75 · run · stage A · plan §4.1
+`cd4f894505ecfa3b` ← `212c5b678a2374e9` · recorded 2026-10-13T00:34:04+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_lejepa_mlp, seeds [4], overrides ['world.obs_dim=8', 'encoder.objective=lejepa']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.objective=lejepa"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #76 · run · stage A · plan §4.1
+`dace66c2a133f560` ← `cd4f894505ecfa3b` · recorded 2026-10-13T00:34:05+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_lejepa_mlp, seeds [1], overrides ['world.obs_dim=8', 'encoder.objective=lejepa']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.objective=lejepa"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #77 · run · stage A · plan §4.1
+`3e94ada9ab806972` ← `dace66c2a133f560` · recorded 2026-10-13T00:34:05+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_lejepa_mlp, seeds [2], overrides ['world.obs_dim=8', 'encoder.objective=lejepa']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.objective=lejepa"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #78 · run · stage A · plan §4.1
+`1888da1c736fdcb8` ← `3e94ada9ab806972` · recorded 2026-10-13T00:41:25+00:00
+
+**What.** Stage A arm=main seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 71.22747,
+ "angle_var_deg": 82.12871,
+ "gap_ratio": 1.1635,
+ "global_r2": 0.00081,
+ "invariant_r2": -0.00029,
+ "leak_any_significant": false,
+ "leak_r2_max": -9e-05,
+ "seconds": 441.1,
+ "selected_d": 7,
+ "variant_r2": 0.00186
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed3.json` (sha256 a1914daaad)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #79 · result · stage A · plan §4.1
+`bb0dc2e62fb976d2` ← `1888da1c736fdcb8` · recorded 2026-10-13T00:41:25+00:00
+
+**What.** Stage A aggregate over seeds [3]: main arm FAIL; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": false,
+  "angle": false,
+  "gap_ratio": false,
+  "invariant_r2": false,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/report.json` (sha256 a102d930b4)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** FAIL
+
+---
+
+## #80 · run · stage A · plan §4.1
+`e6ab804ece0e20f5` ← `bb0dc2e62fb976d2` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 88.92768,
+ "angle_var_deg": 53.66025,
+ "gap_ratio": 1.07075,
+ "global_r2": -0.00133,
+ "invariant_r2": -0.00062,
+ "leak_any_significant": false,
+ "leak_r2_max": 0.00032,
+ "seconds": 453.3,
+ "selected_d": 7,
+ "variant_r2": -0.00136
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed2.json` (sha256 5991eeac6c)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #81 · result · stage A · plan §4.1
+`3527bf306b88262b` ← `e6ab804ece0e20f5` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A aggregate over seeds [2]: main arm FAIL; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": false,
+  "angle": false,
+  "gap_ratio": false,
+  "invariant_r2": false,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/report.json` (sha256 71b907d9c6)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** FAIL
+
+---
+
+## #82 · run · stage A · plan §4.1
+`6bc9d85c3930064b` ← `3527bf306b88262b` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 87.88998,
+ "angle_var_deg": 75.90703,
+ "gap_ratio": 1.05322,
+ "global_r2": -0.00052,
+ "invariant_r2": -0.00012,
+ "leak_any_significant": false,
+ "leak_r2_max": -4e-05,
+ "seconds": 453.8,
+ "selected_d": 7,
+ "variant_r2": 1e-05
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed1.json` (sha256 b954ff99b7)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #83 · result · stage A · plan §4.1
+`f7e6a35a00469c5a` ← `6bc9d85c3930064b` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A aggregate over seeds [1]: main arm FAIL; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": false,
+  "angle": false,
+  "gap_ratio": false,
+  "invariant_r2": false,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/report.json` (sha256 86011d9240)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** FAIL
+
+---
+
+## #84 · run · stage A · plan §4.1
+`97f8a92b535ec958` ← `f7e6a35a00469c5a` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 81.74979,
+ "angle_var_deg": 82.03834,
+ "gap_ratio": 1.36589,
+ "global_r2": -0.0018,
+ "invariant_r2": -0.00049,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00044,
+ "seconds": 453.9,
+ "selected_d": 7,
+ "variant_r2": -0.00124
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed0.json` (sha256 f531dca75b)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #85 · result · stage A · plan §4.1
+`c9d83fb15fe949d1` ← `97f8a92b535ec958` · recorded 2026-10-13T00:41:38+00:00
+
+**What.** Stage A aggregate over seeds [0]: main arm FAIL; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": false,
+  "angle": false,
+  "gap_ratio": false,
+  "invariant_r2": false,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/report.json` (sha256 ea6bf35c65)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** FAIL
+
+---
+
+## #86 · run · stage A · plan §4.1
+`7aca60bdd689bf59` ← `c9d83fb15fe949d1` · recorded 2026-10-13T00:41:39+00:00
+
+**What.** Stage A arm=main seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 81.85034,
+ "angle_var_deg": 78.13753,
+ "gap_ratio": 1.12158,
+ "global_r2": 0.00097,
+ "invariant_r2": -0.00047,
+ "leak_any_significant": true,
+ "leak_r2_max": 0.00147,
+ "seconds": 454.6,
+ "selected_d": 7,
+ "variant_r2": -0.00018
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed4.json` (sha256 837b0c6348)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #87 · result · stage A · plan §4.1
+`0ec018daa6c83206` ← `7aca60bdd689bf59` · recorded 2026-10-13T00:41:39+00:00
+
+**What.** Stage A aggregate over seeds [4]: main arm FAIL; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": false,
+  "angle": false,
+  "gap_ratio": false,
+  "invariant_r2": false,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/report.json` (sha256 28ed08bda9)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** FAIL
+
+---
+
+## #88 · run · stage A · plan §4.1
+`31541b421165f3cf` ← `0ec018daa6c83206` · recorded 2026-10-13T00:41:42+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [3], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #89 · run · stage A · plan §4.1
+`c3f61be5cd52807f` ← `31541b421165f3cf` · recorded 2026-10-13T00:41:42+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [4], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #90 · run · stage A · plan §4.1
+`be8a1161e7f891ec` ← `c3f61be5cd52807f` · recorded 2026-10-13T00:41:42+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [0], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #91 · run · stage A · plan §4.1
+`cc1af8e6c0e089e4` ← `be8a1161e7f891ec` · recorded 2026-10-13T00:41:42+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [2], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #92 · run · stage A · plan §4.1
+`fa2815daff899c2d` ← `cc1af8e6c0e089e4` · recorded 2026-10-13T00:41:42+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [1], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #93 · run · stage A · plan §4.1
+`7a325d8e75acd5af` ← `fa2815daff899c2d` · recorded 2026-10-13T00:50:44+00:00
+
+**What.** Stage A arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.96089,
+ "angle_var_deg": 0.19124,
+ "gap_ratio": 186.09853,
+ "global_r2": 0.99606,
+ "invariant_r2": 0.9962,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.0,
+ "seconds": 542.2,
+ "selected_d": 4,
+ "variant_r2": 0.99578
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/main_seed2.json` (sha256 791fe646c2)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #94 · result · stage A · plan §4.1
+`1094b2e92b547433` ← `7a325d8e75acd5af` · recorded 2026-10-13T00:50:44+00:00
+
+**What.** Stage A aggregate over seeds [2]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/report.json` (sha256 01930d1961)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #95 · run · stage A · plan §4.1
+`d0b922d9c274467a` ← `1094b2e92b547433` · recorded 2026-10-13T00:50:46+00:00
+
+**What.** Stage A arm=main seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.00327,
+ "angle_var_deg": 0.25653,
+ "gap_ratio": 117.05117,
+ "global_r2": 0.99628,
+ "invariant_r2": 0.99558,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00097,
+ "seconds": 543.8,
+ "selected_d": 4,
+ "variant_r2": 0.99689
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/main_seed3.json` (sha256 36a0e41277)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #96 · result · stage A · plan §4.1
+`007f79e7a5e14fba` ← `d0b922d9c274467a` · recorded 2026-10-13T00:50:46+00:00
+
+**What.** Stage A aggregate over seeds [3]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/report.json` (sha256 fb09ad3101)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #97 · run · stage A · plan §4.1
+`e4e92b9b950b8a20` ← `007f79e7a5e14fba` · recorded 2026-10-13T00:50:48+00:00
+
+**What.** Stage A arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.87757,
+ "angle_var_deg": 0.25267,
+ "gap_ratio": 219.7798,
+ "global_r2": 0.99786,
+ "invariant_r2": 0.99762,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00103,
+ "seconds": 545.7,
+ "selected_d": 4,
+ "variant_r2": 0.998
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/main_seed0.json` (sha256 03e75ae9d3)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #98 · result · stage A · plan §4.1
+`0f8c38a9b841eabd` ← `e4e92b9b950b8a20` · recorded 2026-10-13T00:50:48+00:00
+
+**What.** Stage A aggregate over seeds [0]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/report.json` (sha256 edb53998a8)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #99 · run · stage A · plan §4.1
+`3f781dcc17f98d5f` ← `0f8c38a9b841eabd` · recorded 2026-10-13T00:50:49+00:00
+
+**What.** Stage A arm=main seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.17927,
+ "angle_var_deg": 0.1802,
+ "gap_ratio": 259.95674,
+ "global_r2": 0.99831,
+ "invariant_r2": 0.99842,
+ "leak_any_significant": false,
+ "leak_r2_max": -4e-05,
+ "seconds": 547.4,
+ "selected_d": 4,
+ "variant_r2": 0.99808
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/main_seed4.json` (sha256 64c5b90b47)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #100 · result · stage A · plan §4.1
+`31f9ac8dc4fc124e` ← `3f781dcc17f98d5f` · recorded 2026-10-13T00:50:49+00:00
+
+**What.** Stage A aggregate over seeds [4]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/report.json` (sha256 600d379b21)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #101 · run · stage A · plan §4.1
+`2bc9e5fcbb0e7604` ← `31f9ac8dc4fc124e` · recorded 2026-10-13T00:50:50+00:00
+
+**What.** Stage A arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 1.30873,
+ "angle_var_deg": 0.00499,
+ "gap_ratio": 128442.46549,
+ "global_r2": 1.0,
+ "invariant_r2": 0.99999,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00033,
+ "seconds": 548.3,
+ "selected_d": 4,
+ "variant_r2": 0.99982
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/main_seed1.json` (sha256 c7acdf6344)
+
+**Bearing on objectives O1.** Direct test of O1: trained frozen encoder + one spectral split vs plan §4.1 thresholds.
+
+---
+
+## #102 · result · stage A · plan §4.1
+`c375fbc1f57a2df5` ← `2bc9e5fcbb0e7604` · recorded 2026-10-13T00:50:50+00:00
+
+**What.** Stage A aggregate over seeds [1]: main arm PASS; controls {}
+
+**Output.**
+```json
+{
+ "controls": {},
+ "criteria": {
+  "PASS": true,
+  "angle": true,
+  "gap_ratio": true,
+  "invariant_r2": true,
+  "leakage": true
+ }
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/report.json` (sha256 349f84c38a)
+
+**Bearing on objectives O1, OP.** Stage A decision point (plan §5 row 1): PASS -> proceed to Stage B rung 1. FAIL -> debug round (max 3) then halt and publish the negative.
+
+**Verdict.** PASS
+
+---
+
+## #103 · run · stage A · plan §4.1
+`ad0b28533e8d15ee` ← `c375fbc1f57a2df5` · recorded 2026-10-13T00:51:25+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [1], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #104 · run · stage A · plan §4.1
+`d1de6007e582cb5c` ← `ad0b28533e8d15ee` · recorded 2026-10-13T00:51:25+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [2], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #105 · run · stage A · plan §4.1
+`dbc6c52a63f1a7d2` ← `d1de6007e582cb5c` · recorded 2026-10-13T00:51:25+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [4], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  4
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #106 · run · stage A · plan §4.1
+`06fb7f9e17b4db71` ← `dbc6c52a63f1a7d2` · recorded 2026-10-13T00:51:25+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [0], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #107 · run · stage A · plan §4.1
+`e89dd58503cfded0` ← `06fb7f9e17b4db71` · recorded 2026-10-13T00:51:25+00:00
+
+**What.** Stage A run set started: runs/stage_a/enc_mirror, seeds [3], overrides ['world.obs_dim=8', 'encoder.arch=inverse_coupling', 'encoder.objective=lejepa', 'encoder.steps=10000']
+
+**How.** experiments/run_stage_a.py -> isj.stage_a.run_stage_a (train frozen MLP encoder, ZCA, difference-moment split on 30k matched pairs, probe on disjoint latents)
+
+**Output.**
+```json
+{
+ "coupling": 0.5,
+ "criteria_sha256": "88f4ba5618ed5f5176a09e2daa116a3b22cf37c246be861d526a54cefac07cfe",
+ "obs_dim": 8,
+ "overrides": [
+  "world.obs_dim=8",
+  "encoder.arch=inverse_coupling",
+  "encoder.objective=lejepa",
+  "encoder.steps=10000"
+ ],
+ "seeds": [
+  3
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_a.yaml` (sha256 1de20dc38a)
+
+**Bearing on objectives O1, OP.** Criteria are hash-checked before any run starts (OP: thresholds fixed before the run).
+
+---
+
+## #108 · run · stage A · plan §4.1
+`dbaa3120903611f2` ← `e89dd58503cfded0` · recorded 2026-10-13T01:00:11+00:00
+
+**What.** Stage A arm=no_inv seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 0.91701,
+ "angle_var_deg": 0.59084,
+ "gap_ratio": 128442.46549,
+ "global_r2": 1.0,
+ "invariant_r2": 0.99994,
+ "leak_any_significant": false,
+ "leak_r2_max": -0.00025,
+ "seconds": 526.4,
+ "selected_d": 4,
+ "variant_r2": 0.99991
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/no_inv_seed1.json` (sha256 744283b730)
+
+**Bearing on objectives O1.** Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).
+
+---
+
+## #109 · run · stage A · plan §4.1
+`12ada911384cc72a` ← `dbaa3120903611f2` · recorded 2026-10-13T01:00:17+00:00
+
+**What.** Stage A arm=no_inv seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 19.73436,
+ "angle_var_deg": 19.50846,
+ "gap_ratio": 117.05117,
+ "global_r2": 0.99628,
+ "invariant_r2": 0.95735,
+ "leak_any_significant": true,
+ "leak_r2_max": 0.04121,
+ "seconds": 531.7,
+ "selected_d": 4,
+ "variant_r2": 0.95604
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/no_inv_seed3.json` (sha256 dc2b8f046c)
+
+**Bearing on objectives O1.** Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).
+
+---
+
+## #110 · run · stage A · plan §4.1
+`8b40fd9db2b0f21a` ← `12ada911384cc72a` · recorded 2026-10-13T01:00:32+00:00
+
+**What.** Stage A arm=no_inv seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 32.1802,
+ "angle_var_deg": 31.56478,
+ "gap_ratio": 186.09853,
+ "global_r2": 0.99606,
+ "invariant_r2": 0.91587,
+ "leak_any_significant": true,
+ "leak_r2_max": 0.08626,
+ "seconds": 547.0,
+ "selected_d": 4,
+ "variant_r2": 0.90981
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/no_inv_seed2.json` (sha256 160d78764d)
+
+**Bearing on objectives O1.** Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).
+
+---
+
+## #111 · run · stage A · plan §4.1
+`82068b61c59dcdee` ← `8b40fd9db2b0f21a` · recorded 2026-10-13T01:00:37+00:00
+
+**What.** Stage A arm=no_inv seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 13.10489,
+ "angle_var_deg": 12.80909,
+ "gap_ratio": 219.7798,
+ "global_r2": 0.99786,
+ "invariant_r2": 0.98412,
+ "leak_any_significant": true,
+ "leak_r2_max": 0.01216,
+ "seconds": 551.5,
+ "selected_d": 4,
+ "variant_r2": 0.98547
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/no_inv_seed0.json` (sha256 171376f61a)
+
+**Bearing on objectives O1.** Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).
+
+---
+
+## #112 · run · stage A · plan §4.1
+`90c04adfd84f68e8` ← `82068b61c59dcdee` · recorded 2026-10-13T01:00:38+00:00
+
+**What.** Stage A arm=no_inv seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_inv_deg": 25.99347,
+ "angle_var_deg": 26.14758,
+ "gap_ratio": 259.95674,
+ "global_r2": 0.99831,
+ "invariant_r2": 0.95036,
+ "leak_any_significant": true,
+ "leak_r2_max": 0.04838,
+ "seconds": 553.2,
+ "selected_d": 4,
+ "variant_r2": 0.94982
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_mirror/no_inv_seed4.json` (sha256 19d48f6fdf)
+
+**Bearing on objectives O1.** Ablation for O1: without the correspondence-driven rotation, prediction alone leaves the blocks mixed (Lemma 3.1).
+
+---
+
+## #113 · result · stage A · plan §6
+`57677fd0244721f5` ← `90c04adfd84f68e8` · recorded 2026-10-13T01:01:10+00:00
+
+**What.** Encoder-recipe ablations finished: the 0.009 gap is the encoder design, not our pipeline.
+
+**How.** Five variants x 5 seeds (main arm), plus the no-spectral-head baseline for the mirror encoder, 5 seeds.
+
+**Output.**
+```json
+{
+ "summary": [
+  "Starting point: ours 0.989 vs the authors' script 0.998 (gap 0.009).",
+  "1. 8 observed numbers: invariant_r2 0.9900 ± 0.0023",
+  "2. 10,000 steps: 0.9903 ± 0.0024",
+  "3. both: 0.9916 ± 0.0023  (closes about 30% of the gap at most; the rule asked for half)",
+  "4. paper's objective on our generic network: -0.0004 ± 0.0002  (collapsed; nothing recovered)",
+  "5. mirror-style encoder + paper objective: invariant_r2 0.9976 ± 0.0018, a12_fro 0.0034 ± 0.0019, a21_fro 0.0231 ± 0.0021  (authors: 0.9980, 0.0034, 0.0233)",
+  "Paper's LeJEPA baseline (no spectral head) with our mirror encoder: invariant_r2 0.9615 ± 0.0325, a12_fro 0.331 ± 0.216  (authors: 0.9619, 0.329)"
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_a/enc_lejepa_mlp/main_seed0.json` (sha256 f531dca75b); `runs/stage_a/enc_lejepa_mlp/main_seed1.json` (sha256 b954ff99b7); `runs/stage_a/enc_lejepa_mlp/main_seed2.json` (sha256 5991eeac6c); `runs/stage_a/enc_lejepa_mlp/main_seed3.json` (sha256 a1914daaad); `runs/stage_a/enc_lejepa_mlp/main_seed4.json` (sha256 837b0c6348); `runs/stage_a/enc_mirror/main_seed0.json` (sha256 03e75ae9d3) … +24 more
+
+---
+
+## #114 · result · stage B · plan §4.2
+`0759d8207d0ecaef` ← `57677fd0244721f5` · recorded 2026-10-13T01:01:10+00:00
+
+**What.** Stage B maths-only core: three levels plus a planted cross-cutting factor, no encoder.
+
+**How.** tests/test_stage_b_core.py; worlds.BlockWorld(cross_block=...), audits.deviation_map
+
+**Output.**
+```json
+{
+ "T_with_factor": 2.03,
+ "T_without": "about 0",
+ "nominal_angle_160k": "0.1-0.3",
+ "nominal_angle_40k": "1.5-1.6"
+}
+```
 
 ---

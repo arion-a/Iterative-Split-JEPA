@@ -11,9 +11,9 @@
   {
    "id": "B",
    "name": "Split a second time",
-   "status": "next",
+   "status": "active",
    "question": "Can the invariant block be split again?",
-   "result": "Not started. This is the core new claim of the project."
+   "result": "In progress. The maths-only check passes; building the trained-encoder version and the rung-2 pair-building step."
   },
   {
    "id": "C",

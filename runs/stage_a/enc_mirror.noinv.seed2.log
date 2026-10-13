@@ -1,0 +1,10 @@
+/home/user/Iterative-Split-JEPA/src/isj/encoder.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  "min_std": float(h.std(0).min())})
+no_inv    seed=2 inv_r2=0.916 angle=32.18 gap=186.1 leak_r2=0.0863 (547.0s)
+{
+ "git": "cb0abc3",
+ "controls": {
+  "no_inv": false
+ }
+}

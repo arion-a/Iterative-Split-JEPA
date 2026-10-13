@@ -31,11 +31,11 @@ h2{font-size:1.05rem;margin:32px 0 10px;text-wrap:balance}
 .stage .tag{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .stage h3{font-size:.98rem;margin:3px 0 4px}
 .stage p{margin:0 0 6px;font-size:.88rem;color:var(--muted)}
-.stage.done{border-color:var(--pass)}.stage.next{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.stage.done{border-color:var(--pass)}.stage.active{border-color:var(--accent)}.stage.next{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .chip{display:inline-block;font:600 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:99px;white-space:nowrap}
 .chip.pass,.chip.done{background:var(--pass-bg);color:var(--pass)}.chip.fail{background:var(--fail-bg);color:var(--fail)}
 .chip.info,.chip.later{background:var(--info-bg);color:var(--info)}.chip.blocked{background:var(--wait-bg);color:var(--wait)}
-.chip.next{background:var(--accent-soft);color:var(--accent)}
+.chip.next,.chip.active{background:var(--accent-soft);color:var(--accent)}
 .scroll{overflow-x:auto}
 table.cmp{border-collapse:collapse;width:100%;font-size:.9rem;background:var(--surface);border:1px solid var(--line)}
 table.cmp th,table.cmp td{padding:7px 12px;border-bottom:1px solid var(--line);text-align:left;font-variant-numeric:tabular-nums}
@@ -94,7 +94,7 @@ def build() -> str:
     stage_html = "".join(
         f'<div class="stage {s["status"]}"><div class="tag">Stage {esc(s["id"])}</div><h3>{esc(s["name"])}</h3>'
         f'<p>{esc(s["question"])}</p><p>{esc(s["result"])}</p>'
-        f'<span class="chip {s["status"]}">{ {"done": "Done", "next": "Up next", "later": "Later"}[s["status"]] }</span></div>'
+        f'<span class="chip {s["status"]}">{ {"done": "Done", "active": "In progress", "next": "Up next", "later": "Later"}[s["status"]] }</span></div>'
         for s in stages)
 
     rows = []

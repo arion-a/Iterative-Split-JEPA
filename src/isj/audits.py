@@ -158,21 +158,3 @@ def rank_deficient(m: torch.Tensor, n: int, bound: float, delta: float = 0.01) -
     lam_min = float(torch.linalg.eigvalsh(m.double()).min())
     return lam_min <= bound**2 * math.sqrt(2 * math.log(1 / delta) / n)
 
-
-# ---------------------------------------------------------------- cross-cutting (deviation) detector
-def deviation_map(rungs: list[RungFit]) -> dict:
-    """Residual structure left in each rung's difference moment after its d_k variant directions.
-
-    In a pure chain world the residual eigenvalues are ~0. A factor that varies in every family
-    leaves one repeated residual direction. Returns, per rung, the top residual eigenvalue and
-    direction (in full representation coordinates), the statistic T = sum of top residual eigenvalues
-    (our reading of monograph §10; the monograph writes lambda_2 of the residual moment), and the
-    angles between the residual directions of different rungs.
-    """
-    per = []
-    for r in rungs:
-        lam = float(r.eigvals[r.d_k]) if len(r.eigvals) > r.d_k else 0.0
-        per.append({"k": r.k, "residual_eig": lam, "direction": r.Q[:, 0] if r.Q.shape[1] else None})
-    angles = [max_angle_deg(a["direction"].unsqueeze(1), b["direction"].unsqueeze(1))
-              for i, a in enumerate(per) for b in per[i + 1:] if a["direction"] is not None and b["direction"] is not None]
-    return {"T": sum(p["residual_eig"] for p in per), "per_rung": per, "between_rung_angles_deg": angles}

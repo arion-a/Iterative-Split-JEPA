@@ -74,6 +74,9 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
                                      n_identities=w["n_identities"], n_textures=w["n_textures"], sigma_cat=sigma_cat,
                                      sigma_id=w["sigma_id"], sigma_tex=w["sigma_tex"])
     d, n = world.d, s["num_pairs"]
+    n1, n2 = (s["num_pairs_per_rung"] if "num_pairs_per_rung" in s else (n, n))
+    n = n2
+    nest = cfg.get("nesting_enforcement", "hard")
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"], batch_size=e["batch_size"],
                          lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], sigreg_weight=e["sigreg_weight"], arch=e["arch"],
@@ -91,6 +94,11 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     a_hat = w_glob[:-1].T
     image = {k: a_hat[:, world.block_slice(k)] for k in (1, 2, 3)}
     global_r2 = audits.r2(w_glob, zte, rte)
+    # two truths for the rung-1 invariant content H1*: span of the probe images of blocks 2,3 (gate definition),
+    # and the orthogonal complement of block 1's image (what the method targets) -- informational (addition)
+    h_span = torch.cat([image[2], image[3]], 1)
+    u_, _, _ = torch.linalg.svd(image[1], full_matrices=True)
+    h_perp = u_[:, 4:]
     cols = lambda k: list(range(*world.block_slice(k).indices(d)))
     rank_delta = cfg["rank_test_delta"]
 
@@ -114,14 +122,17 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         return audits.rank_deficient(torch.diag(fit.eigvals[: fit.d_k]), len(ru), b, rank_delta)
 
     # ---- rung 1: generator twins (as in B1)
-    u1, v1 = world.correspondence_pairs(n, 1)
+    u1, v1 = world.correspondence_pairs(n1, 1)
     ru1, rv1 = R(u1), R(v1)
-    fit1 = fit_rung(ru1, rv1, torch.eye(d), k=1, d_k=4)
+    fit1 = fit_rung(ru1, rv1, torch.eye(d), k=1, d_k=4, nesting_enforcement=nest)
     rung1 = {"k": 1, "angle_deg": audits.max_angle_deg(fit1.V, image[1]),
              "variant_r2": audits.linear_r2(rtr @ fit1.V, ztr[:, :4], rte @ fit1.V, zte[:, :4]),
              "invariant_r2": audits.linear_r2(rtr @ fit1.Q, ztr[:, 4:], rte @ fit1.Q, zte[:, 4:]),
              "gap_ratio": fit1.gap_ratio, "lambda_dk": float(fit1.eigvals[3]), "eigvals": [float(x) for x in fit1.eigvals],
-             "rank_deficient": rank_flag(fit1, ru1, rv1), "global_r2": global_r2, **leak(fit1.V, fit1.Q, 1)}
+             "rank_deficient": rank_flag(fit1, ru1, rv1), "global_r2": global_r2, **leak(fit1.V, fit1.Q, 1),
+             "n_pairs": len(ru1), "rank_monitor": audits.rank_monitor(fit1),
+             "inherited_span_deg": float(audits.principal_angles_deg(fit1.Q, h_span).max()),
+             "inherited_perp_deg": float(audits.principal_angles_deg(fit1.Q, h_perp).max())}
 
     # ---- the clustering set: rung-1 invariant and variant outputs of N unlabelled samples
     z_c, lab_c = world.sample_with_labels(s["cluster_samples"])
@@ -154,7 +165,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
 
     arms, construction = {}, {}
     for name, (ru, rv, zu, zv, cu, cv) in pairs.items():
-        fit2 = fit_rung(ru, rv, fit1.Q, k=2, d_k=4)
+        fit2 = fit_rung(ru, rv, fit1.Q, k=2, d_k=4, nesting_enforcement=nest)
         L = leak(fit2.V, fit2.Q, 2)
         arms[name] = {
             "k": 2, "angle_deg": audits.max_angle_deg(fit2.V, image[2]),
@@ -163,7 +174,8 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
             "global_r2": global_r2, "gap_ratio": fit2.gap_ratio, "lambda_dk": float(fit2.eigvals[3]),
             "eigvals": [float(x) for x in fit2.eigvals], "rank_deficient": rank_flag(fit2, ru, rv),
             "nesting_angle_deg": float(audits.principal_angles_deg(fit2.V, torch.cat([image[2], image[3]], 1)).max()),
-            "n_pairs": len(ru), **L}
+            "nesting_perp_deg": float(audits.principal_angles_deg(fit2.V, h_perp).max()),
+            "rank_monitor": audits.rank_monitor(fit2), "n_pairs": len(ru), **L}
         arms[name]["core_invariant_r2"] = arms[name]["invariant_r2"]
         validity = None if cu is None else float((cu == cv).float().mean())
         construction[name] = {"n_pairs": len(ru), "pair_validity": validity,
@@ -190,5 +202,5 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "a21_generator_rung2": arms["b1_generator"]["a21_fro"], "a21_kmeans_rung2": arms["b2_kmeans"]["a21_fro"],
              "bound_norm": rung1["a21_fro"] * (1 + 2 * quality["misgroup_rate"]),
              "bound_sqrt": rung1["a21_fro"] * math.sqrt(1 + 2 * quality["misgroup_rate"])}
-    return {"seed": seed, "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
+    return {"seed": seed, "nesting_enforcement": nest, "pair_budgets": [n1, n2], "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
             "quality": quality, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}

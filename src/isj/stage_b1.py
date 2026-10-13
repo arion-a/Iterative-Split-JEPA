@@ -45,18 +45,20 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         else fit_whitener(encode(enc, observe, world.sample(s["num_whiten"])), s["zca_eps"])
 
     max_sq_diff = {}
+    budgets = s.get("num_pairs_per_rung") or [s["num_pairs"]] * len(s["d_ks"])
+    nest = cfg.get("nesting_enforcement", "hard")
 
     def pairs_fn(k):
         if k > world.n_blocks - 1:
             return None
-        u, v = world.correspondence_pairs(s["num_pairs"], k, rank=1 if (control == "rank1_rung2" and k == 2) else None)
+        u, v = world.correspondence_pairs(budgets[k - 1], k, rank=1 if (control == "rank1_rung2" and k == 2) else None)
         if control == "shuffled_rung2" and k == 2:
             v = v[torch.randperm(len(v), generator=world._g)]
         ru, rv = wh(encode(enc, observe, u)), wh(encode(enc, observe, v))
         max_sq_diff[k] = float((ru - rv).square().sum(1).max())
         return ru, rv
 
-    rungs = fit_ladder(pairs_fn, d, d_ks=list(s["d_ks"]))
+    rungs = fit_ladder(pairs_fn, d, d_ks=list(s["d_ks"]), nesting_enforcement=nest)
     if ablation == "no_inv":      # no spectral head: read blocks off the encoder's coordinates
         eye, off, ident, h_prev = torch.eye(d), 0, [], torch.eye(d)
         for r in rungs:
@@ -101,8 +103,9 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
             "variant_r2": audits.linear_r2(v_tr, ztr[:, world.block_slice(k)], v_te, zte[:, world.block_slice(k)]),
             "invariant_content_r2": audits.linear_r2(q_tr, z_slow(ztr), q_te, z_slow(zte)),
             "gap_ratio": r.gap_ratio, "lambda_dk": lam, "eigvals": [float(x) for x in r.eigvals],
-            "rank_deficient": audits.rank_deficient(torch.diag(r.eigvals[: r.d_k]), s["num_pairs"],
+            "rank_deficient": audits.rank_deficient(torch.diag(r.eigvals[: r.d_k]), budgets[k - 1],
                                                     max_sq_diff.get(k, 1.0) ** 0.5, sig["rank_test_delta"]),
+            "n_pairs": budgets[k - 1], "rank_monitor": audits.rank_monitor(r) if r.max_sq_diff is not None else None,
             "a12_fro": float(a12.norm()), "a21_fro": float(a21.norm()), "block_purity": float(good / total),
             "leak_any_significant": leak["any_significant"],
             "leak_r2": {key: v["r2"] for key, v in leak["entries"].items()},
@@ -111,8 +114,14 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     core_r2 = audits.linear_r2(rtr @ last.Q, ztr[:, world.block_slice(3)], rte @ last.Q, zte[:, world.block_slice(3)])
     span = torch.cat([image[2], image[3]], dim=1)
     nesting = float(audits.principal_angles_deg(rungs[1].V, span).max())
+    u_, _, _ = torch.linalg.svd(image[1], full_matrices=True)
+    h_perp = u_[:, world.block_slice(1).stop - world.block_slice(1).start:]
+    extra = {"nesting_perp_deg": float(audits.principal_angles_deg(rungs[1].V, h_perp).max()),
+             "inherited_span_deg": float(audits.principal_angles_deg(rungs[0].Q, span).max()),
+             "inherited_perp_deg": float(audits.principal_angles_deg(rungs[0].Q, h_perp).max()),
+             "pair_budgets": list(budgets), "nesting_enforcement": nest}
     return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs",
-            "rungs": out, "nesting_angle_deg": nesting, "core_invariant_r2": core_r2,
+            "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}
 

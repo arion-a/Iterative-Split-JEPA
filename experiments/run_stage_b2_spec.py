@@ -55,7 +55,7 @@ def main():
             with open(path, "x") as f:
                 json.dump(r, f, indent=1)
             q, m, b = r["quality"], r["arms"]["b2_kmeans"], r["arms"]["b1_generator"]
-            line = (f"| {r['seed']} | B2 sigma_cat={sg} | purity {q['cluster_purity']:.2f}, K found {q['k_discovered']} | "
+            line = (f"| {r['seed']} | B2{cfg.get("label","")} sigma_cat={sg} | purity {q['cluster_purity']:.2f}, K found {q['k_discovered']} | "
                     f"rung-2 angle B1 {b['angle_deg']:.1f} deg, B2 {m['angle_deg']:.1f} deg | `{path}` |\n")
             with open("docs/STATUS.md", "a") as f:
                 f.write(line)

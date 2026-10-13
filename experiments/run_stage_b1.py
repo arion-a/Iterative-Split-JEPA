@@ -53,10 +53,11 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--seeds", type=int, nargs="*")
     ap.add_argument("--arms", nargs="*")
+    ap.add_argument("--criteria-sha", default=None)
     ap.add_argument("--smoke", type=int, help="code-path check with this many steps; saves and logs nothing")
     a = ap.parse_args()
     cfg = yaml.safe_load(open(a.config))
-    expected = open(a.config.replace(".yaml", ".criteria.sha256")).read().strip()
+    expected = open(a.criteria_sha or a.config.replace(".yaml", ".criteria.sha256")).read().strip()
     if hashlib.sha256(json.dumps(cfg["criteria"], sort_keys=True).encode()).hexdigest() != expected:
         sys.exit("criteria differ from the frozen hash; amend the plan first")
     if a.smoke:

@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 129 entries, head 13b392c77131
+Chain status at render time: **VALID** — 131 entries, head a8b9460fb6ae
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -3167,5 +3167,37 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Stage B material deleted at your request, to be restarted later after some design choices.
 
 **How.** Deleted: Stage B config and locked fingerprint, pipeline, runner, maths-only test, all run logs, and the Stage B-only code in worlds.py (cross-cutting factor option) and audits.py (leftover-direction detector). Kept: mirror-style encoder and the paper's objective (used by the Stage A ablations). The log entries are kept because the log is append-only; the deleted files stay recoverable from git commit 17a23b2.
+
+---
+
+## #129 · note · stage B · plan §—
+`3cec93c156b8e550` ← `13b392c77131fbc4` · recorded 2026-10-13T02:53:52+00:00
+
+**What.** Correction: the paper makes matched pairs only once (one split). It never makes second-split pairs.
+
+**How.** Earlier I wrote that second-split pairs would be 'made like the paper's matched pairs'. That was wrong: the paper's twins share the invariant block and resample the variant block, for a single split. Extending this to a second level is our own construction. The earlier decision entry is not edited (the log is append-only); this entry corrects it.
+
+---
+
+## #130 · decision · stage B · plan §4.2
+`a8b9460fb6ae0c2b` ← `3cec93c156b8e550` · recorded 2026-10-13T02:53:52+00:00
+
+**What.** Decision (from you): second-split pairs come from clusters, each Gaussian inside itself; the paper's spectral split is applied between clusters.
+
+**How.** Hidden world becomes nested Gaussian clusters (category contains identities, identity contains texture variation). Rung-2 pairs are built from the data by clustering the first split's invariant output: two samples from the same cluster form a pair. Then the same difference-moment split as the paper separates directions that vary within a cluster from directions that do not. Still open: the meaning of 'reducing the samples from anything between the two structures'; my reading is to drop ambiguous samples that lie between clusters before pairing.
+
+**Output.**
+```json
+{
+ "known_risk": "the encoder's SIGReg regulariser pushes embeddings toward one Gaussian, which may squash clusters",
+ "my_defaults": [
+  "flat first, nested if needed",
+  "leave the cross-cutting factor for a later step",
+  "paper's mirror encoder and objective",
+  "pass numbers written down and locked before any run"
+ ],
+ "open_question": "reading of 'reducing the samples from anything between the two variant-invariant structures'"
+}
+```
 
 ---

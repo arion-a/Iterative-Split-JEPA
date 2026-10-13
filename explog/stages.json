@@ -13,7 +13,7 @@
    "name": "Split a second time",
    "status": "next",
    "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
-   "result": "B1 design approved, pass numbers locked, code built and tested. Waiting for your go to run (about 15 minutes)."
+   "result": "B1 ran: locked verdict FAIL on one line (strict leakage test, one seed, effect 0.0003). Everything else passed. Waiting on your decision."
   },
   {
    "id": "C",

@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 135 entries, head 142a0ecf6a43
+Chain status at render time: **VALID** — 159 entries, head 651f4008a989
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -3315,5 +3315,578 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `src/isj/stage_b1.py` (sha256 f65492948f); `experiments/run_stage_b1.py` (sha256 0865d374e3); `docs/stage_b1_design.md` (sha256 0e092e7cd4)
+
+---
+
+## #135 · note · stage B · plan §—
+`140276d5985bcb80` ← `142a0ecf6a433510` · recorded 2026-10-13T05:29:42+00:00
+
+**What.** docs/stage_b1_design.md was updated to the approved version; earlier fingerprints of the draft are declared superseded.
+
+**How.** The design document changed from draft to approved (the two additions, confirmed settings, a corrected cost estimate of about 15 minutes instead of 10). The locked pass numbers live in configs/stage_b1.yaml and did not change after locking. This entry records the digest of the approved document.
+
+**Artifacts.** `docs/stage_b1_design.md` (sha256 0e092e7cd4)
+
+---
+
+## #136 · run · stage B · plan §4.2
+`f58cc58c92603ec3` ← `140276d5985bcb80` · recorded 2026-10-13T05:34:30+00:00
+
+**What.** Stage B1 run started: seeds [2], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #137 · run · stage B · plan §4.2
+`2e89fbb5325a7b66` ← `f58cc58c92603ec3` · recorded 2026-10-13T05:34:30+00:00
+
+**What.** Stage B1 run started: seeds [0], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #138 · run · stage B · plan §4.2
+`85da03bc2bba41eb` ← `2e89fbb5325a7b66` · recorded 2026-10-13T05:34:30+00:00
+
+**What.** Stage B1 run started: seeds [1], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #139 · run · stage B · plan §4.2
+`76791ad2b79fdc11` ← `85da03bc2bba41eb` · recorded 2026-10-13T05:42:17+00:00
+
+**What.** Stage B1 arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.978,
+ "rung_angles_deg": [
+  1.21,
+  1.25
+ ],
+ "seconds": 466.4,
+ "variant_r2": [
+  0.957,
+  0.983
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/main_seed1.json` (sha256 ed93c3cc3d)
+
+---
+
+## #140 · run · stage B · plan §4.2
+`b7bd9ffae623d6ef` ← `76791ad2b79fdc11` · recorded 2026-10-13T05:42:17+00:00
+
+**What.** Stage B1 arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.981,
+ "rung_angles_deg": [
+  0.77,
+  1.45
+ ],
+ "seconds": 466.5,
+ "variant_r2": [
+  0.962,
+  0.984
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/main_seed0.json` (sha256 19ba2314bd)
+
+---
+
+## #141 · run · stage B · plan §4.2
+`88c25e07c5643565` ← `b7bd9ffae623d6ef` · recorded 2026-10-13T05:42:22+00:00
+
+**What.** Stage B1 arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.976,
+ "rung_angles_deg": [
+  1.18,
+  1.37
+ ],
+ "seconds": 472.2,
+ "variant_r2": [
+  0.955,
+  0.98
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/main_seed2.json` (sha256 a779523c76)
+
+---
+
+## #142 · run · stage B · plan §4.2
+`d4c5e62695d19417` ← `88c25e07c5643565` · recorded 2026-10-13T05:49:25+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.565,
+ "rung_angles_deg": [
+  0.65,
+  75.03
+ ],
+ "seconds": 427.9,
+ "variant_r2": [
+  0.96,
+  0.567
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/shuffled_rung2_seed0.json` (sha256 a9df816249)
+
+---
+
+## #143 · run · stage B · plan §4.2
+`def50bfa6395300d` ← `d4c5e62695d19417` · recorded 2026-10-13T05:49:42+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.325,
+ "rung_angles_deg": [
+  1.22,
+  77.41
+ ],
+ "seconds": 444.9,
+ "variant_r2": [
+  0.958,
+  0.337
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/shuffled_rung2_seed1.json` (sha256 ac7375896e)
+
+---
+
+## #144 · run · stage B · plan §4.2
+`e644c74547ee34d9` ← `def50bfa6395300d` · recorded 2026-10-13T05:49:50+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.689,
+ "rung_angles_deg": [
+  1.24,
+  56.25
+ ],
+ "seconds": 448.0,
+ "variant_r2": [
+  0.956,
+  0.685
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/shuffled_rung2_seed2.json` (sha256 a93e05d061)
+
+---
+
+## #145 · run · stage B · plan §4.2
+`8a0742b347e92642` ← `e644c74547ee34d9` · recorded 2026-10-13T05:56:06+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.492,
+ "rung_angles_deg": [
+  0.77,
+  83.52
+ ],
+ "seconds": 401.8,
+ "variant_r2": [
+  0.962,
+  0.48
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/rank1_rung2_seed0.json` (sha256 5718abc659)
+
+---
+
+## #146 · run · stage B · plan §4.2
+`71ca6beaaed77817` ← `8a0742b347e92642` · recorded 2026-10-13T05:57:09+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.573,
+ "rung_angles_deg": [
+  1.21,
+  82.95
+ ],
+ "seconds": 447.6,
+ "variant_r2": [
+  0.957,
+  0.579
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/rank1_rung2_seed1.json` (sha256 8044d5c940)
+
+---
+
+## #147 · run · stage B · plan §4.2
+`62534d5c12e5e6b6` ← `71ca6beaaed77817` · recorded 2026-10-13T05:57:15+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.533,
+ "rung_angles_deg": [
+  1.18,
+  75.45
+ ],
+ "seconds": 445.1,
+ "variant_r2": [
+  0.955,
+  0.536
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/rank1_rung2_seed2.json` (sha256 dd7f13f1b7)
+
+---
+
+## #148 · run · stage B · plan §4.2
+`1d734409df9f86e3` ← `62534d5c12e5e6b6` · recorded 2026-10-13T06:03:07+00:00
+
+**What.** Stage B1 arm=no_inv seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.744,
+ "rung_angles_deg": [
+  36.25,
+  25.2
+ ],
+ "seconds": 420.6,
+ "variant_r2": [
+  0.742,
+  0.875
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_inv_seed0.json` (sha256 878eb1ae73)
+
+---
+
+## #149 · run · stage B · plan §4.2
+`bdbfa732e61ce219` ← `1d734409df9f86e3` · recorded 2026-10-13T06:04:43+00:00
+
+**What.** Stage B1 arm=no_inv seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.742,
+ "rung_angles_deg": [
+  34.79,
+  31.76
+ ],
+ "seconds": 453.4,
+ "variant_r2": [
+  0.737,
+  0.856
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_inv_seed1.json` (sha256 69362d6906)
+
+---
+
+## #150 · run · stage B · plan §4.2
+`f55c4671447898ad` ← `bdbfa732e61ce219` · recorded 2026-10-13T06:04:44+00:00
+
+**What.** Stage B1 arm=no_inv seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.788,
+ "rung_angles_deg": [
+  31.29,
+  27.43
+ ],
+ "seconds": 448.0,
+ "variant_r2": [
+  0.807,
+  0.88
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_inv_seed2.json` (sha256 4e57c8e27c)
+
+---
+
+## #151 · run · stage B · plan §4.2
+`b8f92aa6f3fdd53e` ← `f55c4671447898ad` · recorded 2026-10-13T06:10:12+00:00
+
+**What.** Stage B1 arm=no_pred seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.989,
+ "rung_angles_deg": [
+  0.31,
+  1.26
+ ],
+ "seconds": 424.8,
+ "variant_r2": [
+  0.989,
+  0.988
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_pred_seed0.json` (sha256 96c256d3c3)
+
+---
+
+## #152 · run · stage B · plan §4.2
+`31729e84513dade8` ← `b8f92aa6f3fdd53e` · recorded 2026-10-13T06:12:06+00:00
+
+**What.** Stage B1 arm=no_pred seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.986,
+ "rung_angles_deg": [
+  0.51,
+  0.97
+ ],
+ "seconds": 442.5,
+ "variant_r2": [
+  0.99,
+  0.989
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_pred_seed2.json` (sha256 f099aa1649)
+
+---
+
+## #153 · run · stage B · plan §4.2
+`2b36bfb9c533d698` ← `31729e84513dade8` · recorded 2026-10-13T06:12:07+00:00
+
+**What.** Stage B1 arm=no_pred seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.985,
+ "rung_angles_deg": [
+  0.47,
+  1.03
+ ],
+ "seconds": 444.1,
+ "variant_r2": [
+  0.986,
+  0.986
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_pred_seed1.json` (sha256 89179d349b)
+
+---
+
+## #154 · run · stage B · plan §4.2
+`54774d2d0c6daeb6` ← `2b36bfb9c533d698` · recorded 2026-10-13T06:17:21+00:00
+
+**What.** Stage B1 arm=no_var seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.981,
+ "rung_angles_deg": [
+  2.31,
+  9.4
+ ],
+ "seconds": 429.4,
+ "variant_r2": [
+  0.881,
+  0.968
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_var_seed0.json` (sha256 d34e426867)
+
+---
+
+## #155 · run · stage B · plan §4.2
+`e8c41d2c71cfb068` ← `54774d2d0c6daeb6` · recorded 2026-10-13T06:19:46+00:00
+
+**What.** Stage B1 arm=no_var seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.978,
+ "rung_angles_deg": [
+  2.69,
+  7.44
+ ],
+ "seconds": 459.5,
+ "variant_r2": [
+  0.851,
+  0.946
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_var_seed1.json` (sha256 56deceea46)
+
+---
+
+## #156 · run · stage B · plan §4.2
+`5882befd615f48ed` ← `e8c41d2c71cfb068` · recorded 2026-10-13T06:19:48+00:00
+
+**What.** Stage B1 arm=no_var seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.976,
+ "rung_angles_deg": [
+  2.86,
+  9.73
+ ],
+ "seconds": 461.5,
+ "variant_r2": [
+  0.872,
+  0.969
+ ]
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/no_var_seed2.json` (sha256 f911c9e549)
+
+---
+
+## #157 · result · stage B · plan §4.2
+`a52d60ea658970cc` ← `5882befd615f48ed` · recorded 2026-10-13T06:19:48+00:00
+
+**What.** Stage B1 aggregate: FAIL
+
+**Output.**
+```json
+{
+ "controls": {
+  "rank1_rung2": true,
+  "shuffled_rung2": true
+ },
+ "failing_criteria": [
+  "leakage"
+ ],
+ "verdict": "FAIL"
+}
+```
+
+**Artifacts.** `runs/stage_b1/r1/report_20261013T061948105124.json` (sha256 34aedfd959)
+
+**Verdict.** FAIL
+
+---
+
+## #158 · note · stage B · plan §4.2
+`651f4008a989dfc1` ← `a52d60ea658970cc` · recorded 2026-10-13T06:21:15+00:00
+
+**What.** B1 result explained: the one failing line is leakage on one seed, with an effect size of 0.0003. The locked verdict stays FAIL.
+
+**How.** Seed 2, rung 1: the strict permutation test (Holm, alpha 0.01) flagged 'rest->own' leakage with held-out R2 = +0.0003. The other five rung-seed combinations were not flagged; their R2 values are -0.0011 to +0.0002. Every other criterion passed on all 3 seeds. The rule was locked strict with no floor at your request; it has not been changed.
+
+**Output.**
+```json
+{
+ "effect_size_R2": 0.0003,
+ "failing": [
+  "leakage, seed 2 rung 1"
+ ],
+ "no_prediction_arm_failed": false,
+ "squash_risk_materialised": false,
+ "texture_variant_r2": [
+  0.962,
+  0.957,
+  0.955
+ ],
+ "verdict": "FAIL (locked rule)"
+}
+```
 
 ---

@@ -12,8 +12,8 @@
    "id": "B",
    "name": "Split a second time",
    "status": "next",
-   "question": "Can the invariant block be split again?",
-   "result": "Not started. Code removed; waiting on some design choices before restarting."
+   "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
+   "result": "B1 design written and waiting on your approval. Nothing built or run."
   },
   {
    "id": "C",

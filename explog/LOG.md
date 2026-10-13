@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 131 entries, head a8b9460fb6ae
+Chain status at render time: **VALID** — 133 entries, head 43d90c3957d1
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -3199,5 +3199,40 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
  "open_question": "reading of 'reducing the samples from anything between the two variant-invariant structures'"
 }
 ```
+
+---
+
+## #131 · note · stage B · plan §—
+`0334d36b7ad211a0` ← `a8b9460fb6ae0c2b` · recorded 2026-10-13T05:15:01+00:00
+
+**What.** Corrected meaning of 'reducing the samples between the two structures': it means taking the difference of the paired samples, which cancels the invariant part. Not dropping ambiguous samples.
+
+**How.** You supplied the derivation: for pairs sharing u, the invariant outputs must agree, so B(v1 - v2) = 0; if the pair differences collectively span the variant space (M full rank) then B = 0, and orthogonality of Q then forces C = 0. This is paper Theorem 2, monograph Theorem 4.1/4.2, plan §2.3. My earlier reading (drop in-between samples) in the decision entry is therefore wrong; that entry is not edited.
+
+---
+
+## #132 · decision · stage B · plan §4.2
+`43d90c3957d1641a` ← `0334d36b7ad211a0` · recorded 2026-10-13T05:15:01+00:00
+
+**What.** Plan amendment: Stage B is split into B1 (mechanism, ground-truth pairs, all Gaussian) and B2 (construction, pairs built by clustering, Gaussian clusters). B1 first.
+
+**How.** Matches plan §4.2's own aim of never confusing imperfect correspondence construction with rung contamination as the cause of a failed rung 2. B1 design written in docs/stage_b1_design.md as a draft; pass numbers are proposed, NOT locked, and nothing is built.
+
+**Output.**
+```json
+{
+ "B1": "does the ladder identify deeper rungs, given correct pairs; all-Gaussian",
+ "B2": "can rung-(k+1) pairs be built without ground truth, by clustering rung-k output; Gaussian clusters",
+ "open_settings": [
+  "block sizes 4/4/4, three levels",
+  "speeds 0.2/0.7/0.95 or one speed",
+  "cross-cutting factor after the basic split passes",
+  "leakage rule strict, no floor",
+  "pass numbers"
+ ]
+}
+```
+
+**Artifacts.** `docs/stage_b1_design.md` (sha256 b0ba82a4b7)
 
 ---

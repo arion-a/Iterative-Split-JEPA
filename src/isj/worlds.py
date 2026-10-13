@@ -28,6 +28,10 @@ class BlockWorld:
     rhos: list[float]
     scales: list[float] | None = None
     seed: int = 0
+    # Planted cross-cutting factor: index (1-based) of an extra block that is NOT part of the chain.
+    # In every correspondence family it varies (independently resampled) with probability cross_p.
+    cross_block: int | None = None
+    cross_p: float = 0.5
     _g: torch.Generator = field(init=False, repr=False)
 
     def __post_init__(self):
@@ -43,6 +47,11 @@ class BlockWorld:
     @property
     def n_blocks(self) -> int:
         return len(self.block_dims)
+
+    @property
+    def n_nominal(self) -> int:
+        """Blocks that form the chain (everything except the cross-cutting block)."""
+        return self.n_blocks - (1 if self.cross_block is not None else 0)
 
     def block_slice(self, k: int) -> slice:
         """Coordinate slice of block k (1-based)."""
@@ -82,6 +91,10 @@ class BlockWorld:
             if j == k and rank is not None:
                 sl = slice(sl.start, sl.start + rank)
             v[:, sl] = fresh[:, sl]
+        if self.cross_block is not None:   # cross-cutting factor varies in every family
+            sl = self.block_slice(self.cross_block)
+            vary = torch.rand(n, generator=self._g) < self.cross_p
+            v[vary, sl.start:sl.stop] = fresh[vary, sl.start:sl.stop]
         return u, v
 
     def shuffled_pairs(self, n: int, k: int) -> tuple[torch.Tensor, torch.Tensor]:

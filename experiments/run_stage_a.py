@@ -100,6 +100,7 @@ def main():
     ap.add_argument("--seeds", type=int, nargs="*")
     ap.add_argument("--only", choices=["main", "controls"], default=None)
     ap.add_argument("--set", nargs="*", default=[], help="override, e.g. world.coupling_strength=1.0")
+    ap.add_argument("--no-plain", action="store_true", help="log to the chain but add no plain-language rows")
     ap.add_argument("--no-log", action="store_true", help="do not append to explog/chain.jsonl")
     a = ap.parse_args()
 
@@ -120,6 +121,8 @@ def main():
         pass   # another seed-worker wrote it first
 
     def log(*args, **kw):
+        if a.no_plain:
+            kw.pop("plain", None)
         if not a.no_log:
             explog.append(*args, **kw)
 

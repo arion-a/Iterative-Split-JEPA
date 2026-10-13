@@ -34,7 +34,8 @@ def run_stage_a(cfg: dict, seed: int, ablation: str = "none", control: str = "no
                          batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"],
                          var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0),
                          sigreg_weight=e.get("sigreg_weight", 1e-6),
-                         stop_grad=e.get("stop_grad", True))
+                         stop_grad=e.get("stop_grad", True), arch=e.get("arch", "mlp"),
+                         objective=e.get("objective", "predict"), coupling_layers=w["coupling_layers"])
     if ablation == "no_pred":
         ecfg.pred_weight = 0.0
     if ablation == "no_var":

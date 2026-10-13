@@ -37,6 +37,31 @@ class SIGReg(nn.Module):
         return (err @ self.weights).mean() * len(h)
 
 
+class InverseCouplingEncoder(nn.Module):
+    """Mirror-style encoder: the same alternating coupling layers as the observation map, run in
+    reverse and subtracting, with learned weights. Only valid when the observation has the same
+    dimension as the hidden state (no lift). Reimplemented from the paper's description.
+    """
+
+    def __init__(self, d: int, layers: int):
+        super().__init__()
+        self.half = d // 2
+        right = d - self.half
+        shapes = [(self.half, right) if i % 2 == 0 else (right, self.half) for i in range(layers)]
+        self.weights = nn.ParameterList(nn.Parameter(torch.randn(*sh) / math.sqrt(sh[0])) for sh in shapes)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        h = x
+        for i in reversed(range(len(self.weights))):
+            left, right = h[:, : self.half], h[:, self.half:]
+            if i % 2 == 0:
+                right = right - torch.tanh(left @ self.weights[i])
+            else:
+                left = left - torch.tanh(right @ self.weights[i])
+            h = torch.cat([left, right], dim=1)
+        return h
+
+
 def variance_hinge(h: torch.Tensor, gamma: float = 1.0) -> torch.Tensor:
     """L_var = sum_j max(0, gamma - std(h_j)) (monograph eq. 11)."""
     return F.relu(gamma - torch.sqrt(h.var(0) + 1e-4)).sum()
@@ -64,16 +89,23 @@ class EncoderConfig:
     pred_weight: float = 1.0
     stop_grad: bool = True        # stop-gradient on the prediction target
     log_every: int = 1000
+    arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
+    objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
+    coupling_layers: int = 4
 
 
 def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
                   seed: int, verbose: bool = False) -> tuple[nn.Module, list[dict]]:
     """Train g (encoder) and f (predictor) on stationary transition pairs; return frozen g."""
     torch.manual_seed(seed)
-    enc = mlp(cfg.in_dim, cfg.hidden, cfg.latent_dim)
+    if cfg.arch == "inverse_coupling":
+        assert cfg.in_dim == cfg.latent_dim, "mirror-style encoder needs obs_dim == d"
+        enc = InverseCouplingEncoder(cfg.latent_dim, cfg.coupling_layers)
+    else:
+        enc = mlp(cfg.in_dim, cfg.hidden, cfg.latent_dim)
     pred = mlp(cfg.latent_dim, cfg.hidden, cfg.latent_dim)
     sig = SIGReg()
-    params = list(enc.parameters()) + list(pred.parameters())
+    params = list(enc.parameters()) + (list(pred.parameters()) if cfg.objective == "predict" else [])
     opt = torch.optim.AdamW(params, lr=cfg.lr)
     half = max(cfg.steps // 2, 1)
     log = []
@@ -86,6 +118,18 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
         z1, z2 = world.transition_pairs(cfg.batch_size)
         h = enc(observe(torch.cat([z1, z2])))
         h1, h2 = h[: cfg.batch_size], h[cfg.batch_size:]
+        if cfg.objective == "lejepa":   # paper: pull both views to their mean + SIGReg, no predictor
+            views = h.reshape(2, cfg.batch_size, -1)
+            l_pred = (views.mean(0) - views).square().mean()
+            l_reg = cfg.sigreg_weight * sig(h)
+            loss = (1 - cfg.sigreg_weight) * l_pred + l_reg
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+            if step % cfg.log_every == 0 or step == cfg.steps - 1:
+                log.append({"step": step, "pred": float(l_pred.detach()), "reg": float(l_reg.detach()),
+                            "min_std": float(h.std(0).min())})
+            continue
         l_pred = F.mse_loss(pred(h1), h2.detach() if cfg.stop_grad else h2)
         loss = cfg.pred_weight * l_pred
         l_reg = torch.zeros(())

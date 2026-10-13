@@ -1,0 +1,23 @@
+{
+ "git": "165e9a6",
+ "main": {
+  "per_seed": [
+   {
+    "seed": 2,
+    "invariant_r2": true,
+    "angle": true,
+    "gap_ratio": true,
+    "leakage": true,
+    "leakage_strict_null": true
+   }
+  ],
+  "criteria": {
+   "invariant_r2": true,
+   "angle": true,
+   "gap_ratio": true,
+   "leakage": true,
+   "PASS": true
+  }
+ },
+ "controls": {}
+}

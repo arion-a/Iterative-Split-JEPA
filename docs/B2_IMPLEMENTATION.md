@@ -35,3 +35,15 @@
 
 r1 (3/6/12 categories) and r2 (6/12/24 categories, fixed world) stay on record as an exploration of how the number of categories matters. The formal B2
 run follows this spec and writes to `results/B2/` in the layout `docs/REPORTING.md` asks for.
+
+
+## D9 nesting enforcement: implementation notes (2026-10-13)
+
+* `src/isj/engine.py`: `fit_rung(..., nesting_enforcement="hard"|"soft"|"none", soft_lambda)`. Hard = restricted eigendecomposition inside H_k, then explicit
+  project-and-QR guard. Soft = top-d_k eigenvectors of `M - lambda (I - P_k)`. None = unrestricted. `fit_ladder(..., pair_budgets=[n1, n2])` passes a
+  per-rung pair count to the pair generator. `RungFit` records `max_sq_diff` and the enforcement mode.
+* `src/isj/audits.py`: `rank_monitor(fit, delta)` returns lambda_min of the restricted moment, the noise-floor threshold
+  `max||Delta h||^2 * sqrt(2 log(1/delta)/n)`, pass/fail, and n_pairs.
+* Defaults for old runs are unchanged in effect: the old path was already restricted (= hard), so existing results are reproduced.
+* `experiments/diagnose_nesting.py` is the diagnostic; output in `results/diagnostics/nesting/`. Finding: no engine setting lowers the B2 span-definition
+  nesting figure; the repair the owner listed (rung-1 budget, rank completeness, gap) is applied in the P9 run and its effect is measured there.

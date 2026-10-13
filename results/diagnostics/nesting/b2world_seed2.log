@@ -1,0 +1,74 @@
+/home/user/Iterative-Split-JEPA/src/isj/encoder.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  "min_std": float(h.std(0).min())})
+{
+ "seed": 2,
+ "sigma_cat": 0.1,
+ "global_r2": 0.9401563890334228,
+ "truth_definition_gap_deg": 12.968420513141968,
+ "budget": [
+  {
+   "n1": 7500,
+   "rung1_angle_vs_image": 3.2125484594634517,
+   "inherited_span": 13.756183118667769,
+   "inherited_perp": 3.212548513208642,
+   "nesting_span": 11.431117757553807,
+   "nesting_perp": 3.0188910079682767,
+   "recovery": 11.484212681464026
+  },
+  {
+   "n1": 30000,
+   "rung1_angle_vs_image": 3.2885210356705707,
+   "inherited_span": 13.625635517984817,
+   "inherited_perp": 3.288521352610511,
+   "nesting_span": 11.483230219776159,
+   "nesting_perp": 2.9928558856101395,
+   "recovery": 11.552353778636533
+  },
+  {
+   "n1": 120000,
+   "rung1_angle_vs_image": 3.1012080215257325,
+   "inherited_span": 13.48936068792994,
+   "inherited_perp": 3.1012077771536366,
+   "nesting_span": 11.376559711607328,
+   "nesting_perp": 2.839930628399645,
+   "recovery": 11.421680730641821
+  },
+  {
+   "n1": 480000,
+   "rung1_angle_vs_image": 3.14683304936281,
+   "inherited_span": 13.590846879894952,
+   "inherited_perp": 3.146832968333419,
+   "nesting_span": 11.500297418655412,
+   "nesting_perp": 2.8759979063089047,
+   "recovery": 11.554422737284215
+  }
+ ],
+ "soft": {
+  "0.3": {
+   "nesting_span": 21.128881654854357,
+   "recovery": 21.37082306247862
+  },
+  "1": {
+   "nesting_span": 12.114158880452901,
+   "recovery": 12.255287166207651
+  },
+  "3": {
+   "nesting_span": 11.03965596023804,
+   "recovery": 11.073073816318223
+  },
+  "10": {
+   "nesting_span": 11.425884620367128,
+   "recovery": 11.470833891634557
+  },
+  "100": {
+   "nesting_span": 11.478902181150012,
+   "recovery": 11.533362017482768
+  }
+ },
+ "intrinsic_recovery_deg": 1.9514826546310642,
+ "none": {
+  "nesting_span": 82.4412691077772,
+  "recovery": 83.19195710621668
+ }
+}

@@ -1,0 +1,74 @@
+# E11b (docs/EVIDENCE.md): longer training, 40,000 steps. Everything else identical to configs/stage_b2_noop.yaml (the E12 run).
+label: " [E11b]"
+# E10 / E10a run (docs/EVIDENCE.md, decisions D10, D10a): clean world; nesting gate judged on the orthogonal-complement reference (D10);
+# Tier 1 purification (+ Tier 4 within-H1 whitening) arms added on the same encoder and pairs. Targets identical to stage_b2_spec.yaml.
+nesting_enforcement: hard
+# Stage B2 (formal) — docs/B2.md. Gates are IDENTICAL to B1's frozen criteria (configs/stage_b1.yaml, incl. its
+# amended leakage floor); `targets` below are frozen and hashed (stage_b2_spec.targets.sha256).
+stage: B2
+spec: docs/B2.md
+gate_criteria_from: configs/stage_b1.yaml
+
+world:
+  block_dims: [4, 4, 4]            # texture, identity, category
+  rhos: [0.2, 0.7, 0.95]
+  n_categories: 6                  # frozen design choice in B2.md
+  n_identities: 20                 # per category
+  n_textures: 2                    # per identity
+  sigma_id: 0.3
+  sigma_tex: 0.3
+  coupling_layers: 4
+  coupling_strength: 0.5
+  obs_dim: null
+encoder:                           # the paper's recipe, as in B1
+  arch: inverse_coupling
+  objective: lejepa
+  steps: 40000   # E11b: 4x the baseline training steps (baseline 10000)
+  batch_size: 256
+  lr: 3.0e-3
+  sigreg_weight: 1.0e-6
+  hidden: 64
+  reg: sigreg
+  var_weight: 0.0
+split:
+  num_whiten: 30000
+  num_pairs: 30000
+  num_pairs_per_rung: [60000, 30000]   # P9: rung-1 budget doubled
+  cluster_samples: 60000
+  kmeans_restarts: 10
+  probe_train: 15000
+  probe_test: 5000
+rank_test_delta: 0.01
+leak_floor: 0.01                   # B1's amended leakage rule: every off-diagonal |R2| below this
+sweep:
+  sigma_cat: [0.1, 0.4, 0.6, 0.8, 1.0, 1.5]    # within-category spread; purity runs from about 1.0 down past 0.7
+  clean_sigma_cat: 0.1                          # "the clean world" for T1
+seeds: [0, 1, 2]
+
+targets:                           # FROZEN
+  T1_construction_cost:
+    applies_to: clean world (sigma_cat = clean_sigma_cat)
+    rule: "per seed, B2 (discovered-count k-means) rung-2 angle <= 2 x the B1 (generator twins) rung-2 angle, same encoder and seed"
+    max_ratio: 2.0
+  T2_purity_threshold:
+    rule: "every run with cluster purity >= 0.9 and pair validity >= 0.95 passes all gates"
+    purity_min: 0.9
+    pair_validity_min: 0.95
+  T3_graceful_degradation:
+    rule: "across the sigma_cat sweep, rung-2 angle and ||A21|| grow smoothly with misgroup rate; no run with purity >= 0.7 has a rung-2 angle above 5 deg; measured ||A21|| stays below the contamination bound"
+    purity_floor_for_no_cliff: 0.7
+    angle_limit_deg: 5.0
+    bound: "||A21||_rung2 <= ||A21||_rung1 x (1 + 2 x misgroup rate)  (monograph section 10; the sqrt form is also drawn)"
+  T4_loud_failure:
+    C1_cross_cluster: {rule: "split must not identify identity: rung-2 angle above 10 deg, and the pair-validity check fires (validity below 0.95)", angle_min_deg: 10.0}
+    C2_variant_clusters: {rule: "must fail: rung-2 angle above 10 deg", angle_min_deg: 10.0}
+    C3_singleton: {rule: "no valid pairs exist, so the rank check fires (zero pairs)"}
+    C4_shuffled: {rule: "recorded, no required outcome"}
+
+nesting_gate: complement          # D10: gate on nesting_perp_deg; the span-truth angle is informational
+purify:                           # D10a constants, fixed before the run
+  factor: 4.0
+  max_iter: 5
+  tier4: true                   # historic run: the Tier 1 + Tier 4 arm was produced (D11: now opt-in, default off)
+noop_control: true                # E10 no-op control: Tier 1 on the B1 arm's clean pairs
+save_subspaces: true              # store rung-2 V per arm for the E10c position check

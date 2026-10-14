@@ -43,14 +43,14 @@ orthogonal-complement nesting lands in 2-4 deg; B1-arm nesting lands in 2-4 deg 
 **Run.** The next B2 run (clean world, 3 seeds) judges nesting by the D10 definition (orthogonal-complement reference, threshold 5 deg).
 **Prediction (owner).** B2-arm nesting is about 3 deg and inside the gate; absolute nesting becomes an informational diagnostic.
 **Caveat recorded now.** P9 already read 2.82 +/- 0.55 deg on this definition, so this is a definitional ruling (D10), not an independent test.
-**Outcome.** (to be appended after the run)
+**Outcome (2026-10-14): CONFIRMED, as a definitional result.** B2 arm nesting on the D10 reference 2.82 +/- 0.55 deg (treated arm 2.79 +/- 0.50, B1 arm 2.80 +/- 0.48), inside the 5 deg gate on all 3 seeds. Absolute nesting 10.31 +/- 1.61 deg, now informational. Report: `results/stage_b2_purify/REPORT.md`.
 
 ## E10a (registered 2026-10-14, before the E10a run)
 
 **Run.** Clean-world B2, 3 seeds, 60,000 / 30,000 pairs, hard nesting. Same encoder and pairs for three rung-2 arms: B2 as before; B2 + Tier 1 purification; B2 + Tier 1 + Tier 4 (D10a constants: factor 4 x median, 5 iterations max).
 **Prediction (owner).** The treated arm (Tier 1 + Tier 4) recovers at least 60% of the B1-B2 rung-2 gap-ratio deficit at fixed cluster purity, where recovered = (treated gap - untreated B2 gap) / (B1 gap - untreated B2 gap), means over 3 seeds. Reference from P9: B1 27.3, B2 3.1.
 **Decision rule.** Confirmed if recovered >= 0.60; refuted otherwise. Tier 1 alone is reported as informational. No tuning of the D10a constants after seeing results.
-**Outcome.** (to be appended after the run)
+**Outcome (2026-10-14): CONFIRMED.** Rung-2 gap ratio: B1 27.3, B2 untreated 3.1, Tier 1 19.7 (recovered 0.68), Tier 1 + Tier 4 18.7 (recovered 0.64; the registered treatment). Pair validity 0.83 -> 1.00 (0.997 on seed 2) at unchanged cluster purity 0.83; 82% of pairs kept, 98-99% of valid pairs kept, 98.5-100% of invalid pairs dropped. Rung-2 gap now passes the gate (>10). Tier 4 added nothing over Tier 1 (gap 18.7 vs 19.7; a21_fro 0.078 vs 0.051). Rung-2 angle (10.6 deg, B1 arm 10.3), texture R2 (0.882) and leakage (0.028) still miss their gates, in the B1 arm as well. Report: `results/stage_b2_purify/REPORT.md`.
 
 ## Item 2 check (2026-10-14): texture block rank
 The owner's concern: if "2 textures per identity" meant 2 discrete values, the 4-dimensional texture block would have about one direction of variation. Checked on the generator and data (seed 0, clean world): texture centres are random 4-D vectors (240 centres) plus Gaussian jitter in all 4 dimensions. Texture block covariance eigenvalues 1.21 / 1.13 / 1.07 / 1.00; rung-1 pair-difference moment on the texture block 1.38 / 1.22 / 1.10 / 0.92; within-identity centre-difference moment 2.40 / 2.08 / 1.86 / 1.49. All four directions vary, so the premise does not hold in this world and the world was not regenerated. The 0.882 texture R2 therefore has another cause, not identified here.

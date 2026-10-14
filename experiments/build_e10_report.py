@@ -1,10 +1,13 @@
 """E10 / E10a report (docs/REPORTING.md format) from results/stage_b2_purify/. Nesting gate = D10 (orthogonal-complement reference)."""
-import glob, json, os, statistics as st
+import glob, json, os, statistics as st, sys
 import yaml
 from isj import svgplots as sv
 from isj.stage_b1 import seed_checks
 
-OUT = "results/stage_b2_purify"
+OUT = sys.argv[1] if len(sys.argv) > 1 else "results/stage_b2_purify"
+LABEL = sys.argv[2] if len(sys.argv) > 2 else "E10 / E12"
+NEWGATE = len(sys.argv) > 3 and sys.argv[3] == "gates_v2"   # leakage gate of configs/gates_v2.yaml (D13), effective from the first run after the E17 freeze
+LEAK_T = yaml.safe_load(open("configs/gates_v2.yaml"))["leakage_gate"]["threshold"]
 crit = yaml.safe_load(open("configs/stage_b1.yaml"))["criteria"]
 runs = sorted((json.load(open(f)) for f in glob.glob(f"{OUT}/sigma_cat_0.1/[0-9]*.json")), key=lambda r: r["seed"])
 old = sorted((json.load(open(f)) for f in glob.glob("results/stage_b2_nesting/sigma_cat_0.1/[0-9]*.json")), key=lambda r: r["seed"])
@@ -28,7 +31,7 @@ GATES = [("Rung 1 angle (texture)", "below 5°", "rung1_angle", lambda v: v["run
          ("Nesting angle, D10 definition (orthogonal-complement reference)", "below 5°", "nesting", lambda v: v["nesting_angle_deg"], 2),
          ("Gap ratio, rung 1", "above 10", "rung1_gap", lambda v: v["rungs"][0]["gap_ratio"], 1),
          ("Gap ratio, rung 2", "above 10", "rung2_gap", lambda v: v["rungs"][1]["gap_ratio"], 1),
-         ("Leakage, largest off-diagonal |R²| (B1 amended rule)", "below 0.01", "leakage", lambda v: max(x["max_leak_abs_r2"] for x in v["rungs"]), 4),
+         ("Leakage, normalized ||A21|| at both rungs (gates_v2, D13)" if NEWGATE else "Leakage, largest off-diagonal |R²| (B1 amended rule)", f"below {LEAK_T}" if NEWGATE else "below 0.01", "leakage", (lambda v: max(x["a21_norm"] for x in v["rungs"])) if NEWGATE else (lambda v: max(x["max_leak_abs_r2"] for x in v["rungs"])), 4),
          ("Rank check (statistical test)", "passes", "rank_test", lambda v: float(not any(x["rank_deficient"] for x in v["rungs"])), 0)]
 
 def gate_table(arm):
@@ -68,9 +71,9 @@ open(f"{OUT}/figures/P2prime.svg", "w").write(sv.standalone(sv.log_lines([("B2 u
 open(f"{OUT}/figures/P5.svg", "w").write(sv.standalone(sv.ladder([st.mean(r["rung1"]["angle_deg"] for r in runs), st.mean(a("b1_generator", "angle_deg"))],
     [st.mean(r["rung1"]["angle_deg"] for r in runs), st.mean(a("b2_kmeans_purified_whitened", "angle_deg"))], st.mean(a("b1_generator", "core_invariant_r2")), st.mean(a("b2_kmeans_purified_whitened", "core_invariant_r2")), note="Ladder: B1 vs treated B2")))
 unit = open("results/stage_b2_purify/unit_test_output.txt").read().strip()
-md = [f"# E10 / E10a report: formal B2, clean world (sigma_cat 0.1), {len(runs)} seeds, hard nesting, pairs 60,000 / 30,000\n",
+md = [f"# {LABEL} report: formal B2, clean world (sigma_cat 0.1), {len(runs)} seeds, hard nesting, pairs 60,000 / 30,000\n",
       f"**Verdict.** E10 (nesting gate on the D10 reference): B2 arm nesting {ms(a('b2_kmeans','nesting_perp_deg'))}°, {'inside' if nest_ok else 'NOT inside'} the 5° gate on every seed; the absolute angle is {ms(a('b2_kmeans','nesting_angle_deg'))}° and is now informational. "
-      f"E10a: rung-2 gap ratio B1 {gap_b1:.1f}, B2 untreated {gap_b2:.1f}, Tier 1 {gap_t1:.1f}, Tier 1 + Tier 4 {gap_t14:.1f}; recovered fraction of the B1-B2 deficit: Tier 1 {rec(gap_t1):.2f}, Tier 1 + Tier 4 {rec(gap_t14):.2f} (registered treatment; needs ≥ 0.60) -> **{'CONFIRMED' if e10a else 'REFUTED'}**.\n",
+      f"E12: rung-2 gap ratio B1 {gap_b1:.1f}, B2 untreated {gap_b2:.1f}, Tier 1 {gap_t1:.1f}, Tier 1 + Tier 4 {gap_t14:.1f}; recovered fraction of the B1-B2 deficit: Tier 1 {rec(gap_t1):.2f}, Tier 1 + Tier 4 {rec(gap_t14):.2f} (registered treatment; needs ≥ 0.60) -> **{'CONFIRMED' if e10a else 'REFUTED'}**.\n",
       "## A. Gate table (registered treatment: B2 + Tier 1 + Tier 4)\n", tab(["Criterion", "Threshold", "Measured (mean ± std)", "Pass?"], gate_table("b2_kmeans_purified_whitened")),
       "\nSame gates, B2 untreated:\n", tab(["Criterion", "Threshold", "Measured (mean ± std)", "Pass?"], gate_table("b2_kmeans")),
       "\nSame gates, B1 arm (generator twins) on the same encoders:\n", tab(["Criterion", "Threshold", "Measured (mean ± std)", "Pass?"], gate_table("b1_generator")),

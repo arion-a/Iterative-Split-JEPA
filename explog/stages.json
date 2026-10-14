@@ -1,0 +1,33 @@
+{
+ "updated_note": "Edited by hand at the end of each stage; the page builder reads it.",
+ "stages": [
+  {
+   "id": "A",
+   "name": "One split with a trained encoder",
+   "status": "done",
+   "question": "Does the paper's single split work in our own code?",
+   "result": "Yes. Passes on all 5 seeds. The authors' own script also run: our numbers are close to theirs (about 0.01 lower on R\u00b2)."
+  },
+  {
+   "id": "B",
+   "name": "Split a second time",
+   "status": "next",
+   "question": "B1: does the second split work given correct pairs? B2: can those pairs be built from the data?",
+   "result": "B1: second split works with correct pairs (15 seeds). B2 (spec run, 18 runs): pairs built from clusters cost little (angle +1.3 deg vs B1) when clusters are right, but the world is too hard for the gates (B1 misses them too) and the split breaks below purity ~0.8."
+  },
+  {
+   "id": "C",
+   "name": "Deeper ladder and scaling",
+   "status": "later",
+   "question": "How many levels hold up, and does error shrink with more data?",
+   "result": "Not started."
+  },
+  {
+   "id": "D",
+   "name": "Does it help?",
+   "status": "later",
+   "question": "Does the ladder beat other methods at the same cost?",
+   "result": "Not started."
+  }
+ ]
+}

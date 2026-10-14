@@ -1,0 +1,38 @@
+# Stage B2 — construction: can the second split's pairs be built from the data (by clustering the
+# first split's invariant output) instead of being handed over by the generator?
+# Guides, not locked rules (see the user's note: judge results sensibly, small deviations are noise).
+stage: B2
+world:
+  block_dims: [4, 4, 4]            # texture, identity, category
+  rhos: [0.2, 0.7, 0.95]
+  sigma: 0.3                       # within-category spread; each category is Gaussian inside itself
+  centre_scale: 1.0
+  isotropic_centres: true          # r2 fix: every category direction gets equal between-cluster spread (needs K > 4)
+  coupling_layers: 4
+  coupling_strength: 0.5
+  obs_dim: null
+sweep:
+  n_categories: [6, 12, 24]        # r2 sweep; r1 used [3, 6, 12], but 3 categories cannot fill a 4-direction block
+encoder:                           # same recipe as B1 (paper's mirror encoder + objective)
+  arch: inverse_coupling
+  objective: lejepa
+  steps: 10000
+  batch_size: 256
+  lr: 3.0e-3
+  sigreg_weight: 1.0e-6
+  hidden: 64
+  reg: sigreg
+  var_weight: 0.0
+split:
+  num_whiten: 30000
+  num_pairs: 30000                 # rung-1 pairs and the generator / label / random rung-2 pairs
+  cluster_samples: 60000           # samples clustered to build rung-2 pairs (about 30,000 pairs)
+  kmeans_restarts: 10
+  probe_train: 15000
+  probe_test: 5000
+seeds: [0, 1, 2]
+guides:                            # what "works" looks like (same spirit as B1)
+  cluster_purity: 0.9              # the plan's target
+  rung2_angle_deg: 5.0
+  variant_r2: 0.9
+  core_invariant_r2: 0.9

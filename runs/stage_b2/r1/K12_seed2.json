@@ -1,0 +1,54 @@
+{
+ "seed": 2,
+ "n_categories": 12,
+ "rung1": {
+  "angle_deg": 1.3360052222004069,
+  "variant_r2": 0.9579607460831748,
+  "gap_ratio": 21.0617143119718
+ },
+ "arms": {
+  "generator": {
+   "angle_deg": 1.5750096701697414,
+   "variant_r2": 0.9756371780321734,
+   "core_invariant_r2": 0.964056731463876,
+   "nesting_deg": 1.1699370033822412,
+   "gap_ratio": 18.93434241480511,
+   "lambda_dk": 1.9530657529830933
+  },
+  "label": {
+   "angle_deg": 1.8857910882344622,
+   "variant_r2": 0.9754873703892585,
+   "core_invariant_r2": 0.9640145984603103,
+   "nesting_deg": 1.1674528424461819,
+   "gap_ratio": 2.777893540486009,
+   "lambda_dk": 1.9459682703018188
+  },
+  "kmeans": {
+   "angle_deg": 4.0123017437645725,
+   "variant_r2": 0.9741972055728498,
+   "core_invariant_r2": 0.9630917945176323,
+   "nesting_deg": 1.1598812634417093,
+   "gap_ratio": 1.2699737325317983,
+   "lambda_dk": 1.3258057832717896,
+   "cluster_purity": 0.4565666666666667,
+   "misgrouped_pair_fraction": 0.6342756152153015
+  },
+  "random": {
+   "angle_deg": 80.33568054830339,
+   "variant_r2": 0.5503405883499966,
+   "core_invariant_r2": 0.5158764357769243,
+   "nesting_deg": 1.2549307773041551,
+   "gap_ratio": 1.0130120972038001,
+   "lambda_dk": 2.028367757797241
+  }
+ },
+ "cluster_purity": 0.4565666666666667,
+ "misgrouped_pair_fraction": 0.6342756152153015,
+ "encoder_final": {
+  "step": 9999,
+  "pred": 0.11532321572303772,
+  "reg": 4.071852163178846e-05,
+  "min_std": 0.7535048127174377
+ },
+ "seconds": 217.4
+}

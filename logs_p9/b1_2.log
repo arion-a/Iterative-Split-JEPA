@@ -1,0 +1,9 @@
+/home/user/Iterative-Split-JEPA/src/isj/encoder.py:131: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  "min_std": float(h.std(0).min())})
+main 2 [1.06, 1.18]
+shuffled_rung2 2 [1.21, 73.96]
+rank1_rung2 2 [1.06, 75.62]
+no_inv 2 [31.28, 27.22]
+no_pred 2 [0.41, 1.05]
+no_var 2 [2.38, 9.81]

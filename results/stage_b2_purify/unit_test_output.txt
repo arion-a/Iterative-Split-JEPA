@@ -1,0 +1,4 @@
+hard nesting angle vs true rung-1 subspace: 0.023 deg (budgets 120000/30000)
+soft(lambda=1000) vs hard on identical pairs: 0.00141 deg
+soft(lambda=10000) vs hard on identical pairs: 0.00812 deg
+38 passed, 4 warnings in 3.84s

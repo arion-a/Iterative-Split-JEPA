@@ -1,0 +1,23 @@
+# Objective registry: every log entry points at these ids so each result is tied to the programme.
+# Source: experimental plan §1 (Goal), §4 (stages), §5 (roadmap); monograph §12-13.
+O0:
+  name: Validated algebraic core
+  claim: "An identified split can be split again, meaningfully, in the linear-Gaussian world."
+  evidence: tests/test_core_linear.py
+O1:
+  name: Engine works on a trained encoder (Stage A)
+  claim: "Prediction + whitening + one correspondence-driven spectral split recovers the planted 2-block split from a *trained, frozen* encoder."
+  pass: "plan §4.1: inv R2>0.9, leakage at null, angle<5deg, gap ratio>10; shuffled pairs flatten the gap"
+O2:
+  name: Second split — the core claim (Stage B)
+  claim: "The invariant output of rung 1 can be split again; rung 2 identifies its block; nesting holds; the planted cross-cutting factor is localized by the deviation map."
+  pass: "plan §4.2: rung-2 angle<5deg, nesting within tolerance, cluster purity>=0.9, deviation map localizes the factor"
+O3:
+  name: Deep ladder and its limit (Stage C)
+  claim: "Four criteria hold between rungs to depth 4-5; angle error scales n^-1/2 with a learned encoder; the first violated gate is located."
+O4:
+  name: Improvement at matched resources (Stage D)
+  claim: "Identification works / hierarchy is real / it pays — three verdicts recorded separately."
+OP:
+  name: Process integrity
+  claim: "Criteria frozen before runs; controls present; no stage proceeds by accumulated effort alone; negatives published."

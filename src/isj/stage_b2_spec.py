@@ -23,7 +23,7 @@ import torch
 from . import audits
 from .cluster import kmeans, pairs_within_clusters, purity
 from .encoder import EncoderConfig, encode, train_encoder
-from .engine import fit_rung, fit_whitener
+from .engine import fit_rung, fit_whitener, purify_pairs
 from .worlds import CouplingMap, HierarchicalMixtureWorld
 
 ARMS_FIT = ["b1_generator", "b2_kmeans", "b2_kmeans_oracleK", "label_pairs", "c1_cross_cluster",
@@ -161,11 +161,22 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "c1_cross_cluster": idx_arm(*cross_cluster_pairs(km_lab, n, seed)),
              "c2_variant_clusters": idx_arm(*pairs_within_clusters(var_lab, seed)),
              "c4_shuffled": idx_arm(*pairs_within_clusters(shuffled_lab, seed))}
+    arm_opts, purify_info = {}, None
+    if cfg.get("purify"):                                      # decision D10a: Tier 1 (purification) and Tier 4 (within-H1 whitening)
+        ru0, rv0, zu0, zv0, cu0, cv0 = pairs["b2_kmeans"]
+        keep, iters = purify_pairs(ru0, rv0, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
+        sub = (ru0[keep], rv0[keep], zu0[keep], zv0[keep], cu0[keep], cv0[keep])
+        pairs["b2_kmeans_purified"] = sub
+        pairs["b2_kmeans_purified_whitened"] = sub
+        arm_opts["b2_kmeans_purified_whitened"] = {"within_whitening": True}
+        purify_info = {"iterations": iters, "kept_fraction": float(keep.float().mean()), "n_kept": int(keep.sum()),
+                       "validity_before": float((cu0 == cv0).float().mean()), "validity_after": float((cu0[keep] == cv0[keep]).float().mean()),
+                       "valid_kept": float(keep[cu0 == cv0].float().mean()), "invalid_dropped": float((~keep)[cu0 != cv0].float().mean()) if (cu0 != cv0).any() else None}
     singleton_pairs = len(pairs_within_clusters(torch.arange(len(inv)))[0])        # C3: every sample alone -> zero pairs
 
     arms, construction = {}, {}
     for name, (ru, rv, zu, zv, cu, cv) in pairs.items():
-        fit2 = fit_rung(ru, rv, fit1.Q, k=2, d_k=4, nesting_enforcement=nest)
+        fit2 = fit_rung(ru, rv, fit1.Q, k=2, d_k=4, nesting_enforcement=nest, **arm_opts.get(name, {}))
         L = leak(fit2.V, fit2.Q, 2)
         arms[name] = {
             "k": 2, "angle_deg": audits.max_angle_deg(fit2.V, image[2]),
@@ -203,4 +214,4 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "bound_norm": rung1["a21_fro"] * (1 + 2 * quality["misgroup_rate"]),
              "bound_sqrt": rung1["a21_fro"] * math.sqrt(1 + 2 * quality["misgroup_rate"])}
     return {"seed": seed, "nesting_enforcement": nest, "pair_budgets": [n1, n2], "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
-            "quality": quality, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}
+            "quality": quality, "purify": purify_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}

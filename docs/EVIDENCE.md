@@ -37,3 +37,20 @@ the B2 world (rung-1 angle flat 3-4.7 deg from 7.5k to 480k pairs); the B2 span-
 (11.6-13.0 deg); against the orthogonal-complement truth nesting is 2.2-3.3 deg. P9 is run unchanged. Claude's expectation, recorded now and not
 replacing the registered prediction: the span-definition nesting stays above 4 deg in B2 (so P9 as worded is refuted for B2 on that definition) while the
 orthogonal-complement nesting lands in 2-4 deg; B1-arm nesting lands in 2-4 deg on either definition; budget doubling changes little.
+
+## E10 (registered 2026-10-14, before the E10 run; earlier called P10 in a Claude note)
+
+**Run.** The next B2 run (clean world, 3 seeds) judges nesting by the D10 definition (orthogonal-complement reference, threshold 5 deg).
+**Prediction (owner).** B2-arm nesting is about 3 deg and inside the gate; absolute nesting becomes an informational diagnostic.
+**Caveat recorded now.** P9 already read 2.82 +/- 0.55 deg on this definition, so this is a definitional ruling (D10), not an independent test.
+**Outcome.** (to be appended after the run)
+
+## E10a (registered 2026-10-14, before the E10a run)
+
+**Run.** Clean-world B2, 3 seeds, 60,000 / 30,000 pairs, hard nesting. Same encoder and pairs for three rung-2 arms: B2 as before; B2 + Tier 1 purification; B2 + Tier 1 + Tier 4 (D10a constants: factor 4 x median, 5 iterations max).
+**Prediction (owner).** The treated arm (Tier 1 + Tier 4) recovers at least 60% of the B1-B2 rung-2 gap-ratio deficit at fixed cluster purity, where recovered = (treated gap - untreated B2 gap) / (B1 gap - untreated B2 gap), means over 3 seeds. Reference from P9: B1 27.3, B2 3.1.
+**Decision rule.** Confirmed if recovered >= 0.60; refuted otherwise. Tier 1 alone is reported as informational. No tuning of the D10a constants after seeing results.
+**Outcome.** (to be appended after the run)
+
+## Item 2 check (2026-10-14): texture block rank
+The owner's concern: if "2 textures per identity" meant 2 discrete values, the 4-dimensional texture block would have about one direction of variation. Checked on the generator and data (seed 0, clean world): texture centres are random 4-D vectors (240 centres) plus Gaussian jitter in all 4 dimensions. Texture block covariance eigenvalues 1.21 / 1.13 / 1.07 / 1.00; rung-1 pair-difference moment on the texture block 1.38 / 1.22 / 1.10 / 0.92; within-identity centre-difference moment 2.40 / 2.08 / 1.86 / 1.49. All four directions vary, so the premise does not hold in this world and the world was not regenerated. The 0.882 texture R2 therefore has another cause, not identified here.

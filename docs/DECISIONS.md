@@ -44,3 +44,16 @@ because it is not equivalent (it ignores the restriction while choosing directio
 The budget doubling in P9 is kept exactly as registered, but we expect it to do little in the B2 world (see EVIDENCE.md note). The gate keeps its frozen
 (span) nesting definition; the orthogonal-complement nesting angle is added as one informational row (addition) so the two readings sit side by side.
 No engine change can lower the span-definition figure, because it is a property of the truth definition and the encoder, not of the split.
+
+
+## D10. Nesting gate definition (owner ruling, 2026-10-14)
+
+**Decision.** The nesting gate is measured against the relative reference: the orthogonal complement of the first block's probe image (the quantity the spectral head can identify). The threshold is unchanged (the frozen 5 deg). The absolute nesting angle (against the span of the true identity and category probe images) is kept and reported, but is reclassified as an informational encoder-quality diagnostic, not a gate. This applies to every run from E10 onward. No earlier result is rewritten.
+
+**Disclosure.** The owner chose this definition after the P9 data showed 2.82 deg on it (10.31 deg on the old one). It is therefore a definitional ruling, not a pre-registered pass. Runs from E10 onward are the first judged under a yardstick frozen before the run.
+
+## D10a. Tier 1 and Tier 4 for the second split (owner instruction, 2026-10-14)
+
+The repository does not define "Tier 1" or "Tier 4"; the owner's one-line descriptions are implemented as follows (Claude's reading, flag if wrong).
+* **Tier 1, purification loop.** On the cluster-built rung-2 pairs: fit the rung-2 difference moment inside H_1; score every pair by its energy in the bottom (invariant) eigendirections of that moment; drop pairs whose score exceeds 4 x the median score; re-estimate; repeat until the kept set stops changing or 5 iterations. Constants fixed here, before the run.
+* **Tier 4, within-H_1 whitening.** Whiten the content coordinates inside H_1 with the covariance of the pair endpoints' content coordinates before the eigendecomposition, then map back and re-orthonormalize inside H_1 (nesting preserved). Note: after the global ZCA, an orthonormal subspace of the population already has identity covariance, so this may change little; it is measured, not assumed.

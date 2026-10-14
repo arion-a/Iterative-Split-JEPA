@@ -117,7 +117,8 @@ def _qr_keep_orientation(v: torch.Tensor) -> torch.Tensor:
 def fit_rung(ru: torch.Tensor, rv: torch.Tensor, h_prev: torch.Tensor, k: int,
              d_k: int | None = None, gamma_min: float | None = None,
              gauge_ref: torch.Tensor | None = None,
-             nesting_enforcement: str = "hard", soft_lambda: float = 100.0) -> RungFit:
+             nesting_enforcement: str = "hard", soft_lambda: float = 100.0,
+             within_whitening: bool = False) -> RungFit:
     """One split on content H_{k-1}. ru/rv are whitened representations of D_k tuples.
 
     nesting_enforcement (decision D9):
@@ -134,7 +135,17 @@ def fit_rung(ru: torch.Tensor, rv: torch.Tensor, h_prev: torch.Tensor, k: int,
     proj = hp @ hp.T                                              # P: projector onto H_{k-1}
     m = hp.T @ m_full @ hp                                        # the same moment seen from inside H_{k-1}
     max_sq = float((delta_full @ hp).square().sum(1).max())
-    vals, vecs = eig_desc(m)
+    c_inv_half = None
+    if within_whitening:                                          # decision D10a, Tier 4 (hard enforcement only)
+        if nesting_enforcement != "hard":
+            raise ValueError("within_whitening needs hard nesting enforcement")
+        c = torch.cat([ru, rv]).double() @ hp
+        c = c - c.mean(0)
+        ev, evec = torch.linalg.eigh(c.T @ c / len(c))
+        c_inv_half = evec @ torch.diag(ev.clamp_min(1e-12).rsqrt()) @ evec.T
+        vals, vecs = eig_desc(c_inv_half @ m @ c_inv_half)
+    else:
+        vals, vecs = eig_desc(m)
     selected = select_block_count(vals, gamma_min) if gamma_min is not None else None
     if d_k is None:
         if selected is None:
@@ -142,7 +153,13 @@ def fit_rung(ru: torch.Tensor, rv: torch.Tensor, h_prev: torch.Tensor, k: int,
         d_k = selected
     gauge_local = None if gauge_ref is None else hp.T @ gauge_ref.double() @ hp
 
-    if nesting_enforcement == "hard":
+    if nesting_enforcement == "hard" and c_inv_half is not None:
+        v_c = _qr_keep_orientation(c_inv_half @ vecs[:, :d_k])    # directions back in content coordinates, orthonormalized
+        u_c, _, _ = torch.linalg.svd(torch.eye(hp.shape[1], dtype=v_c.dtype) - v_c @ v_c.T)
+        v = _qr_keep_orientation(proj @ (hp @ gauge_fix(v_c, gauge_local)))
+        q = hp @ u_c[:, : hp.shape[1] - d_k]
+        eig_report = vals
+    elif nesting_enforcement == "hard":
         v = hp @ gauge_fix(vecs[:, :d_k], gauge_local)
         v = _qr_keep_orientation(proj @ v)                        # explicit D9 guard: project onto the rung-(k-1) basis, re-orthonormalize
         q = hp @ vecs[:, d_k:]
@@ -163,6 +180,25 @@ def fit_rung(ru: torch.Tensor, rv: torch.Tensor, h_prev: torch.Tensor, k: int,
     return RungFit(k=k, d_k=d_k, eigvals=eig_report.float(), gap_ratio=gap_ratio(eig_report, d_k),
                    selected_d=selected, V=v.float(), Q=q.float(), H_prev=h_prev, n_pairs=len(ru), M=m.float(),
                    max_sq_diff=max_sq, nesting_enforcement=nesting_enforcement)
+
+
+def purify_pairs(ru: torch.Tensor, rv: torch.Tensor, h_prev: torch.Tensor, d_k: int,
+                 factor: float = 4.0, max_iter: int = 5) -> tuple[torch.Tensor, int]:
+    """Tier 1 (decision D10a): drop pairs with large energy in the bottom (invariant) eigendirections of the
+    difference moment inside H_prev. Valid pairs cancel the invariant content, so their energy there is only noise.
+    Returns (boolean keep mask, iterations used). Constants fixed in D10a before any run."""
+    hp = h_prev.double()
+    delta = (ru - rv).double() @ hp
+    keep = torch.ones(len(delta), dtype=torch.bool)
+    for it in range(1, max_iter + 1):
+        d_keep = delta[keep]
+        _, vecs = eig_desc(d_keep.T @ d_keep / len(d_keep))
+        score = (delta @ vecs[:, d_k:]).square().sum(1)
+        new = score <= factor * score[keep].median()
+        if torch.equal(new, keep):
+            return keep, it
+        keep = new
+    return keep, max_iter
 
 
 PairsFn = Callable[[int], "tuple[torch.Tensor, torch.Tensor] | None"]

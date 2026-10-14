@@ -45,3 +45,8 @@
 | 1 | B2 [E11a] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 8.1 deg, B2 8.3 deg | `results/stage_b2_e11a/sigma_cat_0.1/1.json` |
 
 | - | **E11a outcome (2026-10-14): REFUTED** | Horizon-3 alignment: texture probe 0.880 / 0.853 / 0.937 (needs 0.95; baseline 0.894 / 0.907 / 0.930), mean rung-1 angle 4.45 (baseline 3.78, needs 2.8), B1-arm rung-2 angle 10.10 (baseline 10.30, needs 7.7). Multi-step alignment did not lower the floor and slightly worsened it; matches the recorded caveat. First run under the new leakage gate: not met (0.044 B1 arm). Tier 1 gap recovery replicated (0.70). E11b next, not started | Horizon option built; horizon-1 path verified identical | `results/stage_b2_e11a/` |
+| 1 | B2 [E11b] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 8.8 deg, B2 8.9 deg | `results/stage_b2_e11b/sigma_cat_0.1/1.json` |
+| 2 | B2 [E11b] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 11.7 deg, B2 11.7 deg | `results/stage_b2_e11b/sigma_cat_0.1/2.json` |
+| 0 | B2 [E11b] sigma_cat=0.1 | purity 1.00, K found 6 | rung-2 angle B1 9.8 deg, B2 9.8 deg | `results/stage_b2_e11b/sigma_cat_0.1/0.json` |
+
+| - | **E11b outcome (2026-10-14): REFUTED** | 40,000 steps: texture probe 0.892 / 0.905 / 0.932 (baseline 0.894 / 0.907 / 0.930), mean rung-1 angle 3.63 (baseline 3.78), B1-arm rung-2 angle 10.08 (baseline 10.30): no change beyond seed noise. E11a and E11b both refuted; the encoder floor is not moved by multi-step alignment or 4x training. Side observation: seed 0 found K = 6 (purity 0.999), the only run where the clusterer found all six categories | Encoder cause still unidentified | `results/stage_b2_e11b/` |

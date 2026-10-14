@@ -291,20 +291,31 @@ class HierarchicalMixtureWorld(BlockWorld):
     def sample(self, n):
         return self.sample_with_labels(n)[0]
 
-    def transition_pairs(self, n):
-        cat, ident, tex, j = self._draw(n)
-        z0 = self._build(cat, ident, tex, *j)
+    def _step(self, cat, ident, tex, j):
+        """One step of the dynamics (labels persist with the block speed, jitters follow AR(1)); RNG order is the original one."""
         r1, r2, r3 = self.rhos
         g = self._g
-        keep3 = torch.rand(n, generator=g) < r3
-        cat2 = torch.where(keep3, cat, torch.randint(0, self.n_categories, (n,), generator=g))
-        keep2 = (torch.rand(n, generator=g) < r2) & (cat2 == cat)
-        ident2 = torch.where(keep2, ident, torch.randint(0, self.n_identities, (n,), generator=g))
-        keep1 = (torch.rand(n, generator=g) < r1) & (ident2 == ident) & (cat2 == cat)
-        tex2 = torch.where(keep1, tex, torch.randint(0, self.n_textures, (n,), generator=g))
+        keep3 = torch.rand(len(cat), generator=g) < r3
+        cat2 = torch.where(keep3, cat, torch.randint(0, self.n_categories, (len(cat),), generator=g))
+        keep2 = (torch.rand(len(cat), generator=g) < r2) & (cat2 == cat)
+        ident2 = torch.where(keep2, ident, torch.randint(0, self.n_identities, (len(cat),), generator=g))
+        keep1 = (torch.rand(len(cat), generator=g) < r1) & (ident2 == ident) & (cat2 == cat)
+        tex2 = torch.where(keep1, tex, torch.randint(0, self.n_textures, (len(cat),), generator=g))
         ar = lambda x, r: r * x + math.sqrt(1 - r**2) * torch.randn(x.shape, generator=g)
-        z1 = self._build(cat2, ident2, tex2, ar(j[0], r1), ar(j[1], r2), ar(j[2], r3))
-        return z0, z1
+        return cat2, ident2, tex2, [ar(j[0], r1), ar(j[1], r2), ar(j[2], r3)]
+
+    def transition_chain(self, n, horizon=1):
+        """[z_t, z_{t+1}, ..., z_{t+horizon}] from the stationary chain (horizon 1 is exactly transition_pairs)."""
+        cat, ident, tex, j = self._draw(n)
+        out = [self._build(cat, ident, tex, *j)]
+        for _ in range(horizon):
+            cat, ident, tex, j = self._step(cat, ident, tex, j)
+            out.append(self._build(cat, ident, tex, *j))
+        return out
+
+    def transition_pairs(self, n):
+        z = self.transition_chain(n, 1)
+        return z[0], z[1]
 
     def correspondence_pairs(self, n, k, rank=None):
         """Generator twins: share every block slower than k EXACTLY (same labels and jitter)."""

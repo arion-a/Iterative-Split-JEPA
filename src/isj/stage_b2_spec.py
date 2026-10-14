@@ -80,7 +80,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"], batch_size=e["batch_size"],
                          lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], sigreg_weight=e["sigreg_weight"], arch=e["arch"],
-                         objective=e["objective"], coupling_layers=w["coupling_layers"])
+                         objective=e["objective"], coupling_layers=w["coupling_layers"], horizon=e.get("horizon", 1))
     enc, train_log = train_encoder(world, observe, ecfg, seed + 77_777, verbose)
     wh = fit_whitener(encode(enc, observe, world.sample(s["num_whiten"])), 1e-5)
     R = lambda z: wh(encode(enc, observe, z))
@@ -94,6 +94,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     a_hat = w_glob[:-1].T
     image = {k: a_hat[:, world.block_slice(k)] for k in (1, 2, 3)}
     global_r2 = audits.r2(w_glob, zte, rte)
+    probe_r2 = {nm: audits.linear_r2(rtr, ztr[:, sl], rte, zte[:, sl]) for nm, sl in (("texture", slice(0, 4)), ("identity", slice(4, 8)), ("category", slice(8, 12)))}   # E15 measure: full features -> true block
     # two truths for the rung-1 invariant content H1*: span of the probe images of blocks 2,3 (gate definition),
     # and the orthogonal complement of block 1's image (what the method targets) -- informational (addition)
     h_span = torch.cat([image[2], image[3]], 1)
@@ -221,4 +222,4 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "bound_norm": rung1["a21_fro"] * (1 + 2 * quality["misgroup_rate"]),
              "bound_sqrt": rung1["a21_fro"] * math.sqrt(1 + 2 * quality["misgroup_rate"])}
     return {"seed": seed, "nesting_enforcement": nest, "pair_budgets": [n1, n2], "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
-            "quality": quality, "purify": purify_info, "noop_control": noop_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}
+            "quality": quality, "full_feature_probe_r2": probe_r2, "horizon": e.get("horizon", 1), "purify": purify_info, "noop_control": noop_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}

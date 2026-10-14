@@ -92,6 +92,7 @@ class EncoderConfig:
     arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
     objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
     coupling_layers: int = 4
+    horizon: int = 1              # E11a: alignment at lags 1..horizon (lejepa objective, worlds with transition_chain); 1 = the original objective
 
 
 def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
@@ -115,6 +116,20 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
         lr = cfg.lr if step < half else cfg.lr * (1 + math.cos(math.pi * prog)) / 2
         for g in opt.param_groups:
             g["lr"] = lr
+        if cfg.horizon > 1:             # E11a: multi-step alignment (losses summed over lags 1..horizon), SIGReg on every encoded point
+            assert cfg.objective == "lejepa" and hasattr(world, "transition_chain"), "horizon > 1 needs the lejepa objective and a world with transition_chain"
+            chain = world.transition_chain(cfg.batch_size, cfg.horizon)
+            h_all = enc(observe(torch.cat(chain)))
+            hs = h_all.reshape(cfg.horizon + 1, cfg.batch_size, -1)
+            l_pred = sum((torch.stack([hs[0], hs[k]]).mean(0) - torch.stack([hs[0], hs[k]])).square().mean() for k in range(1, cfg.horizon + 1))
+            l_reg = cfg.sigreg_weight * sig(h_all)
+            loss = (1 - cfg.sigreg_weight) * cfg.pred_weight * l_pred + l_reg
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+            if step % cfg.log_every == 0 or step == cfg.steps - 1:
+                log.append({"step": step, "pred": float(l_pred.detach()), "reg": float(l_reg.detach()), "min_std": float(h_all.std(0).min())})
+            continue
         z1, z2 = world.transition_pairs(cfg.batch_size)
         h = enc(observe(torch.cat([z1, z2])))
         h1, h2 = h[: cfg.batch_size], h[cfg.batch_size:]

@@ -161,7 +161,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "c1_cross_cluster": idx_arm(*cross_cluster_pairs(km_lab, n, seed)),
              "c2_variant_clusters": idx_arm(*pairs_within_clusters(var_lab, seed)),
              "c4_shuffled": idx_arm(*pairs_within_clusters(shuffled_lab, seed))}
-    arm_opts, purify_info = {}, None
+    arm_opts, purify_info, noop_info = {}, None, None
     if cfg.get("purify"):                                      # decision D10a: Tier 1 (purification) and Tier 4 (within-H1 whitening)
         ru0, rv0, zu0, zv0, cu0, cv0 = pairs["b2_kmeans"]
         keep, iters = purify_pairs(ru0, rv0, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
@@ -169,6 +169,11 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         pairs["b2_kmeans_purified"] = sub
         pairs["b2_kmeans_purified_whitened"] = sub
         arm_opts["b2_kmeans_purified_whitened"] = {"within_whitening": True}
+        if cfg.get("noop_control"):                                  # E10 no-op control: Tier 1 on B1's clean generator-twin pairs
+            ru1c, rv1c, zu1c, zv1c, cu1c, cv1c = pairs["b1_generator"]
+            keepc, itersc = purify_pairs(ru1c, rv1c, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
+            pairs["b1_generator_purified"] = (ru1c[keepc], rv1c[keepc], zu1c[keepc], zv1c[keepc], None, None)
+            noop_info = {"n_pairs": len(keepc), "n_trimmed": int((~keepc).sum()), "trimmed_fraction": float((~keepc).float().mean()), "iterations": itersc}
         purify_info = {"iterations": iters, "kept_fraction": float(keep.float().mean()), "n_kept": int(keep.sum()),
                        "validity_before": float((cu0 == cv0).float().mean()), "validity_after": float((cu0[keep] == cv0[keep]).float().mean()),
                        "valid_kept": float(keep[cu0 == cv0].float().mean()), "invalid_dropped": float((~keep)[cu0 != cv0].float().mean()) if (cu0 != cv0).any() else None}
@@ -185,6 +190,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
             "global_r2": global_r2, "gap_ratio": fit2.gap_ratio, "lambda_dk": float(fit2.eigvals[3]),
             "eigvals": [float(x) for x in fit2.eigvals], "rank_deficient": rank_flag(fit2, ru, rv),
             "nesting_angle_deg": float(audits.principal_angles_deg(fit2.V, torch.cat([image[2], image[3]], 1)).max()),
+            "V": [[float(x) for x in row] for row in fit2.V.T] if cfg.get("save_subspaces") else None,
             "nesting_perp_deg": float(audits.principal_angles_deg(fit2.V, h_perp).max()),
             "rank_monitor": audits.rank_monitor(fit2), "n_pairs": len(ru), **L}
         arms[name]["core_invariant_r2"] = arms[name]["invariant_r2"]
@@ -214,4 +220,4 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "bound_norm": rung1["a21_fro"] * (1 + 2 * quality["misgroup_rate"]),
              "bound_sqrt": rung1["a21_fro"] * math.sqrt(1 + 2 * quality["misgroup_rate"])}
     return {"seed": seed, "nesting_enforcement": nest, "pair_budgets": [n1, n2], "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
-            "quality": quality, "purify": purify_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}
+            "quality": quality, "purify": purify_info, "noop_control": noop_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}

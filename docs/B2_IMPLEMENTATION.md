@@ -46,4 +46,4 @@ run follows this spec and writes to `results/B2/` in the layout `docs/REPORTING.
   `max||Delta h||^2 * sqrt(2 log(1/delta)/n)`, pass/fail, and n_pairs.
 * Defaults for old runs are unchanged in effect: the old path was already restricted (= hard), so existing results are reproduced.
 * `experiments/diagnose_nesting.py` is the diagnostic; output in `results/diagnostics/nesting/`. Finding: no engine setting lowers the B2 span-definition
-  nesting figure; the repair the owner listed (rung-1 budget, rank completeness, gap) is applied in the P9 run and its effect is measured there.
+  nesting figure; the repair the owner listed (rung-1 budget, rank completeness, gap) is applied in the E9 run and its effect is measured there.

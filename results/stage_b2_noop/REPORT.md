@@ -1,12 +1,12 @@
-# E10c and no-op control: Tier 1 purification, clean world (sigma_cat 0.1), 3 seeds
+# E14 and no-op control: Tier 1 purification, clean world (sigma_cat 0.1), 3 seeds
 
-Untreated and treated arms reproduce the E10a run exactly: yes.
+Untreated and treated arms reproduce the E12 run exactly: yes.
 
-**E10c verdict:** CONFIRMED (criterion: no metric worse than untreated by more than 1 untreated seed-std; fixed in docs/EVIDENCE.md after the E10a numbers were seen, so not blind).
+**E14 verdict:** CONFIRMED (criterion: no metric worse than untreated by more than 1 untreated seed-std; fixed in docs/EVIDENCE.md after the E10a numbers were seen, so not blind).
 
 **No-op control verdict:** strict reading (nothing trimmed, results identical): **FAIL**. Practical reading (≤ 2% trimmed, every metric within one seed-std of the unpurified B1 arm): **FAIL**. Which reading is the gate is the owner's call.
 
-## E10c: treated vs untreated B2 arm (means over 3 seeds)
+## E14: treated vs untreated B2 arm (means over 3 seeds)
 
 | Treated arm | Metric | Untreated | Treated | Δ | Untreated seed-std | Direction | No damage? |
 |---|---|---|---|---|---|---|---|
@@ -50,3 +50,13 @@ Untreated and treated arms reproduce the E10a run exactly: yes.
 | Category core R² | 0.970 ± 0.004 | 0.970 ± 0.004 | 0.0000 |
 | Nesting, D10 reference (°) | 2.799 ± 0.484 | 2.798 ± 0.485 | 0.0052 |
 | a21_fro | 0.040 ± 0.008 | 0.039 ± 0.006 | 0.0045 |
+
+## E14 per seed: untreated -> Tier 1, with position against the clean B1-arm subspace (°)
+
+| Seed | Rung-2 angle (°) | Identity R² | Core R² | Nesting D10 (°) | Gap ratio | Angle to B1-arm subspace |
+|---|---|---|---|---|---|---|
+| 0 | 14.74 -> 10.71 | 0.919 -> 0.930 | 0.961 -> 0.970 | 3.37 -> 3.27 | 2.7 -> 19.2 | 11.85 -> 0.76 |
+| 1 | 8.66 -> 8.61 | 0.926 -> 0.932 | 0.972 -> 0.973 | 2.28 -> 2.29 | 2.7 -> 22.2 | 5.17 -> 0.90 |
+| 2 | 11.65 -> 11.60 | 0.902 -> 0.900 | 0.963 -> 0.966 | 2.79 -> 2.86 | 3.9 -> 17.6 | 6.97 -> 1.41 |
+
+Treated subspace closer to the clean B1 subspace on every seed: yes.

@@ -167,8 +167,9 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         keep, iters = purify_pairs(ru0, rv0, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
         sub = (ru0[keep], rv0[keep], zu0[keep], zv0[keep], cu0[keep], cv0[keep])
         pairs["b2_kmeans_purified"] = sub
-        pairs["b2_kmeans_purified_whitened"] = sub
-        arm_opts["b2_kmeans_purified_whitened"] = {"within_whitening": True}
+        if cfg["purify"].get("tier4", False):                  # D11: Tier 4 is opt-in (demoted); historic configs set tier4: true
+            pairs["b2_kmeans_purified_whitened"] = sub
+            arm_opts["b2_kmeans_purified_whitened"] = {"within_whitening": True}
         if cfg.get("noop_control"):                                  # E10 no-op control: Tier 1 on B1's clean generator-twin pairs
             ru1c, rv1c, zu1c, zv1c, cu1c, cv1c = pairs["b1_generator"]
             keepc, itersc = purify_pairs(ru1c, rv1c, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])

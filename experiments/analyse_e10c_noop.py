@@ -1,4 +1,4 @@
-"""E10c (no collateral damage) and the Tier 1 no-op control, from results/stage_b2_noop/ (+ cross-check against results/stage_b2_purify/).
+"""E14 (no collateral damage) and the Tier 1 no-op control, from results/stage_b2_noop/ (+ cross-check against results/stage_b2_purify/).
 Criteria are the ones registered in docs/EVIDENCE.md before the run. Writes results/stage_b2_noop/REPORT.md."""
 import glob, json, math, statistics as st, torch
 from isj.audits import principal_angles_deg
@@ -10,11 +10,11 @@ ms = lambda v, nd=3: f"{st.mean(v):.{nd}f} ± {st.stdev(v):.{nd}f}"
 tab = lambda h, rows: "\n".join(["| " + " | ".join(h) + " |", "|" + "---|" * len(h)] + ["| " + " | ".join(str(c) for c in r) + " |" for r in rows])
 yn = lambda b: "yes" if b else "**NO**"
 
-# reproducibility: untreated arms must equal the E10a run
+# reproducibility: untreated arms must equal the E12 run
 repro = all(abs(r["arms"][a][k] - prev[r["seed"]]["arms"][a][k]) < 1e-6 for r in runs for a in ("b1_generator", "b2_kmeans", "b2_kmeans_purified", "b2_kmeans_purified_whitened")
             for k in ("angle_deg", "gap_ratio", "variant_r2", "nesting_angle_deg"))
 
-# ---- E10c: worse-than-untreated by more than 1 untreated std = damage (lower is better: True)
+# ---- E14: worse-than-untreated by more than 1 untreated std = damage (lower is better: True)
 METRICS = [("Rung-2 angle (°)", "angle_deg", True), ("Identity R²", "variant_r2", False), ("Category core R²", "core_invariant_r2", False),
            ("Nesting, D10 reference (°)", "nesting_perp_deg", True), ("Nesting, absolute (°) (informational)", "nesting_angle_deg", True),
            ("Block purity", "block_purity", False), ("a12_fro", "a12_fro", True)]
@@ -43,13 +43,26 @@ strict = all(n["n_trimmed"] == 0 for n in nc) and all(r["arms"][pur][k] == r["ar
 frac = max(n["trimmed_fraction"] for n in nc)
 practical = frac <= 0.02 and all(abs(r["arms"][pur][k] - r["arms"][base][k]) <= (st.stdev([x["arms"][base][k] for x in runs])) for r in runs for _, k in CM)
 
-md = ["# E10c and no-op control: Tier 1 purification, clean world (sigma_cat 0.1), 3 seeds\n",
-      f"Untreated and treated arms reproduce the E10a run exactly: {'yes' if repro else '**NO**'}.\n",
-      f"**E10c verdict:** {'CONFIRMED' if ok_all else 'REFUTED'} (criterion: no metric worse than untreated by more than 1 untreated seed-std; fixed in docs/EVIDENCE.md after the E10a numbers were seen, so not blind).\n",
+md = ["# E14 and no-op control: Tier 1 purification, clean world (sigma_cat 0.1), 3 seeds\n",
+      f"Untreated and treated arms reproduce the E12 run exactly: {'yes' if repro else '**NO**'}.\n",
+      f"**E14 verdict:** {'CONFIRMED' if ok_all else 'REFUTED'} (criterion: no metric worse than untreated by more than 1 untreated seed-std; fixed in docs/EVIDENCE.md after the E10a numbers were seen, so not blind).\n",
       f"**No-op control verdict:** strict reading (nothing trimmed, results identical): **{'PASS' if strict else 'FAIL'}**. Practical reading (≤ 2% trimmed, every metric within one seed-std of the unpurified B1 arm): **{'PASS' if practical else 'FAIL'}**. Which reading is the gate is the owner's call.\n",
-      "## E10c: treated vs untreated B2 arm (means over 3 seeds)\n", tab(["Treated arm", "Metric", "Untreated", "Treated", "Δ", "Untreated seed-std", "Direction", "No damage?"], rows),
+      "## E14: treated vs untreated B2 arm (means over 3 seeds)\n", tab(["Treated arm", "Metric", "Untreated", "Treated", "Δ", "Untreated seed-std", "Direction", "No damage?"], rows),
       "\n### Position: largest angle between the untreated and the treated rung-2 variant subspace (°)\n", tab(["Seed", "Tier 1", "Tier 1 + Tier 4"], pos),
       "\n## No-op control: Tier 1 on B1's clean generator-twin pairs\n", tab(["Seed", "Pairs", "Trimmed", "Trimmed fraction", "Iterations"], [[r["seed"], n["n_pairs"], n["n_trimmed"], f"{n['trimmed_fraction']:.4f}", n["iterations"]] for r, n in zip(runs, nc)]),
       "\n", tab(["Metric", "B1 arm, unpurified", "B1 arm, Tier 1", "Largest per-seed change"], ctl_rows)]
+# ---- E14 per seed: before/after purification (Tier 1) for each seed, with the position relative to the clean B1 subspace
+KEY = [("Rung-2 angle (°)", "angle_deg", 2), ("Identity R²", "variant_r2", 3), ("Core R²", "core_invariant_r2", 3), ("Nesting D10 (°)", "nesting_perp_deg", 2), ("Gap ratio", "gap_ratio", 1)]
+ps = []
+for r in runs:
+    b1v, un, tr = (torch.tensor(r["arms"][x]["V"]).T for x in ("b1_generator", "b2_kmeans", "b2_kmeans_purified"))
+    row = [r["seed"]] + [f"{r['arms']['b2_kmeans'][k]:.{nd}f} -> {r['arms']['b2_kmeans_purified'][k]:.{nd}f}" for _, k, nd in KEY]
+    row += [f"{principal_angles_deg(un, b1v).max():.2f} -> {principal_angles_deg(tr, b1v).max():.2f}"]
+    ps.append(row)
+closer = all(principal_angles_deg(torch.tensor(r["arms"]["b2_kmeans_purified"]["V"]).T, torch.tensor(r["arms"]["b1_generator"]["V"]).T).max()
+             < principal_angles_deg(torch.tensor(r["arms"]["b2_kmeans"]["V"]).T, torch.tensor(r["arms"]["b1_generator"]["V"]).T).max() for r in runs)
+md += ["\n## E14 per seed: untreated -> Tier 1, with position against the clean B1-arm subspace (°)\n",
+       tab(["Seed"] + [l for l, _, _ in KEY] + ["Angle to B1-arm subspace"], ps),
+       f"\nTreated subspace closer to the clean B1 subspace on every seed: {'yes' if closer else '**NO**'}."]
 open(f"{D}/REPORT.md", "w").write("\n".join(md))
-print("repro", repro, "E10c", ok_all, "noop strict", strict, "practical", practical, "trim frac max", round(frac, 4))
+print("repro", repro, "E14", ok_all, "noop strict", strict, "practical", practical, "trim frac max", round(frac, 4))

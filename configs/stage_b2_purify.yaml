@@ -68,3 +68,4 @@ nesting_gate: complement          # D10: gate on nesting_perp_deg; the span-trut
 purify:                           # D10a constants, fixed before the run
   factor: 4.0
   max_iter: 5
+  tier4: true                   # historic run: the Tier 1 + Tier 4 arm was produced (D11: now opt-in, default off)

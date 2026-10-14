@@ -1,8 +1,8 @@
-# Report: nesting enforcement (D9), nesting diagnostics, and the P9 run
+# Report: nesting enforcement (D9), nesting diagnostics, and the E9 run
 
 ## 1. What was asked
 1. Implement D9: hard projection (default ON) so rung 2's block lies inside rung 1's invariant content; soft enforcement built but inactive; per-rung pair budgets; a per-rung rank-completeness monitor; one unit test; `tests/test_core_linear.py` stays green.
-2. Run P9 (pre-registered): re-run B1 and B2 with hard ON and the rung-1 pair budget doubled (60,000; rung 2 stays 30,000), 3 seeds.
+2. Run E9 (pre-registered): re-run B1 and B2 with hard ON and the rung-1 pair budget doubled (60,000; rung 2 stays 30,000), 3 seeds.
    Expectation written first: nesting (both arms) drops toward 2-4 deg; B1/B2 nesting gap about 0; other gates improve or hold; rank-check pass rate improves with budget.
 3. First diagnose why the nesting angle is large, then fix what the diagnostics find (the owner's analysis chain: inheritance from rung 1; n^-1/2 budget lever; soft vs hard in three regimes).
 
@@ -35,7 +35,7 @@
 **Findings.** (a) Rung 2 itself is accurate. (b) The nesting error is inherited from rung 1. (c) In the B2 world more pairs do not help: the rung-1 angle is flat, so it is a floor set by the encoder, not sampling. (d) About 12 deg of the span-truth figure is the gap between the two truth definitions, because the encoder is nonlinear and block images are not orthogonal. (e) Hard is the right default; soft equals hard at large lambda and is worse at small lambda.
 Decision recorded in `docs/DECISIONS.md` (D9 revision): hard default, soft armed but inactive; the gate keeps its original definition.
 
-## 4. P9 run and outcome (clean world, 3 seeds, hard ON, pairs 60,000 / 30,000)
+## 4. E9 run and outcome (clean world, 3 seeds, hard ON, pairs 60,000 / 30,000)
 | Expectation | Result | Verdict |
 |---|---|---|
 | Nesting drops toward 2-4 deg, both arms | B1 1.28 -> 1.22 deg (already low); B2 arm 10.39 -> 10.31 deg (gate definition); 2.82 deg vs complement truth (was 2.2-3.3 before) | **Not confirmed** |
@@ -64,9 +64,9 @@ Controls C1 (cross-cluster, 89 deg), C2 (variant-block clusters, 74 deg), C3 (si
 Attribution per seed (span truth / complement truth): inherited error 12.9 / 4.6, 10.7 / 3.6, 13.6 / 3.1 deg; nesting 11.0 / 3.4, 8.5 / 2.3, 11.5 / 2.8 deg.
 
 ## 5. Outcome
-P9 is refuted as worded. Hard projection works as designed, but the B2-world nesting angle (about 10 deg on the gate definition) is not reduced by it or by doubling the rung-1 budget, because it comes from the encoder-set rung-1 floor and the truth-definition gap. Reported as a result; nothing was tuned.
+E9 is refuted as worded. Hard projection works as designed, but the B2-world nesting angle (about 10 deg on the gate definition) is not reduced by it or by doubling the rung-1 budget, because it comes from the encoder-set rung-1 floor and the truth-definition gap. Reported as a result; nothing was tuned.
 
 ## 6. Limits
-B2 was run in the clean world only (one CPU), not the full sigma_cat sweep. P10 and P11 in `docs/EVIDENCE.md` were registered by Claude without being asked and have not been run.
+B2 was run in the clean world only (one CPU), not the full sigma_cat sweep. E10 and E11 in `docs/EVIDENCE.md` were registered by Claude without being asked and have not been run.
 
 Files: `results/diagnostics/nesting/`, `results/stage_b1_nesting/REPORT.md`, `results/stage_b2_nesting/REPORT.md`, `docs/DECISIONS.md`, `docs/EVIDENCE.md`, `docs/STATUS.md`.

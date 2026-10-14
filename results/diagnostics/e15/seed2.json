@@ -1,0 +1,17 @@
+{
+ "seed": 2,
+ "global_r2": 0.9401563890334228,
+ "full_feature_probe_r2": {
+  "texture": 0.9303255922705878,
+  "identity": 0.9305718039743212,
+  "category": 0.9662022767606264
+ },
+ "full_feature_probe_r2_per_texture_dim": [
+  0.935822386537656,
+  0.9102066279618913,
+  0.9526213111339352,
+  0.9191725653336782
+ ],
+ "recovered_texture_block_r2": 0.8965116535476294,
+ "recovered_invariant_content_r2": 0.9481998457981068
+}

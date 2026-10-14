@@ -1,0 +1,11 @@
+# Leakage gate re-referenced to the paper's dimension scaling (decision D13, prediction E17). Frozen 2026-10-14, effective from the next run.
+# Replaces the retired post-hoc gate "largest off-diagonal |R2| below 0.01" (that number stays as an informational metric).
+leakage_gate:
+  metric: "||A21||_F / sqrt(d_V)  (the paper's normalized form; field a21_norm in the run JSON)"
+  applies_to: "rung 1 and rung 2"
+  paper_points: {d4: 0.0053, d64: 0.0325}
+  interpolation: power_law          # exponent 0.654; alternatives: linear -> 0.0089, log-linear -> 0.0161 at d = 12
+  d: 12
+  predicted_at_d: 0.0109
+  tolerance: 0.01
+  threshold: 0.0209

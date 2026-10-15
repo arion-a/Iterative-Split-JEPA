@@ -50,3 +50,23 @@
 | 0 | B2 [E11b] sigma_cat=0.1 | purity 1.00, K found 6 | rung-2 angle B1 9.8 deg, B2 9.8 deg | `results/stage_b2_e11b/sigma_cat_0.1/0.json` |
 
 | - | **E11b outcome (2026-10-14): REFUTED** | 40,000 steps: texture probe 0.892 / 0.905 / 0.932 (baseline 0.894 / 0.907 / 0.930), mean rung-1 angle 3.63 (baseline 3.78), B1-arm rung-2 angle 10.08 (baseline 10.30): no change beyond seed noise. E11a and E11b both refuted; the encoder floor is not moved by multi-step alignment or 4x training. Side observation: seed 0 found K = 6 (purity 0.999), the only run where the clusterer found all six categories | Encoder cause still unidentified | `results/stage_b2_e11b/` |
+| 2 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.84, K found 5 | rung-2 angle B1 11.6 deg, B2 11.6 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.1/2.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 10.7 deg, B2 14.7 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.1/0.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.84, K found 5 | rung-2 angle B1 8.6 deg, B2 8.7 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.1/1.json` |
+| 2 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 11.0 deg, B2 11.3 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.4/2.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.97, K found 6 | rung-2 angle B1 10.5 deg, B2 10.6 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.4/0.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.99, K found 6 | rung-2 angle B1 8.4 deg, B2 8.5 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.4/1.json` |
+| 2 | B2 [no-op control + E10c] sigma_cat=0.6 | purity 0.85, K found 6 | rung-2 angle B1 10.7 deg, B2 13.2 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.6/2.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=0.6 | purity 0.85, K found 6 | rung-2 angle B1 10.2 deg, B2 13.0 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.6/0.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=0.6 | purity 0.84, K found 6 | rung-2 angle B1 8.4 deg, B2 10.4 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.6/1.json` |
+| 2 | B2 [no-op control + E10c] sigma_cat=0.8 | purity 0.75, K found 9 | rung-2 angle B1 10.6 deg, B2 28.2 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.8/2.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=0.8 | purity 0.74, K found 12 | rung-2 angle B1 8.4 deg, B2 69.6 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.8/1.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=0.8 | purity 0.77, K found 11 | rung-2 angle B1 10.2 deg, B2 25.0 deg | `results/stage_b2_gapfix_sweep/sigma_cat_0.8/0.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=1.0 | purity 0.65, K found 10 | rung-2 angle B1 8.3 deg, B2 83.5 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.0/1.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=1.0 | purity 0.69, K found 10 | rung-2 angle B1 10.1 deg, B2 50.6 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.0/0.json` |
+| 2 | B2 [no-op control + E10c] sigma_cat=1.0 | purity 0.71, K found 12 | rung-2 angle B1 10.7 deg, B2 61.9 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.0/2.json` |
+| 0 | B2 [no-op control + E10c] sigma_cat=1.5 | purity 0.54, K found 9 | rung-2 angle B1 10.0 deg, B2 79.8 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.5/0.json` |
+| 1 | B2 [no-op control + E10c] sigma_cat=1.5 | purity 0.52, K found 10 | rung-2 angle B1 8.4 deg, B2 87.9 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.5/1.json` |
+| 2 | B2 [no-op control + E10c] sigma_cat=1.5 | purity 0.54, K found 10 | rung-2 angle B1 10.5 deg, B2 84.0 deg | `results/stage_b2_gapfix_sweep/sigma_cat_1.5/2.json` |
+
+| - | **E13 outcome (2026-10-15): REFUTED as registered** | 18-run sweep. Contamination model: log-gap R2 0.667 (needs 0.8), purified above the curve in 10 of 17 runs (needs 90%). Tier 1 recovers the gap only in the clean world (sigma_cat 0.1: 2.7-3.9 -> 17.6-22.2); from sigma_cat 0.4 up it stays at 1-6 because cluster pairs carry within-category energy (observed: 0.342 vs 0.047 at sigma 0.4 seed 1 with 98% valid pairs). rho-hat valid only at sigma 0.1. Blind E14: no damage 18/18, subspace no farther in 14/18 (the 4 are runs where nothing was trimmed). Tier 4: no case (CV 1.38 vs 1.42). The E12 fix does not generalise across the sweep | Exploratory refit R2 0.714, a lead only | `results/stage_b2_gapfix_sweep/` |

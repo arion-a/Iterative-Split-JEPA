@@ -21,7 +21,7 @@ import time
 import torch
 
 from . import audits
-from .cluster import kmeans, pairs_within_clusters, purity
+from .cluster import kmeans, pairs_within_clusters, purity, spectral_k
 from .encoder import EncoderConfig, encode, train_encoder
 from .engine import fit_rung, fit_whitener, purify_pairs
 from .worlds import CouplingMap, HierarchicalMixtureWorld
@@ -145,6 +145,11 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     km_lab, _, _ = kmeans(inv, k_star, restarts=s["kmeans_restarts"], seed=seed)
     km6_lab, _, _ = kmeans(inv, k_true, restarts=s["kmeans_restarts"], seed=seed)
     var_lab, _, _ = kmeans(var, k_star, restarts=s["kmeans_restarts"], seed=seed)
+    spec = None
+    if cfg.get("cluster", {}).get("spectral_k", False):          # E18: cluster count by Laplacian eigengap instead of the silhouette
+        k_spec, spec_info = spectral_k(inv, seed=seed)
+        spec_lab, _, _ = kmeans(inv, k_spec, restarts=s["kmeans_restarts"], seed=seed)
+        spec = {"k": int(k_spec), "info": spec_info, "purity": purity(spec_lab, cat_c)}
     shuffled_lab = km_lab[torch.randperm(len(km_lab), generator=torch.Generator().manual_seed(seed + 5))]
 
     # ---- pairs for each arm: (representation u, representation v, true latents u, true latents v)
@@ -179,6 +184,12 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         purify_info = {"iterations": iters, "kept_fraction": float(keep.float().mean()), "n_kept": int(keep.sum()),
                        "validity_before": float((cu0 == cv0).float().mean()), "validity_after": float((cu0[keep] == cv0[keep]).float().mean()),
                        "valid_kept": float(keep[cu0 == cv0].float().mean()), "invalid_dropped": float((~keep)[cu0 != cv0].float().mean()) if (cu0 != cv0).any() else None}
+    if spec is not None:
+        pairs["b2_spectral"] = idx_arm(*pairs_within_clusters(spec_lab, seed))
+        if cfg.get("purify"):
+            ru_s, rv_s, zu_s, zv_s, cu_s, cv_s = pairs["b2_spectral"]
+            keep_s, _ = purify_pairs(ru_s, rv_s, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
+            pairs["b2_spectral_purified"] = (ru_s[keep_s], rv_s[keep_s], zu_s[keep_s], zv_s[keep_s], cu_s[keep_s], cv_s[keep_s])
     singleton_pairs = len(pairs_within_clusters(torch.arange(len(inv)))[0])        # C3: every sample alone -> zero pairs
 
     arms, construction = {}, {}
@@ -203,7 +214,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     construction["label_pairs"]["pair_validity"] = 1.0
     construction["c3_singleton"] = {"n_pairs": singleton_pairs, "pair_validity": None}
     quality = {"cluster_purity": purity(km_lab, cat_c), "cluster_purity_oracleK": purity(km6_lab, cat_c),
-               "variant_cluster_purity": purity(var_lab, cat_c), "k_discovered": int(k_star), "k_true": k_true,
+               "variant_cluster_purity": purity(var_lab, cat_c), "k_discovered": int(k_star), "k_true": k_true, "spectral": spec,
                "silhouette_by_k": {str(k): v for k, v in sil.items()},
                "misgroup_rate": 1 - purity(km_lab, cat_c)}
 

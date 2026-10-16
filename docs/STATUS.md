@@ -80,3 +80,5 @@
 | 5 | B2 [no-op control + E10c] sigma_cat=0.6 | purity 0.82, K found 11 | rung-2 angle B1 13.4 deg, B2 37.9 deg | `results/stage_b2_e20_blind/sigma_cat_0.6/5.json` |
 
 | - | **E20 blind outcome (2026-10-16): NOT CONFIRMED as worded** | Fresh seeds 3-5: recalibrated gap criterion (0.6 x perfect-cluster gap) met by B2 + Tier 1 on 3/3 at sigma_cat 0.4 (ratios 0.62-0.76) and 1/3 at 0.6 (0.64 / 0.49 / 0.45). The two failing seeds at 0.6 found 8 and 11 clusters (passing seed 6): cluster-count instability. Corrected contamination model (v_cat frozen at 2.14): median error 0.24, passes narrowly (3 of 6 runs above 25%) | Blind; seeds 3-5 | `results/stage_b2_e20_blind/` |
+
+| - | **E18 built (2026-10-16), not run** | `spectral_k` selector (Laplacian eigengap on a 15-NN self-tuning graph, K in 2..12, no labels), optional arms `b2_spectral` / `b2_spectral_purified` behind `cluster.spectral_k`, constants fixed beforehand; 3 new unit tests (44 pass); default pipeline behaviour unchanged. Run on the B2 world awaits go-ahead | Prediction (draft): K = 6 on every seed at sigma_cat 0.1, 0.4, 0.6 | `configs/stage_b2_e18.yaml` |

@@ -82,3 +82,23 @@
 | - | **E20 blind outcome (2026-10-16): NOT CONFIRMED as worded** | Fresh seeds 3-5: recalibrated gap criterion (0.6 x perfect-cluster gap) met by B2 + Tier 1 on 3/3 at sigma_cat 0.4 (ratios 0.62-0.76) and 1/3 at 0.6 (0.64 / 0.49 / 0.45). The two failing seeds at 0.6 found 8 and 11 clusters (passing seed 6): cluster-count instability. Corrected contamination model (v_cat frozen at 2.14): median error 0.24, passes narrowly (3 of 6 runs above 25%) | Blind; seeds 3-5 | `results/stage_b2_e20_blind/` |
 
 | - | **E18 built (2026-10-16), not run** | `spectral_k` selector (Laplacian eigengap on a 15-NN self-tuning graph, K in 2..12, no labels), optional arms `b2_spectral` / `b2_spectral_purified` behind `cluster.spectral_k`, constants fixed beforehand; 3 new unit tests (44 pass); default pipeline behaviour unchanged. Run on the B2 world awaits go-ahead | Prediction (draft): K = 6 on every seed at sigma_cat 0.1, 0.4, 0.6 | `configs/stage_b2_e18.yaml` |
+| 1 | B2 [E18] sigma_cat=0.1 | purity 0.84, K found 5 | rung-2 angle B1 8.6 deg, B2 8.7 deg | `results/stage_b2_e18/sigma_cat_0.1/1.json` |
+| 2 | B2 [E18] sigma_cat=0.1 | purity 0.84, K found 5 | rung-2 angle B1 11.6 deg, B2 11.6 deg | `results/stage_b2_e18/sigma_cat_0.1/2.json` |
+| 0 | B2 [E18] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 10.7 deg, B2 14.7 deg | `results/stage_b2_e18/sigma_cat_0.1/0.json` |
+| 3 | B2 [E18] sigma_cat=0.1 | purity 0.84, K found 5 | rung-2 angle B1 12.3 deg, B2 14.7 deg | `results/stage_b2_e18/sigma_cat_0.1/3.json` |
+| 4 | B2 [E18] sigma_cat=0.1 | purity 0.98, K found 6 | rung-2 angle B1 5.8 deg, B2 8.0 deg | `results/stage_b2_e18/sigma_cat_0.1/4.json` |
+| 5 | B2 [E18] sigma_cat=0.1 | purity 0.98, K found 7 | rung-2 angle B1 14.2 deg, B2 14.3 deg | `results/stage_b2_e18/sigma_cat_0.1/5.json` |
+| 0 | B2 [E18] sigma_cat=0.4 | purity 0.97, K found 6 | rung-2 angle B1 10.5 deg, B2 10.6 deg | `results/stage_b2_e18/sigma_cat_0.4/0.json` |
+| 2 | B2 [E18] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 11.0 deg, B2 11.3 deg | `results/stage_b2_e18/sigma_cat_0.4/2.json` |
+| 1 | B2 [E18] sigma_cat=0.4 | purity 0.99, K found 6 | rung-2 angle B1 8.4 deg, B2 8.5 deg | `results/stage_b2_e18/sigma_cat_0.4/1.json` |
+| 3 | B2 [E18] sigma_cat=0.4 | purity 0.84, K found 5 | rung-2 angle B1 11.5 deg, B2 12.5 deg | `results/stage_b2_e18/sigma_cat_0.4/3.json` |
+| 5 | B2 [E18] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 13.6 deg, B2 17.7 deg | `results/stage_b2_e18/sigma_cat_0.4/5.json` |
+| 4 | B2 [E18] sigma_cat=0.4 | purity 0.93, K found 9 | rung-2 angle B1 6.2 deg, B2 9.1 deg | `results/stage_b2_e18/sigma_cat_0.4/4.json` |
+| 0 | B2 [E18] sigma_cat=0.6 | purity 0.85, K found 6 | rung-2 angle B1 10.2 deg, B2 13.0 deg | `results/stage_b2_e18/sigma_cat_0.6/0.json` |
+| 2 | B2 [E18] sigma_cat=0.6 | purity 0.85, K found 6 | rung-2 angle B1 10.7 deg, B2 13.2 deg | `results/stage_b2_e18/sigma_cat_0.6/2.json` |
+| 1 | B2 [E18] sigma_cat=0.6 | purity 0.84, K found 6 | rung-2 angle B1 8.4 deg, B2 10.4 deg | `results/stage_b2_e18/sigma_cat_0.6/1.json` |
+| 3 | B2 [E18] sigma_cat=0.6 | purity 0.82, K found 6 | rung-2 angle B1 11.0 deg, B2 13.2 deg | `results/stage_b2_e18/sigma_cat_0.6/3.json` |
+| 5 | B2 [E18] sigma_cat=0.6 | purity 0.82, K found 11 | rung-2 angle B1 13.4 deg, B2 37.9 deg | `results/stage_b2_e18/sigma_cat_0.6/5.json` |
+| 4 | B2 [E18] sigma_cat=0.6 | purity 0.85, K found 8 | rung-2 angle B1 5.8 deg, B2 23.2 deg | `results/stage_b2_e18/sigma_cat_0.6/4.json` |
+
+| - | **E18 outcome (2026-10-16): REFUTED** | Spectral K = 6 in 1 of 18 runs (0/6 at sigma_cat 0.1, 0/6 at 0.4, 1/6 at 0.6); it overestimates K by 2-6 at 0.1 and 0.4 (8-12) and scatters 2-12 at 0.6; the largest eigengap is only 1.1-3.3x the second. Silhouette finds 6 in 7 of 18. Hypothesis (untested): identity sub-clusters inside the 8-D invariant output. Selector kept as an option, constants unchanged | 18 runs, frozen rule | `results/stage_b2_e18/` |

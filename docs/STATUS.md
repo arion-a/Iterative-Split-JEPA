@@ -40,3 +40,5 @@
 | - | **Stage V handshake (2026-10-20)** | 3 seeds, 64-d encoder, additive-illumination nuisance | E31c' confirmed (V 0.003, ICC 0.973, L 0.993, rollout 0.232); E31d refuted (|Spearman| 0.786); E31e S1-at-lag-32 refuted (2/3 seeds); P-stab refuted (0.766); controls met; shuffled arm matches main (finding) | `results/handshake/REPORT.md` |
 | - | **Stage V hierarchical (2026-10-20)** | AR world a=(.2,.5,.75,.9,.95), lags 1,2,4,8, 3 seeds | E35 refuted: RUNGS 1 (registered 4); found rung passes R2/(D)/(C)/L; shuffled control RUNGS 0 | `results/hier/REPORT.md` |
 | - | **Stage V real video (2026-10-20)** | 10 public clips, informational | certificate passes trivially (V 0, ICC 0.989) but psi does not track tracker proxies (|Spearman| 0.11 / 0.31): likely per-clip appearance; owner capture blocked | `results/real/REPORT.md` |
+
+| - | **Stage V F1 follow-up (2026-10-20)** | 3 seeds, same encoders as the handshake | F1 refuted: release-free temporal-only arm = main arm (gap 0.000 / 0.000 / −0.010); the discovery is redundantly identified by temporal slowness and by release grouping | `results/followup/*.json` |

@@ -1,0 +1,10 @@
+{
+ "seed": 0,
+ "main_abs_spearman": 0.8484344076285354,
+ "temporal_only_abs_spearman": 0.8484343874310575,
+ "main_icc_test": 0.9749514677068919,
+ "temporal_only_icc_test": 0.9749514679458543,
+ "temporal_only_lambda_min_over_chance": 0.024708542248651256,
+ "handshake_main_abs_spearman": 0.8484344076285354,
+ "gap": 2.0197477912375916e-08
+}

@@ -97,3 +97,8 @@ Claude's operationalisation: pass if L ≤ 1.02 (estimation tolerance, DECIDE 20
 6. At rung k+1 of a temporal-only world the correspondence family is the pair (t, t+τ_{k+1}) on the previous rung's invariant content, with a fixed geometric lag schedule τ_k = 2^(k−1)·τ_0. Data-adaptive lags would be a registered probe.
 
 ## Candidate for owner confirmation (not binding): D18 — see docs/IMPLEMENTATION_PLAN.md §1 DECIDE lines 1–10 and §6 A1/A2.
+
+## D18. Gap criterion for temporal worlds (owner ruling, 2026-10-20; answers A1)
+**Decision.** In temporal (AR-lag) worlds the spectral-gap criterion is gamma_min = 2.0 (the 2x threshold of MATHEMATICAL_PLAN). The B1/B2 gate of 10 is unchanged and applies only to those stages.
+**Note.** The line above headed "Candidate for owner confirmation: D18" referred to the list of Claude DECIDE lines (docs/IMPLEMENTATION_PLAN.md §1); that list is not a decision and keeps no D-number until confirmed. It is not rewritten (append-only).
+**Disclosure.** The value was already in use for the hierarchical run (DECIDE 20261020-10); this ruling confirms it, no rerun needed.

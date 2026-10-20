@@ -145,12 +145,14 @@ Recommend: (a) — at any lag the cut gap of this AR world cannot exceed the adj
 Impact: (a) P4 can measure RUNGS; (b) P4 reports RUNGS = 0 by construction; (c) depends.
 Reversible: yes, all options. Cost: none (a, b); (c) rerun ≈ minutes CPU.
 On-silence: (a), already used (DECIDE 20261020-10).
+**ANSWERED 2026-10-20 by the owner: (a); recorded as D18.**
 
 **A2**
 Q: The chain verify fails on artifacts only: entry 134 logged `src/isj/stage_b1.py`, which was edited afterwards. The hash links themselves verify. Declare it superseded (`known_stale`)?
 Options: (a) append a decision entry declaring entry 134's artifact superseded; (b) leave as is and always verify with `check_artifacts=False`.
 Recommend: (a). Impact: (a) full verify passes; (b) none. Reversible: (a) yes (append-only), (b) yes. Cost: none.
 On-silence: (b); this plan does not alter earlier entries.
+**ANSWERED 2026-10-20 by the owner: (a), declare entry 134 superseded (chain amendment entry, `known_stale`).**
 
 ## 7. Status at 2026-10-20 (checkpoints)
 

@@ -27,10 +27,10 @@ def criteria_hash(cfg):
     return hashlib.sha256(json.dumps(cfg["criteria"], sort_keys=True).encode()).hexdigest()
 
 
-def run(cfg, seeds, out, log):
+def run(cfg, seeds, out, log, data_root="data/handshake"):
     crit = cfg["criteria"]; lad = crit["ladder"]; cert = crit["certificate"]
-    data = {s: load_frames(f"data/handshake/seed{s}") for s in seeds}
-    evals = {s: ev.aligned(f"data/handshake/seed{s}") for s in seeds}
+    data = {s: load_frames(f"{data_root}/seed{s}") for s in seeds}
+    evals = {s: ev.aligned(f"{data_root}/seed{s}") for s in seeds}
     pipes, arms_psi, res = {}, {}, {}
     for s in seeds:
         t0 = time.time()
@@ -82,7 +82,7 @@ def run(cfg, seeds, out, log):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/handshake.yaml"); ap.add_argument("--out", default="results/handshake")
-    ap.add_argument("--seeds", type=int, nargs="*"); ap.add_argument("--no-log", action="store_true")
+    ap.add_argument("--seeds", type=int, nargs="*"); ap.add_argument("--no-log", action="store_true"); ap.add_argument("--data-root", default="data/handshake")
     a = ap.parse_args()
     cfg = yaml.safe_load(open(a.config))
     if criteria_hash(cfg) != open(a.config.replace(".yaml", ".criteria.sha256")).read().strip():
@@ -92,4 +92,4 @@ if __name__ == "__main__":
         if not a.no_log:
             explog.append(kind, what, stage="V", step="P2/P3", how="experiments/run_handshake.py", outputs=outputs, artifact_paths=arts)
     torch.set_num_threads(4)
-    run(cfg, seeds, a.out, log)
+    run(cfg, seeds, a.out, log, a.data_root)

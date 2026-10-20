@@ -1,0 +1,61 @@
+stage: V-B1
+plan_ref: 'docs/ROADMAP_TO_FINISH.md Phase B1: one scaling probe (3x releases, 2x
+  encoder steps) for the refuted naming result'
+criteria:
+  scaling:
+    naming_gain_min: 0.05
+  naming:
+    spearman_min: 0.99
+  certificate:
+    V_max: 0.05
+    icc_min: 0.9
+    L_max: 1.02
+    rollout_nmse_max: 0.35
+    horizon_K: 8
+    delta_std: 0.1
+    n_pairs: 200
+  ladder:
+    gamma_min: 2.0
+    s1_rung: 3
+    lags:
+    - 8
+    - 32
+    s1_chance_fraction: 0.05
+    b2_quantile: 0.99
+  pilot:
+    stability_min_abs_spearman: 0.9
+    control_max_abs_spearman_E: 0.9
+seeds:
+- 0
+- 1
+- 2
+world:
+  n_releases: 450
+  splits:
+  - 300
+  - 75
+  - 75
+  n_frames: 200
+  dt_frame: 0.05
+  dt_int: 0.001
+  size: 32
+  amp_range:
+  - 0.3
+  - 3.14159
+  omega_std: 0.3
+  nuisance_amp: 0.4
+  pixel_noise: 0.01
+encoder:
+  latent_dim: 64
+  hidden: 256
+  steps: 8000
+  batch_size: 256
+  lr: 0.003
+  horizons:
+  - 1
+  - 8
+  - 32
+  var_weight: 0.01
+  cov_weight: 0.04
+  zca_eps: 1.0e-05
+  aug_weight: 0.2

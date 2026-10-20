@@ -102,3 +102,6 @@
 | 4 | B2 [E18] sigma_cat=0.6 | purity 0.85, K found 8 | rung-2 angle B1 5.8 deg, B2 23.2 deg | `results/stage_b2_e18/sigma_cat_0.6/4.json` |
 
 | - | **E18 outcome (2026-10-16): REFUTED** | Spectral K = 6 in 1 of 18 runs (0/6 at sigma_cat 0.1, 0/6 at 0.4, 1/6 at 0.6); it overestimates K by 2-6 at 0.1 and 0.4 (8-12) and scatters 2-12 at 0.6; the largest eigengap is only 1.1-3.3x the second. Silhouette finds 6 in 7 of 18. Hypothesis (untested): identity sub-clusters inside the 8-D invariant output. Selector kept as an option, constants unchanged | 18 runs, frozen rule | `results/stage_b2_e18/` |
+| 20 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 11.4 deg, B2 11.6 deg | `results/stage_b2_e21/sigma_cat_0.1/20.json` |
+| 21 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 9.9 deg, B2 10.0 deg | `results/stage_b2_e21/sigma_cat_0.1/21.json` |
+| 22 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 9.5 deg, B2 10.0 deg | `results/stage_b2_e21/sigma_cat_0.1/22.json` |

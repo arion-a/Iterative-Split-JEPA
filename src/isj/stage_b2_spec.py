@@ -97,6 +97,13 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     probe_r2 = {nm: audits.linear_r2(rtr, ztr[:, sl], rte, zte[:, sl]) for nm, sl in (("texture", slice(0, 4)), ("identity", slice(4, 8)), ("category", slice(8, 12)))}   # E15 measure: full features -> true block
     # two truths for the rung-1 invariant content H1*: span of the probe images of blocks 2,3 (gate definition),
     # and the orthogonal complement of block 1's image (what the method targets) -- informational (addition)
+    # E22 (probe-image explanation, tested directly): how far the block images are from orthogonal, and the identity image taken orthogonal to the texture image
+    q_tex = audits.orth(image[1])
+    image2_orth = image[2] - q_tex @ (q_tex.T @ image[2])
+    image_geometry = {"min_angle_texture_vs_identity_category_deg": float(audits.principal_angles_deg(image[1], torch.cat([image[2], image[3]], 1)).min()),
+                      "min_angle_texture_vs_identity_deg": float(audits.principal_angles_deg(image[1], image[2]).min()),
+                      "min_angle_identity_vs_category_deg": float(audits.principal_angles_deg(image[2], image[3]).min()),
+                      "identity_image_energy_removed": float(1 - image2_orth.square().sum() / image[2].square().sum())}
     h_span = torch.cat([image[2], image[3]], 1)
     u_, _, _ = torch.linalg.svd(image[1], full_matrices=True)
     h_perp = u_[:, 4:]
@@ -204,6 +211,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
             "eigvals": [float(x) for x in fit2.eigvals], "rank_deficient": rank_flag(fit2, ru, rv),
             "nesting_angle_deg": float(audits.principal_angles_deg(fit2.V, torch.cat([image[2], image[3]], 1)).max()),
             "V": [[float(x) for x in row] for row in fit2.V.T] if cfg.get("save_subspaces") else None,
+            "angle_orth_deg": audits.max_angle_deg(fit2.V, image2_orth),
             "nesting_perp_deg": float(audits.principal_angles_deg(fit2.V, h_perp).max()),
             "rank_monitor": audits.rank_monitor(fit2), "n_pairs": len(ru), **L}
         arms[name]["core_invariant_r2"] = arms[name]["invariant_r2"]
@@ -233,4 +241,4 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
              "bound_norm": rung1["a21_fro"] * (1 + 2 * quality["misgroup_rate"]),
              "bound_sqrt": rung1["a21_fro"] * math.sqrt(1 + 2 * quality["misgroup_rate"])}
     return {"seed": seed, "nesting_enforcement": nest, "pair_budgets": [n1, n2], "sigma_cat": sigma_cat, "rung1": rung1, "arms": arms, "construction": construction,
-            "quality": quality, "full_feature_probe_r2": probe_r2, "horizon": e.get("horizon", 1), "purify": purify_info, "noop_control": noop_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}
+            "quality": quality, "full_feature_probe_r2": probe_r2, "image_geometry": image_geometry, "horizon": e.get("horizon", 1), "purify": purify_info, "noop_control": noop_info, "bound": bound, "p7": p7, "encoder_final": train_log[-1], "seconds": round(time.time() - t0, 1)}

@@ -1,0 +1,11 @@
+[33;1m2026-10-20 03:25:07,609 - mani_skill  - WARNING - Requested to use render device "sapien_cuda", but CUDA device was not found. Falling back to "cpu" device. Rendering might be disabled.[0m
+group 1: 8 trajectories, lengths [88, 83, 93, 100, 89, 88, 111, 138], 8 tries, 105 s
+group 4: 8 trajectories, lengths [130, 124, 125, 191, 127, 154, 135, 118], 8 tries, 149 s
+screw plan failed
+group 7: 8 trajectories, lengths [124, 112, 96, 114, 102, 123, 97, 84], 9 tries, 147 s
+[33;1m2026-10-20 03:32:15,897 - mani_skill  - WARNING - Requested to use render device "sapien_cuda", but CUDA device was not found. Falling back to "cpu" device. Rendering might be disabled.[0m
+group 1: 8 trajectories, lengths [71, 72, 71, 85, 78, 93, 84, 61], 13 tries, 181 s
+group 4: 8 trajectories, lengths [102, 87, 82, 116, 102, 83, 98, 98], 10 tries, 179 s
+group 7: 8 trajectories, lengths [104, 65, 80, 80, 76, 83, 92, 90], 11 tries, 155 s
+[33;1m2026-10-20 03:41:19,543 - mani_skill  - WARNING - Requested to use render device "sapien_cuda", but CUDA device was not found. Falling back to "cpu" device. Rendering might be disabled.[0m
+group 10: 8 trajectories, lengths [171, 164, 162, 114, 127, 143, 140, 131], 8 tries, 193 s

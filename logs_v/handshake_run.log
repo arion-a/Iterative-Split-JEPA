@@ -1,0 +1,3 @@
+seed 0: encoder trained 295s, min std 0.99
+seed 1: encoder trained 70s, min std 0.95
+seed 2: encoder trained 69s, min std 0.97

@@ -47,12 +47,12 @@ How to use this file: tick a step only when its **done when** line is true, put 
 ## Phase 3: E24, robot data (the largest phase)
 
 - [x] 3.1 Data generation (done 2026-10-20 22:00 UTC, 100/100 per task, `check_results.py data --final` passes): 100 groups per task in `data/robot/PickCube` and `data/robot/PushCube` (`.gitignore` keeps `data/` out of git). **Done when:** both folders hold 100 `group_*.npz` files. Estimate: about 157 s per group per process under load, so 200 groups on 2 processes is about 4.5 hours of uninterrupted running; on all 4 cores after E21 and E23 finish, about 2 hours.
-- [ ] 3.2 Feature extraction: `python experiments/robot/extract_features.py --task PickCube --threads 4` and the same for PushCube. Frozen ImageNet ResNet-50, 2048-d, float16 per group. CPU run is slow (roughly 100,000 images). **Done when:** `data/robot/feat/` holds a feature file per group for both tasks.
-- [ ] 3.3 Stage C runs: for each task and split seed 0, 1, 2: `PYTHONPATH=src python experiments/robot/run_stage_c.py --task <T> --split-seed <S> --out results/stage_c --head-steps 6000`. **Done when:** six result files exist in `results/stage_c/`.
-- [ ] 3.4 Report: `python experiments/robot/build_stage_c_report.py`. **Done when:** the report and figure exist with per-task, per-criterion tables.
-- [ ] 3.5 Verdict per task against the registered E24 text: P1 viewpoint response V1/Q1 >= 3 (paper 8.4x PickCube, 14.0x PushCube), P2 trajectory response V2/Q2 >= 1.5 (paper 2.1x, 3.1x), P3 controls (shuffled-pair rung-1 gap ratio < 2; random split both ratios < 1.5), P4 camera id decoded >= 0.9 from the rung-1 variant block and <= 0.65 from the invariant content. Confirmed for a task only if P1-P4 all hold; a finding that no gap clears the threshold is a result.
-- [ ] 3.6 Report the limits in plain words: simulated data, frozen ImageNet encoder with a trained head, our own trajectory-variation scheme, any reduced group count.
-- [ ] 3.7 Record outcome in EVIDENCE, STATUS, explog. **Done when:** E24 has a per-task verdict on the branch.
+- [x] 3.2 Feature extraction: `python experiments/robot/extract_features.py --task PickCube --threads 4` and the same for PushCube. Frozen ImageNet ResNet-50, 2048-d, float16 per group. CPU run is slow (roughly 100,000 images). **Done when:** `data/robot/feat/` holds a feature file per group for both tasks.
+- [x] 3.3 Stage C runs: for each task and split seed 0, 1, 2: `PYTHONPATH=src python experiments/robot/run_stage_c.py --task <T> --split-seed <S> --out results/stage_c --head-steps 6000`. **Done when:** six result files exist in `results/stage_c/`.
+- [x] 3.4 Report: `python experiments/robot/build_stage_c_report.py`. **Done when:** the report and figure exist with per-task, per-criterion tables.
+- [x] 3.5 Verdict per task against the registered E24 text: P1 viewpoint response V1/Q1 >= 3 (paper 8.4x PickCube, 14.0x PushCube), P2 trajectory response V2/Q2 >= 1.5 (paper 2.1x, 3.1x), P3 controls (shuffled-pair rung-1 gap ratio < 2; random split both ratios < 1.5), P4 camera id decoded >= 0.9 from the rung-1 variant block and <= 0.65 from the invariant content. Confirmed for a task only if P1-P4 all hold; a finding that no gap clears the threshold is a result.
+- [x] 3.6 Report the limits in plain words: simulated data, frozen ImageNet encoder with a trained head, our own trajectory-variation scheme, any reduced group count.
+- [x] 3.7 Record outcome in EVIDENCE, STATUS, explog. **Done when:** E24 has a per-task verdict on the branch.
 - **Fallback (owner decides, flagged if used):** if generation cannot finish, report E24 on the groups that exist, state the count, and keep the registered criteria unchanged. Alternative route: the owner runs `docs/HANDOFF_E24_GPU.md` from a session that can reach the GPU box; its results come back on branch `claude/vast-results`.
 
 ## Phase 4: close-out
@@ -83,6 +83,7 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 - 2026-10-20 20:55 UTC: E21 Part B complete (20/20, final check passes). E23 complete (10/10): REFUTED as registered (8 of 9 non-excepted criteria 0/5 seeds; rung-1 gap 1.1). Phase 2 gate: evidence unedited (PASS), explog verify True, integrity checks pass for all files so far. Phase 1 awaits B1 (14/30); Phase 3 data at 50/40 of 100.
 - 2026-10-20 21:50 UTC: Phase 1 done. E21 Part A refuted as registered (rank test flag on seed 21; 99/100 criterion-seed checks pass), Part B confirmed (4/4), E22 confirmed (20/20). Outcomes in EVIDENCE (additions only), STATUS, explog. Phase 3 data at 88/80 of 100.
 - 2026-10-20 22:00 UTC: Phase 3.1 done (robot data 100 + 100 groups, integrity check passes). Phase 1 gate closed: 44 tests passed. Feature extraction running for both tasks (about 22 s per group per process).
+- 2026-10-20 22:55 UTC: Phase 3 done. E24 NOT confirmed for either task: P1 fails on every seed (viewpoint ratio 1.37 PickCube, 1.17 PushCube, needs 3); P2 holds for PickCube only; P3 controls held; P4 fails on the invariant-content bound. No clean block boundary (rung-1 gap ratio 1.1-1.8; rank monitor 0/3). Limits stated in EVIDENCE and the report. Note: the container restarts whenever the session is idle and kills background jobs; Stage C needed three relaunches for that reason.
 
 ## Noted, not started
 

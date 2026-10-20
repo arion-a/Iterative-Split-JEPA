@@ -126,3 +126,5 @@
 | 20-29 | B1 [E21 Part A, fresh seeds] | refuted as registered (rank test flagged rung 2 on seed 21; 99/100 checks pass) | angles ~1 deg, gap ~50, texture R2 0.958, identity R2 0.983 | `results/stage_b1_e21/E21_REPORT.md` |
 | 20-29 | B2 [E21 Part B, sigma 0.1 and 0.4] | confirmed (4/4 sub-claims): sigma 0.1 recovery 0.69, Tier 1 gap 19.3; sigma 0.4 E20 criterion 9/10 | nesting below 5 deg in every run | `results/stage_b2_e21/E21_E22_REPORT.md` |
 | 20-29 | B2 [E22 probe-image test] | confirmed: orthogonalised rung-2 angle 2.76 deg vs raw 10.07 deg, 20/20 runs | texture image 77.5 deg from identity+category images | `results/stage_b2_e21/E21_E22_REPORT.md` |
+| 0-2 | C [E24, PickCube] | not confirmed: P1 1.37 (needs 3), P2 1.74 (3/3 seeds), P3 held, P4 camera from invariant content 0.61 | rung-1 gap ratio 1.11, rank monitor 0/3 | `results/stage_c/REPORT.md` |
+| 0-2 | C [E24, PushCube] | not confirmed: P1 1.17 (needs 3), P2 1.51 (1/3 seeds), P3 held, P4 camera from invariant content 0.69 | rung-1 gap ratio 1.76, rank monitor 0/3 | `results/stage_c/REPORT.md` |

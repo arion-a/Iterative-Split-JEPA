@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 418 entries, head 2c5e9a6aac0b
+Chain status at render time: **VALID** — 419 entries, head f11b2f04fade
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -9224,5 +9224,44 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **Bearing on objectives O2.** The roughly 10 deg rung-2 angle is mostly a definition effect of the identity probe image overlapping the texture image, not an estimation floor.
 
 **Verdict.** confirmed
+
+---
+
+## #418 · result · stage C · plan §E24
+`f11b2f04fade23e0` ← `2c5e9a6aac0b63fc` · recorded 2026-10-20T22:51:03+00:00
+
+**What.** E24 (robot data, ManiSkill3 PickCube-v1 and PushCube-v1, 100 groups x 8 trajectories each, frozen ResNet-50 + JEPA head, 3 split seeds per task): NOT confirmed for either task. P1 viewpoint response ratio 1.37 (PickCube) and 1.17 (PushCube) against the registered threshold 3 (paper 8.4x / 14.0x), failing on every seed; P2 trajectory ratio 1.74 (PickCube, 3/3 seeds) and 1.51 (PushCube, 1/3 seeds) against 1.5; P3 controls held; P4 camera decoding from the variant block 0.93-1.00 but from the invariant content 0.61 (PickCube) and 0.69 (PushCube) against the 0.65 bound. No clean block boundary: rung-1 gap ratio 1.11 / 1.76, rank monitor passed 0/3 at both rungs.
+
+**How.** experiments/robot: gen_robot_data.py (200 groups), extract_features.py (frozen ResNet-50), run_stage_c.py (head 6000 steps, split seeds 0-2 per task), build_stage_c_report.py; scored against the registered E24 text
+
+**Output.**
+```json
+{
+ "P1_ratio": {
+  "PickCube": 1.37,
+  "PushCube": 1.17
+ },
+ "P2_ratio": {
+  "PickCube": 1.74,
+  "PushCube": 1.51
+ },
+ "P3": "held",
+ "P4_camera_from_Q1": {
+  "PickCube": 0.612,
+  "PushCube": 0.686
+ },
+ "rung1_gap_ratio": {
+  "PickCube": 1.11,
+  "PushCube": 1.76
+ },
+ "verdict": "not confirmed (both tasks)"
+}
+```
+
+**Artifacts.** `results/stage_c/REPORT.md` (sha256 10f0ab0a5f); `results/stage_c/PickCube/split0.json` (sha256 377838a4ce); `results/stage_c/PushCube/split0.json` (sha256 c44bfc3c1c)
+
+**Bearing on objectives O3.** On simulated robot data with a frozen ImageNet encoder plus a small trained head, the viewpoint change does not separate into a clean block, so the paper-style two-block response ratios are not reproduced; the claim is limited to what the registered setup tests (frozen encoder, simulated data, our own trajectory scheme).
+
+**Verdict.** refuted
 
 ---

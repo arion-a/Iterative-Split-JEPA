@@ -34,7 +34,7 @@
    "name": "Video-first handshake",
    "status": "done",
    "question": "Can the pipeline find an unnamed conserved coordinate from pixels, certify it, and earn the name 'energy'?",
-   "result": "Certificate yes (E31c' confirmed); naming no (|Spearman| 0.79 vs 0.99); the shuffled-pair control finds the same coordinate, so release grouping rather than the temporal split identifies it here. Hierarchical AR world: 1 cut, not 4. Real clips: informational, likely per-clip appearance."
+   "result": "Certificate confirmed; naming 0.79 at 150 releases, 0.97-0.98 at 450 releases and 8000 steps (0.99 not reached). Hierarchical AR world: 1 cut, not 4 (E35 refuted). E36: split and control hold, closure gate weakly sensitive. F1: a release-free slow-feature direction finds the same coordinate. Live-footage test (E44-E47) blocked on the owner's recording."
   }
  ]
 }

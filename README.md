@@ -38,7 +38,7 @@ python experiments/run_handshake.py --out results/handshake     # P2-P3, ~15 min
 python experiments/run_hier.py --out results/hier               # P4
 python experiments/run_real.py --out results/real               # P5, needs data/real/morpheus/v{0..9}.mp4 (see configs/real.yaml)
 python experiments/build_report.py handshake                    # also: hier, real
-pytest -q                                                       # 59 tests
+pytest -q                                                       # 64 tests
 ```
 
 New modules: `pendulum.py`, `pendulum_data.py` (generator + sealed audit), `video_io.py`, `video_encoder.py`, `temporal_ladder.py`, `pipeline.py` (discovery side, no physics tokens, enforced by `tests/test_sealed_audit.py`), `quotient_audit.py`, `handshake_eval.py` (evaluator side), `hier.py`, `real_video_io.py`, `real_video.py`.

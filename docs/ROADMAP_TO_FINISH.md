@@ -77,19 +77,19 @@ Expected shape of the result (not a prediction): with friction, V holds only app
 ### Phase E — assemble the paper results *([AGENT], after CP-A and CP-C; CP-B/CP-D as chosen)*
 | ID | Step | Test / evidence | Status |
 |---|---|---|---|
-| E1 | Registry table: every stage-V E-number with outcome, report path and chain index (extend `docs/STATUS.md`) | no E-number without an outcome line | ☐ |
-| E2 | Figures: FIG 1 (psi over a chaotic release beside tracked energy), FIG 2 (psi against energy scatter with the verdict table), FIG 3 (reach curves), P-series panels where REPORTING requires them; generated from the raw JSONs by one script | `experiments/build_figures.py`, figures regenerate | ☐ |
-| E3 | Cross-track table (SYNTHESIS E34): each certificate (S, D, C, T) maps to a measured artifact; list the ones that have none | `docs/CROSS_TRACK.md` | ☐ |
-| E4 | Results text keyed to the SYNTHESIS paper skeleton (Sec 2–5): what is guaranteed, what is measured, what is open | `docs/PAPER_RESULTS.md` | ☐ |
-| E5 | Limitations, stated plainly: additive-illumination nuisance only; E redundantly identified by two selectors; encoder-dependent naming; friction; thin real data until C is done | section in E4 | ☐ |
-| **CP-E** | Every table and figure traces to a raw JSON and a chain entry | script + spot check | ☐ |
+| E1 | Registry table: every stage-V E-number with outcome, report path and chain index (extend `docs/STATUS.md`) | no E-number without an outcome line | ☑ |
+| E2 | Figures: FIG 1 (psi over a chaotic release beside tracked energy), FIG 2 (psi against energy scatter with the verdict table), FIG 3 (reach curves), P-series panels where REPORTING requires them; generated from the raw JSONs by one script | `experiments/build_figures.py`; FIG 2 reproduces the handshake seed-0 naming (0.8487 vs 0.848), `tests/test_figures.py` | ☑ |
+| E3 | Cross-track table (SYNTHESIS E34): each certificate (S, D, C, T) maps to a measured artifact; list the ones that have none | `docs/CROSS_TRACK.md` (orphans declared: full five-gate audit, NIM) | ☑ |
+| E4 | Results text keyed to the SYNTHESIS paper skeleton (Sec 2–5): what is guaranteed, what is measured, what is open | `docs/PAPER_RESULTS.md`, numbers checked by `tests/test_paper_numbers.py` | ☑ |
+| E5 | Limitations, stated plainly: additive-illumination nuisance only; E redundantly identified by two selectors; encoder-dependent naming; friction; thin real data until C is done | section in E4 | ☑ |
+| **CP-E** | Every table and figure traces to a raw JSON and a chain entry | script + spot check | ☑ |
 
 ### Phase F — close-out *([AGENT] then [OWNER])*
 | ID | Step | Test / evidence | Status |
 |---|---|---|---|
-| F1 | Full test suite, criteria-hash checks for every config (`handshake`, `hier`, `followup`, `e36`, `live`), sealed-audit scan | `pytest -q` green | ☐ |
-| F2 | `explog.verify()` with artifacts; for any doc appended after logging, declare the stale reference superseded (owner-approved mechanism) | verify true | ☐ |
-| F3 | Rebuild the log page (`python experiments/build_log_page.py`) and republish; update `explog/stages.json` | page current | ☐ |
+| F1 | Full test suite, criteria-hash checks for every config (`handshake`, `hier`, `followup`, `e36`, `live`), sealed-audit scan | `pytest -q` green | ☑ |
+| F2 | `explog.verify()` with artifacts; for any doc appended after logging, declare the stale reference superseded (owner-approved mechanism) | verify true | ☑ |
+| F3 | Rebuild the log page (`python experiments/build_log_page.py`); update `explog/stages.json` (republishing the hosted page is left to the owner) | page current | ☑ |
 | F4 | **[OWNER]** Sign off limitations and open decisions (§4) | written reply, chain entry | ☐ |
 | **CP-F / FINISH** | All five finish-line conditions in §1 hold | §1 checklist | ☐ |
 
@@ -124,3 +124,15 @@ Expected shape of the result (not a prediction): with friction, V holds only app
 ## 5. How to update this document
 
 For each finished step: (1) change its status here and add the evidence path, (2) append one chain entry with `stage "V"`, `step "<ID>"`, (3) update §3 if a prediction got an outcome, (4) commit and push. Never edit an earlier outcome line; add a dated line below it. If a step needs a new prediction, write it in `docs/EVIDENCE.md` before any run.
+
+## 6. Closing state (2026-10-20)
+
+| Finish-line condition (§1) | State |
+|---|---|
+| 1. Every registered prediction has an outcome | **met**: confirmed / refuted / "not run with reason" in `docs/EVIDENCE.md`; E44–E47 recorded as blocked |
+| 2. Live-capture handshake on the owner's footage | **open**: needs the recording (Phase C, steps C1–C2); C3–C6 are ready to run the moment the files arrive |
+| 3. Paper-ready results set | **met**: `docs/PAPER_RESULTS.md`, `docs/CROSS_TRACK.md`, `results/figures/` |
+| 4. Integrity checks | **met**: `python experiments/audit_stage_v.py` passes |
+| 5. Owner sign-off of limitations and open decisions | **open**: the limitations are in `docs/PAPER_RESULTS.md` Sec 5 and the decision queue in §4 |
+
+The experiment is complete except for the two owner-gated items (2 and 5). Phase C step C3 (two-marker tracker and energy calculation) is written when footage with known marker colours exists.

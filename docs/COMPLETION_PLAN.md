@@ -28,12 +28,12 @@ How to use this file: tick a step only when its **done when** line is true, put 
 
 ## Phase 1: finish E21 and record E21 and E22
 
-- [ ] 1.1 B1 runs complete: 30 files in `results/stage_b1_e21/`. **Done when:** `ls results/stage_b1_e21/*.json | wc -l` is 30.
-- [ ] 1.2 B2 runs complete: 10 files in each of `results/stage_b2_e21/sigma_cat_0.1/` and `.../sigma_cat_0.4/`. **Done when:** both directories hold 10 files.
-- [ ] 1.3 Run the analysis: `python experiments/analyse_e21_e22.py` (writes `E21_REPORT.md` and `E21_E22_REPORT.md` under the results folders). **Done when:** both reports exist and list per-criterion counts over the 10 seeds.
-- [ ] 1.4 Score against the registered E21 text in `docs/EVIDENCE.md` without changing it: Part A (frozen B1 verdict rule, controls, D13 leakage gate reported); Part B (i) sigma 0.1 recovery >= 0.60 and gap > 10 in >= 90% of seeds, (ii) sigma 0.4 gap >= 0.6 x perfect-cluster gap in >= 90%, (iii) nesting angle < 5 deg in every run, (iv) no metric damaged beyond one untreated seed-std. Each part and sub-claim reported separately.
-- [ ] 1.5 Score E22 from the same files: orthogonalised-identity rung-2 angle <= 5 deg in >= 90% of the 20 runs, and >= 3 deg below the raw angle in >= 90%. Refuted if it stays near the raw angle.
-- [ ] 1.6 Record: outcome lines for E21 and E22 appended under their entries in `docs/EVIDENCE.md` (outcome only, prediction text untouched), a `docs/STATUS.md` line, and an explog entry with the verdicts and plain-language result (paper metric names, per `docs/REPORTING.md`).
+- [x] 1.1 B1 runs complete: 30 files in `results/stage_b1_e21/`. **Done when:** `ls results/stage_b1_e21/*.json | wc -l` is 30.
+- [x] 1.2 B2 runs complete: 10 files in each of `results/stage_b2_e21/sigma_cat_0.1/` and `.../sigma_cat_0.4/`. **Done when:** both directories hold 10 files.
+- [x] 1.3 Run the analysis: `python experiments/analyse_e21_e22.py` (writes `E21_REPORT.md` and `E21_E22_REPORT.md` under the results folders). **Done when:** both reports exist and list per-criterion counts over the 10 seeds.
+- [x] 1.4 Score against the registered E21 text in `docs/EVIDENCE.md` without changing it: Part A (frozen B1 verdict rule, controls, D13 leakage gate reported); Part B (i) sigma 0.1 recovery >= 0.60 and gap > 10 in >= 90% of seeds, (ii) sigma 0.4 gap >= 0.6 x perfect-cluster gap in >= 90%, (iii) nesting angle < 5 deg in every run, (iv) no metric damaged beyond one untreated seed-std. Each part and sub-claim reported separately.
+- [x] 1.5 Score E22 from the same files: orthogonalised-identity rung-2 angle <= 5 deg in >= 90% of the 20 runs, and >= 3 deg below the raw angle in >= 90%. Refuted if it stays near the raw angle.
+- [x] 1.6 Record: outcome lines for E21 and E22 appended under their entries in `docs/EVIDENCE.md` (outcome only, prediction text untouched), a `docs/STATUS.md` line, and an explog entry with the verdicts and plain-language result (paper metric names, per `docs/REPORTING.md`).
 - **Done when:** E21 and E22 each have a verdict (confirmed, partly confirmed, or refuted) written in EVIDENCE, STATUS and explog, and committed.
 - **Estimate (unmeasured):** 26 B1 files and 14 B2 files still to go.
 
@@ -81,6 +81,7 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 
 - 2026-10-20 19:35 UTC: plan written. E21 B1 4/30, B2 6/20; robot data 20 and 15 of 100 groups. Container restarts about every 15 minutes; jobs relaunched after each.
 - 2026-10-20 20:55 UTC: E21 Part B complete (20/20, final check passes). E23 complete (10/10): REFUTED as registered (8 of 9 non-excepted criteria 0/5 seeds; rung-1 gap 1.1). Phase 2 gate: evidence unedited (PASS), explog verify True, integrity checks pass for all files so far. Phase 1 awaits B1 (14/30); Phase 3 data at 50/40 of 100.
+- 2026-10-20 21:50 UTC: Phase 1 done. E21 Part A refuted as registered (rank test flag on seed 21; 99/100 criterion-seed checks pass), Part B confirmed (4/4), E22 confirmed (20/20). Outcomes in EVIDENCE (additions only), STATUS, explog. Phase 3 data at 88/80 of 100.
 
 ## Noted, not started
 

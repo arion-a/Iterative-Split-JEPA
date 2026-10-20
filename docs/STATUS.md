@@ -123,3 +123,6 @@
 | 28 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 10.5 deg, B2 11.3 deg | `results/stage_b2_e21/sigma_cat_0.4/28.json` |
 | 29 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.90, K found 6 | rung-2 angle B1 7.5 deg, B2 9.8 deg | `results/stage_b2_e21/sigma_cat_0.4/29.json` |
 | 30-34 | B1 [E23, generic MLP encoder] | refuted as registered: 8 of 9 criteria 0/5 seeds; rung-1 gap 1.1 | rung-1 angle 82 deg, rung-2 angle 81 deg, nesting 74 deg | `results/stage_b1_e23/E23_REPORT.md` |
+| 20-29 | B1 [E21 Part A, fresh seeds] | refuted as registered (rank test flagged rung 2 on seed 21; 99/100 checks pass) | angles ~1 deg, gap ~50, texture R2 0.958, identity R2 0.983 | `results/stage_b1_e21/E21_REPORT.md` |
+| 20-29 | B2 [E21 Part B, sigma 0.1 and 0.4] | confirmed (4/4 sub-claims): sigma 0.1 recovery 0.69, Tier 1 gap 19.3; sigma 0.4 E20 criterion 9/10 | nesting below 5 deg in every run | `results/stage_b2_e21/E21_E22_REPORT.md` |
+| 20-29 | B2 [E22 probe-image test] | confirmed: orthogonalised rung-2 angle 2.76 deg vs raw 10.07 deg, 20/20 runs | texture image 77.5 deg from identity+category images | `results/stage_b2_e21/E21_E22_REPORT.md` |

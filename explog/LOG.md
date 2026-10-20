@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 401 entries, head 580b6907e1fe
+Chain status at render time: **VALID** — 418 entries, head 2c5e9a6aac0b
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -8797,5 +8797,432 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **Bearing on objectives O2.** With the generic MLP encoder and the Stage A prediction recipe, the ladder's first split is not recovered in the B1 world, although the encoder trained normally and keeps the category content. The run does not separate architecture, objective and training budget.
 
 **Verdict.** refuted
+
+---
+
+## #401 · run · stage B · plan §4.2
+`1878974d27df2b63` ← `580b6907e1fee32e` · recorded 2026-10-20T20:42:57+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=25 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.533,
+ "rung_angles_deg": [
+  0.74,
+  79.04
+ ],
+ "seconds": 222.6,
+ "variant_r2": [
+  0.966,
+  0.529
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed25.json` (sha256 1dfb07bce9)
+
+---
+
+## #402 · run · stage B · plan §4.2
+`c167d2fe73cfc0a0` ← `1878974d27df2b63` · recorded 2026-10-20T20:46:30+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=26 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.485,
+ "rung_angles_deg": [
+  0.74,
+  74.21
+ ],
+ "seconds": 213.4,
+ "variant_r2": [
+  0.961,
+  0.492
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed26.json` (sha256 ac0f803553)
+
+---
+
+## #403 · run · stage B · plan §4.2
+`f346c40174b78acd` ← `c167d2fe73cfc0a0` · recorded 2026-10-20T20:49:54+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=27 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.562,
+ "rung_angles_deg": [
+  0.89,
+  82.33
+ ],
+ "seconds": 203.6,
+ "variant_r2": [
+  0.955,
+  0.569
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed27.json` (sha256 da6d823b3c)
+
+---
+
+## #404 · run · stage B · plan §4.2
+`803c21bc151c6943` ← `f346c40174b78acd` · recorded 2026-10-20T20:53:21+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=28 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.479,
+ "rung_angles_deg": [
+  0.73,
+  75.78
+ ],
+ "seconds": 207.6,
+ "variant_r2": [
+  0.963,
+  0.478
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed28.json` (sha256 7044252e73)
+
+---
+
+## #405 · run · stage B · plan §4.2
+`bee17235959f96c1` ← `803c21bc151c6943` · recorded 2026-10-20T20:56:42+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=29 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.439,
+ "rung_angles_deg": [
+  1.33,
+  88.56
+ ],
+ "seconds": 200.2,
+ "variant_r2": [
+  0.956,
+  0.453
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed29.json` (sha256 8ddec7e805)
+
+---
+
+## #406 · run · stage B · plan §4.2
+`699a8c77ab819169` ← `bee17235959f96c1` · recorded 2026-10-20T21:00:11+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=20 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.563,
+ "rung_angles_deg": [
+  0.87,
+  82.75
+ ],
+ "seconds": 209.7,
+ "variant_r2": [
+  0.956,
+  0.558
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed20.json` (sha256 17c5526d7e)
+
+---
+
+## #407 · run · stage B · plan §4.2
+`7b71c77f57d5aa83` ← `699a8c77ab819169` · recorded 2026-10-20T21:03:33+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=21 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.507,
+ "rung_angles_deg": [
+  0.84,
+  87.47
+ ],
+ "seconds": 201.8,
+ "variant_r2": [
+  0.961,
+  0.503
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed21.json` (sha256 95321c71e4)
+
+---
+
+## #408 · run · stage B · plan §4.2
+`a851ced1661896ee` ← `7b71c77f57d5aa83` · recorded 2026-10-20T21:06:58+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=22 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.467,
+ "rung_angles_deg": [
+  1.46,
+  79.8
+ ],
+ "seconds": 204.7,
+ "variant_r2": [
+  0.951,
+  0.473
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed22.json` (sha256 13d00b51ba)
+
+---
+
+## #409 · run · stage B · plan §4.2
+`6064d72be6f2fd53` ← `a851ced1661896ee` · recorded 2026-10-20T21:10:21+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=23 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.641,
+ "rung_angles_deg": [
+  0.85,
+  64.47
+ ],
+ "seconds": 203.1,
+ "variant_r2": [
+  0.954,
+  0.632
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed23.json` (sha256 7cfe765975)
+
+---
+
+## #410 · run · stage B · plan §4.2
+`5c2f8e3b8d776671` ← `6064d72be6f2fd53` · recorded 2026-10-20T21:13:44+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=24 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.504,
+ "rung_angles_deg": [
+  0.84,
+  77.42
+ ],
+ "seconds": 203.4,
+ "variant_r2": [
+  0.957,
+  0.515
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed24.json` (sha256 cb736fec5b)
+
+---
+
+## #411 · run · stage B · plan §4.2
+`73dc19119d9d9d99` ← `5c2f8e3b8d776671` · recorded 2026-10-20T21:17:12+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=25 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.621,
+ "rung_angles_deg": [
+  0.94,
+  69.25
+ ],
+ "seconds": 207.5,
+ "variant_r2": [
+  0.966,
+  0.612
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed25.json` (sha256 b37991814f)
+
+---
+
+## #412 · run · stage B · plan §4.2
+`f3102a2b2ea74caa` ← `73dc19119d9d9d99` · recorded 2026-10-20T21:20:34+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=26 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.528,
+ "rung_angles_deg": [
+  0.84,
+  82.89
+ ],
+ "seconds": 202.5,
+ "variant_r2": [
+  0.96,
+  0.53
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed26.json` (sha256 cb197be181)
+
+---
+
+## #413 · run · stage B · plan §4.2
+`76c098486de02ef0` ← `f3102a2b2ea74caa` · recorded 2026-10-20T21:23:55+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=27 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.493,
+ "rung_angles_deg": [
+  0.85,
+  87.24
+ ],
+ "seconds": 200.8,
+ "variant_r2": [
+  0.954,
+  0.491
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed27.json` (sha256 1c3e94423f)
+
+---
+
+## #414 · run · stage B · plan §4.2
+`5597e0137871a453` ← `76c098486de02ef0` · recorded 2026-10-20T21:27:18+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=28 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.319,
+ "rung_angles_deg": [
+  0.83,
+  81.05
+ ],
+ "seconds": 202.2,
+ "variant_r2": [
+  0.962,
+  0.323
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed28.json` (sha256 866eaf9e64)
+
+---
+
+## #415 · run · stage B · plan §4.2
+`c18387e28aec835b` ← `5597e0137871a453` · recorded 2026-10-20T21:30:43+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=29 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.511,
+ "rung_angles_deg": [
+  1.44,
+  84.55
+ ],
+ "seconds": 205.3,
+ "variant_r2": [
+  0.957,
+  0.519
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/rank1_rung2_seed29.json` (sha256 df7d30c84c)
+
+---
+
+## #416 · result · stage B · plan §E21
+`badebc8fb1f57a5c` ← `c18387e28aec835b` · recorded 2026-10-20T21:31:49+00:00
+
+**What.** E21 (confirmatory re-run, fresh seeds 20-29): Part A (B1 world, 30 runs) REFUTED as registered: the frozen rule needs every criterion on every seed and the rank test flagged rung 2 on seed 21; the other 99 of 100 criterion-seed checks held (angles ~1 deg, texture R2 0.958, identity R2 0.983, gap ratios ~50, nesting 1.13 deg, D13 leakage gate met 10/10), controls behaved. Part B (B2 world, 20 runs) CONFIRMED: sigma 0.1 recovery 0.69 with Tier 1 gap above 10 in 10/10; sigma 0.4 E20 criterion in 9/10; nesting below 5 deg in every run; no metric damaged. E21 as a whole not confirmed.
+
+**How.** experiments/run_stage_b1.py (stage_b1.yaml, arms main/shuffled_rung2/rank1_rung2, seeds 20-29) and run_stage_b2_spec.py (stage_b2_noop.yaml, sigma 0.1 and 0.4, seeds 20-29); scored by experiments/analyse_e21_e22.py against the registered text
+
+**Output.**
+```json
+{
+ "deficit_recovered_sigma0.1": 0.69,
+ "e20_criterion_sigma0.4": "9/10",
+ "partA": "refuted (rank_test fails on seed 21)",
+ "partA_criteria_checks_passing": "99/100",
+ "partB": "confirmed (4/4 sub-claims)",
+ "tier1_gap_sigma0.1": 19.3
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/E21_REPORT.md` (sha256 afd74de954); `results/stage_b2_e21/E21_E22_REPORT.md` (sha256 15a705a565); `experiments/analyse_e21_e22.py` (sha256 3690662850)
+
+**Bearing on objectives O2.** On fresh seeds the mechanism numbers reproduce and the Tier 1 gap fix holds; the registered all-seeds verdict rule is broken by a single rank-test flag.
+
+**Verdict.** mixed: part A refuted, part B confirmed
+
+---
+
+## #417 · result · stage B · plan §E22
+`2c5e9a6aac0b63fc` ← `badebc8fb1f57a5c` · recorded 2026-10-20T21:31:49+00:00
+
+**What.** E22 (probe-image explanation, direct test on the E21 Part B runs): CONFIRMED. Orthogonalised rung-2 angle at most 5 deg in 20 of 20 runs (mean 2.76 deg; largest 4.85), at least 3 deg below the raw angle in 20 of 20 (raw 10.07 deg). Texture image sits 77.5 deg from the identity+category images; orthogonalising removes 0.5-1.6% of the identity image.
+
+**How.** fields image_geometry and angle_orth_deg in the E21 Part B run files; scored by experiments/analyse_e21_e22.py
+
+**Output.**
+```json
+{
+ "orth_angle_mean_deg": 2.76,
+ "raw_angle_mean_deg": 10.07,
+ "runs_3deg_lower": "20/20",
+ "runs_orth_le_5": "20/20"
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/E21_E22_REPORT.md` (sha256 15a705a565)
+
+**Bearing on objectives O2.** The roughly 10 deg rung-2 angle is mostly a definition effect of the identity probe image overlapping the texture image, not an estimation floor.
+
+**Verdict.** confirmed
 
 ---

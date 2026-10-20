@@ -3,3 +3,4 @@ Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pyto
   "min_std": float(h.std(0).min())})
 main 20 [0.87, 0.99]
 main 21 [0.84, 1.26]
+main 22 [1.46, 1.15]

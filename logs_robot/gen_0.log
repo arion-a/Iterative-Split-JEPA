@@ -10,3 +10,5 @@ group 3: 8 trajectories, lengths [74, 101, 86, 87, 88, 82, 90, 77], 9 tries, 154
 group 6: 8 trajectories, lengths [77, 89, 74, 81, 76, 67, 68, 80], 8 tries, 105 s
 group 9: 8 trajectories, lengths [72, 94, 70, 93, 92, 84, 79, 69], 9 tries, 121 s
 [33;1m2026-10-20 03:42:59,891 - mani_skill  - WARNING - Requested to use render device "sapien_cuda", but CUDA device was not found. Falling back to "cpu" device. Rendering might be disabled.[0m
+group 12: 8 trajectories, lengths [128, 101, 110, 125, 113, 132, 126, 107], 8 tries, 155 s
+group 15: 8 trajectories, lengths [118, 108, 103, 107, 101, 93, 101, 125], 8 tries, 144 s

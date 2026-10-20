@@ -123,3 +123,8 @@ Source: `docs/IMPLEMENTATION_PLAN.md` §1 (DECIDE 20261020-1 … -15). DECIDE 10
 * **D32** (was DECIDE 15). Nuisance = additive 4-coefficient illumination pattern (amplitude 0.4), not gain/offset/shift (untested, a stated limitation); S1 on a family skips that family, and the ladder ends by S1 only when the last family is exhausted.
 
 **Not settled by this confirmation:** which way the five-bit "triggers" pattern runs in the DECISION_POLICY log format (the plan used 1 = fired). It stays flagged.
+
+
+## D33. Trigger-pattern convention in DECIDE log lines (owner instruction, 2026-10-20)
+**Decision.** In `triggers-clear: <T1..T5>` a 1 means the trigger is CLEAR (did not fire), a 0 means it fired. A DECIDE-D line (no trigger fired) therefore reads `11111`.
+**Correction.** The stage-V plan first used the inverse (1 = fired). The 15 DECIDE lines in `docs/IMPLEMENTATION_PLAN.md` §1 were flipped (`00000` -> `11111`, and the one-trigger-fired lines `10000` -> `01111`: T1 fired for DECIDE 10-15 where a gate or criterion was added or changed). Earlier chain entries are not rewritten; no chain entry carried the pattern.

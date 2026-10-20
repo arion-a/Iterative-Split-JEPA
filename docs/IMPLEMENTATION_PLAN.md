@@ -22,39 +22,39 @@ Full text in `docs/DECISIONS.md` D13–D17.
 
 **Confirmed by the owner 2026-10-20 and promoted: DECIDE 1-9 → D19-D27, 10 → D18, 11-15 → D28-D32 (docs/DECISIONS.md).**
 
-DECIDE lines (Claude, per DECISION_POLICY Step 5; rule = R-number of Step 4; the 5-bit pattern lists T1..T5 with 1 = the trigger fired — the policy text does not say which
-way the bit runs, so this is flagged for the owner):
+DECIDE lines (Claude, per DECISION_POLICY Step 5; rule = R-number of Step 4; the 5-bit pattern lists T1..T5 with 1 = the trigger is CLEAR (did not fire), matching the field name `triggers-clear`, so 11111 = no trigger fired;
+convention fixed by D33; the first version of this plan had the bits inverted and was corrected on 2026-10-20):
 
 ```
-DECIDE 20261020-1 | RK4 sub-stepped integrator, not velocity Verlet | rule R5 | triggers-clear: 00000 | 2026-10-20
+DECIDE 20261020-1 | RK4 sub-stepped integrator, not velocity Verlet | rule R5 | triggers-clear: 11111 | 2026-10-20
    (non-separable double-pendulum Hamiltonian: Verlet is not symplectic there; step-halving check kept)
-DECIDE 20261020-2 | Encoder trained by prediction + regulariser only, no alignment loss | rule R2 | triggers-clear: 00000 | 2026-10-20
+DECIDE 20261020-2 | Encoder trained by prediction + regulariser only, no alignment loss | rule R2 | triggers-clear: 11111 | 2026-10-20
    (paper's synthetic recipe; alignment in the encoder would remove the nuisance rung 1 must split)
-DECIDE 20261020-3 | Encoder recipe = repo's validated hinge+cov (var 1e-2, cov 0.04), multi-horizon heads {1,8,32} | rule R3 | 00000 | 2026-10-20
-DECIDE 20261020-4 | Block size per rung = largest gap ratio above the noise floor c(n), ratio >= gamma_min = 2.0 | rule R1 | 00000 | 2026-10-20
+DECIDE 20261020-3 | Encoder recipe = repo's validated hinge+cov (var 1e-2, cov 0.04), multi-horizon heads {1,8,32} | rule R3 | 11111 | 2026-10-20
+DECIDE 20261020-4 | Block size per rung = largest gap ratio above the noise floor c(n), ratio >= gamma_min = 2.0 | rule R1 | 11111 | 2026-10-20
    (2x threshold is MATHEMATICAL_PLAN §2.1/E35; c(n) is STOP_CRITERIA S1)
-DECIDE 20261020-5 | S1 operationalised: fires when no eigenvalue of the rung's difference moment exceeds c(n) | rule R5 | 00000 | 2026-10-20
+DECIDE 20261020-5 | S1 operationalised: fires when no eigenvalue of the rung's difference moment exceeds c(n) | rule R5 | 11111 | 2026-10-20
    (source text says "lambda_min <= c(n)"; read as: the family exposes no variation on the remaining content)
-DECIDE 20261020-6 | psi = max-ICC direction in the invariant core (generalised eigenproblem, release groups) | rule R5 | 00000 | 2026-10-20
-DECIDE 20261020-7 | V uses delta = 0.1 std, eps = delta + 2 x q95 drift on validation (triangle rule); 200 cross-release pairs | rule R2/R1 | 00000 | 2026-10-20
+DECIDE 20261020-6 | psi = max-ICC direction in the invariant core (generalised eigenproblem, release groups) | rule R5 | 11111 | 2026-10-20
+DECIDE 20261020-7 | V uses delta = 0.1 std, eps = delta + 2 x q95 drift on validation (triangle rule); 200 cross-release pairs | rule R2/R1 | 11111 | 2026-10-20
    (200 pairs per q is the source convention; eps from validation noise is VIDEO_FIRST §8)
-DECIDE 20261020-8 | L tolerance 1.02 for estimation error, rollout horizon K = 8 frames | rule R4 (tolerance is minimal) | 00000 | 2026-10-20
-DECIDE 20261020-9 | Real data = public Morpheus double-pendulum videos (MIT), informational only, no gates | rule R5 | 00000 | 2026-10-20
-DECIDE 20261020-11 | S1 amended: fires when lambda_max of the rung's moment <= 5% of an unmatched pair's energy (2 per whitened dim) | rule R5 | 10000 | 2026-10-20
+DECIDE 20261020-8 | L tolerance 1.02 for estimation error, rollout horizon K = 8 frames | rule R4 (tolerance is minimal) | 11111 | 2026-10-20
+DECIDE 20261020-9 | Real data = public Morpheus double-pendulum videos (MIT), informational only, no gates | rule R5 | 11111 | 2026-10-20
+DECIDE 20261020-11 | S1 amended: fires when lambda_max of the rung's moment <= 5% of an unmatched pair's energy (2 per whitened dim) | rule R5 | 01111 | 2026-10-20
    (found in the P2 planted-ladder unit test, before any registered run: the statistical floor c(n) is exceeded by white measurement noise in any
     invariant core at large n, so "variation above c(n)" never ends. Replaces the lambda-above-c(n) reading of DECIDE 5; c(n) is kept for block-size selection.)
-DECIDE 20261020-12 | B^2 in c(n) = 99th percentile of squared pair differences, not the maximum | rule R5 | 10000 | 2026-10-20
+DECIDE 20261020-12 | B^2 in c(n) = 99th percentile of squared pair differences, not the maximum | rule R5 | 01111 | 2026-10-20
    (the maximum is outlier-dominated; both are computed and the maximum is reported in the rung records)
-DECIDE 20261020-13 | Block-size candidates need top eigenvalue > S1 level (5% of chance), not c(n) | rule R5 | 10000 | 2026-10-20
+DECIDE 20261020-13 | Block-size candidates need top eigenvalue > S1 level (5% of chance), not c(n) | rule R5 | 01111 | 2026-10-20
    (dev finding: for whitened d >= 32 the monograph floor B^2 sqrt(2 log(1/delta)/n) exceeds every eigenvalue; c(n) is still reported per rung)
-DECIDE 20261020-14 | Encoder objective adds a consistency term (aug_weight 0.2) and latent 64-d; replaces DECIDE 2 | rule R1 | 10000 | 2026-10-20
+DECIDE 20261020-14 | Encoder objective adds a consistency term (aug_weight 0.2) and latent 64-d; replaces DECIDE 2 | rule R1 | 01111 | 2026-10-20
    (LIVE_DATA_PLAN §2 specifies consistency across renderings; chosen on dev seed 100 by a physics-free diagnostic only: does the temporal family show a cut.
     No oracle quantity was looked at. Dev observations, not registered runs: 12-d and 32-d latents: no cut; 64-d with aug_weight 0 and nuisance 0.4: no cliff in the
     rendering-pair spectrum (S2); 64-d with 0.2: renderings agree (S1, nuisance absorbed), temporal family cuts 61|3.)
-DECIDE 20261020-15 | Nuisance = additive 4-coefficient illumination pattern (amplitude 0.4); S1 on a family skips it, the ladder ends by S1 only when the last family is exhausted | rule R5/R1 | 10000 | 2026-10-20
+DECIDE 20261020-15 | Nuisance = additive 4-coefficient illumination pattern (amplitude 0.4); S1 on a family skips it, the ladder ends by S1 only when the last family is exhausted | rule R5/R1 | 01111 | 2026-10-20
    (the first renderer used gain/offset/shift: multiplicative and shift nuisance is not an additive latent block and gave no cliff; gain/shift arms are
     NOT tested and are a limitation. Skip-on-S1 is STOP_CRITERIA S1 read literally: terminate only if NONE of the families has variation.)
-DECIDE 20261020-10 | S2 gap criterion for temporal worlds uses gamma_min 2.0, not the B1/B2 gate of 10 | rule R1 | 10000 | 2026-10-20
+DECIDE 20261020-10 | S2 gap criterion for temporal worlds uses gamma_min 2.0, not the B1/B2 gate of 10 | rule R1 | 01111 | 2026-10-20
    (T1 fired: a gate is added to a new stage, so it is also escalated as A1; the B1/B2 gate stays untouched)
 ```
 
@@ -167,5 +167,5 @@ On-silence: (b); this plan does not alter earlier entries.
 | CP5 | run on public data; 5.3 blocked | `results/real/REPORT.md` (informational); owner capture needed |
 
 Full test suite: 50 passed. Chain links verify (`explog.verify(check_artifacts=False)`); the artifact-digest failure on entry 134 predates this stage (A2).
-Open for the owner: A1 (gap criterion for temporal worlds), A2 (declare entry 134 superseded), confirm DECIDE 1–15, the "triggers-clear" bit convention, and the owner's own capture.
+Open for the owner: A1 (gap criterion for temporal worlds), A2 (declare entry 134 superseded), confirm DECIDE 1–15, the "triggers-clear" bit convention (settled, D33), and the owner's own capture.
 Limitations: nuisance is additive illumination only (gain/shift untested); datasets differ per seed; real data is 10 clips with friction and a one-link tracker; the ResNet-50 / GPU route of the paper was not run.

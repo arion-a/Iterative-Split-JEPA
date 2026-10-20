@@ -13,6 +13,9 @@ Every number below has a raw JSON and a chain entry (`docs/STATUS.md`, `explog/c
 
 Controls: the flat baseline (no split) stays at 0.03-0.26; shuffled temporal pairs end the ladder by S2 as required.
 
+## Real clips (Columbia, 1100 releases, tracked energy as evaluator) — added 2026-10-20
+A one-dimensional core is found from real pixels and tracks the tracked total energy at |Spearman| 0.893 / 0.895 / 0.880 on held-out clips (registered ≥ 0.5: met); the flat no-split baseline reaches 0.38-0.48 (C1b: confirmed). The certificate calibrated on simulation is only partly met on real clips (V and L pass; 8-step rollout 0.43-0.45 against 0.35; ICC 0.898 on one seed against 0.9), so C1 is refuted as worded. As in simulation, a release-free slow direction names energy exactly as well as the ladder. Caveats: noisy tracked energy, 60-frame clips, neighbouring clips may share a video (contiguous-block split).
+
 ## Sec 2-3 (theory and mechanism) — what the experiments touch
 * Prediction fixes content, correspondences fix the partition: confirmed in the AR world; with correct pairs the lag ladder recovers a clean cut (variant R² 0.96-0.98, invariant 0.98-0.99, gap ratio 19-33 in E36's world).
 * The cut gap cannot exceed the adjacent timescale ratio; measured eigenvalues follow 2(1−a) (hierarchical run). With the 2× criterion (D18) only one of four cuts in the planted five-level world is taken (E35 refuted as worded).
@@ -31,9 +34,11 @@ Controls: the flat baseline (no split) stays at 0.03-0.26; shuffled temporal pai
 | E36 | refuted as worded: (S) 6/6, control closes (1.00), coupled closure ratio 1.25-1.32 against ≥ 2.0 (the world has the failure, ≈ 3.1; the learned core's 2% recovery error floors the ratio) |
 | B1 | confirmed |
 | E31f, E37, E38, E43 | not run, reasons in EVIDENCE |
+| C1 (Columbia real clips) | refuted as worded: naming 0.88-0.90 met, certificate partly met |
+| C1b (Columbia controls) | confirmed: flat 0.38-0.48 |
 | E44-E47 | blocked on the owner's footage |
 
 ## Sec 5 (boundaries) — what is guaranteed, measured, open
 * **Measured:** certificate on a discovered coordinate; the data / training dependence of naming; the cut-gap bound in an AR world; redundancy of the two selectors.
 * **Not shown:** that the temporal ladder adds anything over one slow-feature direction in this world (F1); that depth grows reach across levels (one level measured); the full five-gate rung audit; transport (NIM) in stage V.
-* **Limitations:** nuisance is additive illumination only (gain and shift untested); naming stays below 0.99; simulated video; the closure gate is weakly sensitive for a 98%-pure core; the public real clips (10, one tracked link) are informational and their coordinate is probably per-clip appearance; the live-footage test (E44-E47) is not done.
+* **Limitations:** nuisance is additive illumination only (gain and shift untested); naming stays below 0.99 in simulation (0.97-0.98 at best) and 0.88-0.90 on real clips; real evidence is the 1100 Columbia clips (short, noisy tracked energy, possible shared-video leakage); the closure gate is weakly sensitive for a 98%-pure core; the public real clips (10, one tracked link) are informational and their coordinate is probably per-clip appearance; the live-footage test (E44-E47) is not done.

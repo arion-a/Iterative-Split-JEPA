@@ -139,3 +139,5 @@ The experiment is complete except for the two owner-gated items (2 and 5). Phase
 
 ## 7. Public-data note (2026-10-20)
 Downloaded on request into `data/public/` (not committed): **Columbia** rigid double pendulum (1100 clips × 60 frames, 128×128 RGB, 135 MB) and **Mendeley** angle/encoder time series (no video). Columbia could stand in for Phase C's release diversity (1100 releases) but its clips are short (60 frames), energy is not given, and its `phys_vars.npy` is a pickled object array that must be parsed safely before use. Nothing was run on it; Phase C's owner-footage step is unchanged.
+
+**Update (2026-10-20):** Columbia was parsed safely (`src/isj/safe_npy.py`) and run (C1, C1b; `docs/EVIDENCE.md`, `docs/PAPER_RESULTS.md`): naming 0.88–0.90 against tracked energy, flat baseline 0.38–0.48, certificate partly met. This is real-data evidence from 1100 clips, but it does not replace the owner's footage for E44–E47 (clips are 60 frames, tracked energy is noisy, no controlled markers).

@@ -31,3 +31,10 @@ def test_hier_and_e36_statements():
     co = _load("results/e36/coupled_*.json"); ct = _load("results/e36/control_*.json")
     assert all(1.2 < r["closure_ratio"] < 1.4 and r["S_pass"] for r in co)
     assert all(abs(r["closure_ratio"] - 1.0) < 0.01 and r["S_pass"] for r in ct)
+
+
+@pytest.mark.skipif(not os.path.exists("results/columbia_controls/2.json"), reason="results not present")
+def test_columbia_statements():
+    co, cc = _load("results/columbia/*.json"), _load("results/columbia_controls/*.json")
+    assert all(0.85 < r["certificate"]["naming_abs_spearman"] < 0.92 for r in co)
+    assert all(r["flat"] < 0.5 and r["reproduction_diff"] < 0.005 for r in cc)

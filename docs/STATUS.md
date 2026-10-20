@@ -46,3 +46,5 @@
 | - | **Stage V E36 (2026-10-20)** | coupled vs uncoupled two-block world, 3 seeds | refuted as worded: (S) passes 6/6, control ratio 1.000, coupled ratio [1.252, 1.319, 1.247] (needed ≥ 2.0); world arithmetic 3.1 verified | `results/e36/*.json` |
 
 | - | **Stage V B1 scaling probe (2026-10-20)** | 450 releases, 8000 steps, 3 seeds | confirmed: naming [0.848, 0.683, 0.828] → [0.97, 0.976, 0.978]; E31d still refuted (0.99); seed agreement 0.976-0.981; certificate holds | `results/scaling/main/*.json` |
+
+| - | **Stage V Columbia real clips C1 / C1b (2026-10-20)** | 1100 real clips, 3 seeds, tracked energy as evaluator | C1 refuted as worded (naming [0.893, 0.895, 0.88] passes ≥ 0.5; rollout 0.43-0.45 and ICC 0.898 on seed 1 miss the sim-calibrated certificate); C1b confirmed (flat [0.477, 0.38, 0.471]) | `results/columbia`, `results/columbia_controls` |

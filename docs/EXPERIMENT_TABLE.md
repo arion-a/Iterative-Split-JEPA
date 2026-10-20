@@ -1,6 +1,6 @@
 # Experiment table (generated from `explog/chain.jsonl`; do not edit)
 
-Chain: 419 entries, head `f11b2f04fade`, verify = True. Rows: 71 (plans, results, decisions, amendments, blockers).
+Chain: 420 entries, head `d782cce44fef`, verify = False. Rows: 71 (plans, results, decisions, amendments, blockers).
 
 | # | Date | Kind | Idea (objective) | What happened | Record (hash; artifacts) | Contribution (verdict; reading) | Relevance |
 |---|---|---|---|---|---|---|---|

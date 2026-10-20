@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 419 entries, head f11b2f04fade
+Chain status at render time: **VALID** — 420 entries, head d782cce44fef
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -9263,5 +9263,16 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **Bearing on objectives O3.** On simulated robot data with a frozen ImageNet encoder plus a small trained head, the viewpoint change does not separate into a clean block, so the paper-style two-block response ratios are not reproduced; the claim is limited to what the registered setup tests (frozen encoder, simulated data, our own trajectory scheme).
 
 **Verdict.** refuted
+
+---
+
+## #419 · note · stage C · plan §close-out
+`d782cce44fefdf09` ← `f11b2f04fade23e0` · recorded 2026-10-20T22:57:36+00:00
+
+**What.** Completion plan finished: Phases 0-4 done. Final report docs/FINAL_REPORT.md: E21 Part A refuted as registered (one rank-test flag; 99/100 checks pass), E21 Part B confirmed, E22 confirmed, E23 refuted (generic MLP encoder does not recover the first split), E24 not confirmed on either task (no clean viewpoint block with frozen ResNet-50 features on simulated robot data). Tests 44 passed; log verifies; predictions unedited.
+
+**Artifacts.** `docs/FINAL_REPORT.md` (sha256 a53512d317); `docs/COMPLETION_PLAN.md` (sha256 f3e9743b4d)
+
+**Bearing on objectives O2, O3.** The mechanism is supported with the mirror encoder in the controlled worlds (E21, E22); it is not shown with a generic encoder (E23) or on the simulated robot data (E24).
 
 ---

@@ -57,10 +57,10 @@ How to use this file: tick a step only when its **done when** line is true, put 
 
 ## Phase 4: close-out
 
-- [ ] 4.1 Consistency pass: EVIDENCE, STATUS, DECISIONS and explog agree on every outcome since E9; `python -c "from isj import explog; print(explog.verify())"` prints True; 44+ tests pass (`python -m pytest -q`).
-- [ ] 4.2 Regenerate the combined reports that exist for earlier stages if their inputs changed (`experiments/build_e10_report.py`, `build_e11_summary.py`), only where a new result touches them.
-- [ ] 4.3 One final plain-language report of what was asked: for every registered item since the restart (E21, E22, E23, E24) the prediction, the result with its numbers, and the outcome, including refuted ones, plus the paper-readiness answer redone with the new evidence.
-- [ ] 4.4 Final push of the working branch. Merging to `main` only when the owner says so.
+- [x] 4.1 Consistency pass: EVIDENCE, STATUS, DECISIONS and explog agree on every outcome since E9; `python -c "from isj import explog; print(explog.verify())"` prints True; 44+ tests pass (`python -m pytest -q`).
+- [x] 4.2 Regenerate the combined reports that exist for earlier stages if their inputs changed (`experiments/build_e10_report.py`, `build_e11_summary.py`), only where a new result touches them.
+- [x] 4.3 One final plain-language report of what was asked: for every registered item since the restart (E21, E22, E23, E24) the prediction, the result with its numbers, and the outcome, including refuted ones, plus the paper-readiness answer redone with the new evidence.
+- [x] 4.4 Final push of the working branch. Merging to `main` only when the owner says so.
 - **Done when:** the final report is committed and the owner has it.
 
 ## Checks (kept minimal; the owner asked for strong checks after every step and a review after every phase)
@@ -84,6 +84,7 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 - 2026-10-20 21:50 UTC: Phase 1 done. E21 Part A refuted as registered (rank test flag on seed 21; 99/100 criterion-seed checks pass), Part B confirmed (4/4), E22 confirmed (20/20). Outcomes in EVIDENCE (additions only), STATUS, explog. Phase 3 data at 88/80 of 100.
 - 2026-10-20 22:00 UTC: Phase 3.1 done (robot data 100 + 100 groups, integrity check passes). Phase 1 gate closed: 44 tests passed. Feature extraction running for both tasks (about 22 s per group per process).
 - 2026-10-20 22:55 UTC: Phase 3 done. E24 NOT confirmed for either task: P1 fails on every seed (viewpoint ratio 1.37 PickCube, 1.17 PushCube, needs 3); P2 holds for PickCube only; P3 controls held; P4 fails on the invariant-content bound. No clean block boundary (rung-1 gap ratio 1.1-1.8; rank monitor 0/3). Limits stated in EVIDENCE and the report. Note: the container restarts whenever the session is idle and kills background jobs; Stage C needed three relaunches for that reason.
+- 2026-10-20 23:10 UTC: Phase 4 done. Consistency pass: EVIDENCE holds an outcome for E21, E22, E23, E24; STATUS and explog agree; explog verifies (420 entries); 44 tests pass; predictions unedited. 4.2 not needed (no earlier combined report's inputs changed). Final report `docs/FINAL_REPORT.md`. Plan complete; branch not merged to main (owner decides).
 
 ## Noted, not started
 

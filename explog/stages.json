@@ -28,6 +28,13 @@
    "status": "later",
    "question": "Does the ladder beat other methods at the same cost?",
    "result": "Not started."
+  },
+  {
+   "id": "V",
+   "name": "Video-first handshake",
+   "status": "done",
+   "question": "Can the pipeline find an unnamed conserved coordinate from pixels, certify it, and earn the name 'energy'?",
+   "result": "Certificate yes (E31c' confirmed); naming no (|Spearman| 0.79 vs 0.99); the shuffled-pair control finds the same coordinate, so release grouping rather than the temporal split identifies it here. Hierarchical AR world: 1 cut, not 4. Real clips: informational, likely per-clip appearance."
   }
  ]
 }

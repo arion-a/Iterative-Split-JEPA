@@ -151,3 +151,17 @@ Q: The chain verify fails on artifacts only: entry 134 logged `src/isj/stage_b1.
 Options: (a) append a decision entry declaring entry 134's artifact superseded; (b) leave as is and always verify with `check_artifacts=False`.
 Recommend: (a). Impact: (a) full verify passes; (b) none. Reversible: (a) yes (append-only), (b) yes. Cost: none.
 On-silence: (b); this plan does not alter earlier entries.
+
+## 7. Status at 2026-10-20 (checkpoints)
+
+| Checkpoint | State | Evidence |
+|---|---|---|
+| CP0 | passed | chain, config hash, 13 tests |
+| CP1 | passed | simulator, renderer, sealed audit, token scan |
+| CP2/CP3 | run; mixed result | `results/handshake/REPORT.md`: E31c′ confirmed, E31d / E31e(S1) / P-stab refuted, controls met, shuffled arm = main arm |
+| CP4 | run | `results/hier/REPORT.md`: E35 refuted (RUNGS 1), per-rung gates and control met |
+| CP5 | run on public data; 5.3 blocked | `results/real/REPORT.md` (informational); owner capture needed |
+
+Full test suite: 50 passed. Chain links verify (`explog.verify(check_artifacts=False)`); the artifact-digest failure on entry 134 predates this stage (A2).
+Open for the owner: A1 (gap criterion for temporal worlds), A2 (declare entry 134 superseded), confirm DECIDE 1–15, the "triggers-clear" bit convention, and the owner's own capture.
+Limitations: nuisance is additive illumination only (gain/shift untested); datasets differ per seed; real data is 10 clips with friction and a one-link tracker; the ResNet-50 / GPU route of the paper was not run.

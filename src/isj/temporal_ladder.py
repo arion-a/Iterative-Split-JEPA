@@ -96,9 +96,9 @@ def fit_psi(z_white: np.ndarray, core: np.ndarray) -> dict:
     r, a, t, d = z_white.shape
     c = z_white.reshape(-1, d) @ core                                  # (N, m)
     g = np.repeat(np.arange(r), a * t)
-    total = np.cov(c.T).reshape(c.shape[1], c.shape[1])
+    total = np.cov(c.T, ddof=0).reshape(c.shape[1], c.shape[1])
     means = np.stack([c[g == i].mean(0) for i in range(r)])
-    between = np.cov(means.T).reshape(c.shape[1], c.shape[1])
+    between = np.cov(means.T, ddof=0).reshape(c.shape[1], c.shape[1])
     ev, evec = np.linalg.eigh(total)
     inv_half = evec @ np.diag(1 / np.sqrt(np.maximum(ev, 1e-12))) @ evec.T
     lam, u = np.linalg.eigh(inv_half @ between @ inv_half)

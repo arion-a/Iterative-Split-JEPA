@@ -1,0 +1,28 @@
+{
+ "n_videos": 10,
+ "frames_per_video": 447,
+ "fps": 30,
+ "stop": "S2",
+ "core_dim": 7,
+ "psi_icc_fit": 1.0877459965715437,
+ "certificate": {
+  "V": 0.0,
+  "n_pairs_found": 200,
+  "eps": 0.618187181296031,
+  "drift_q95_val": 0.2590935906480155,
+  "icc": 0.9891861126281134,
+  "L": 0.9885713165353585,
+  "rollout_nmse": 0.1708098059463932
+ },
+ "tracker_detect_fraction": 1.0,
+ "informational": {
+  "speed2": {
+   "abs_spearman_psi_test": 0.11218530205045103,
+   "ceiling_probe_r2_test_report_only": -0.49007046065557436
+  },
+  "height": {
+   "abs_spearman_psi_test": 0.3093347693617833,
+   "ceiling_probe_r2_test_report_only": 0.06822555966700206
+  }
+ }
+}

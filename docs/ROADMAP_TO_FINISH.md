@@ -136,3 +136,6 @@ For each finished step: (1) change its status here and add the evidence path, (2
 | 5. Owner sign-off of limitations and open decisions | **open**: the limitations are in `docs/PAPER_RESULTS.md` Sec 5 and the decision queue in §4 |
 
 The experiment is complete except for the two owner-gated items (2 and 5). Phase C step C3 (two-marker tracker and energy calculation) is written when footage with known marker colours exists.
+
+## 7. Public-data note (2026-10-20)
+Downloaded on request into `data/public/` (not committed): **Columbia** rigid double pendulum (1100 clips × 60 frames, 128×128 RGB, 135 MB) and **Mendeley** angle/encoder time series (no video). Columbia could stand in for Phase C's release diversity (1100 releases) but its clips are short (60 frames), energy is not given, and its `phys_vars.npy` is a pickled object array that must be parsed safely before use. Nothing was run on it; Phase C's owner-footage step is unchanged.

@@ -102,3 +102,24 @@ Claude's operationalisation: pass if L ≤ 1.02 (estimation tolerance, DECIDE 20
 **Decision.** In temporal (AR-lag) worlds the spectral-gap criterion is gamma_min = 2.0 (the 2x threshold of MATHEMATICAL_PLAN). The B1/B2 gate of 10 is unchanged and applies only to those stages.
 **Note.** The line above headed "Candidate for owner confirmation: D18" referred to the list of Claude DECIDE lines (docs/IMPLEMENTATION_PLAN.md §1); that list is not a decision and keeps no D-number until confirmed. It is not rewritten (append-only).
 **Disclosure.** The value was already in use for the hierarchical run (DECIDE 20261020-10); this ruling confirms it, no rerun needed.
+
+
+## D19–D32. Stage V DECIDE lines 1–15, confirmed and promoted (owner instruction, 2026-10-20)
+Source: `docs/IMPLEMENTATION_PLAN.md` §1 (DECIDE 20261020-1 … -15). DECIDE 10 is D18 (already a ruling). Where one choice replaced another, both are kept and the replacement is named; none is deleted.
+
+* **D19** (was DECIDE 1). Double-pendulum integrator: RK4 with sub-steps (dt_int 1e-3), not velocity Verlet; the Hamiltonian is not separable, so Verlet is not symplectic there. A step-halving check is kept.
+* **D20** (was DECIDE 2). Encoder trained by multi-horizon prediction + regulariser only, no alignment loss. **Superseded by D31.**
+* **D21** (was DECIDE 3). Encoder recipe = the repo's validated hinge + covariance regulariser (var 1e-2, cov 0.04), prediction heads at horizons {1, 8, 32}.
+* **D22** (was DECIDE 4). Block size per rung = largest gap ratio, ratio >= gamma_min = 2.0. **Amended by D30** (which eigenvalues count as candidates).
+* **D23** (was DECIDE 5). S1 read as "no eigenvalue above c(n)". **Replaced by D28.**
+* **D24** (was DECIDE 6). The coordinate psi = the maximum-ICC direction in the invariant core (generalised eigenproblem, release groups; physics-free).
+* **D25** (was DECIDE 7). Violation rate V: delta = 0.1 std, eps = delta + 2 x q95 validation drift (triangle rule), 200 cross-release matched pairs.
+* **D26** (was DECIDE 8). L tolerance 1.02 for estimation error; rollout horizon K = 8 frames.
+* **D27** (was DECIDE 9). Real data = public Morpheus double-pendulum clips (MIT), informational only, no gates.
+* **D28** (was DECIDE 11). S1 amended: fires when lambda_max of a family's difference moment is <= 5% of an unmatched pair's energy (2 per whitened dimension). Replaces D23.
+* **D29** (was DECIDE 12). B^2 in c(n) = the 99th percentile of squared pair differences, not the maximum; c(n) is reported per rung.
+* **D30** (was DECIDE 13). Block-size candidates must have top eigenvalue above the S1 level (5% of chance), not c(n); c(n) exceeds every eigenvalue for whitened d >= 32. Amends D22.
+* **D31** (was DECIDE 14). Encoder objective adds a consistency term between two renderings of a frame (aug_weight 0.2) and uses a 64-d latent (LIVE_DATA_PLAN §2); chosen on dev seed 100 by a physics-free diagnostic only. Supersedes D20.
+* **D32** (was DECIDE 15). Nuisance = additive 4-coefficient illumination pattern (amplitude 0.4), not gain/offset/shift (untested, a stated limitation); S1 on a family skips that family, and the ladder ends by S1 only when the last family is exhausted.
+
+**Not settled by this confirmation:** which way the five-bit "triggers" pattern runs in the DECISION_POLICY log format (the plan used 1 = fired). It stays flagged.

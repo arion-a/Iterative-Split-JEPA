@@ -20,6 +20,8 @@ Owner-directed answers (D17, adopted by the instruction to implement): sequentia
 release diversity + ICC; friction handled by calibrating ε on measured drift; depth (not state counts) planted in AR worlds; geometric lag ladder.
 Full text in `docs/DECISIONS.md` D13–D17.
 
+**Confirmed by the owner 2026-10-20 and promoted: DECIDE 1-9 → D19-D27, 10 → D18, 11-15 → D28-D32 (docs/DECISIONS.md).**
+
 DECIDE lines (Claude, per DECISION_POLICY Step 5; rule = R-number of Step 4; the 5-bit pattern lists T1..T5 with 1 = the trigger fired — the policy text does not say which
 way the bit runs, so this is flagged for the owner):
 

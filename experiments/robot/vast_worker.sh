@@ -21,6 +21,8 @@ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null | hea
 command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh >/dev/null 2>&1; export PATH=$HOME/.local/bin:$PATH
 [ -d $W/venv ] || { uv venv --python 3.10 $W/venv -q; . $W/venv/bin/activate; uv pip install -q "numpy<2" "mani_skill==3.0.1" mplib==0.1.1 h5py pyyaml scipy pillow; uv pip install -q torch torchvision --index-url https://download.pytorch.org/whl/cu128 || uv pip install -q torch torchvision; }
 . $W/venv/bin/activate
+# the box image's own CUDA/NCCL libraries on LD_LIBRARY_PATH shadow the ones torch ships (ImportError: undefined symbol ncclCommResume)
+export LD_LIBRARY_PATH=
 # ---- 3. code (private repo: token used only in the remote URL, never printed)
 [ -d repo ] || git clone -q https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO_PATH}.git repo
 cd repo && git fetch -q origin $BRANCH && git checkout -q $BRANCH && git pull -q origin $BRANCH && git config user.email "worker@vast" && git config user.name "vast worker"

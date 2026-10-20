@@ -44,3 +44,5 @@
 | - | **Stage V F1 follow-up (2026-10-20)** | 3 seeds, same encoders as the handshake | F1 refuted: release-free temporal-only arm = main arm (gap 0.000 / 0.000 / −0.010); the discovery is redundantly identified by temporal slowness and by release grouping | `results/followup/*.json` |
 
 | - | **Stage V E36 (2026-10-20)** | coupled vs uncoupled two-block world, 3 seeds | refuted as worded: (S) passes 6/6, control ratio 1.000, coupled ratio [1.252, 1.319, 1.247] (needed ≥ 2.0); world arithmetic 3.1 verified | `results/e36/*.json` |
+
+| - | **Stage V B1 scaling probe (2026-10-20)** | 450 releases, 8000 steps, 3 seeds | confirmed: naming [0.848, 0.683, 0.828] → [0.97, 0.976, 0.978]; E31d still refuted (0.99); seed agreement 0.976-0.981; certificate holds | `results/scaling/main/*.json` |

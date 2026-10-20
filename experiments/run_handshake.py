@@ -46,7 +46,7 @@ def run(cfg, seeds, out, log, data_root="data/handshake"):
         qf = (zc @ pipe.flat_dir)[..., None]
         q["flat"] = (qf - qf[split == 0].mean()) / qf[split == 0].std()
         pipes[s] = (pipe, main, psi_main)
-        r = {"seed": s, "encoder_log": pipe.log, "ladder_main": [{k: v for k, v in x.items() if k != "V"} for x in main["rungs"]],
+        r = {"seed": s, "encoder_log": pipe.log, "ladder_main": [{k: v for k, v in x.items() if k not in ("V", "Q")} for x in main["rungs"]],
              "stop_main": main["stop"], "core_dim_main": int(main["core"].shape[1]),
              "ladder_shuffled_stop": shuf["stop"], "core_dim_shuffled": int(shuf["core"].shape[1]), "arms": {}}
         for arm, qa_ in q.items():

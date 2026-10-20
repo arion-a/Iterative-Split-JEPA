@@ -146,3 +146,13 @@ Reading: the release-free slowest direction (linear slow-feature analysis at lag
 ## B1 scaling probe (registered 2026-10-20, before the run; decided by Claude under the owner's delegation, roadmap Q1; `configs/scaling.yaml`)
 **Question.** Is the refuted naming result (E31d, |Spearman| 0.786) a data / training limit? **Run.** The handshake pipeline unchanged except 450 releases (300 / 75 / 75) and 8000 encoder steps (handshake: 150 releases, 4000 steps); new datasets, 3 seeds; criteria and recipe otherwise as `configs/handshake.yaml`.
 **Prediction (Claude's).** Naming improves by at least 0.05 over the handshake value of the same seed on every seed (confirmed), but does not reach 0.99 (E31d stays refuted). **Decision rule:** confirmed if naming_new ≥ naming_old + 0.05 on all three seeds; refuted otherwise (then the limit is not data or training length). The 0.99 re-test is informational. Confounded on purpose: data and steps change together, a single minimal probe; no further probes.
+
+### B1 outcome (2026-10-20), `results/scaling/main/*.json`: **CONFIRMED** (naming improves with data and training; 0.99 still not reached)
+|Spearman(psi, E)| main arm, handshake → B1 (450 releases, 8000 steps): [0.848, 0.683, 0.828] → [0.97, 0.976, 0.978]; gain [0.122, 0.293, 0.15] (needed ≥ 0.05 on every seed). E31d (≥ 0.99) therefore **stays refuted**, now by 0.012-0.020. Certificate still holds on every seed (V 0.000-0.005, ICC 0.989-0.993, L 0.998, rollout 0.12-0.15). Informational, not registered: seed agreement 0.976-0.981 (handshake 0.766); shuffled-pair arm naming [0.972, 0.977, 0.16] (the release-grouped selector alone matched main on seeds 0 and 1 but not on seed 2); flat arm 0.03-0.21; the first-family and lag-32 stop pattern differs across seeds (first attempt crashed on the JSON writer, repeated; see chain). Claude's expectation (improves, does not reach 0.99) held.
+
+### Not run, with reasons (2026-10-20, roadmap Phase D; written so every stage-V prediction has an outcome line)
+* **E31f** (recurrence structure of psi): not run; no frozen statistic exists and it is marked informational in the source. Not needed for the central claim.
+* **E37, E38:** not run; E37 needs unstable dynamics the stationary pipeline cannot represent, E38 needs bridge variants beyond E36. E36 covered the (S)-pass / (D)-fail bridge.
+* **E43** (same pattern in other physical systems): not run; separate study, needs new renderers.
+* **Pooling probe, paper-scale ResNet-50 encoder (GPU):** not run; not needed for the central claim; the GPU route needs an ASK (trigger T2).
+* **E45-E47 and E44 on the owner's footage:** blocked on the footage (roadmap Phase C).

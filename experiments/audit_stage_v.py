@@ -52,7 +52,7 @@ missing = [p for p in raw if p not in logged]
 check("every raw result JSON is in the chain", not missing, str(missing[:3]))
 
 ev = open("docs/EVIDENCE.md").read()
-for ident, marker in (("E31c′", "E31c′: CONFIRMED"), ("E31d", "E31d: REFUTED"), ("E35", "E35: REFUTED"), ("F1", "F1 outcome"), ("E36", "E36 outcome")):
+for ident, marker in (("E31c′", "E31c′: CONFIRMED"), ("E31d", "E31d: REFUTED"), ("E35", "E35: REFUTED"), ("F1", "F1 outcome"), ("E36", "E36 outcome"), ("B1", "B1 outcome")):
     check(f"EVIDENCE has an outcome for {ident}", marker in ev)
 
 print("AUDIT", "PASSED" if ok else "FAILED")

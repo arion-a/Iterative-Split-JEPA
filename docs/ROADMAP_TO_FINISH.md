@@ -46,11 +46,11 @@ Status key: ☐ pending · ☑ done · ⛔ blocked · ◇ optional (needs an own
 The handshake left three open results: naming 0.79 against 0.99, seed disagreement 0.77 against 0.9, one seed whose core had 4 dimensions. Nothing is retuned; each follow-up is a new registered prediction.
 | ID | Step | Depends | Test / evidence | Status |
 |---|---|---|---|---|
-| B1 | **[OWNER]** Choose: accept the refutations as the result, or register one scaling probe (more releases and encoder steps: does naming approach 0.99?) | CP-A | owner reply, recorded as a decision | ☐ |
-| B2 | ◇ If probe chosen: write prediction and frozen config first (releases 150 → 450, steps 4000 → 8000; naming per seed); then build the larger datasets | B1 | prediction in `EVIDENCE.md` before any run | ☐ |
-| B3 | ◇ Run the probe (about 40 min CPU), outcome entry, report | B2 | `results/scaling/*.json` | ☐ |
-| B4 | ◇ Nuisance limitation: one arm with multiplicative gain or shift nuisance (currently untested) | B1 | prediction first; one arm, 3 seeds | ☐ |
-| **CP-B** | Each refuted item has either an accepted-as-result note or a probe outcome | B1–B4 | `EVIDENCE.md` | ☐ |
+| B1 | **[OWNER → decided by Claude under delegation: probe registered]** Choose: accept the refutations as the result, or register one scaling probe (more releases and encoder steps: does naming approach 0.99?) | CP-A | owner reply, recorded as a decision | ☑ |
+| B2 | ◇ If probe chosen: write prediction and frozen config first (releases 150 → 450, steps 4000 → 8000; naming per seed); then build the larger datasets | B1 | prediction in `EVIDENCE.md` before any run | ☑ |
+| B3 | ◇ Run the probe (about 40 min CPU), outcome entry, report | B2 | `results/scaling/*.json` | ☑ |
+| B4 | ◇ (skipped by decision: minimal; stays a stated limitation) Nuisance limitation: one arm with multiplicative gain or shift nuisance (currently untested) | B1 | prediction first; one arm, 3 seeds | skipped |
+| **CP-B** | Each refuted item has either an accepted-as-result note or a probe outcome | B1–B4 | `EVIDENCE.md` | ☑ |
 
 ### Phase C — the live capture *(owner-gated; the step that decides E44–E47)*
 | ID | Step | Depends | Test / evidence | Status |
@@ -67,12 +67,12 @@ Expected shape of the result (not a prediction): with friction, V holds only app
 ### Phase D — optional registered extensions *(each needs an owner go; none starts on its own)*
 | ID | Step | Cost | Registration needed | Status |
 |---|---|---|---|---|
-| D1 | E31f: define a frozen recurrence statistic for psi, run on existing handshake latents | minutes CPU | statistic + prediction | ◇ |
+| D1 (not run, reason in EVIDENCE) | E31f: define a frozen recurrence statistic for psi, run on existing handshake latents | minutes CPU | statistic + prediction | ◇ |
 | D2 | E37/E38: stability boundary and consistency of the bridges; needs unstable or non-stationary dynamics the current pipeline cannot represent, so a design decision first | design + hours | new world + predictions | ◇ |
 | D3 | E43 universality: render a spring and an orbit and look for the same conserved coordinate | about 20 min CPU + renderers | per-system prediction | ◇ |
 | D4 | Pooling probe (augmentation + temporal pairs in one moment matrix; D17-4) | about 15 min CPU | prediction | ◇ |
 | D5 | Paper-scale encoder (ResNet-50, 128×128, as in SplitJEPA robotics) on RunPod | GPU hours (trigger T2: ASK first) | ask batch | ◇ |
-| **CP-D** | Every extension is either run with an outcome or listed as "not run, reason" in `EVIDENCE.md` | — | `EVIDENCE.md` | ☐ |
+| **CP-D** | Every extension is either run with an outcome or listed as "not run, reason" in `EVIDENCE.md` | — | `EVIDENCE.md` | ☑ |
 
 ### Phase E — assemble the paper results *([AGENT], after CP-A and CP-C; CP-B/CP-D as chosen)*
 | ID | Step | Test / evidence | Status |
@@ -98,7 +98,8 @@ Expected shape of the result (not a prediction): with friction, V holds only app
 | ID | Prediction | Outcome | Where |
 |---|---|---|---|
 | E31c′ | certificate: V ≤ 0.05, ICC ≥ 0.9, L ≤ 1.02, rollout ≤ 0.35 | confirmed (3 seeds) | handshake report |
-| E31d | naming ≥ 0.99 | refuted (0.786) | handshake report |
+| E31d | naming ≥ 0.99 | refuted (0.786; with 3x data and 2x steps 0.970-0.978, still below) | handshake report, B1 outcome |
+| B1 | naming +0.05 with 450 releases / 8000 steps | confirmed (gain +0.12/+0.29/+0.15) | `results/scaling`, EVIDENCE |
 | E31e | S1 at lag 32; reach shorter for the fast block | S1 refuted (2 of 3 seeds); reach confirmed | handshake report |
 | E31f | recurrence structure | not run (no frozen statistic) | D1 |
 | P-stab | seed agreement ≥ 0.9 | refuted (0.766) | handshake report |

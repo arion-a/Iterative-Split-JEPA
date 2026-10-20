@@ -1,0 +1,3 @@
+0 {'V': 0.015, 'eps': 1.618, 'drift_q95_val': 0.759, 'icc': 0.908, 'L': 0.959, 'rollout_nmse': 0.431, 'naming_abs_spearman': 0.893} S2
+1 {'V': 0.015, 'eps': 1.659, 'drift_q95_val': 0.779, 'icc': 0.898, 'L': 0.954, 'rollout_nmse': 0.452, 'naming_abs_spearman': 0.895} S2
+2 {'V': 0.0, 'eps': 1.724, 'drift_q95_val': 0.812, 'icc': 0.903, 'L': 0.961, 'rollout_nmse': 0.441, 'naming_abs_spearman': 0.88} S2

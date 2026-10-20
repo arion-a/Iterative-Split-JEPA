@@ -1,0 +1,9 @@
+stage: V-C1b
+criteria:
+  controls:
+    flat_max_abs_spearman: 0.5
+    reproduction_tolerance: 0.005
+seeds:
+- 0
+- 1
+- 2

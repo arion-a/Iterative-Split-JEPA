@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 420 entries, head d782cce44fef
+Chain status at render time: **VALID** — 421 entries, head 3b629012fc99
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -9274,5 +9274,14 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **Artifacts.** `docs/FINAL_REPORT.md` (sha256 a53512d317); `docs/COMPLETION_PLAN.md` (sha256 f3e9743b4d)
 
 **Bearing on objectives O2, O3.** The mechanism is supported with the mirror encoder in the controlled worlds (E21, E22); it is not shown with a generic encoder (E23) or on the simulated robot data (E24).
+
+---
+
+## #420 · note · stage C · plan §—
+`3b629012fc99147b` ← `d782cce44fefdf09` · recorded 2026-10-20T22:57:47+00:00
+
+**What.** Entry 420 fingerprinted docs/COMPLETION_PLAN.md before the plan's last ticks were written; the plan is a living tracker, so that reference is declared superseded.
+
+**Bearing on objectives —.** Housekeeping only; no result changed.
 
 ---

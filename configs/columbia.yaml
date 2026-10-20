@@ -1,0 +1,50 @@
+stage: V-C1
+plan_ref: docs/ROADMAP_TO_FINISH.md section 7; Columbia real double-pendulum clips
+criteria:
+  certificate:
+    V_max: 0.05
+    icc_min: 0.9
+    L_max: 1.02
+    rollout_nmse_max: 0.35
+    horizon_K: 8
+    delta_std: 0.1
+    n_pairs: 200
+  naming:
+    spearman_min: 0.5
+  ladder:
+    gamma_min: 2.0
+    s1_rung: 3
+    lags:
+    - 8
+    - 32
+    s1_chance_fraction: 0.05
+    b2_quantile: 0.99
+split_blocks:
+  train:
+  - 0
+  - 770
+  val:
+  - 770
+  - 870
+  test:
+  - 870
+  - 1100
+seeds:
+- 0
+- 1
+- 2
+nuisance_amp: 0.4
+encoder:
+  latent_dim: 64
+  hidden: 256
+  steps: 4000
+  batch_size: 256
+  lr: 0.003
+  horizons:
+  - 1
+  - 8
+  - 32
+  var_weight: 0.01
+  cov_weight: 0.04
+  zca_eps: 1.0e-05
+  aug_weight: 0.2

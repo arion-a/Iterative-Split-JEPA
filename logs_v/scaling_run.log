@@ -1,3 +1,0 @@
-usage: run_handshake.py [-h] [--config CONFIG] [--out OUT]
-                        [--seeds [SEEDS ...]] [--no-log]
-run_handshake.py: error: unrecognized arguments: --data-root data/scaling

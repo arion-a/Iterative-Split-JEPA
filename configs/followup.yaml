@@ -1,0 +1,8 @@
+# Stage V follow-up F1 — does the temporal split contribute, or does release grouping carry the discovery? (owner chose this run, 2026-10-20)
+# `criteria` FROZEN (sha256 in followup.criteria.sha256). Encoder/world recipe is read from configs/handshake.yaml unchanged.
+stage: V-F1
+criteria:
+  f1:
+    min_gap_main_minus_temporal_only: 0.1     # |Spearman(psi, E)|: main must beat the release-free temporal-only arm by this much on EVERY seed
+    temporal_lag: 8                           # lag of the release-free slowest-direction arm (same as ladder rung 2)
+seeds: [0, 1, 2]

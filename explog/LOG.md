@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 421 entries, head 3b629012fc99
+Chain status at render time: **VALID** — 422 entries, head e7e38133efd2
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -9281,6 +9281,15 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 `3b629012fc99147b` ← `d782cce44fefdf09` · recorded 2026-10-20T22:57:47+00:00
 
 **What.** Entry 420 fingerprinted docs/COMPLETION_PLAN.md before the plan's last ticks were written; the plan is a living tracker, so that reference is declared superseded.
+
+**Bearing on objectives —.** Housekeeping only; no result changed.
+
+---
+
+## #421 · note · stage C · plan §—
+`e7e38133efd22b75` ← `3b629012fc99147b` · recorded 2026-10-20T22:57:55+00:00
+
+**What.** Entry 419 (completion close-out) fingerprinted docs/COMPLETION_PLAN.md before the plan's last ticks were written; the plan is a living tracker, so that reference is declared superseded. (The previous housekeeping entry named index 420 by mistake; entry 419 is the correct one.)
 
 **Bearing on objectives —.** Housekeeping only; no result changed.
 

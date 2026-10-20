@@ -46,7 +46,7 @@ How to use this file: tick a step only when its **done when** line is true, put 
 
 ## Phase 3: E24, robot data (the largest phase)
 
-- [ ] 3.1 Data generation: 100 groups per task in `data/robot/PickCube` and `data/robot/PushCube` (`.gitignore` keeps `data/` out of git). **Done when:** both folders hold 100 `group_*.npz` files. Estimate: about 157 s per group per process under load, so 200 groups on 2 processes is about 4.5 hours of uninterrupted running; on all 4 cores after E21 and E23 finish, about 2 hours.
+- [x] 3.1 Data generation (done 2026-10-20 22:00 UTC, 100/100 per task, `check_results.py data --final` passes): 100 groups per task in `data/robot/PickCube` and `data/robot/PushCube` (`.gitignore` keeps `data/` out of git). **Done when:** both folders hold 100 `group_*.npz` files. Estimate: about 157 s per group per process under load, so 200 groups on 2 processes is about 4.5 hours of uninterrupted running; on all 4 cores after E21 and E23 finish, about 2 hours.
 - [ ] 3.2 Feature extraction: `python experiments/robot/extract_features.py --task PickCube --threads 4` and the same for PushCube. Frozen ImageNet ResNet-50, 2048-d, float16 per group. CPU run is slow (roughly 100,000 images). **Done when:** `data/robot/feat/` holds a feature file per group for both tasks.
 - [ ] 3.3 Stage C runs: for each task and split seed 0, 1, 2: `PYTHONPATH=src python experiments/robot/run_stage_c.py --task <T> --split-seed <S> --out results/stage_c --head-steps 6000`. **Done when:** six result files exist in `results/stage_c/`.
 - [ ] 3.4 Report: `python experiments/robot/build_stage_c_report.py`. **Done when:** the report and figure exist with per-task, per-criterion tables.
@@ -82,6 +82,7 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 - 2026-10-20 19:35 UTC: plan written. E21 B1 4/30, B2 6/20; robot data 20 and 15 of 100 groups. Container restarts about every 15 minutes; jobs relaunched after each.
 - 2026-10-20 20:55 UTC: E21 Part B complete (20/20, final check passes). E23 complete (10/10): REFUTED as registered (8 of 9 non-excepted criteria 0/5 seeds; rung-1 gap 1.1). Phase 2 gate: evidence unedited (PASS), explog verify True, integrity checks pass for all files so far. Phase 1 awaits B1 (14/30); Phase 3 data at 50/40 of 100.
 - 2026-10-20 21:50 UTC: Phase 1 done. E21 Part A refuted as registered (rank test flag on seed 21; 99/100 criterion-seed checks pass), Part B confirmed (4/4), E22 confirmed (20/20). Outcomes in EVIDENCE (additions only), STATUS, explog. Phase 3 data at 88/80 of 100.
+- 2026-10-20 22:00 UTC: Phase 3.1 done (robot data 100 + 100 groups, integrity check passes). Phase 1 gate closed: 44 tests passed. Feature extraction running for both tasks (about 22 s per group per process).
 
 ## Noted, not started
 

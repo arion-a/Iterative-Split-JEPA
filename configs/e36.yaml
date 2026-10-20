@@ -1,0 +1,14 @@
+# Stage V E36 — spectral split passes, dynamics not closed (MATHEMATICAL_PLAN §2.4). `criteria` FROZEN (sha256 in e36.criteria.sha256).
+stage: V-E36
+criteria:
+  split:                       # (S) must pass in both worlds
+    gamma_min: 2.0             # D18
+    lags: [1, 2, 4, 8]
+    s1_chance_fraction: 0.05   # D28
+    block_r2_min: 0.9
+  closure:                     # (D): residual of q(t+1) from q(t) over residual from the full latent
+    coupled_ratio_min: 2.0     # coupled world: the gate must catch the failure
+    control_ratio_max: 1.25    # uncoupled control: closure holds
+seeds: [0, 1, 2]
+world: {a_fast: 0.1, a_slow: 0.97, coupling: 0.2, n_fit: 300, n_test: 80, t: 100, n_whiten: 30000}
+encoder: {arch: inverse_coupling, steps: 4000, batch_size: 256, lr: 3.0e-3, var_weight: 1.0e-2, cov_weight: 0.04, coupling_layers: 4, zca_eps: 1.0e-5}

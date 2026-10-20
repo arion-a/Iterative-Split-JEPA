@@ -113,3 +113,8 @@ E36, E37, E38: not run (need a constructed bridge-failure world; the plain AR wo
 * **E31e: S1 at lag 32 REFUTED as worded** (seeds 0, 1 end by S1 at lag 32 on a 1-d core; seed 2 splits a 4-d core into 3 + 1, lambda_max/chance 0.153 > 0.05). **Reach part confirmed:** NMSE at horizon 32 is 0.666 for the variant block and 0.057 for ψ.
 * **P-stab: REFUTED:** 0.766 ± 0.058 (needs 0.9). **P-ctrl: met:** flat 0.257, shuffled 0.790 (< 0.9), shuffled ladder S2 on all seeds.
 * **Finding, not predicted:** the shuffled arm's ψ is as good as the main arm's (ICC 0.974 vs 0.973, naming 0.790 vs 0.786). The shuffled ladder stops at S2 and keeps the full content, and the max-ICC selector over release groups then finds the same coordinate. So release grouping is itself the correspondence that identifies the invariant here; the temporal rung's contribution is not shown by this run.
+
+### Outcome (2026-10-20), stage V hierarchical (P4), `results/hier/REPORT.md`
+* **E35: REFUTED as worded.** RUNGS = 1 on all 3 seeds (registered 4). One cut is taken, blocks {1,2,3} | {4,5} (gap ratio 2.23–2.31 against the oracle arithmetic 2.5); the lag-2 family on blocks 4–5 gives 1.75–1.81 (< 2) so the ladder ends by S2. This is the outcome recorded as Claude's expectation before the run. **Control met:** shuffled pairs give RUNGS 0 on every seed.
+* **Per-rung gates met** for the one found rung: variant R² 0.959 ± 0.011, invariant R² 0.989 ± 0.003, (D) 1.074 ± 0.017 and (C) 1.005 ± 0.001 times the oracle, L 0.949 ± 0.002.
+* Measured eigenvalues of the lag-1 moment follow the arithmetic 2(1−a) (1.6, 1.0, 0.5, 0.2, 0.1). Escalation A1 (gap criterion for temporal worlds) stands.

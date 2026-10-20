@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 219 entries, head 3782f45374a8
+Chain status at render time: **VALID** — 368 entries, head ed8620971685
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -5272,5 +5272,2773 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 ```
 
 **Artifacts.** `results/B2/REPORT.md` (sha256 224ad4cedd); `docs/b2_results.html` (sha256 67466ee6fb)
+
+---
+
+## #219 · decision · stage log · plan §—
+`352cd5d23aa1db75` ← `3782f45374a8709c` · recorded 2026-10-13T22:35:28+00:00
+
+**What.** DECIDE: created AGENTS.md, DECISION_POLICY.md, docs/DECISIONS.md (D9) and docs/EVIDENCE.md (P9) from the owner's message, because they were not in the repository.
+
+**How.** Alternatives: ask the owner for the originals (rejected: the instruction says decide-don't-ask), or proceed without records (rejected: P9 must be registered before the run). Unknown content: D9's soft-enforcement activation condition (marked 'not supplied'; soft stays off in all confirmatory runs) and the derivation document (the noise-floor threshold is taken from monograph section 10).
+
+**Artifacts.** `AGENTS.md` (sha256 852586f597); `DECISION_POLICY.md` (sha256 bbdd5bd9cb); `docs/DECISIONS.md` (sha256 b676752a3c); `docs/EVIDENCE.md` (sha256 203c69c592)
+
+---
+
+## #220 · decision · stage B2 · plan §D9
+`b713bc574ce7d208` ← `352cd5d23aa1db75` · recorded 2026-10-13T22:43:44+00:00
+
+**What.** D9 revision after nesting-angle diagnostics: hard stays default, soft armed but inactive; budget lever flat in B2 world; span-vs-perp truth gap 11.6-13 deg
+
+**How.** experiments/diagnose_nesting.py: ideal 3-block world + trained B2 world (3 seeds), budget sweep, soft lambda sweep, none
+
+**Output.**
+```json
+{
+ "b2_nesting_perp_deg": "2.2-3.3",
+ "b2_nesting_span_deg": "8.5-11.5",
+ "b2_rung1_angle_deg": "3.1-4.7 flat in n1",
+ "ideal_slope": -0.51,
+ "truth_gap_deg": "11.6-13.0"
+}
+```
+
+**Artifacts.** `results/diagnostics/nesting/ideal_world.json` (sha256 ad5f2347eb); `results/diagnostics/nesting/b2world_seed0.json` (sha256 e802575f21); `results/diagnostics/nesting/b2world_seed1.json` (sha256 a13e2bde05); `results/diagnostics/nesting/b2world_seed2.json` (sha256 73ee709296)
+
+**Bearing on objectives —.** DECIDE: keep hard default; soft off (activation = truth outside H_k and reachable without contamination); gate keeps span definition, perp added as informational. Foreign-direction regime did not replicate the owner's claim.
+
+---
+
+## #221 · run · stage B · plan §4.2
+`83682e7f32189064` ← `b713bc574ce7d208` · recorded 2026-10-13T22:45:14+00:00
+
+**What.** Stage B1 run started: seeds [2], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  2
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_nesting.yaml` (sha256 62dfddd6dd)
+
+---
+
+## #222 · run · stage B · plan §4.2
+`72e9a68eda62a2dc` ← `83682e7f32189064` · recorded 2026-10-13T22:45:14+00:00
+
+**What.** Stage B1 run started: seeds [1], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  1
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_nesting.yaml` (sha256 62dfddd6dd)
+
+---
+
+## #223 · run · stage B · plan §4.2
+`a0305283f5f1d45b` ← `72e9a68eda62a2dc` · recorded 2026-10-13T22:45:14+00:00
+
+**What.** Stage B1 run started: seeds [0], arms ['main', 'shuffled_rung2', 'rank1_rung2', 'no_inv', 'no_pred', 'no_var']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  0
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_nesting.yaml` (sha256 62dfddd6dd)
+
+---
+
+## #224 · run · stage B · plan §4.2
+`9da337fdf0c745d9` ← `a0305283f5f1d45b` · recorded 2026-10-13T22:52:51+00:00
+
+**What.** Stage B1 arm=main seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.976,
+ "rung_angles_deg": [
+  1.06,
+  1.18
+ ],
+ "seconds": 457.8,
+ "variant_r2": [
+  0.955,
+  0.979
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/main_seed2.json` (sha256 05e9210d37)
+
+---
+
+## #225 · run · stage B · plan §4.2
+`ada7bec40496daad` ← `9da337fdf0c745d9` · recorded 2026-10-13T22:53:14+00:00
+
+**What.** Stage B1 arm=main seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.98,
+ "rung_angles_deg": [
+  0.66,
+  1.48
+ ],
+ "seconds": 480.0,
+ "variant_r2": [
+  0.961,
+  0.985
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/main_seed0.json` (sha256 a3e5a86ef6)
+
+---
+
+## #226 · run · stage B · plan §4.2
+`155216ce65a23ba2` ← `ada7bec40496daad` · recorded 2026-10-13T22:53:29+00:00
+
+**What.** Stage B1 arm=main seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.978,
+ "rung_angles_deg": [
+  1.13,
+  1.18
+ ],
+ "seconds": 495.3,
+ "variant_r2": [
+  0.959,
+  0.984
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/main_seed1.json` (sha256 ccd7aba990)
+
+---
+
+## #227 · run · stage B · plan §4.2
+`86a2584c348e62e5` ← `155216ce65a23ba2` · recorded 2026-10-13T22:53:43+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 14.74,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_nesting/sigma_cat_0.1/0.json` (sha256 a211423f61)
+
+---
+
+## #228 · run · stage B · plan §4.2
+`861518b96350174d` ← `86a2584c348e62e5` · recorded 2026-10-13T22:54:07+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.58,
+ "angle_b2": 11.65,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_nesting/sigma_cat_0.1/2.json` (sha256 74e4d8c91b)
+
+---
+
+## #229 · run · stage B · plan §4.2
+`aa5158c28fb1e6bb` ← `861518b96350174d` · recorded 2026-10-13T22:54:23+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.63,
+ "angle_b2": 8.66,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_nesting/sigma_cat_0.1/1.json` (sha256 d8a8a153e0)
+
+---
+
+## #230 · run · stage B · plan §4.2
+`d9d5b25ffc5212c3` ← `aa5158c28fb1e6bb` · recorded 2026-10-13T22:57:50+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.556,
+ "rung_angles_deg": [
+  1.21,
+  73.96
+ ],
+ "seconds": 299.0,
+ "variant_r2": [
+  0.955,
+  0.554
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/shuffled_rung2_seed2.json` (sha256 1ba99117c9)
+
+---
+
+## #231 · run · stage B · plan §4.2
+`efe926e285dbf03b` ← `d9d5b25ffc5212c3` · recorded 2026-10-13T22:58:09+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.494,
+ "rung_angles_deg": [
+  0.93,
+  87.38
+ ],
+ "seconds": 295.4,
+ "variant_r2": [
+  0.961,
+  0.495
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/shuffled_rung2_seed0.json` (sha256 d7b19edb2a)
+
+---
+
+## #232 · run · stage B · plan §4.2
+`6439a46774add93c` ← `efe926e285dbf03b` · recorded 2026-10-13T22:58:22+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.517,
+ "rung_angles_deg": [
+  1.09,
+  89.74
+ ],
+ "seconds": 292.7,
+ "variant_r2": [
+  0.959,
+  0.512
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/shuffled_rung2_seed1.json` (sha256 0bf3df5acb)
+
+---
+
+## #233 · run · stage B · plan §4.2
+`0a34462cc089ac42` ← `6439a46774add93c` · recorded 2026-10-13T23:02:19+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.528,
+ "rung_angles_deg": [
+  1.06,
+  75.62
+ ],
+ "seconds": 268.9,
+ "variant_r2": [
+  0.955,
+  0.534
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/rank1_rung2_seed2.json` (sha256 bfa19e9b8a)
+
+---
+
+## #234 · run · stage B · plan §4.2
+`f6ad4863bc301982` ← `0a34462cc089ac42` · recorded 2026-10-13T23:02:40+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.486,
+ "rung_angles_deg": [
+  0.66,
+  84.02
+ ],
+ "seconds": 271.2,
+ "variant_r2": [
+  0.961,
+  0.486
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/rank1_rung2_seed0.json` (sha256 83e23eb0e2)
+
+---
+
+## #235 · run · stage B · plan §4.2
+`7242f5a7ee728d71` ← `f6ad4863bc301982` · recorded 2026-10-13T23:02:52+00:00
+
+**What.** Stage B1 arm=rank1_rung2 seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.581,
+ "rung_angles_deg": [
+  1.13,
+  81.22
+ ],
+ "seconds": 270.0,
+ "variant_r2": [
+  0.959,
+  0.589
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/rank1_rung2_seed1.json` (sha256 7e14ef7f6a)
+
+---
+
+## #236 · run · stage B · plan §4.2
+`117cd8e8e1592379` ← `7242f5a7ee728d71` · recorded 2026-10-13T23:06:53+00:00
+
+**What.** Stage B1 arm=no_inv seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.784,
+ "rung_angles_deg": [
+  31.28,
+  27.22
+ ],
+ "seconds": 274.1,
+ "variant_r2": [
+  0.807,
+  0.88
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_inv_seed2.json` (sha256 cd8c022c15)
+
+---
+
+## #237 · run · stage B · plan §4.2
+`0f487b61f3d0b586` ← `117cd8e8e1592379` · recorded 2026-10-13T23:07:15+00:00
+
+**What.** Stage B1 arm=no_inv seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.747,
+ "rung_angles_deg": [
+  36.2,
+  25.28
+ ],
+ "seconds": 274.8,
+ "variant_r2": [
+  0.741,
+  0.878
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_inv_seed0.json` (sha256 173a010416)
+
+---
+
+## #238 · run · stage B · plan §4.2
+`d32ac31fde825a20` ← `0f487b61f3d0b586` · recorded 2026-10-13T23:07:27+00:00
+
+**What.** Stage B1 arm=no_inv seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.742,
+ "rung_angles_deg": [
+  34.82,
+  31.93
+ ],
+ "seconds": 275.3,
+ "variant_r2": [
+  0.735,
+  0.852
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_inv_seed1.json` (sha256 12d49be806)
+
+---
+
+## #239 · run · stage B · plan §4.2
+`950445af7131bdb9` ← `d32ac31fde825a20` · recorded 2026-10-13T23:11:29+00:00
+
+**What.** Stage B1 arm=no_pred seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.986,
+ "rung_angles_deg": [
+  0.41,
+  1.05
+ ],
+ "seconds": 275.5,
+ "variant_r2": [
+  0.99,
+  0.989
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_pred_seed2.json` (sha256 75069386c6)
+
+---
+
+## #240 · run · stage B · plan §4.2
+`0e962af98b02dfe8` ← `950445af7131bdb9` · recorded 2026-10-13T23:11:51+00:00
+
+**What.** Stage B1 arm=no_pred seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.989,
+ "rung_angles_deg": [
+  0.34,
+  1.28
+ ],
+ "seconds": 275.5,
+ "variant_r2": [
+  0.989,
+  0.988
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_pred_seed0.json` (sha256 06d3392f78)
+
+---
+
+## #241 · run · stage B · plan §4.2
+`3df3bea971e8d77a` ← `0e962af98b02dfe8` · recorded 2026-10-13T23:12:04+00:00
+
+**What.** Stage B1 arm=no_pred seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.985,
+ "rung_angles_deg": [
+  0.34,
+  0.92
+ ],
+ "seconds": 277.2,
+ "variant_r2": [
+  0.986,
+  0.986
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_pred_seed1.json` (sha256 14a7fa6356)
+
+---
+
+## #242 · run · stage B · plan §4.2
+`6b2031045c322aad` ← `3df3bea971e8d77a` · recorded 2026-10-13T23:16:06+00:00
+
+**What.** Stage B1 arm=no_var seed=2 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.976,
+ "rung_angles_deg": [
+  2.38,
+  9.81
+ ],
+ "seconds": 276.5,
+ "variant_r2": [
+  0.875,
+  0.968
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_var_seed2.json` (sha256 0cc434c727)
+
+---
+
+## #243 · run · stage B · plan §4.2
+`3086e3ead4acbd96` ← `6b2031045c322aad` · recorded 2026-10-13T23:16:27+00:00
+
+**What.** Stage B1 arm=no_var seed=0 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.98,
+ "rung_angles_deg": [
+  2.11,
+  9.52
+ ],
+ "seconds": 276.7,
+ "variant_r2": [
+  0.881,
+  0.969
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_var_seed0.json` (sha256 775b2b7aa3)
+
+---
+
+## #244 · run · stage B · plan §4.2
+`16576cc406cfbbe7` ← `3086e3ead4acbd96` · recorded 2026-10-13T23:16:41+00:00
+
+**What.** Stage B1 arm=no_var seed=1 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.978,
+ "rung_angles_deg": [
+  2.64,
+  7.43
+ ],
+ "seconds": 276.3,
+ "variant_r2": [
+  0.848,
+  0.946
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/no_var_seed1.json` (sha256 e506d542a2)
+
+---
+
+## #245 · result · stage B · plan §4.2
+`826b6ed057f6d91d` ← `16576cc406cfbbe7` · recorded 2026-10-13T23:16:41+00:00
+
+**What.** Stage B1 aggregate: FAIL
+
+**Output.**
+```json
+{
+ "controls": {
+  "rank1_rung2": true,
+  "shuffled_rung2": true
+ },
+ "failing_criteria": [
+  "leakage"
+ ],
+ "verdict": "FAIL"
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/report_20261013T231641052680.json` (sha256 4a7360e693)
+
+**Verdict.** FAIL
+
+---
+
+## #246 · result · stage B · plan §P9
+`cd3b2b660236fa66` ← `826b6ed057f6d91d` · recorded 2026-10-13T23:17:08+00:00
+
+**What.** P9 outcome: REFUTED as worded (nesting unchanged: B1 1.22 deg, B2 10.31 deg gate definition / 2.82 deg orthogonal-complement; gap ~0 confirmed; other gates held)
+
+**Output.**
+```json
+{
+ "b1_nesting": "1.28->1.22",
+ "b2_minus_b1_gap": 0.1,
+ "b2_nesting_gate": "10.39->10.31",
+ "b2_nesting_perp": 2.82,
+ "rank_pass": "3/3 before and after"
+}
+```
+
+**Artifacts.** `results/stage_b1_nesting/REPORT.md` (sha256 d2d397cd55); `results/stage_b2_nesting/REPORT.md` (sha256 8e87c06543)
+
+**Bearing on objectives —.** Refuted as worded; reported as first-class result, no tuning. Cause: encoder-bias floor at rung 1 plus truth-definition gap; follow-ups P10/P11 registered.
+
+**Verdict.** refuted
+
+---
+
+## #247 · run · stage B · plan §4.2
+`3aecf971fcbd1d7c` ← `cd3b2b660236fa66` · recorded 2026-10-14T01:45:58+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.63,
+ "angle_b2": 8.66,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_purify/sigma_cat_0.1/1.json` (sha256 6f23d7e94e)
+
+---
+
+## #248 · run · stage B · plan §4.2
+`f974ed856f6abea8` ← `3aecf971fcbd1d7c` · recorded 2026-10-14T01:46:01+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 14.74,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_purify/sigma_cat_0.1/0.json` (sha256 20710aaa24)
+
+---
+
+## #249 · run · stage B · plan §4.2
+`2ae8efd4b6017879` ← `f974ed856f6abea8` · recorded 2026-10-14T01:46:03+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.58,
+ "angle_b2": 11.65,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_purify/sigma_cat_0.1/2.json` (sha256 afedfbaff2)
+
+---
+
+## #250 · decision · stage B2 · plan §D10
+`3974902815b81f31` ← `2ae8efd4b6017879` · recorded 2026-10-14T01:46:46+00:00
+
+**What.** D10: nesting gate judged on orthogonal-complement reference (owner ruling); absolute nesting informational. D10a: Tier 1 purification and Tier 4 within-H1 whitening defined; E10/E10a registered before the run
+
+**Output.**
+```json
+{
+ "texture_block_cov_eig": "1.21/1.13/1.07/1.00"
+}
+```
+
+**Artifacts.** `docs/DECISIONS.md` (sha256 926c258d56); `docs/EVIDENCE.md` (sha256 1dc003d3b6)
+
+**Bearing on objectives —.** DECIDE: constants fixed before run (factor 4 x median, 5 iterations). Disclosure: D10 chosen after P9 showed 2.82 deg on the new definition. Item 2 checked: texture block has 4 varying directions, no world change.
+
+---
+
+## #251 · result · stage B2 · plan §E10a
+`dd334914dd78f0ee` ← `3974902815b81f31` · recorded 2026-10-14T01:46:46+00:00
+
+**What.** E10 confirmed (definitional); E10a confirmed: rung-2 gap 3.1 -> 18.7 (recovered 0.64 of the B1-B2 deficit, needs 0.60)
+
+**Output.**
+```json
+{
+ "gap_b1": 27.3,
+ "gap_b2": 3.1,
+ "gap_tier1": 19.7,
+ "gap_tier1_4": 18.7,
+ "nesting_absolute": 10.31,
+ "nesting_complement": 2.82,
+ "validity": "0.83->1.00"
+}
+```
+
+**Artifacts.** `results/stage_b2_purify/REPORT.md` (sha256 e99cf56888)
+
+**Bearing on objectives —.** Tier 1 does the work; Tier 4 adds nothing. Rung-2 angle, texture R2, leakage still miss in both arms.
+
+**Verdict.** confirmed
+
+---
+
+## #252 · run · stage B · plan §4.2
+`a6ef5dbf5e770154` ← `dd334914dd78f0ee` · recorded 2026-10-14T03:53:51+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.58,
+ "angle_b2": 11.65,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_noop/sigma_cat_0.1/2.json` (sha256 1db29d1d18)
+
+---
+
+## #253 · run · stage B · plan §4.2
+`e899020ac45a3fbe` ← `a6ef5dbf5e770154` · recorded 2026-10-14T03:53:53+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 14.74,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_noop/sigma_cat_0.1/0.json` (sha256 cfca2fa8c6)
+
+---
+
+## #254 · run · stage B · plan §4.2
+`d9761a0725b61b46` ← `e899020ac45a3fbe` · recorded 2026-10-14T03:53:54+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.63,
+ "angle_b2": 8.66,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_noop/sigma_cat_0.1/1.json` (sha256 33779cbb78)
+
+---
+
+## #255 · result · stage B2 · plan §E10c
+`f1af31df52390292` ← `d9761a0725b61b46` · recorded 2026-10-14T03:54:15+00:00
+
+**What.** E10c confirmed; Tier 1 no-op control failed both readings (2.3-3.4% of clean pairs trimmed, rung-2 gap 27.3 -> 30.2, other metrics within 0.006)
+
+**Output.**
+```json
+{
+ "e10c": "confirmed",
+ "noop_gap": "27.3->30.2",
+ "noop_trim_fraction": "0.023-0.034",
+ "subspace_move_deg_tier1": "11.6/4.6/6.4"
+}
+```
+
+**Artifacts.** `results/stage_b2_noop/REPORT.md` (sha256 aa28f4d93e)
+
+**Bearing on objectives —.** Purification does not damage the result, but is not a strict no-op on clean pairs: the 4 x median rule trims the noise tail. Owner decides whether this is a failure.
+
+**Verdict.** mixed
+
+---
+
+## #256 · decision · stage B2 · plan §D11
+`b2e9a9284e71973e` ← `f1af31df52390292` · recorded 2026-10-14T04:05:15+00:00
+
+**What.** Naming fix and gap-fix rulings: E9/E10/E11 (nesting), E12/E13/E14 (gap ratio); Tier 1 canonical, Tier 4 demoted, probes registered not run, E13 scheduled, Tier 2 rebuild deferred and unsupervised (D11)
+
+**Output.**
+```json
+{
+ "E12": "confirmed 0.64, gate 17.0/19.5/19.5",
+ "E13": "scheduled",
+ "E14": "confirmed, subspace 0.76/0.90/1.41 deg from B1 reference",
+ "noop": "failed both readings"
+}
+```
+
+**Artifacts.** `docs/DECISIONS.md` (sha256 0e78e1a952); `docs/EVIDENCE.md` (sha256 632a169fb7); `docs/FIXES/2026-10-13_gap_ratio.md` (sha256 c5f052011a)
+
+**Bearing on objectives —.** Earlier log rows use the old names (P9, P10, P11, E10a/b/c); mapping is in docs/EVIDENCE.md. DECIDE: Tier 4 made opt-in in code (purify.tier4, default false); historic configs set it true.
+
+---
+
+## #257 · note · stage B2 · plan §Tier2
+`be3a367c9fa5a9bf` ← `b2e9a9284e71973e` · recorded 2026-10-14T04:05:15+00:00
+
+**What.** Tier 2 diagnosis (analysis only): the sixth category is missed because the closest pair of category centres sits about one cluster radius apart in the clusterer's input, so silhouette prefers 5 over 6; k=6 separates them on 2 of 3 seeds; seed 2 also has k-means local minima
+
+**Output.**
+```json
+{
+ "closest_pair_over_radius": "1.13/1.05/0.90",
+ "k6_purity": "0.999/1.0/0.901",
+ "silhouette_prefers_5_in": "17/20,20/20,20/20 subsamples"
+}
+```
+
+**Artifacts.** `results/diagnostics/tier2/seed0.json` (sha256 597ac573a7); `results/diagnostics/tier2/seed1.json` (sha256 d2b6ee8eec); `results/diagnostics/tier2/seed2.json` (sha256 40780096a8)
+
+**Bearing on objectives —.** No rebuild. Owner statement recorded for the log: the iterative splitting mechanism passed every direct test; every remaining red number was traced to inputs (pairs) or the ruler (definitions), each with a fix, a prediction or an owner. Claude note: the rung-2 angle (~10 deg in both arms), texture R2 0.882 and leakage 0.028 have no confirmed cause yet.
+
+---
+
+## #258 · decision · stage B2 · plan §D12
+`a233ca62efbfd676` ← `be3a367c9fa5a9bf` · recorded 2026-10-14T04:15:25+00:00
+
+**What.** Owner ruling: Tier 1 no-op control PASS under the corrected criterion (D12 candidate); strict byte-identity reading refuted and replaced; E13 sweep scheduled; E14 blind re-confirmation frozen
+
+**Output.**
+```json
+{
+ "angle_to_truth_untreated_to_treated": "14.74->10.71, 8.66->8.61, 11.65->11.60",
+ "rho_hat_excess": "0.159/0.157/0.147",
+ "trimmed_B2": "0.181",
+ "trimmed_clean": "0.023/0.025/0.034",
+ "true_rho": "0.170/0.167/0.165"
+}
+```
+
+**Artifacts.** `docs/DECISIONS.md` (sha256 a2e6d81263); `docs/EVIDENCE.md` (sha256 c81c982e46); `docs/FIXES/2026-10-13_gap_ratio.md` (sha256 f49b2c2259); `results/stage_b2_noop/ANALYSIS.md` (sha256 9d7ad83b02)
+
+**Bearing on objectives —.** The corrected criterion was set after the control was seen, so the pass is retrospective. Claude's operationalization of 'no systematic harm' (worse on every seed and mean worsening over 0.5 seed-std) is flagged for owner confirmation. Earlier rows call the strict result a FAIL; this row replaces that reading.
+
+---
+
+## #259 · result · stage B2 · plan §E15-E17
+`5c9d0225d0b59fe7` ← `a233ca62efbfd676` · recorded 2026-10-14T04:34:06+00:00
+
+**What.** Attribution battery: E15 texture probe 0.910 (blocks 0.882): 76% of the texture shortfall is on the encoder side; E16 world ruled out; E17 leakage gate re-frozen at 0.0209 on normalized ||A21|| (D13)
+
+**Output.**
+```json
+{
+ "block": "0.862/0.887/0.897",
+ "encoder_share": "0.76",
+ "gate": 0.0209,
+ "gate_met_b1_arm": "1/3",
+ "probe": "0.894/0.907/0.930"
+}
+```
+
+**Artifacts.** `results/diagnostics/attribution_battery/REPORT.md` (sha256 3b2c4bd4ff); `configs/gates_v2.yaml` (sha256 30bc3d52d5); `docs/EVIDENCE.md` (sha256 3136fb3d81); `docs/DECISIONS.md` (sha256 ad7bfa5595)
+
+**Bearing on objectives —.** DECIDE: E11 not scheduled because the E15 rule leaves the 0.9-0.95 band uncovered (seeds 1, 2); owner decides. DECIDE (D13): the leakage gate is on the paper's normalized ||A21|| not max |R2|, power-law interpolation, d=12 for both rungs; alternatives listed in E17.
+
+**Verdict.** mixed
+
+---
+
+## #260 · decision · stage B2 · plan §E11
+`74b4a3a99680f63a` ← `5c9d0225d0b59fe7` · recorded 2026-10-14T05:45:03+00:00
+
+**What.** E15 rule amended (0.9-0.95 band = encoder branch, post-hoc); E11 registered and scheduled (E11a multi-step prediction, then E11b longer training), not run
+
+**Output.**
+```json
+{
+ "e11_thresholds": "probe>=0.95 each seed; rung-1 angle<=2.8; B1-arm rung-2 angle<=7.7",
+ "e15_probe": "0.894/0.907/0.930"
+}
+```
+
+**Artifacts.** `docs/EVIDENCE.md` (sha256 99275d0334); `docs/FIXES/2026-10-13_gap_ratio.md` (sha256 21d54dc78a); `docs/STATUS.md` (sha256 0513290951)
+
+**Bearing on objectives —.** DECIDE: thresholds for the E11 prediction (25% drop in the rung-1 and rung-2 angles, texture probe at the E15 0.95 line) are Claude's, flagged for owner confirmation; direction and order (multi-step first) are the owner's. Caveat recorded: a speed-0.2 block has little to predict at longer horizons, so E11a may not lower the texture floor.
+
+---
+
+## #261 · run · stage B · plan §4.2
+`04c816541481f018` ← `74b4a3a99680f63a` · recorded 2026-10-14T06:23:48+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.5,
+ "angle_b2": 11.71,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_e11a/sigma_cat_0.1/2.json` (sha256 d0a9f23b8c)
+
+---
+
+## #262 · run · stage B · plan §4.2
+`89a3d501ddae80b7` ← `04c816541481f018` · recorded 2026-10-14T06:23:50+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.69,
+ "angle_b2": 16.62,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e11a/sigma_cat_0.1/0.json` (sha256 6c601008bd)
+
+---
+
+## #263 · run · stage B · plan §4.2
+`4918b6893379204a` ← `89a3d501ddae80b7` · recorded 2026-10-14T06:23:57+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.12,
+ "angle_b2": 8.28,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_e11a/sigma_cat_0.1/1.json` (sha256 31670e84b7)
+
+---
+
+## #264 · result · stage B2 · plan §E11a
+`6b9de09e4b96a205` ← `4918b6893379204a` · recorded 2026-10-14T06:24:51+00:00
+
+**What.** E11a refuted: multi-step alignment (horizon 3) did not lower the encoder floor (texture probe 0.880/0.853/0.937, rung-1 angle 4.45, B1-arm rung-2 angle 10.10)
+
+**Output.**
+```json
+{
+ "gap_tier1": 17.6,
+ "leak_gate_met": "0 of 3 arms",
+ "probe": "0.880/0.853/0.937",
+ "rung1_angle": 4.45,
+ "rung2_angle_b1": 10.1
+}
+```
+
+**Artifacts.** `results/stage_b2_e11a/REPORT.md` (sha256 f9513e1eb8); `docs/EVIDENCE.md` (sha256 be6184affa)
+
+**Bearing on objectives —.** First-class refutation, no tuning. Matches the caveat registered with E11 (speed-0.2 block has little to predict at longer horizons; alignment pressure rises). DECIDE: the leakage gate of configs/gates_v2.yaml was applied for the first time here (first run after the E17 freeze). DECIDE: horizon implemented as the lejepa alignment term at lags 1..3, summed; horizon-1 path verified identical to the earlier code.
+
+**Verdict.** refuted
+
+---
+
+## #265 · run · stage B · plan §4.2
+`4fa2d47e17779bb4` ← `6b9de09e4b96a205` · recorded 2026-10-14T09:51:37+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.77,
+ "angle_b2": 8.92,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_e11b/sigma_cat_0.1/1.json` (sha256 1fc740a70c)
+
+---
+
+## #266 · run · stage B · plan §4.2
+`5fe58d4e30229634` ← `4fa2d47e17779bb4` · recorded 2026-10-14T09:51:41+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.65,
+ "angle_b2": 11.73,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e11b/sigma_cat_0.1/2.json` (sha256 01fa1969c1)
+
+---
+
+## #267 · run · stage B · plan §4.2
+`481a8cbf67fef3f2` ← `5fe58d4e30229634` · recorded 2026-10-14T09:51:42+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.82,
+ "angle_b2": 9.82,
+ "k_found": 6,
+ "purity": 0.999
+}
+```
+
+**Artifacts.** `results/stage_b2_e11b/sigma_cat_0.1/0.json` (sha256 6ca3fde726)
+
+---
+
+## #268 · result · stage B2 · plan §E11b
+`ce8acf77b65bf3d6` ← `481a8cbf67fef3f2` · recorded 2026-10-14T09:52:18+00:00
+
+**What.** E11b refuted: 4x longer training (40,000 steps) did not move the encoder floor (texture probe 0.892/0.905/0.932, rung-1 angle 3.63, B1-arm rung-2 angle 10.08); seed 0 incidentally found K=6
+
+**Output.**
+```json
+{
+ "probe": "0.892/0.905/0.932",
+ "rung1_angle": 3.63,
+ "rung2_angle_b1": 10.08,
+ "seed0_K": 6,
+ "seed0_purity": 0.999
+}
+```
+
+**Artifacts.** `results/stage_b2_e11b/REPORT.md` (sha256 3e2b17b5d1); `docs/EVIDENCE.md` (sha256 213dc95572)
+
+**Bearing on objectives —.** First-class refutation, no tuning. Both E11 variants refuted; E15 attribution to the encoder side stands but its cause is not identified. Seed-0 K=6 is a one-seed lead. The report's printed recovery fraction (0.62) is not comparable with E12 because seed 0 lifted the untreated gap.
+
+**Verdict.** refuted
+
+---
+
+## #269 · run · stage B · plan §4.2
+`a5e0cb7e8e1c6388` ← `ce8acf77b65bf3d6` · recorded 2026-10-15T00:26:08+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.58,
+ "angle_b2": 11.65,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.1/2.json` (sha256 81d779c6bc)
+
+---
+
+## #270 · run · stage B · plan §4.2
+`c5a0c4699626ba9f` ← `a5e0cb7e8e1c6388` · recorded 2026-10-15T00:26:11+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 14.74,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.1/0.json` (sha256 80e3f5329c)
+
+---
+
+## #271 · run · stage B · plan §4.2
+`4af29f9f48fcb4dc` ← `c5a0c4699626ba9f` · recorded 2026-10-15T00:26:12+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.63,
+ "angle_b2": 8.66,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.1/1.json` (sha256 eb3e838be6)
+
+---
+
+## #272 · run · stage B · plan §4.2
+`b79bf0bccf073a39` ← `4af29f9f48fcb4dc` · recorded 2026-10-15T00:28:03+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.02,
+ "angle_b2": 11.34,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.4/2.json` (sha256 ceb6826083)
+
+---
+
+## #273 · run · stage B · plan §4.2
+`bf9ca526c8b81d2f` ← `b79bf0bccf073a39` · recorded 2026-10-15T00:28:08+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.48,
+ "angle_b2": 10.62,
+ "k_found": 6,
+ "purity": 0.967
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.4/0.json` (sha256 840f190912)
+
+---
+
+## #274 · run · stage B · plan §4.2
+`273f55d83f2dccb0` ← `bf9ca526c8b81d2f` · recorded 2026-10-15T00:28:10+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.42,
+ "angle_b2": 8.54,
+ "k_found": 6,
+ "purity": 0.99
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.4/1.json` (sha256 82d811cab5)
+
+---
+
+## #275 · run · stage B · plan §4.2
+`805f7fbe716f33ff` ← `273f55d83f2dccb0` · recorded 2026-10-15T00:30:01+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.73,
+ "angle_b2": 13.25,
+ "k_found": 6,
+ "purity": 0.848
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.6/2.json` (sha256 2faadfce2b)
+
+---
+
+## #276 · run · stage B · plan §4.2
+`7f6c42facc0e7371` ← `805f7fbe716f33ff` · recorded 2026-10-15T00:30:06+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.24,
+ "angle_b2": 13.05,
+ "k_found": 6,
+ "purity": 0.849
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.6/0.json` (sha256 7b139c5f07)
+
+---
+
+## #277 · run · stage B · plan §4.2
+`230208d56949d97b` ← `7f6c42facc0e7371` · recorded 2026-10-15T00:30:06+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.43,
+ "angle_b2": 10.38,
+ "k_found": 6,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.6/1.json` (sha256 bfd7058a8b)
+
+---
+
+## #278 · run · stage B · plan §4.2
+`b7e137be0741fb2d` ← `230208d56949d97b` · recorded 2026-10-15T00:32:08+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.64,
+ "angle_b2": 28.23,
+ "k_found": 9,
+ "purity": 0.747
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.8/2.json` (sha256 b9b0bb5014)
+
+---
+
+## #279 · run · stage B · plan §4.2
+`dc8f45713a19e595` ← `b7e137be0741fb2d` · recorded 2026-10-15T00:32:11+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.38,
+ "angle_b2": 69.57,
+ "k_found": 12,
+ "purity": 0.744
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.8/1.json` (sha256 0e34d99db1)
+
+---
+
+## #280 · run · stage B · plan §4.2
+`f50874bd3d1f837d` ← `dc8f45713a19e595` · recorded 2026-10-15T00:32:11+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.2,
+ "angle_b2": 24.98,
+ "k_found": 11,
+ "purity": 0.769
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_0.8/0.json` (sha256 e74ec3d605)
+
+---
+
+## #281 · run · stage B · plan §4.2
+`1da8d8fe93cef2b7` ← `f50874bd3d1f837d` · recorded 2026-10-15T00:34:15+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.32,
+ "angle_b2": 83.5,
+ "k_found": 10,
+ "purity": 0.653
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.0/1.json` (sha256 312c7371b9)
+
+---
+
+## #282 · run · stage B · plan §4.2
+`302a52d16c3c03c5` ← `1da8d8fe93cef2b7` · recorded 2026-10-15T00:34:16+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.14,
+ "angle_b2": 50.65,
+ "k_found": 10,
+ "purity": 0.688
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.0/0.json` (sha256 2e60d88b94)
+
+---
+
+## #283 · run · stage B · plan §4.2
+`d4d44e29f01672c2` ← `302a52d16c3c03c5` · recorded 2026-10-15T00:34:16+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.69,
+ "angle_b2": 61.92,
+ "k_found": 12,
+ "purity": 0.711
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.0/2.json` (sha256 9ee82ce1a0)
+
+---
+
+## #284 · run · stage B · plan §4.2
+`16c15035e3613c97` ← `d4d44e29f01672c2` · recorded 2026-10-15T00:36:22+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.04,
+ "angle_b2": 79.76,
+ "k_found": 9,
+ "purity": 0.541
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.5/0.json` (sha256 db733e9582)
+
+---
+
+## #285 · run · stage B · plan §4.2
+`5084e7cbd2f5a02f` ← `16c15035e3613c97` · recorded 2026-10-15T00:36:24+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.41,
+ "angle_b2": 87.93,
+ "k_found": 10,
+ "purity": 0.518
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.5/1.json` (sha256 110d04c6ef)
+
+---
+
+## #286 · run · stage B · plan §4.2
+`96dc27c77e64fa28` ← `5084e7cbd2f5a02f` · recorded 2026-10-15T00:36:26+00:00
+
+**What.** Stage B2 sigma_cat=1.5 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.49,
+ "angle_b2": 84.02,
+ "k_found": 10,
+ "purity": 0.543
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/sigma_cat_1.5/2.json` (sha256 bfcfacc279)
+
+---
+
+## #287 · result · stage B2 · plan §E13
+`2d46214a0b2f7d92` ← `96dc27c77e64fa28` · recorded 2026-10-15T00:37:51+00:00
+
+**What.** E13 refuted as registered: the contamination model does not fit across the sweep (log-gap R2 0.667), purified points above the curve in 10 of 17 runs; Tier 1 recovers the gap only in the clean world
+
+**Output.**
+```json
+{
+ "above_curve": "10/17",
+ "e14_blind_closer": "14/18",
+ "e14_nodamage": "18/18",
+ "r2": 0.667,
+ "rho_hat_corr": -0.5,
+ "tier1_gap_clean": "19.2/22.2/17.6",
+ "tier1_gap_sigma_ge_0.4": "1-6",
+ "tier4_cv": "1.384 vs 1.419"
+}
+```
+
+**Artifacts.** `results/stage_b2_gapfix_sweep/E13_REPORT.md` (sha256 020d973870); `docs/EVIDENCE.md` (sha256 4d1e7bc878); `docs/FIXES/2026-10-13_gap_ratio.md` (sha256 df6f369c2b)
+
+**Bearing on objectives —.** First-class refutation, no tuning. Observed (not proven) reason: cluster-built valid pairs carry within-category energy (~2 sigma_cat^2), unlike the B1 twins, so the purifier's silent-direction premise fails at sigma_cat >= 0.4. The exploratory refit (R2 0.714) is post hoc and does not rescue the model. E12 stays confirmed for the clean world only.
+
+**Verdict.** refuted
+
+---
+
+## #288 · decision · stage B2 · plan §D14
+`a35033cfa67680c2` ← `2d46214a0b2f7d92` · recorded 2026-10-16T08:47:25+00:00
+
+**What.** Owner's post-sweep recommended actions recorded: D14 candidate (gap reference for cluster-built pairs), E20 registered, encoder-floor narrative retired, E18 drafted / E19 reserved, theory erratum for the contamination model
+
+**Output.**
+```json
+{
+ "achievable_gap": "19.5/5.3/3.2/2.3/1.8/1.3",
+ "corrected_model": "R2 0.810, err 0.12, above curve 14/17",
+ "e20_retro": "sigma0.4 Tier1 3/3 untreated 2/3; sigma0.6 0/3 (0.47-0.59)"
+}
+```
+
+**Artifacts.** `docs/DECISIONS.md` (sha256 abb5b1db8f); `docs/EVIDENCE.md` (sha256 2c5ffd46f1); `docs/FIXES/2026-10-13_gap_ratio.md` (sha256 9e38593081); `results/stage_b2_gapfix_sweep/RECALIBRATION.md` (sha256 c3dd7b5248)
+
+**Bearing on objectives —.** DECIDE (D14): reference = measured perfect-cluster gap (no fitted model); fraction 0.6 from E12; minimum achievable gap 3 is Claude's constant. DECIDE: E20 prediction could not be written before the numbers were seen; the sweep evaluation is retrospective and a blind run on seeds 3-5 is scheduled, not run. DECIDE: E18 drafted with Claude's thresholds; E19 not written because 'world geometry' is undefined. The owner's expectation that gaps clear at sigma 0.4-0.6 held at 0.4 and not at 0.6.
+
+---
+
+## #289 · run · stage B · plan §4.2
+`9c095fb6df760737` ← `a35033cfa67680c2` · recorded 2026-10-16T08:52:19+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.49,
+ "angle_b2": 12.55,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.4/3.json` (sha256 d369aac7e9)
+
+---
+
+## #290 · run · stage B · plan §4.2
+`25d7ec2c34b61e55` ← `9c095fb6df760737` · recorded 2026-10-16T08:52:20+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=5 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.6,
+ "angle_b2": 17.69,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.4/5.json` (sha256 5c0b6daa69)
+
+---
+
+## #291 · run · stage B · plan §4.2
+`22a55081233cc3de` ← `25d7ec2c34b61e55` · recorded 2026-10-16T08:52:24+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 6.23,
+ "angle_b2": 9.11,
+ "k_found": 9,
+ "purity": 0.933
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.4/4.json` (sha256 d19529a11c)
+
+---
+
+## #292 · run · stage B · plan §4.2
+`56ec8317b58d1e48` ← `22a55081233cc3de` · recorded 2026-10-16T08:54:06+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.96,
+ "angle_b2": 13.2,
+ "k_found": 6,
+ "purity": 0.823
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.6/3.json` (sha256 50647b3357)
+
+---
+
+## #293 · run · stage B · plan §4.2
+`c0a73b59fb0c25d7` ← `56ec8317b58d1e48` · recorded 2026-10-16T08:54:13+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 5.82,
+ "angle_b2": 23.24,
+ "k_found": 8,
+ "purity": 0.853
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.6/4.json` (sha256 49a85a1ca0)
+
+---
+
+## #294 · run · stage B · plan §4.2
+`49ce19dbbbbf1216` ← `c0a73b59fb0c25d7` · recorded 2026-10-16T08:54:15+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=5 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.42,
+ "angle_b2": 37.88,
+ "k_found": 11,
+ "purity": 0.821
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/sigma_cat_0.6/5.json` (sha256 71b59453ae)
+
+---
+
+## #295 · result · stage B2 · plan §E20
+`fdd9688c427e656a` ← `49ce19dbbbbf1216` · recorded 2026-10-16T08:54:45+00:00
+
+**What.** E20 blind check: recalibrated gap criterion met on 3/3 fresh seeds at sigma_cat 0.4, 1/3 at 0.6; prediction not confirmed as worded; corrected contamination model passes narrowly (median error 0.24)
+
+**Output.**
+```json
+{
+ "K_found_sigma0.6": "6/8/11",
+ "model_median_err": 0.24,
+ "sigma0.4_tier1": "3/3 (0.76/0.62/0.68)",
+ "sigma0.6_tier1": "1/3 (0.64/0.49/0.45)"
+}
+```
+
+**Artifacts.** `results/stage_b2_e20_blind/E20_REPORT.md` (sha256 e9628d5aaa); `docs/EVIDENCE.md` (sha256 36722e9132)
+
+**Bearing on objectives —.** Settings were frozen before launch. The yardstick is met at 0.4; at 0.6 the failing seeds are the ones with unstable cluster counts (8 and 11 found), pointing at cluster-count selection (E18 draft). Corrected model: lead that passed a blind test by a small margin; 3 of 6 runs individually above 25% error.
+
+**Verdict.** mixed
+
+---
+
+## #296 · implementation · stage B2 · plan §E18
+`544c4dd52f676ec1` ← `fdd9688c427e656a` · recorded 2026-10-16T09:03:53+00:00
+
+**What.** E18 spectral K selection built and unit-tested (not run on the B2 world): Laplacian eigengap selector, optional spectral arms in the B2 pipeline
+
+**Output.**
+```json
+{
+ "constants": "15-NN, scale neighbour 7, subsample 3000, K in 2..12",
+ "tests": "44 pass"
+}
+```
+
+**Artifacts.** `src/isj/cluster.py` (sha256 a5b9171e97); `src/isj/stage_b2_spec.py` (sha256 d962da9275); `configs/stage_b2_e18.yaml` (sha256 f1f769e49e); `tests/test_spectral_k.py` (sha256 3728b96b19); `docs/EVIDENCE.md` (sha256 f988d04c06)
+
+**Bearing on objectives —.** DECIDE: selector constants are standard defaults fixed before any use on the B2 world and not tuned on world data (E18 predicts K on that data); the unit tests use synthetic blobs only. DECIDE: integration is opt-in (default off) so earlier results reproduce; verified by an identical 200-step smoke output for the existing arms. The 200-step smoke numbers for the spectral arms are not results.
+
+---
+
+## #297 · run · stage B · plan §4.2
+`adc6a0e31a038a4b` ← `544c4dd52f676ec1` · recorded 2026-10-16T10:37:03+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.63,
+ "angle_b2": 8.66,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/1.json` (sha256 514337bbeb)
+
+---
+
+## #298 · run · stage B · plan §4.2
+`0a7d629bbccde807` ← `adc6a0e31a038a4b` · recorded 2026-10-16T10:37:04+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.58,
+ "angle_b2": 11.65,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/2.json` (sha256 c5573a797f)
+
+---
+
+## #299 · run · stage B · plan §4.2
+`3598d2013b74be17` ← `0a7d629bbccde807` · recorded 2026-10-16T10:37:06+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 14.74,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/0.json` (sha256 479ad413c6)
+
+---
+
+## #300 · run · stage B · plan §4.2
+`26df13664349c615` ← `3598d2013b74be17` · recorded 2026-10-16T10:38:54+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.3,
+ "angle_b2": 14.72,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/3.json` (sha256 1ffac03573)
+
+---
+
+## #301 · run · stage B · plan §4.2
+`5b9d4ed83b79a258` ← `26df13664349c615` · recorded 2026-10-16T10:38:55+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 5.82,
+ "angle_b2": 8.02,
+ "k_found": 6,
+ "purity": 0.978
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/4.json` (sha256 8161f87656)
+
+---
+
+## #302 · run · stage B · plan §4.2
+`fc4ed56bdca17c30` ← `5b9d4ed83b79a258` · recorded 2026-10-16T10:38:56+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=5 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 14.22,
+ "angle_b2": 14.29,
+ "k_found": 7,
+ "purity": 0.984
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.1/5.json` (sha256 aa578753b6)
+
+---
+
+## #303 · run · stage B · plan §4.2
+`6891ae947835ab06` ← `fc4ed56bdca17c30` · recorded 2026-10-16T10:40:44+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.48,
+ "angle_b2": 10.62,
+ "k_found": 6,
+ "purity": 0.967
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/0.json` (sha256 fbab1a257b)
+
+---
+
+## #304 · run · stage B · plan §4.2
+`4bdb0fbb572a63b1` ← `6891ae947835ab06` · recorded 2026-10-16T10:40:45+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.02,
+ "angle_b2": 11.34,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/2.json` (sha256 f281c2f347)
+
+---
+
+## #305 · run · stage B · plan §4.2
+`bf3c74bbecbb3e8a` ← `4bdb0fbb572a63b1` · recorded 2026-10-16T10:40:49+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.42,
+ "angle_b2": 8.54,
+ "k_found": 6,
+ "purity": 0.99
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/1.json` (sha256 c31534cb49)
+
+---
+
+## #306 · run · stage B · plan §4.2
+`adb5524e7384e32f` ← `bf3c74bbecbb3e8a` · recorded 2026-10-16T10:42:34+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.49,
+ "angle_b2": 12.55,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/3.json` (sha256 760d0a168f)
+
+---
+
+## #307 · run · stage B · plan §4.2
+`32ea505a376b5c81` ← `adb5524e7384e32f` · recorded 2026-10-16T10:42:42+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=5 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.6,
+ "angle_b2": 17.69,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/5.json` (sha256 ef1538ec92)
+
+---
+
+## #308 · run · stage B · plan §4.2
+`33d7c897332a6eed` ← `32ea505a376b5c81` · recorded 2026-10-16T10:42:51+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 6.23,
+ "angle_b2": 9.11,
+ "k_found": 9,
+ "purity": 0.933
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.4/4.json` (sha256 6bb7b88dfe)
+
+---
+
+## #309 · run · stage B · plan §4.2
+`34868baaccf2fb27` ← `33d7c897332a6eed` · recorded 2026-10-16T10:44:29+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=0 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.24,
+ "angle_b2": 13.05,
+ "k_found": 6,
+ "purity": 0.849
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/0.json` (sha256 6e131d9d7a)
+
+---
+
+## #310 · run · stage B · plan §4.2
+`34ed493b0b2f1b5b` ← `34868baaccf2fb27` · recorded 2026-10-16T10:44:36+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=2 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.73,
+ "angle_b2": 13.25,
+ "k_found": 6,
+ "purity": 0.848
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/2.json` (sha256 d4a17c1451)
+
+---
+
+## #311 · run · stage B · plan §4.2
+`aca72ecc232cdf2c` ← `34ed493b0b2f1b5b` · recorded 2026-10-16T10:44:45+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=1 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.43,
+ "angle_b2": 10.38,
+ "k_found": 6,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/1.json` (sha256 806a770564)
+
+---
+
+## #312 · run · stage B · plan §4.2
+`b0afcc02fb50980e` ← `aca72ecc232cdf2c` · recorded 2026-10-16T10:46:21+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=3 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.96,
+ "angle_b2": 13.2,
+ "k_found": 6,
+ "purity": 0.823
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/3.json` (sha256 24ef9ad0b5)
+
+---
+
+## #313 · run · stage B · plan §4.2
+`6d6b91c911712415` ← `b0afcc02fb50980e` · recorded 2026-10-16T10:46:32+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=5 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.42,
+ "angle_b2": 37.88,
+ "k_found": 11,
+ "purity": 0.821
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/5.json` (sha256 e2be3dbc63)
+
+---
+
+## #314 · run · stage B · plan §4.2
+`be2ff5de93f2d29e` ← `6d6b91c911712415` · recorded 2026-10-16T10:46:39+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=4 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 5.82,
+ "angle_b2": 23.24,
+ "k_found": 8,
+ "purity": 0.853
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/sigma_cat_0.6/4.json` (sha256 211c4b574f)
+
+---
+
+## #315 · result · stage B2 · plan §E18
+`517f1766c4505786` ← `be2ff5de93f2d29e` · recorded 2026-10-16T10:47:18+00:00
+
+**What.** E18 refuted: spectral K selection found K=6 in 1 of 18 runs (silhouette 7 of 18); it overestimates K at sigma_cat 0.1 and 0.4 and scatters at 0.6
+
+**Output.**
+```json
+{
+ "K_sigma0.1": "10/8/8/10/11/10",
+ "K_sigma0.4": "8/12/11/8/12/9",
+ "K_sigma0.6": "12/3/6/10/8/2",
+ "eigengap_ratio": "1.1-3.3",
+ "silhouette_K6": "7/18",
+ "spectral_K6": "1/18"
+}
+```
+
+**Artifacts.** `results/stage_b2_e18/E18_REPORT.md` (sha256 cbcb41cc05); `docs/EVIDENCE.md` (sha256 1a3768b0db)
+
+**Bearing on objectives —.** First-class refutation, constants not tuned. Hypothesis, untested: identity sub-clusters inside the 8-dim invariant output make both rules mis-count (spectral over, silhouette under). The cluster-count instability seen at sigma 0.6 in E20 is not resolved by this selector; E19 stays undefined.
+
+**Verdict.** refuted
+
+---
+
+## #316 · note · stage B · plan §log
+`6a06ceef4ce696bd` ← `517f1766c4505786` · recorded 2026-10-20T03:14:15+00:00
+
+**What.** Declared stale: artifact src/isj/stage_b1.py of entry 134 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #317 · note · stage B · plan §log
+`79ea7efe61f725dc` ← `6a06ceef4ce696bd` · recorded 2026-10-20T03:14:15+00:00
+
+**What.** Declared stale: artifact experiments/run_stage_b1.py of entry 134 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #318 · note · stage B · plan §log
+`4b5339be457a712d` ← `79ea7efe61f725dc` · recorded 2026-10-20T03:14:15+00:00
+
+**What.** Declared stale: artifact docs/B2_IMPLEMENTATION.md of entry 199 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #319 · note · stage B · plan §log
+`78ede720e6e5c6e6` ← `4b5339be457a712d` · recorded 2026-10-20T03:14:15+00:00
+
+**What.** Declared stale: artifact AGENTS.md of entry 219 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #320 · note · stage B · plan §log
+`cc600927148fa80c` ← `78ede720e6e5c6e6` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/DECISIONS.md of entry 219 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #321 · note · stage B · plan §log
+`04ececa21fed7dee` ← `cc600927148fa80c` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 219 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #322 · note · stage B · plan §log
+`0d907b5a7fee4712` ← `04ececa21fed7dee` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/DECISIONS.md of entry 250 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #323 · note · stage B · plan §log
+`d7039e694e8697c4` ← `0d907b5a7fee4712` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 250 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #324 · note · stage B · plan §log
+`dddc69bb60588039` ← `d7039e694e8697c4` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact results/stage_b2_noop/REPORT.md of entry 255 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #325 · note · stage B · plan §log
+`9ef31285f0b2202b` ← `dddc69bb60588039` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/DECISIONS.md of entry 256 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #326 · note · stage B · plan §log
+`c2be9569d0e9428e` ← `9ef31285f0b2202b` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 256 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #327 · note · stage B · plan §log
+`4704e69ce948f0ce` ← `c2be9569d0e9428e` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/FIXES/2026-10-13_gap_ratio.md of entry 256 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #328 · note · stage B · plan §log
+`f6bf4fd77bd35bf9` ← `4704e69ce948f0ce` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/DECISIONS.md of entry 258 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #329 · note · stage B · plan §log
+`ce6bd01f9a8716f7` ← `f6bf4fd77bd35bf9` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 258 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #330 · note · stage B · plan §log
+`fe4867360748e417` ← `ce6bd01f9a8716f7` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/FIXES/2026-10-13_gap_ratio.md of entry 258 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #331 · note · stage B · plan §log
+`c69abffeb09a3509` ← `fe4867360748e417` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 259 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #332 · note · stage B · plan §log
+`b12f50a3db011244` ← `c69abffeb09a3509` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/DECISIONS.md of entry 259 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #333 · note · stage B · plan §log
+`507f777e48eb7d33` ← `b12f50a3db011244` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 260 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #334 · note · stage B · plan §log
+`403e94d2cff3a555` ← `507f777e48eb7d33` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/FIXES/2026-10-13_gap_ratio.md of entry 260 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #335 · note · stage B · plan §log
+`c1759d9638586fb4` ← `403e94d2cff3a555` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/STATUS.md of entry 260 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #336 · note · stage B · plan §log
+`0790ec128cfeebb6` ← `c1759d9638586fb4` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 264 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #337 · note · stage B · plan §log
+`7e4e31c33d3ed03e` ← `0790ec128cfeebb6` · recorded 2026-10-20T03:14:16+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 268 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #338 · note · stage B · plan §log
+`29a4d77f53cedb53` ← `7e4e31c33d3ed03e` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 287 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #339 · note · stage B · plan §log
+`4864e3bf40f3f0bf` ← `29a4d77f53cedb53` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/FIXES/2026-10-13_gap_ratio.md of entry 287 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #340 · note · stage B · plan §log
+`b1c13961e077a5c1` ← `4864e3bf40f3f0bf` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 288 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #341 · note · stage B · plan §log
+`36c1c2eebcd22fd4` ← `b1c13961e077a5c1` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/FIXES/2026-10-13_gap_ratio.md of entry 288 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #342 · note · stage B · plan §log
+`17aa2eccdd5ec05d` ← `36c1c2eebcd22fd4` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 295 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #343 · note · stage B · plan §log
+`158394befa07d2f5` ← `17aa2eccdd5ec05d` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 296 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #344 · note · stage B · plan §log
+`f4610efb8bf4702b` ← `158394befa07d2f5` · recorded 2026-10-20T03:14:17+00:00
+
+**What.** Declared stale: artifact docs/EVIDENCE.md of entry 315 changed after it was logged (later edits, see git history); the chain itself is intact
+
+**Bearing on objectives —.** Housekeeping. The artifact fingerprint recorded at that entry no longer matches the file because the file was edited later (for B1: per-rung budgets, nesting options and attribution fields added for D9; behaviour at default settings unchanged). Git history holds every version.
+
+---
+
+## #345 · run · stage B · plan §4.2
+`bdc10ce3fdc48444` ← `f4610efb8bf4702b` · recorded 2026-10-20T03:30:21+00:00
+
+**What.** Stage B1 run started: seeds [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], arms ['main', 'shuffled_rung2', 'rank1_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #346 · run · stage B · plan §4.2
+`4adcb878559b2533` ← `bdc10ce3fdc48444` · recorded 2026-10-20T03:36:14+00:00
+
+**What.** Stage B1 arm=main seed=20 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.979,
+ "rung_angles_deg": [
+  0.87,
+  0.99
+ ],
+ "seconds": 353.6,
+ "variant_r2": [
+  0.956,
+  0.983
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed20.json` (sha256 14bccf1691)
+
+---
+
+## #347 · run · stage B · plan §4.2
+`1d7c1c48a0d2ca7d` ← `4adcb878559b2533` · recorded 2026-10-20T03:36:37+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=20 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.41,
+ "angle_b2": 11.61,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/20.json` (sha256 f76acd34c8)
+
+---
+
+## #348 · run · stage B · plan §4.2
+`a02cb8c25efa4b9f` ← `1d7c1c48a0d2ca7d` · recorded 2026-10-20T03:40:23+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=21 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.92,
+ "angle_b2": 9.97,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/21.json` (sha256 18910611f9)
+
+---
+
+## #349 · run · stage B · plan §4.2
+`e53d458393466f40` ← `a02cb8c25efa4b9f` · recorded 2026-10-20T03:41:41+00:00
+
+**What.** Stage B1 arm=main seed=21 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.981,
+ "rung_angles_deg": [
+  0.84,
+  1.26
+ ],
+ "seconds": 326.0,
+ "variant_r2": [
+  0.961,
+  0.981
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed21.json` (sha256 b14fc51b3d)
+
+---
+
+## #350 · run · stage B · plan §4.2
+`fce6cdb5b7bd6f06` ← `e53d458393466f40` · recorded 2026-10-20T03:43:13+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=22 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.54,
+ "angle_b2": 9.97,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/22.json` (sha256 f17c17878c)
+
+---
+
+## #351 · run · stage B · plan §4.2
+`2133a70d81495d40` ← `fce6cdb5b7bd6f06` · recorded 2026-10-20T03:46:03+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=23 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.04,
+ "angle_b2": 8.01,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/23.json` (sha256 63f65d4ba3)
+
+---
+
+## #352 · run · stage B · plan §4.2
+`2806235b306f12a3` ← `2133a70d81495d40` · recorded 2026-10-20T03:46:12+00:00
+
+**What.** Stage B1 arm=main seed=22 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.977,
+ "rung_angles_deg": [
+  1.46,
+  1.15
+ ],
+ "seconds": 271.7,
+ "variant_r2": [
+  0.951,
+  0.982
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed22.json` (sha256 52fc2db7dc)
+
+---
+
+## #353 · run · stage B · plan §4.2
+`14cdb00e23a3d26e` ← `2806235b306f12a3` · recorded 2026-10-20T03:48:48+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=24 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.38,
+ "angle_b2": 11.34,
+ "k_found": 5,
+ "purity": 0.836
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/24.json` (sha256 fac6662c93)
+
+---
+
+## #354 · note · stage C · plan §infra
+`f4094166d28b11a5` ← `14cdb00e23a3d26e` · recorded 2026-10-20T04:26:15+00:00
+
+**What.** Vast.ai: stopped instance 56833962 (RTX PRO 5000) at the owner's request; attached a throwaway SSH public key (Vast key id 1617010, fingerprint SHA256:7LtHXiNP...mB2JM) to instance 56833948 (RTX 5090) at the owner's request; an accidental empty key entry (id 1617005) was created by a failed key generation and removed at once
+
+**Output.**
+```json
+{
+ "instance_stopped": 56833962,
+ "key_attached_to": 56833948,
+ "key_id": 1617010,
+ "removal": "DELETE /api/v0/instances/56833948/ssh/1617010/"
+}
+```
+
+**Bearing on objectives —.** DECIDE: the private key stays only in the session scratchpad and is never printed; the public key must be removed from the instance when the GPU work ends. Direct SSH from this sandbox is still blocked until the owner adds a Bash permission rule for ssh; nothing has connected to the instance.
+
+---
+
+## #355 · run · stage B · plan §4.2
+`4f088e346dd250b0` ← `f4094166d28b11a5` · recorded 2026-10-20T10:22:18+00:00
+
+**What.** Stage B1 run started: seeds [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], arms ['main', 'shuffled_rung2', 'rank1_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #356 · run · stage B · plan §4.2
+`2a19723774a1f198` ← `4f088e346dd250b0` · recorded 2026-10-20T19:20:01+00:00
+
+**What.** Stage B1 run started: seeds [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], arms ['main', 'shuffled_rung2', 'rank1_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #357 · run · stage B · plan §4.2
+`6c3686c409945905` ← `2a19723774a1f198` · recorded 2026-10-20T19:24:29+00:00
+
+**What.** Stage B1 arm=main seed=23 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.981,
+ "rung_angles_deg": [
+  0.85,
+  0.85
+ ],
+ "seconds": 267.0,
+ "variant_r2": [
+  0.954,
+  0.978
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed23.json` (sha256 a9944c506b)
+
+---
+
+## #358 · run · stage B · plan §4.2
+`407c512ced867ad7` ← `6c3686c409945905` · recorded 2026-10-20T19:24:50+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=25 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.14,
+ "angle_b2": 13.21,
+ "k_found": 6,
+ "purity": 1.0
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/25.json` (sha256 ade7e5d92c)
+
+---
+
+## #359 · run · stage B · plan §4.2
+`89bce6c23d2682f0` ← `407c512ced867ad7` · recorded 2026-10-20T19:35:41+00:00
+
+**What.** Stage B1 run started: seeds [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], arms ['main', 'shuffled_rung2', 'rank1_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #360 · run · stage B · plan §4.2
+`a2e32f1da9dba82f` ← `89bce6c23d2682f0` · recorded 2026-10-20T19:39:50+00:00
+
+**What.** Stage B1 arm=main seed=24 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.98,
+ "rung_angles_deg": [
+  0.84,
+  1.35
+ ],
+ "seconds": 248.8,
+ "variant_r2": [
+  0.957,
+  0.984
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed24.json` (sha256 69308ca1dd)
+
+---
+
+## #361 · run · stage B · plan §4.2
+`9831f15912064a1e` ← `a2e32f1da9dba82f` · recorded 2026-10-20T19:40:18+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=26 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.17,
+ "angle_b2": 10.3,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/26.json` (sha256 c18ba50318)
+
+---
+
+## #362 · note · stage C · plan §—
+`501f6c41988d6dd5` ← `9831f15912064a1e` · recorded 2026-10-20T19:57:54+00:00
+
+**What.** Completion plan created: docs/COMPLETION_PLAN.md tracks E21/E22 (finish + score), E23 (run + score), E24 (data, features, Stage C, verdict) and close-out, with done-when conditions per step. No new experiment registered.
+
+**Artifacts.** `docs/COMPLETION_PLAN.md` (sha256 b3d3bd2135)
+
+**Bearing on objectives —.** Planning document only; predictions unchanged.
+
+---
+
+## #363 · run · stage B · plan §4.2
+`8dd937a66cc079c0` ← `501f6c41988d6dd5` · recorded 2026-10-20T19:58:14+00:00
+
+**What.** Stage B1 run started: seeds [20, 21, 22, 23, 24, 25, 26, 27, 28, 29], arms ['main', 'shuffled_rung2', 'rank1_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  20,
+  21,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  28,
+  29
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1.yaml` (sha256 ae1f0bfc5d)
+
+---
+
+## #364 · note · stage B · plan §—
+`794bff1f14ae01b8` ← `8dd937a66cc079c0` · recorded 2026-10-20T20:02:10+00:00
+
+**What.** Entry 296 recorded src/isj/stage_b2_spec.py before the E22 fields (image_geometry, angle_orth_deg) were added to it; declared stale. The E18 results are unaffected (the added fields are extra outputs).
+
+**Bearing on objectives —.** Housekeeping: the fingerprint of a code file moved because it was extended for E22, not because any recorded result changed.
+
+---
+
+## #365 · run · stage B · plan §4.2
+`3ec30bc12df7f0f6` ← `794bff1f14ae01b8` · recorded 2026-10-20T20:03:33+00:00
+
+**What.** Stage B1 arm=main seed=25 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.985,
+ "rung_angles_deg": [
+  0.94,
+  1.11
+ ],
+ "seconds": 319.3,
+ "variant_r2": [
+  0.966,
+  0.987
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed25.json` (sha256 9788dfda3c)
+
+---
+
+## #366 · run · stage B · plan §4.2
+`15662c9bc47c0a2b` ← `3ec30bc12df7f0f6` · recorded 2026-10-20T20:04:21+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=27 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.18,
+ "angle_b2": 11.25,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/27.json` (sha256 c68927f73e)
+
+---
+
+## #367 · note · stage C · plan §—
+`ed8620971685ce36` ← `15662c9bc47c0a2b` · recorded 2026-10-20T20:04:38+00:00
+
+**What.** docs/COMPLETION_PLAN.md is a living tracker (ticked off and extended as steps finish); entry 362 fingerprinted its first version, so that reference is declared superseded. Progress on it is recorded by separate chain entries.
+
+**Bearing on objectives —.** Housekeeping: the tracker is meant to change.
 
 ---

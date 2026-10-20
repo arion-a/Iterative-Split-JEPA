@@ -63,6 +63,16 @@ How to use this file: tick a step only when its **done when** line is true, put 
 - [ ] 4.4 Final push of the working branch. Merging to `main` only when the owner says so.
 - **Done when:** the final report is committed and the owner has it.
 
+## Checks (kept minimal; the owner asked for strong checks after every step and a review after every phase)
+
+**After every step** (automatic, `python experiments/check_results.py <mode> [--final]`; modes `e21b1`, `e21b2`, `e23`, `data`, `feat`, `evidence`): right file names and seeds, JSON loads, every number finite, required fields present (including the E22 fields), image and feature shapes, both cameras present and different, every trajectory successful. These test integrity, not the claim; claims are scored only by the analysis scripts against the registered text. A step is not ticked until its check passes with `--final` where it has a count.
+
+**Predictions never edited:** `check_results.py evidence` fails if any line of `docs/EVIDENCE.md` was deleted or changed since commit `b0c0a10` (outcome lines may only be added).
+
+**Phase gate (after every phase, before starting the next):** (1) rerun the step checks of every earlier phase, not just the current one; (2) `explog.verify()` is True and `python -m pytest -q` passes; (3) reread this plan against the branch: counts in the table at the top match the files, no step ticked without evidence, nothing run that is not in the plan; (4) one explog entry for the phase and a Log line below stating the gate result; (5) rebuild `docs/EXPERIMENT_TABLE.md` and the log page (`python experiments/build_log_table.py; python experiments/build_log_page.py`). If any check fails the phase stays open and the failure is written in the Log.
+
+**The record:** `explog/chain.jsonl` is the hash-chained database (each entry holds what happened, how, outputs, artifact fingerprints, the objective it serves, interpretation, verdict, and a plain-language block with relevance). `docs/EXPERIMENT_TABLE.md` is the table view: idea (objective), what happened, record (hash, artifacts), contribution (verdict, reading), relevance. `explog/LOG.md` and `explog/log_page.html` are the long views. All are generated from the chain.
+
 ## Order and dependencies
 
 Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel now (4 cores). Phase 2 starts when Phase 1's B1 or B2 job frees a core. Phase 3.2 onward needs 3.1. Phase 4 needs Phases 1-3 (or the owner's fallback decision).
@@ -73,4 +83,4 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 
 ## Noted, not started
 
-- (empty)
+- `explog.verify()` was False on 2026-10-20 (entry 296 stale after the E22 fields were added to `stage_b2_spec.py`); declared stale the same day, verify True again.

@@ -1,0 +1,25 @@
+{
+ "seed": 1,
+ "world": "control",
+ "coupling": 0.0,
+ "stop": "S2",
+ "families": [
+  [
+   "lag1",
+   4,
+   24.41
+  ],
+  [
+   "lag2",
+   0,
+   1.05
+  ]
+ ],
+ "rung_found": true,
+ "variant_r2_fast": 0.9905459070257762,
+ "invariant_r2_slow": 0.9956276112418174,
+ "resid_core_only": 0.06759965193027737,
+ "resid_full_latent": 0.06761693120305835,
+ "closure_ratio": 0.9997444534604936,
+ "S_pass": true
+}

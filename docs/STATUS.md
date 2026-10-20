@@ -42,3 +42,5 @@
 | - | **Stage V real video (2026-10-20)** | 10 public clips, informational | certificate passes trivially (V 0, ICC 0.989) but psi does not track tracker proxies (|Spearman| 0.11 / 0.31): likely per-clip appearance; owner capture blocked | `results/real/REPORT.md` |
 
 | - | **Stage V F1 follow-up (2026-10-20)** | 3 seeds, same encoders as the handshake | F1 refuted: release-free temporal-only arm = main arm (gap 0.000 / 0.000 / −0.010); the discovery is redundantly identified by temporal slowness and by release grouping | `results/followup/*.json` |
+
+| - | **Stage V E36 (2026-10-20)** | coupled vs uncoupled two-block world, 3 seeds | refuted as worded: (S) passes 6/6, control ratio 1.000, coupled ratio [1.252, 1.319, 1.247] (needed ≥ 2.0); world arithmetic 3.1 verified | `results/e36/*.json` |

@@ -14,7 +14,7 @@ Scope rule (AGENTS.md): steps marked **[OWNER]** need your decision or your mate
 | P4 hierarchical AR world | run: E35 refuted (RUNGS 1, registered 4); per-rung gates and control met | `results/hier/REPORT.md` |
 | P5 real video, public clips | run, informational | `results/real/REPORT.md` |
 | F1 follow-up | refuted: release-free slow-feature arm = main arm | `results/followup/*.json` |
-| E36 | **set up, not run**: code, config and prediction on disk, uncommitted; criteria hash and chain entry missing; shell permission check failing | `configs/e36.yaml`, `experiments/run_e36.py`, `docs/EVIDENCE.md` |
+| E36 | run: refuted as worded (closure ratio 1.25–1.32 against ≥ 2.0; (S) and control met) | `results/e36`, `docs/EVIDENCE.md` |
 | Live capture on the owner's footage | **blocked on footage** | `docs/IMPLEMENTATION_PLAN.md` P5 step 5.3 |
 | Log chain | valid (292 entries, 48 declared-superseded artifact references) | `python -c "from isj import explog; print(explog.verify())"` |
 
@@ -35,12 +35,12 @@ Status key: ☐ pending · ☑ done · ⛔ blocked · ◇ optional (needs an own
 ### Phase A — unblock and close E36 *(immediate, [AGENT])*
 | ID | Step | Depends | Test / evidence | Status |
 |---|---|---|---|---|
-| A1 | Retry the shell until the permission check recovers; no workaround around git | — | `git status` runs | ⛔ |
-| A2 | Write `configs/e36.criteria.sha256` from the `criteria` block; append the registration chain entry | A1 | `run_e36.py` stops refusing; entry in chain | ☐ |
-| A3 | Commit and push the E36 setup | A2 | pushed commit | ☐ |
-| A4 | Run `python experiments/run_e36.py` (3 seeds × coupled / control, about 10 min CPU) | A3 | `results/e36/*.json` | ☐ |
-| A5 | Write outcome into `docs/EVIDENCE.md`, a STATUS row, a chain entry; commit, push | A4 | rule in the E36 registration | ☐ |
-| **CP-A** | E36 has a recorded outcome; tree clean; chain valid | A5 | `explog.verify()` true | ☐ |
+| A1 | Retry the shell until the permission check recovers; no workaround around git | — | `git status` runs | ☑ (recovered) |
+| A2 | Write `configs/e36.criteria.sha256` from the `criteria` block; append the registration chain entry | A1 | `run_e36.py` stops refusing; entry in chain | ☑ |
+| A3 | Commit and push the E36 setup | A2 | pushed commit | ☑ |
+| A4 | Run `python experiments/run_e36.py` (3 seeds × coupled / control, about 10 min CPU) | A3 | `results/e36/*.json` | ☑ |
+| A5 | Write outcome into `docs/EVIDENCE.md`, a STATUS row, a chain entry; commit, push | A4 | rule in the E36 registration | ☑ |
+| **CP-A** | E36 has a recorded outcome; tree clean; chain valid | A5 | `explog.verify()` true | ☑ |
 
 ### Phase B — read the refuted handshake items honestly *(decision first, then [AGENT])*
 The handshake left three open results: naming 0.79 against 0.99, seed disagreement 0.77 against 0.9, one seed whose core had 4 dimensions. Nothing is retuned; each follow-up is a new registered prediction.
@@ -105,7 +105,7 @@ Expected shape of the result (not a prediction): with friction, V holds only app
 | P-ctrl | flat / shuffled arms < 0.9 | met (shuffled 0.790 close to main) | handshake report |
 | E35 | RUNGS = 4 | refuted (RUNGS 1; arithmetic expectation recorded) | hier report |
 | F1 | main beats release-free arm by ≥ 0.1 | refuted (gap 0.000 / 0.000 / −0.010) | followup |
-| E36 | (S) passes and (D) fails in the coupled world; control closes | registered, not run | Phase A |
+| E36 | (S) passes and (D) fails in the coupled world; control closes | refuted as worded: (S) 6/6, control 1.000, coupled closure 1.25-1.32 against ≥ 2.0 | `results/e36`, EVIDENCE |
 | E37, E38 | stability boundary, consistency | not run (reason in `EVIDENCE.md`) | D2 |
 | E43 | same pattern in other systems | not run | D3 |
 | E44 | ceiling probe | report-only (D13); public clips: poor | Phase C |

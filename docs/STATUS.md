@@ -112,3 +112,4 @@
 | 27 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 11.2 deg, B2 11.3 deg | `results/stage_b2_e21/sigma_cat_0.1/27.json` |
 | 28 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 11.1 deg, B2 11.1 deg | `results/stage_b2_e21/sigma_cat_0.1/28.json` |
 | 29 | B2 [no-op control + E10c] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 7.4 deg, B2 8.3 deg | `results/stage_b2_e21/sigma_cat_0.1/29.json` |
+| 20 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 11.1 deg, B2 11.4 deg | `results/stage_b2_e21/sigma_cat_0.4/20.json` |

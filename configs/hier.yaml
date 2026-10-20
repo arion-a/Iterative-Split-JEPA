@@ -1,0 +1,32 @@
+# Stage V P4 — minimal hierarchical AR world (docs/IMPLEMENTATION_PLAN.md P4). `criteria` is FROZEN (sha256 in hier.criteria.sha256).
+stage: V-hier
+criteria:
+  ladder:
+    gamma_min: 2.0                 # MATHEMATICAL_PLAN 2x threshold (DECIDE 10; escalated as A1)
+    lags: [1, 2, 4, 8]             # geometric lag schedule, D17-6
+    s1_chance_fraction: 0.05
+  e35:
+    expected_rungs: 4              # registered text: RUNGS = levels above the 2x threshold = 4 by construction
+    control_rungs: 0               # shuffled pairs: no rung
+  per_rung:
+    block_r2_min: 0.9              # paper-standard variant / invariant R^2 on held-out trajectories
+    dc_ratio_max: 1.25             # (D) residual and (C) K-step rollout error vs the oracle-block predictor
+    L_max: 1.02                    # D16
+    horizon_K: 8
+seeds: [0, 1, 2]
+world:
+  a: [0.20, 0.50, 0.75, 0.90, 0.95]
+  block: 4
+  n_fit: 200
+  n_test: 60
+  t: 100
+  n_whiten: 30000
+encoder:
+  arch: inverse_coupling           # D4: mirror encoder is the confirmatory arm
+  steps: 4000
+  batch_size: 256
+  lr: 3.0e-3
+  var_weight: 1.0e-2
+  cov_weight: 0.04
+  coupling_layers: 4
+  zca_eps: 1.0e-5

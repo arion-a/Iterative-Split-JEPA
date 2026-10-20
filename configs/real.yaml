@@ -1,0 +1,27 @@
+# Stage V P5 — real double-pendulum video (public Morpheus clips, MIT). INFORMATIONAL: no gates, no frozen criteria (DECIDE 9).
+stage: V-real
+source: "huggingface.co/datasets/physics-from-video/morpheus-real-world, real-world-cropped/double_pendulum/video_{0..9}_fps30/cropped_video.mp4"
+videos: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+fps: 30
+crop: [224, 300, 640, 640]       # fixed square covering the motion extent of the clips (x, y, w, h in source pixels)
+size: 32
+time_split: [0.60, 0.75]         # train | val | test by time within each clip (held out in time, NOT in release)
+nuisance_amp: 0.4
+lags: [8, 32]
+gamma_min: 2.0
+s1_chance_fraction: 0.05
+horizon_K: 8
+delta_std: 0.1
+n_pairs: 200
+seed: 0
+encoder:                          # same recipe as the handshake encoder
+  latent_dim: 64
+  hidden: 256
+  steps: 4000
+  batch_size: 256
+  lr: 3.0e-3
+  horizons: [1, 8, 32]
+  var_weight: 1.0e-2
+  cov_weight: 0.04
+  zca_eps: 1.0e-5
+  aug_weight: 0.2

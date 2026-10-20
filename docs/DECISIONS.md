@@ -69,3 +69,31 @@ The repository does not define "Tier 1" or "Tier 4"; the owner's one-line descri
 **Ruling.** The strict reading of the Tier 1 no-op control (nothing trimmed, results byte-identical) is refuted and replaced. Reason: it demands inaction, and a purifier that scores pairs against a median cannot be inactive on noisy clean data by construction; the question that matters is whether it is safe.
 **Corrected criterion, frozen prospectively for every future no-op control.** On clean (correctly matched) pairs, Tier 1 passes if (a) it trims at most about 5% of the pairs, (b) no metric is degraded beyond seed noise, and (c) there is no systematic harm. Claude's operationalization, for the owner to confirm: (b) the mean worsening of each metric against the unpurified arm is at most 1 seed-to-seed standard deviation of the unpurified arm; (c) harm is systematic if the metric is worse on every seed AND the mean worsening exceeds 0.5 seed-std.
 **Retrospective application, disclosed.** The criterion was set after the first control was seen. Applied to that control (`results/stage_b2_noop/ANALYSIS.md`): trimmed 2.3 / 2.5 / 3.4%; the largest worsening of any metric is 0.14 seed-std (five metrics are worse on all three seeds, all by 0.14 seed-std or less); rung-2 gap improves. Result: PASS.
+
+
+## Stage V (video-first handshake) — added 2026-10-20
+
+## D13. Ceiling gate is report-only (owner ruling, 2026-10-20)
+**Decision.** The "ceiling gate" of LIVE_DATA_PLAN §2 (linear probe latent → tracked E, R² ≥ 0.9 before discovery proceeds, with up to two remedies) is **report-only**.
+It is computed on the train releases and reported as an informational row. It never gates discovery, never triggers a remedy, and never feeds back into the framework.
+**Reason.** An oracle value used for selection or stopping contradicts the governing principle (MATHEMATICAL_PLAN) and VIDEO_FIRST §5.
+
+## D14. Naming statistic (owner ruling, 2026-10-20)
+**Decision.** Naming is judged by Spearman rank correlation (or a flexible-readout R²), never Pearson. Any monotone function of a conserved quantity is equally conserved, so a rank statistic is the correct test. Thresholds stay as registered (sim 0.99, live 0.98).
+
+## D15. Non-degeneracy statistic (owner ruling, 2026-10-20)
+**Decision.** Every violation rate V is reported with a non-degeneracy statistic, because a constant map has V = 0. Operationalised (Claude, DECIDE 20261020-6/7): ICC = share of the coordinate's variance that is between releases, plus the validation-calibrated ε used in V.
+
+## D16. Stability factor (owner ruling, 2026-10-20)
+**Decision.** L is the Lipschitz constant of the latent transition F̂ (spectral norm for a linear F̂). L ≤ 1 is allowed, because a conserved mode has F̂ = identity and L = 1 exactly.
+Claude's operationalisation: pass if L ≤ 1.02 (estimation tolerance, DECIDE 20261020-8). Rollout closure e(K) is reported separately.
+
+## D17. Answers to the six smaller theory gaps (owner-directed, 2026-10-20; adopted by the instruction to implement)
+1. Nuisance is split first, by same-frame different-render pairs (rung 1); the temporal split runs inside rung 1's invariant content (rung 2+), hard nesting (D9).
+2. Release diversity is a data requirement (generator-side choice of initial conditions); the invariant must vary between releases (ICC); effective sample size for the invariant is the number of releases.
+3. Friction: E is an approximate quotient; ε is calibrated on measured per-step drift (validation), plus tracking noise; a damped simulator arm is a unit test, not a separate experiment.
+4. Augmentation pairs and temporal pairs are not pooled in one moment matrix (the pooled null space is the intersection, but the spectrum depends on an arbitrary mixing weight, and temporal pairs are only approximately matched). Pooling is a possible probe with its own prediction; none is registered.
+5. Planted state counts (240→…→3) belong to the discrete mixture worlds. In continuous AR worlds only depth (number of blocks, their timescales) is planted; States-per-Rung there is measured, informational.
+6. At rung k+1 of a temporal-only world the correspondence family is the pair (t, t+τ_{k+1}) on the previous rung's invariant content, with a fixed geometric lag schedule τ_k = 2^(k−1)·τ_0. Data-adaptive lags would be a registered probe.
+
+## Candidate for owner confirmation (not binding): D18 — see docs/IMPLEMENTATION_PLAN.md §1 DECIDE lines 1–10 and §6 A1/A2.

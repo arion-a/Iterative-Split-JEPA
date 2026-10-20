@@ -1,0 +1,6 @@
+# Stage C report: the iterated spectral ladder on ManiSkill3 robot data (E24)
+
+Design and limits: `docs/stage_c_design.md`. Encoder: frozen ImageNet-initialized ResNet-50 features (2048-d) plus an MLP head trained with the JEPA recipe (adjacent-frame prediction, variance and covariance regulariser, no viewpoint-invariance term), 128-d output, then the engine's whitening and spectral ladder. Rung 1 = viewpoint pairs (base vs side camera), rung 2 = trajectory pairs. Block sizes by the absolute-gap rule γ = 0.1 λ₁ (Stage A); if no gap qualifies the largest gap ratio among the first 32 is used and flagged.
+
+## Limits
+Simulated robot data generated here (ManiSkill motion-planning solutions with perturbed waypoints and speed; the paper's own way of generating trajectories is not stated); frozen ImageNet ResNet-50 plus a small trained head, not the paper's fine-tuned encoder; group count and frames per trajectory as stated per task above; the paper's behaviour-cloning and closed-loop results are out of scope.

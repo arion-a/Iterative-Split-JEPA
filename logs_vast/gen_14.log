@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/root/isj_work/repo/experiments/robot/gen_robot_data.py", line 6, in <module>
+    import numpy as np, torch, sapien, gymnasium as gym
+  File "/root/isj_work/venv/lib/python3.10/site-packages/torch/__init__.py", line 496, in <module>
+    from torch._C import *  # noqa: F403
+ImportError: /root/isj_work/venv/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommResume
+Traceback (most recent call last):
+  File "/root/isj_work/repo/experiments/robot/gen_robot_data.py", line 6, in <module>
+    import numpy as np, torch, sapien, gymnasium as gym
+  File "/root/isj_work/venv/lib/python3.10/site-packages/torch/__init__.py", line 496, in <module>
+    from torch._C import *  # noqa: F403
+ImportError: /root/isj_work/venv/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommResume

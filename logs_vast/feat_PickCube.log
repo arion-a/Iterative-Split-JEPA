@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/root/isj_work/repo/experiments/robot/extract_features.py", line 5, in <module>
+    import numpy as np, torch, torchvision
+  File "/root/isj_work/venv/lib/python3.10/site-packages/torch/__init__.py", line 496, in <module>
+    from torch._C import *  # noqa: F403
+ImportError: /root/isj_work/venv/lib/python3.10/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommResume

@@ -39,10 +39,10 @@ How to use this file: tick a step only when its **done when** line is true, put 
 
 ## Phase 2: E23, a non-mirror encoder
 
-- [ ] 2.1 Start when a core is free. `python experiments/run_stage_b1.py --config configs/stage_b1_mlp.yaml --out results/stage_b1_e23 --seeds 30 31 32 33 34 --arms main shuffled_rung2 --criteria-sha configs/stage_b1.criteria.sha256`. The criteria block in that config must hash to the value in `configs/stage_b1.criteria.sha256` (checked at start).
-- [ ] 2.2 **Done when:** 10 files in `results/stage_b1_e23/`.
-- [ ] 2.3 Score per criterion over the 5 seeds with the same scorer used for B1 (check whether `experiments/build_b1_report.py` or `rescore_b1.py` accepts the E23 folder; if neither does, report per-criterion pass counts directly from the run files and say so). Registered prediction: each registered B1 criterion except possibly the texture variant R2 holds on >= 4 of 5 seeds; shuffled control behaves. Refuted if two or more criteria fail on two or more seeds.
-- [ ] 2.4 Record outcome in EVIDENCE, STATUS, explog. **Done when:** E23 has a verdict on the branch.
+- [x] 2.1 Start when a core is free. `python experiments/run_stage_b1.py --config configs/stage_b1_mlp.yaml --out results/stage_b1_e23 --seeds 30 31 32 33 34 --arms main shuffled_rung2 --criteria-sha configs/stage_b1.criteria.sha256`. The criteria block in that config must hash to the value in `configs/stage_b1.criteria.sha256` (checked at start).
+- [x] 2.2 **Done when:** 10 files in `results/stage_b1_e23/`.
+- [x] 2.3 Score per criterion over the 5 seeds with the same scorer used for B1 (check whether `experiments/build_b1_report.py` or `rescore_b1.py` accepts the E23 folder; if neither does, report per-criterion pass counts directly from the run files and say so). Registered prediction: each registered B1 criterion except possibly the texture variant R2 holds on >= 4 of 5 seeds; shuffled control behaves. Refuted if two or more criteria fail on two or more seeds.
+- [x] 2.4 Record outcome in EVIDENCE, STATUS, explog. **Done when:** E23 has a verdict on the branch.
 
 ## Phase 3: E24, robot data (the largest phase)
 
@@ -80,7 +80,10 @@ Phase 0 runs throughout. Phase 1 and the Phase 3 data generation run in parallel
 ## Log (newest last)
 
 - 2026-10-20 19:35 UTC: plan written. E21 B1 4/30, B2 6/20; robot data 20 and 15 of 100 groups. Container restarts about every 15 minutes; jobs relaunched after each.
+- 2026-10-20 20:55 UTC: E21 Part B complete (20/20, final check passes). E23 complete (10/10): REFUTED as registered (8 of 9 non-excepted criteria 0/5 seeds; rung-1 gap 1.1). Phase 2 gate: evidence unedited (PASS), explog verify True, integrity checks pass for all files so far. Phase 1 awaits B1 (14/30); Phase 3 data at 50/40 of 100.
 
 ## Noted, not started
+
+- E23 refuted as registered; it does not separate architecture, objective and training budget (none was varied). Waiting for the owner; nothing started.
 
 - `explog.verify()` was False on 2026-10-20 (entry 296 stale after the E22 fields were added to `stage_b2_spec.py`); declared stale the same day, verify True again.

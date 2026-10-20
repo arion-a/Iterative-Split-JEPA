@@ -122,3 +122,4 @@
 | 27 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 11.8 deg, B2 12.0 deg | `results/stage_b2_e21/sigma_cat_0.4/27.json` |
 | 28 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.83, K found 5 | rung-2 angle B1 10.5 deg, B2 11.3 deg | `results/stage_b2_e21/sigma_cat_0.4/28.json` |
 | 29 | B2 [no-op control + E10c] sigma_cat=0.4 | purity 0.90, K found 6 | rung-2 angle B1 7.5 deg, B2 9.8 deg | `results/stage_b2_e21/sigma_cat_0.4/29.json` |
+| 30-34 | B1 [E23, generic MLP encoder] | refuted as registered: 8 of 9 criteria 0/5 seeds; rung-1 gap 1.1 | rung-1 angle 82 deg, rung-2 angle 81 deg, nesting 74 deg | `results/stage_b1_e23/E23_REPORT.md` |

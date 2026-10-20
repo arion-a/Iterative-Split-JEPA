@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 368 entries, head ed8620971685
+Chain status at render time: **VALID** — 401 entries, head 580b6907e1fe
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -8040,5 +8040,762 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** docs/COMPLETION_PLAN.md is a living tracker (ticked off and extended as steps finish); entry 362 fingerprinted its first version, so that reference is declared superseded. Progress on it is recorded by separate chain entries.
 
 **Bearing on objectives —.** Housekeeping: the tracker is meant to change.
+
+---
+
+## #368 · run · stage B · plan §4.2
+`bd985bd2c57997a7` ← `ed8620971685ce36` · recorded 2026-10-20T20:07:38+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=28 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.07,
+ "angle_b2": 11.07,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/28.json` (sha256 1a098e1b83)
+
+---
+
+## #369 · run · stage B · plan §4.2
+`7535e2feda9c2311` ← `bd985bd2c57997a7` · recorded 2026-10-20T20:08:57+00:00
+
+**What.** Stage B1 arm=main seed=26 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.982,
+ "rung_angles_deg": [
+  0.84,
+  1.18
+ ],
+ "seconds": 323.9,
+ "variant_r2": [
+  0.96,
+  0.986
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed26.json` (sha256 1a19a31c49)
+
+---
+
+## #370 · run · stage B · plan §4.2
+`28fe49390722f945` ← `7535e2feda9c2311` · recorded 2026-10-20T20:09:51+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=29 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.4,
+ "angle_b2": 8.3,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.1/29.json` (sha256 c0803abb69)
+
+---
+
+## #371 · run · stage B · plan §4.2
+`6402d734848dd6ba` ← `28fe49390722f945` · recorded 2026-10-20T20:12:03+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=20 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.08,
+ "angle_b2": 11.38,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/20.json` (sha256 c27084e1d7)
+
+---
+
+## #372 · run · stage B · plan §4.2
+`9b1bb779e8c6cb26` ← `6402d734848dd6ba` · recorded 2026-10-20T20:12:46+00:00
+
+**What.** Stage B1 arm=main seed=27 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.98,
+ "rung_angles_deg": [
+  0.85,
+  0.9
+ ],
+ "seconds": 229.6,
+ "variant_r2": [
+  0.954,
+  0.983
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed27.json` (sha256 c5ce7d25e4)
+
+---
+
+## #373 · run · stage B · plan §4.2
+`d393799bd2153344` ← `9b1bb779e8c6cb26` · recorded 2026-10-20T20:14:14+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=21 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.31,
+ "angle_b2": 10.92,
+ "k_found": 5,
+ "purity": 0.832
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/21.json` (sha256 8962938508)
+
+---
+
+## #374 · run · stage B · plan §4.2
+`0718e84389049adc` ← `d393799bd2153344` · recorded 2026-10-20T20:16:26+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=22 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.63,
+ "angle_b2": 11.05,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/22.json` (sha256 cb8cdc40b1)
+
+---
+
+## #375 · run · stage B · plan §4.2
+`5840c5a063e7cd95` ← `0718e84389049adc` · recorded 2026-10-20T20:16:40+00:00
+
+**What.** Stage B1 arm=main seed=28 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.98,
+ "rung_angles_deg": [
+  0.83,
+  1.67
+ ],
+ "seconds": 233.8,
+ "variant_r2": [
+  0.962,
+  0.987
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed28.json` (sha256 e27d44fac2)
+
+---
+
+## #376 · run · stage B · plan §4.2
+`4636ab24d16a2f00` ← `5840c5a063e7cd95` · recorded 2026-10-20T20:18:45+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=23 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.4,
+ "angle_b2": 9.12,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/23.json` (sha256 81b3ee028a)
+
+---
+
+## #377 · run · stage B · plan §4.2
+`63511b84b0588794` ← `4636ab24d16a2f00` · recorded 2026-10-20T20:20:29+00:00
+
+**What.** Stage B1 arm=main seed=29 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.977,
+ "rung_angles_deg": [
+  1.44,
+  1.36
+ ],
+ "seconds": 228.6,
+ "variant_r2": [
+  0.957,
+  0.983
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/main_seed29.json` (sha256 394c61e3de)
+
+---
+
+## #378 · run · stage B · plan §4.2
+`c01c776ac9e2fd79` ← `63511b84b0588794` · recorded 2026-10-20T20:20:53+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=24 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.41,
+ "angle_b2": 11.32,
+ "k_found": 5,
+ "purity": 0.832
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/24.json` (sha256 7de290bc7c)
+
+---
+
+## #379 · run · stage B · plan §4.2
+`c509aa3da87a3656` ← `c01c776ac9e2fd79` · recorded 2026-10-20T20:23:07+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=25 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.39,
+ "angle_b2": 12.44,
+ "k_found": 6,
+ "purity": 0.994
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/25.json` (sha256 82d6f2beeb)
+
+---
+
+## #380 · run · stage B · plan §4.2
+`6439fe04774d1e6b` ← `c509aa3da87a3656` · recorded 2026-10-20T20:24:10+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=20 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.861,
+ "rung_angles_deg": [
+  0.86,
+  35.87
+ ],
+ "seconds": 221.4,
+ "variant_r2": [
+  0.959,
+  0.863
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed20.json` (sha256 b9741db935)
+
+---
+
+## #381 · run · stage B · plan §4.2
+`6c60d66d084c016a` ← `6439fe04774d1e6b` · recorded 2026-10-20T20:25:17+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=26 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.1,
+ "angle_b2": 9.15,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/26.json` (sha256 e2f247f5dc)
+
+---
+
+## #382 · run · stage B · plan §4.2
+`a27cb206e2892ac9` ← `6c60d66d084c016a` · recorded 2026-10-20T20:27:24+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=27 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.75,
+ "angle_b2": 12.04,
+ "k_found": 5,
+ "purity": 0.832
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/27.json` (sha256 a619d4c224)
+
+---
+
+## #383 · run · stage B · plan §4.2
+`85d208fb1cb197e6` ← `a27cb206e2892ac9` · recorded 2026-10-20T20:27:53+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=21 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.562,
+ "rung_angles_deg": [
+  0.88,
+  88.8
+ ],
+ "seconds": 222.4,
+ "variant_r2": [
+  0.962,
+  0.554
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed21.json` (sha256 bc031f6de8)
+
+---
+
+## #384 · run · stage B · plan §4.2
+`b093fa4bb740d257` ← `85d208fb1cb197e6` · recorded 2026-10-20T20:29:31+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=28 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.51,
+ "angle_b2": 11.27,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/28.json` (sha256 16fa15bf30)
+
+---
+
+## #385 · run · stage B · plan §4.2
+`c1b1d2fa25fa6e64` ← `b093fa4bb740d257` · recorded 2026-10-20T20:31:53+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=22 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.577,
+ "rung_angles_deg": [
+  1.44,
+  86.25
+ ],
+ "seconds": 240.1,
+ "variant_r2": [
+  0.95,
+  0.57
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed22.json` (sha256 fb74f9617d)
+
+---
+
+## #386 · run · stage B · plan §4.2
+`eb7bb01227f4c991` ← `c1b1d2fa25fa6e64` · recorded 2026-10-20T20:31:56+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=29 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.52,
+ "angle_b2": 9.75,
+ "k_found": 6,
+ "purity": 0.899
+}
+```
+
+**Artifacts.** `results/stage_b2_e21/sigma_cat_0.4/29.json` (sha256 5762108aa9)
+
+---
+
+## #387 · run · stage B · plan §4.2
+`88e5ebee4d59620b` ← `eb7bb01227f4c991` · recorded 2026-10-20T20:32:32+00:00
+
+**What.** Stage B1 run started: seeds [30, 31, 32, 33, 34], arms ['main', 'shuffled_rung2']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  30,
+  31,
+  32,
+  33,
+  34
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_mlp.yaml` (sha256 2ef82b4ccc)
+
+---
+
+## #388 · run · stage B · plan §4.2
+`f85ffd473d82d7d3` ← `88e5ebee4d59620b` · recorded 2026-10-20T20:33:05+00:00
+
+**What.** Stage B1 arm=main seed=30 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.965,
+ "rung_angles_deg": [
+  74.0,
+  68.33
+ ],
+ "seconds": 32.6,
+ "variant_r2": [
+  -0.001,
+  0.535
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/main_seed30.json` (sha256 529e960c66)
+
+---
+
+## #389 · run · stage B · plan §4.2
+`fc0e5d4a84613aa7` ← `f85ffd473d82d7d3` · recorded 2026-10-20T20:33:36+00:00
+
+**What.** Stage B1 arm=main seed=31 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.983,
+ "rung_angles_deg": [
+  84.65,
+  86.65
+ ],
+ "seconds": 31.1,
+ "variant_r2": [
+  -0.0,
+  0.716
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/main_seed31.json` (sha256 1c9924a118)
+
+---
+
+## #390 · run · stage B · plan §4.2
+`f6264a738fda0f3f` ← `fc0e5d4a84613aa7` · recorded 2026-10-20T20:34:06+00:00
+
+**What.** Stage B1 arm=main seed=32 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.909,
+ "rung_angles_deg": [
+  89.42,
+  86.9
+ ],
+ "seconds": 29.9,
+ "variant_r2": [
+  -0.001,
+  0.451
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/main_seed32.json` (sha256 7be24ab7d4)
+
+---
+
+## #391 · run · stage B · plan §4.2
+`3fa72968b966280c` ← `f6264a738fda0f3f` · recorded 2026-10-20T20:34:37+00:00
+
+**What.** Stage B1 arm=main seed=33 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.957,
+ "rung_angles_deg": [
+  88.46,
+  88.82
+ ],
+ "seconds": 31.6,
+ "variant_r2": [
+  -0.001,
+  0.476
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/main_seed33.json` (sha256 c33a99c0e2)
+
+---
+
+## #392 · run · stage B · plan §4.2
+`596048dca0b75300` ← `3fa72968b966280c` · recorded 2026-10-20T20:35:08+00:00
+
+**What.** Stage B1 arm=main seed=34 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.959,
+ "rung_angles_deg": [
+  73.91,
+  74.71
+ ],
+ "seconds": 30.3,
+ "variant_r2": [
+  -0.0,
+  0.349
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/main_seed34.json` (sha256 d222fddd52)
+
+---
+
+## #393 · run · stage B · plan §4.2
+`0b9526a2aa2a1735` ← `596048dca0b75300` · recorded 2026-10-20T20:35:36+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=23 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.478,
+ "rung_angles_deg": [
+  0.8,
+  86.06
+ ],
+ "seconds": 223.1,
+ "variant_r2": [
+  0.954,
+  0.475
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed23.json` (sha256 9ac7f3fdba)
+
+---
+
+## #394 · run · stage B · plan §4.2
+`01cea9236ffa0162` ← `0b9526a2aa2a1735` · recorded 2026-10-20T20:35:40+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=30 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.557,
+ "rung_angles_deg": [
+  59.08,
+  86.69
+ ],
+ "seconds": 32.0,
+ "variant_r2": [
+  -0.001,
+  0.218
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/shuffled_rung2_seed30.json` (sha256 8a0144334b)
+
+---
+
+## #395 · run · stage B · plan §4.2
+`550bcd15dd879d09` ← `01cea9236ffa0162` · recorded 2026-10-20T20:36:10+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=31 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.511,
+ "rung_angles_deg": [
+  83.94,
+  87.43
+ ],
+ "seconds": 30.6,
+ "variant_r2": [
+  -0.0,
+  0.402
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/shuffled_rung2_seed31.json` (sha256 26c0c7923f)
+
+---
+
+## #396 · run · stage B · plan §4.2
+`4d3d5831618145a8` ← `550bcd15dd879d09` · recorded 2026-10-20T20:36:40+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=32 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.385,
+ "rung_angles_deg": [
+  74.75,
+  83.27
+ ],
+ "seconds": 30.0,
+ "variant_r2": [
+  -0.0,
+  0.236
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/shuffled_rung2_seed32.json` (sha256 d81fd03f26)
+
+---
+
+## #397 · run · stage B · plan §4.2
+`6c732a09e0012a76` ← `4d3d5831618145a8` · recorded 2026-10-20T20:37:12+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=33 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.623,
+ "rung_angles_deg": [
+  80.73,
+  89.21
+ ],
+ "seconds": 31.7,
+ "variant_r2": [
+  -0.0,
+  0.342
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/shuffled_rung2_seed33.json` (sha256 80e2ea7d5b)
+
+---
+
+## #398 · run · stage B · plan §4.2
+`ef74e49db8d825f6` ← `6c732a09e0012a76` · recorded 2026-10-20T20:37:43+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=34 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.543,
+ "rung_angles_deg": [
+  87.43,
+  82.92
+ ],
+ "seconds": 31.4,
+ "variant_r2": [
+  -0.0,
+  0.211
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/shuffled_rung2_seed34.json` (sha256 6b8bb2620b)
+
+---
+
+## #399 · run · stage B · plan §4.2
+`35e635a23f154abf` ← `ef74e49db8d825f6` · recorded 2026-10-20T20:39:14+00:00
+
+**What.** Stage B1 arm=shuffled_rung2 seed=24 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.563,
+ "rung_angles_deg": [
+  0.91,
+  89.8
+ ],
+ "seconds": 218.1,
+ "variant_r2": [
+  0.957,
+  0.571
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e21/shuffled_rung2_seed24.json` (sha256 0c3b1bd554)
+
+---
+
+## #400 · result · stage B · plan §E23
+`580b6907e1fee32e` ← `35e635a23f154abf` · recorded 2026-10-20T20:40:16+00:00
+
+**What.** E23 (generic MLP encoder, B1 ladder, seeds 30-34): REFUTED as registered. 8 of 9 non-excepted criteria held on 0 of 5 seeds; only core invariant R2 held (5 of 5). Rung 1 found no split (gap 1.1, rank-deficient on every seed, angle 82 deg, texture R2 -0.001); rung 2 angle 81 deg, gap 2.2; nesting 74 deg. Shuffled control behaved.
+
+**How.** python experiments/run_stage_b1.py --config configs/stage_b1_mlp.yaml --seeds 30-34 --arms main shuffled_rung2; scored by experiments/analyse_e23.py with the E21 Part A scorer and leakage floor 0.01
+
+**Output.**
+```json
+{
+ "criteria_seeds_passing": {
+  "all_other_non_excepted": 0,
+  "core_invariant_r2": 5
+ },
+ "nesting_deg": 74.4,
+ "rung1_angle_deg": 82.1,
+ "rung1_gap": 1.1,
+ "rung2_angle_deg": 81.1,
+ "shuffled_control": "behaved"
+}
+```
+
+**Artifacts.** `results/stage_b1_e23/E23_REPORT.md` (sha256 9d78fc5a2f); `experiments/analyse_e23.py` (sha256 281c9b7463)
+
+**Bearing on objectives O2.** With the generic MLP encoder and the Stage A prediction recipe, the ladder's first split is not recovered in the B1 world, although the encoder trained normally and keeps the category content. The run does not separate architecture, objective and training budget.
+
+**Verdict.** refuted
 
 ---

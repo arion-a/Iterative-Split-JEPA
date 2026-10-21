@@ -1,3 +1,5 @@
+> **Superseded on 2026-10-21 by `docs/PLAN_GAPS_ONE_BY_ONE.md` for Phases G0-G6** (reduced so that no new criteria, metrics or experiments go beyond the theory and the experimental plan). Phase G4-K below stays as written and is Gap 1 of the new plan.
+
 # Plan: closing the gaps between "works on a representation that contains the structure" and "works in practice", especially for deeper ladders
 
 Written 2026-10-21 at the owner's request. **Planning document only: nothing here has been registered or run.** Each phase registers its predictions in `docs/EVIDENCE.md` (additions only) and freezes its criteria by hash BEFORE its runs, as before; the numbers below marked "draft" are proposals, fixed only at registration. Same rules as the earlier plans: no tuning to fit, refuted results are results, a check after every step and a gate after every phase, a supervisor during runs, anything outside the plan goes to "Noted, not started".

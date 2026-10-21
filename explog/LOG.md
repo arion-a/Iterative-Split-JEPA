@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 568 entries, head 726e9d77a50b
+Chain status at render time: **VALID** — 573 entries, head c5b0ec788e70
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12409,5 +12409,90 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Housekeeping: entry 563 fingerprinted configs/stage_b2_slowk.yaml, which was extended afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #568 · run · stage B · plan §4.2
+`33f8cf83d2387223` ← `726e9d77a50b6f1f` · recorded 2026-10-21T12:55:20+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.45,
+ "angle_b2": 8.79,
+ "k_found": 6,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/60.json` (sha256 5497a43cb6)
+
+---
+
+## #569 · run · stage B · plan §4.2
+`53a9d8d38f3ecef1` ← `33f8cf83d2387223` · recorded 2026-10-21T12:55:22+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.21,
+ "angle_b2": 7.31,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/62.json` (sha256 3b255e75a9)
+
+---
+
+## #570 · run · stage B · plan §4.2
+`c74cca23985655c5` ← `53a9d8d38f3ecef1` · recorded 2026-10-21T12:55:26+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.77,
+ "angle_b2": 12.0,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/61.json` (sha256 791e10a1b4)
+
+---
+
+## #571 · run · stage B · plan §4.2
+`5dd75d5bf785bfa3` ← `c74cca23985655c5` · recorded 2026-10-21T12:55:31+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.21,
+ "angle_b2": 10.37,
+ "k_found": 6,
+ "purity": 1.0
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/63.json` (sha256 624612dc31)
+
+---
+
+## #572 · plan · stage C · plan §gap plan v2
+`c5b0ec788e70912b` ← `5dd75d5bf785bfa3` · recorded 2026-10-21T12:57:06+00:00
+
+**What.** Owner asked for a plan that attacks each gap one by one, with steps and a supervisor, matched to the theory and the experimental plan, without expanding experiments or increasing criteria, metrics or numbers. Wrote docs/PLAN_GAPS_ONE_BY_ONE.md: six gaps in dependency order (cluster count [running], carry-over from a failed rung, deeper ladder, encoder keeping the content, real-image features, payoff), each with its theory anchor, steps and done-when conditions; only existing criteria are used (the four per-rung acceptance checks, presence 0.95, the plan's 1/sqrt(n) scaling); about 80 further runs (earlier plan: about 150); proposals that went beyond the theory were dropped (decoder-based presence proxy, energy-based block size, new abstention level, soft pairs and BIC, full Stage D). Supervisor: per-gap monitor scripts and experiments/plan_status.py. Nothing registered or run for gaps 2-6.
+
+**Bearing on objectives O2, O3, O4.** Planning only; each gap registers its prediction and freezes its criteria before its first run.
 
 ---

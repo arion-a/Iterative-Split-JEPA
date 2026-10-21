@@ -134,3 +134,7 @@
 | 30-34 | B1 [E28, MLP + paper objective, weight 0.01] | not confirmed: no collapse, but 2 of 5 seeds keep all blocks (presence 0.97) and split like the mirror; 3 seeds partial (0.82-0.95), splits fail | gap ratios 80 / 54 on the good seeds, 1.2-6 on the others | `results/enc_generality/REPORT.md` |
 | 35-44 | B1 [E29, 0.95 presence threshold, MLP + paper objective] | refuted as registered (1 of 9 rungs at 0.95+ did not split; 0 of 11 below split); conditional rule 'presence at least 0.95 and previous rung split' fits 80 of 80 rungs of E25-E29 | 4 of 10 seeds split both rungs | `results/enc_generality/E29_REPORT.md` |
 | 45-54 | B1 [E30, prospective test of claims 2 and 3, cells A and B] | both claims refuted as registered; 0 of 22 below presence 0.95 split (held); 3 of 10 rungs split after a failed rung 1 | pooled E25-E30: 0/59 below 0.95, 50/50 at 0.95+ with split predecessor, 3/11 after a failed rung | `results/enc_generality/E30_REPORT.md` |
+| 60 | B2 [E18] sigma_cat=0.1 | purity 0.83, K found 6 | rung-2 angle B1 8.4 deg, B2 8.8 deg | `results/stage_b2_slowk/sigma_cat_0.1/60.json` |
+| 62 | B2 [E18] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 7.2 deg, B2 7.3 deg | `results/stage_b2_slowk/sigma_cat_0.1/62.json` |
+| 61 | B2 [E18] sigma_cat=0.1 | purity 0.83, K found 5 | rung-2 angle B1 10.8 deg, B2 12.0 deg | `results/stage_b2_slowk/sigma_cat_0.1/61.json` |
+| 63 | B2 [E18] sigma_cat=0.1 | purity 1.00, K found 6 | rung-2 angle B1 10.2 deg, B2 10.4 deg | `results/stage_b2_slowk/sigma_cat_0.1/63.json` |

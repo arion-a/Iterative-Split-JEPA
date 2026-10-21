@@ -113,5 +113,37 @@ def real():
     return "real report written", [], []
 
 
+def columbia_full():
+    cfg = yaml.safe_load(open("configs/columbia_full.yaml")); c = cfg["criteria"]; cert = c["certificate"]
+    runs = [json.load(open(p)) for p in sorted(glob.glob("results/columbia_full/[0-9].json"))]
+    m = lambda k, arm="main": [r["arms"][arm][k] for r in runs]
+    stab = list(runs[0]["seed_agreement"].values())
+    gate = [
+        ["(a) V", "matched states keep matched successors", f"≤ {cert['V_max']}", ms(m("V")), all(v <= cert["V_max"] for v in m("V"))],
+        ["(a) ICC (between videos)", "share of psi variance between videos", f"≥ {cert['icc_min']}", ms(m("icc")), all(v >= cert["icc_min"] for v in m("icc"))],
+        ["(a) L", "Lipschitz constant of the linear transition", f"≤ {cert['L_max']}", ms(m("L")), all(v <= cert["L_max"] for v in m("L"))],
+        ["(a) rollout", f"{cert['horizon_K']}-step rollout RMSE / std psi", f"≤ {cert['rollout_nmse_max']}", ms(m("rollout_nmse")), all(v <= cert["rollout_nmse_max"] for v in m("rollout_nmse"))],
+        ["(b) naming", "|Spearman(psi, tracked total energy)|, valid test frames", f"≥ {c['naming']['spearman_min']}", ms(m("naming_abs_spearman")), all(v >= c["naming"]["spearman_min"] for v in m("naming_abs_spearman"))],
+        ["(c) flat control", "no-split baseline stays below", f"< {c['controls']['flat_max_abs_spearman']}", ms(m("naming_abs_spearman", "flat")), all(v < c["controls"]["flat_max_abs_spearman"] for v in m("naming_abs_spearman", "flat"))],
+        ["(d) seed agreement", "min pairwise |Spearman| of psi on the common test videos", f"≥ {c['stability']['min_abs_spearman']}", ms(stab), all(v >= c["stability"]["min_abs_spearman"] for v in stab)],
+    ]
+    verdict = f"C2 Columbia full: gates passed {sum(g[-1] for g in gate)}/{len(gate)}; confirmed only if all four predictions (a)-(d) hold: {'CONFIRMED' if all(g[-1] for g in gate) else 'NOT CONFIRMED'}."
+    arms = [[a] + [ms(m(x, a)) for x in ("V", "icc", "L", "rollout_nmse", "naming_abs_spearman")] for a in ("main", "flat", "shuffled", "temporal_only")]
+    rungs = [[r["seed"], x["family"], x["content_dim"], x["d_k"], round(x["lambda_max_over_chance"], 3), round(x["best_ratio"], 2), x.get("stop", "split")] for r in runs for x in r["ladder"]]
+    hs = [1, 2, 4, 8, 16, 32]
+    reach = [["psi"] + [ms([r["reach_psi"][str(h)] for r in runs]) for h in hs], ["fast block"] + [ms([r["reach_variant_block"][str(h)] for r in runs if r["reach_variant_block"]]) for h in hs]]
+    prev = [json.load(open(p)) for p in sorted(glob.glob("results/columbia/[0-9].json"))]
+    txt = ["# Stage V C2 report: Columbia full experiment (video-level)", "", "Criteria frozen in `configs/columbia_full.yaml`; prediction text in `docs/EVIDENCE.md` (C2). Format: docs/REPORTING.md.", "",
+           "## A. Gate table", table(["Criterion", "Plain meaning", "Threshold", "Measured (mean ± std over 3 seeds)", "Pass?"], gate), "", "## D. Verdict", verdict, "",
+           "## Informational (not gates)", "", "Arms:", table(["arm", "V", "ICC", "L", "rollout", "|Spearman| with energy"], arms), "",
+           "Ladder records:", table(["seed", "family", "content dim", "d_k", "lambda_max / chance", "best ratio", "outcome"], rungs), "",
+           f"Reach (normalised held-out error vs horizon in frames {hs}):", table(["block"] + [str(h) for h in hs], reach), "",
+           f"Tracked-energy reliability (ANOVA share between test videos): {runs[0]['tracked_energy_between_video_icc_test']:.3f}. Report-only ceiling probe R² (D13): {[round(r['ceiling_probe_report_only_r2_test'], 3) for r in runs]}.", "",
+           f"Comparison with C1 (clip-level, 4000 steps; its thresholds were the same): naming {[round(p['certificate']['naming_abs_spearman'], 3) for p in prev]}, rollout {[round(p['certificate']['rollout_nmse'], 3) for p in prev]}, ICC {[round(p['certificate']['icc'], 3) for p in prev]}.", "",
+           "Not applicable to real data, not run: E35 (planted hierarchy), E36 (planted bridge)."]
+    open("results/columbia_full/REPORT.md", "w").write("\n".join(txt) + "\n")
+    return verdict, gate, []
+
+
 if __name__ == "__main__":
-    print(dict(handshake=handshake, hier=hier, real=real)[sys.argv[1]]()[0])
+    print(dict(handshake=handshake, hier=hier, real=real, columbia_full=columbia_full)[sys.argv[1]]()[0])

@@ -34,7 +34,7 @@ if "--no-tests" not in sys.argv:
 v, msg = explog.verify()
 check("chain links + artifact digests", v, msg)
 
-for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36", "scaling", "live", "columbia", "columbia_controls") if glob.glob(f"configs/{n}.yaml")]:
+for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36", "scaling", "live", "columbia", "columbia_controls", "columbia_full") if glob.glob(f"configs/{n}.yaml")]:
     sha = cfg.replace(".yaml", ".criteria.sha256")
     c = yaml.safe_load(open(cfg))
     if "criteria" in c:
@@ -47,13 +47,15 @@ for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36"
         check(f"criteria hash {cfg}", got == want)
 
 logged = {a["path"] for e in explog.read_all() for a in e["artifacts"]}
-raw = [p for d in ("handshake/main", "hier/ladder", "hier/shuffled", "followup", "e36", "real", "scaling", "live", "columbia", "columbia_controls") for p in glob.glob(f"results/{d}/*.json")]
+raw = [p for d in ("handshake/main", "hier/ladder", "hier/shuffled", "followup", "e36", "real", "scaling", "live", "columbia", "columbia_controls", "columbia_full") for p in glob.glob(f"results/{d}/*.json")]
 missing = [p for p in raw if p not in logged]
 check("every raw result JSON is in the chain", not missing, str(missing[:3]))
 
 ev = open("docs/EVIDENCE.md").read()
 for ident, marker in (("E31c′", "E31c′: CONFIRMED"), ("E31d", "E31d: REFUTED"), ("E35", "E35: REFUTED"), ("F1", "F1 outcome"), ("E36", "E36 outcome"), ("B1", "B1 outcome"), ("C1", "C1 outcome"), ("C1b", "C1b outcome")):
     check(f"EVIDENCE has an outcome for {ident}", marker in ev)
+if glob.glob("results/columbia_full/[0-9].json"):                    # C2 outcome is required once C2 has results
+    check("EVIDENCE has an outcome for C2", "C2 outcome" in ev)
 
 print("AUDIT", "PASSED" if ok else "FAILED")
 sys.exit(0 if ok else 1)

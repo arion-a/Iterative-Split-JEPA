@@ -1,0 +1,29 @@
+# Supervisor plan: Columbia full experiment (C2). Run: python experiments/supervisor.py plans/columbia_full.yaml  (resumes; --status shows the tracker)
+name: columbia_full
+chain: true
+state: results/columbia_full/supervisor_state.json
+transient: ["Killed", "No space left", "Connection reset", "Connection aborted", "Temporary failure", "classifier"]
+steps:
+  # ---- Phase 0: set-up and registration (nothing runs before this passes)
+  - {id: S0.1, phase: 0, desc: "supervisor tests pass", run: "python -m pytest tests/test_supervisor.py -q"}
+  - id: S0.2
+    phase: 0
+    desc: "C2 registered before any run: config hash matches, prediction text in EVIDENCE, no C2 result exists yet"
+    run: "python -c \"import hashlib,json,yaml,glob,sys; c=yaml.safe_load(open('configs/columbia_full.yaml')); assert hashlib.sha256(json.dumps(c['criteria'],sort_keys=True).encode()).hexdigest()==open('configs/columbia_full.criteria.sha256').read().strip(); assert '## C2 Columbia full experiment (registered' in open('docs/EVIDENCE.md').read(); assert not glob.glob('results/columbia_full/[0-9].json')\""
+  # ---- Phase 1: data integrity
+  - {id: S1.1, phase: 1, desc: "group 1100 clips into 100 videos (rule checked against pixel continuity), build video-level sequences and evaluator table", run: "python experiments/prep_columbia_full.py"}
+  - {id: S1.2, phase: 1, desc: "data tests: grouping, shapes, valid-energy fraction", run: "python -m pytest tests/test_columbia_full.py -q -k grouping"}
+  - {id: S1.3, phase: 1, desc: "phase 1 gate: safe loader and quotient/statistic tests, sealed-audit scan, audit", run: "python -m pytest tests/test_safe_npy.py tests/test_quotient_audit.py tests/test_sealed_audit.py -q && python experiments/audit_stage_v.py --no-tests"}
+  # ---- Phase 2: the run
+  - id: S2.1
+    phase: 2
+    desc: "full run: 3 seeds x arms main/flat/shuffled/temporal-only, 8000 encoder steps, video-level split"
+    run: "python experiments/run_columbia_full.py > logs_v/columbia_full_run.log 2>&1"
+    check: "python -m pytest tests/test_columbia_full.py -q -k results"
+    retries: 1
+  # ---- Phase 3: analysis and records
+  - {id: S3.1, phase: 3, desc: "render the report (gate table, controls, informational, C1 comparison)", run: "python experiments/build_report.py columbia_full", check: "test -s results/columbia_full/REPORT.md"}
+  - {id: S3.2, phase: 3, desc: "record the mechanical outcome (a)-(d) in EVIDENCE, STATUS and the chain", run: "python experiments/record_columbia_full.py", check: "grep -q '### C2 outcome' docs/EVIDENCE.md"}
+  # ---- Phase 4: close
+  - {id: S4.1, phase: 4, desc: "full audit: tests, chain, hashes, raw JSONs, outcomes", run: "python experiments/audit_stage_v.py"}
+  - {id: S4.2, phase: 4, desc: "plan-alignment check: every step done, registration intact, outcome after registration, all seeds logged", run: "python experiments/check_plan_alignment.py"}

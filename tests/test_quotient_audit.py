@@ -47,3 +47,13 @@ def test_damped_eps_from_drift():
     e = np.repeat(e, 2, axis=1)
     c = qa.certificate(e[:12], e[12:24], e[24:], k=8)
     assert c["V"] <= 0.05 and c["icc"] > 0.5
+
+
+def test_anova_icc_known_values():
+    from isj import handshake_eval as ev
+    rng = np.random.default_rng(0)
+    base = rng.normal(0, 1, (60, 1))                                   # between-group sd 1, within sd 0.5 -> ICC = 1 / (1 + 0.25) = 0.8
+    vals = base + 0.5 * rng.normal(size=(60, 40))
+    valid = rng.random((60, 40)) > 0.15                                # unbalanced
+    assert abs(ev.anova_icc(vals, valid) - 0.8) < 0.05
+    assert abs(ev.anova_icc(rng.normal(size=(60, 40)), valid)) < 0.05    # pure noise -> 0

@@ -61,3 +61,15 @@ def reach_curve(coords: np.ndarray, split: np.ndarray, horizons=(1, 2, 4, 8, 16,
         p = np.concatenate([xte, np.ones((len(xte), 1))], 1) @ w
         out[str(h)] = float(((yte - p) ** 2).sum() / ((yte - yte.mean(0)) ** 2).sum())
     return out
+
+
+def anova_icc(values: np.ndarray, valid: np.ndarray) -> float:
+    """One-way ANOVA ICC(1) of a (groups, frames) table with a validity mask (unbalanced groups): share of variance that is between groups.
+    Evaluator side: used for the reliability (label-noise ceiling) of tracked energy."""
+    g = [v[m] for v, m in zip(values, valid) if m.sum() > 1]
+    n_i = np.array([len(x) for x in g], float); n = n_i.sum(); k = len(g)
+    grand = np.concatenate(g).mean()
+    msb = sum(len(x) * (x.mean() - grand) ** 2 for x in g) / (k - 1)
+    msw = sum(((x - x.mean()) ** 2).sum() for x in g) / (n - k)
+    n0 = (n - (n_i ** 2).sum() / n) / (k - 1)
+    return float((msb - msw) / (msb + (n0 - 1) * msw))

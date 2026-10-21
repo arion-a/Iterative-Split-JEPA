@@ -11,6 +11,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--task", required=True); ap.add_argument("--split-seed", type=int, default=0); ap.add_argument("--out", default="results/stage_c")
 ap.add_argument("--data", default="data/robot"); ap.add_argument("--pca", type=int, default=128); ap.add_argument("--max-groups", type=int, default=None)
 ap.add_argument("--encoder", choices=["pca", "head"], default="head", help="pca = frozen features only; head = JEPA-trained MLP head on the frozen features (E24 main arm)")
+ap.add_argument("--fixed-d1", type=int, default=None, help="paper Appendix D: fix the rung-1 variant block to d_H dims (use --pca 2*d_H) instead of the gap rule; off by default")
 ap.add_argument("--head-steps", type=int, default=4000); ap.add_argument("--head-hidden", type=int, default=512)
 a = ap.parse_args()
 t0 = time.time(); torch.manual_seed(a.split_seed)
@@ -51,6 +52,9 @@ wh = fit_whitener(Ztr.reshape(-1, a.pca), 1e-5); R_tr, R_va = wh(Ztr.reshape(-1,
 D = a.pca
 
 def fit_two_pass(ru, rv, h_prev, k):
+    if k == 1 and a.fixed_d1:
+        fit = fit_rung(ru, rv, h_prev, k=k, d_k=a.fixed_d1)
+        return fit, {"d": a.fixed_d1, "fixed": True, "no_cliff_fallback": False, "gap_ratio": fit.gap_ratio, "top_eigvals": [float(x) for x in fit.eigvals[:10]], "eigvals_full": [float(x) for x in fit.eigvals], "rank_monitor": audits.rank_monitor(fit)}
     """Engine rung with the block size chosen by the absolute-gap rule gamma = 0.1 lambda_1 (Stage A); falls back to the largest gap ratio (flagged) if no gap qualifies."""
     probe = fit_rung(ru, rv, h_prev, k=k, d_k=1); vals = probe.eigvals.double()
     d = select_block_count(vals, 0.1 * float(vals[0])); flagged = False

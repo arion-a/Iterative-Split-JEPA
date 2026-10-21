@@ -12,7 +12,7 @@ D = "data/columbia_full"
 @pytest.mark.skipif(not os.path.exists(f"{D}/grouping_check.json"), reason="data not prepared")
 def test_grouping_and_shapes():
     g = json.load(open(f"{D}/grouping_check.json"))
-    assert g["ok"] and g["fraction_on_k_boundary"] >= 0.98 and g["adjacent_vs_random_distance"][0] < 0.5 * g["adjacent_vs_random_distance"][1]
+    assert g["ok"] and g["best_period"] == 11 and g["pixel_break_fraction_within_videos"] <= 0.02 and g["adjacent_vs_random_distance"][0] < 0.5 * g["adjacent_vs_random_distance"][1]
     f = np.load(f"{D}/frames.npy"); a = np.load(f"{D}/audit.npz")
     assert f.shape == (100, 660, 1024) and a["total_energy"].shape == (100, 660)
     assert np.isfinite(f).all() and 0.80 < np.mean(np.isfinite(a["total_energy"]) & ~a["reject"]) < 0.95

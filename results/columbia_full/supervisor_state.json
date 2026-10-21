@@ -1,0 +1,26 @@
+{
+ "steps": {
+  "S0.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:39:45+00:00",
+   "tail": "....                                                                     [100%]\n4 passed in 0.54s\n"
+  },
+  "S0.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:39:45+00:00",
+   "tail": ""
+  },
+  "S1.1": {
+   "status": "failed",
+   "attempts": 1,
+   "rc": 1,
+   "at": "2026-10-21T01:39:49+00:00",
+   "tail": "{'clips_per_video': 11, 'n_breaks': 88, 'fraction_on_k_boundary': 0.9090909090909091, 'threshold': 0.012734759598970413, 'adjacent_vs_random_distance': [0.005598240531980991, 0.018847178667783737], 'ok': False}\nTraceback (most recent call last):\n  File \"/home/user/Iterative-Split-JEPA/experiments/prep_columbia_full.py\", line 28, in <module>\n    assert check[\"ok\"], \"grouping rule failed: breaks off the multiple-of-k boundaries\"\n           ~~~~~^^^^^^\nAssertionError: grouping rule failed: breaks off the multiple-of-k boundaries\n",
+   "diagnosis": "real failure: fix the cause, then rerun the supervisor (it resumes here)"
+  }
+ }
+}

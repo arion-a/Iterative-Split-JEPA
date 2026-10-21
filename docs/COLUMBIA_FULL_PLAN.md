@@ -13,7 +13,7 @@ Everything for C2 is in this one place: this plan (what and why), `plans/columbi
 ## 2. What C2 fixes relative to C1 (issues found and resolved)
 | # | Issue in C1 | Resolution | Verified by |
 |---|---|---|---|
-| I1 | Neighbouring clip ids are consecutive windows of one video, so a contiguous-block split could share a video between train and test | Grouping recovered: 100 videos × 11 clips (pixel-continuity breaks fall on multiple-of-11 boundaries; tracked-angle continuity 87% vs random-pair median 0.74 rad); video = release; split by video (70 / 10 / 20) | `experiments/prep_columbia_full.py` (asserts ≥ 98% of breaks on the boundary), `tests/test_columbia_full.py` |
+| I1 | Neighbouring clip ids are consecutive windows of one video, so a contiguous-block split could share a video between train and test | Grouping recovered: 100 videos × 11 clips (pixel-continuity breaks fall on multiple-of-11 boundaries; tracked-angle continuity 87% vs random-pair median 0.74 rad); video = release; split by video (70 / 10 / 20) | `experiments/prep_columbia_full.py` (11 is the best period among the divisors of 1100; breaks ≥ 70% on boundaries, ≤ 2% within videos), `tests/test_columbia_full.py` |
 | I2 | "Between-clip share of tracked energy" came out above 1 (masked-variance artefact) | Proper one-way ANOVA ICC for unbalanced groups, `handshake_eval.anova_icc` | `tests/test_quotient_audit.py::test_anova_icc_known_values` |
 | I3 | 4000-step encoder, small data | The B1 scaling recipe (8000 steps), chosen because B1 showed naming and seed agreement improve with scale in simulation; not tuned on Columbia | `configs/columbia_full.yaml` |
 | I4 | No control arms in the first run | Flat, shuffled-pair and temporal-only arms are part of the registered run | `results/columbia_full/REPORT.md` |
@@ -42,7 +42,7 @@ Phase checkpoints are S1.3 (data) and S4.1–S4.2 (everything); after the run th
 Interpretation lines are added to `docs/EVIDENCE.md` below the mechanical outcome; `docs/PAPER_RESULTS.md` and `docs/ROADMAP_TO_FINISH.md` get one line each; the tree is committed and pushed. Nothing earlier is rewritten.
 
 ## 6. Issue log (filled during execution; newest last)
-_(none yet — halts and fixes are recorded here and in the chain)_
+* **2026-10-21, S1.1 halted (supervisor worked as designed).** The first grouping check required ≥ 98% of pixel breaks to sit on 11-clip boundaries; only 80 of 88 did. Diagnosis: the break threshold is the 99th percentile of within-clip steps, so about 1% of within-video joins exceed it by design (8 of 1000 here, all at 1.02–1.31× the threshold, with small angle jumps 0.17–0.38 rad), while the boundaries behave as claimed (98% angle-discontinuous, 81% pixel breaks). The check, not the data, was wrong. Replaced by a contrast test: 11 must be the best period among the divisors of 1100, breaks ≥ 70% on boundaries and ≤ 2% within videos, with the tracked-angle discontinuity (largest jump of either angle) as independent verification: ≥ 90% of boundary joins discontinuous and a ≥ 0.5 contrast against within-video joins. (A first version of the verification used one angle only and failed at 75%: a single angle looks continuous by chance for about a quarter of unrelated pairs; the two-angle version is the one written down here.) No criterion of the experiment was touched; the grouping rule 'video = clip // 11' is unchanged.
 
 ## 7. Tracker
 `python experiments/supervisor.py plans/columbia_full.yaml --status` is the live tracker; the final state is copied below when the plan completes.

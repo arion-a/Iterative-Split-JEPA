@@ -1,0 +1,13 @@
+== S0.1 (phase 0) attempt 1: supervisor tests pass
+   done S0.1
+== S0.2 (phase 0) attempt 1: C2 registered before any run: config hash matches, prediction text in EVIDENCE, no C2 result exists yet
+   done S0.2
+== S1.1 (phase 1) attempt 1: group 1100 clips into 100 videos (rule checked against pixel continuity), build video-level sequences and evaluator table
+   HALT at S1.1: real failure: fix the cause, then rerun the supervisor (it resumes here)
+{'clips_per_video': 11, 'n_breaks': 88, 'fraction_on_k_boundary': 0.9090909090909091, 'threshold': 0.012734759598970413, 'adjacent_vs_random_distance': [0.005598240531980991, 0.018847178667783737], 'ok': False}
+Traceback (most recent call last):
+  File "/home/user/Iterative-Split-JEPA/experiments/prep_columbia_full.py", line 28, in <module>
+    assert check["ok"], "grouping rule failed: breaks off the multiple-of-k boundaries"
+           ~~~~~^^^^^^
+AssertionError: grouping rule failed: breaks off the multiple-of-k boundaries
+

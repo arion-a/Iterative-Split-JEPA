@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 518 entries, head 3d8ed31b5899
+Chain status at render time: **VALID** — 519 entries, head 7d8a08861032
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -11388,5 +11388,18 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Housekeeping: entry 419 fingerprinted docs/FINAL_REPORT.md, which was regenerated or extended afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #518 · plan · stage B · plan §E30 registration
+`7d8a08861032bd36` ← `3d8ed31b589956b2` · recorded 2026-10-21T07:31:53+00:00
+
+**What.** Owner asked to check and run the three criteria claims. Re-check from raw files (VERIFY_CLAIMS.md): claim 1 holds (presence field in 40/40 files); claim 2 holds exactly (0 of 37 rungs below 0.95 split, 42 of 43 at or above), also with the linear probe; claim 3 fits 80/80 but rests on one distinguishing rung. E30 registered before any run: prospective test on fresh seeds 45-54 of cell A (the E28 cell) and cell B (MLP + prediction recipe at speeds 0.35/0.6/0.8, built to give many rungs with high presence after a failed rung); analysis rule written first (analyse_e30.py), criteria frozen (layered_v2).
+
+**How.** docs/EVIDENCE.md E30; experiments/verify_claims.py; experiments/analyse_e30.py; configs/stage_b1_mlp_midrho.yaml; configs/layered_v2.yaml
+
+**Artifacts.** `configs/stage_b1_mlp_midrho.yaml` (sha256 4c5b9979fc); `experiments/analyse_e30.py` (sha256 87c87b61f1); `experiments/verify_claims.py` (sha256 cac21c1a6e); `configs/layered_v2.yaml` (sha256 69ceee0f05); `configs/layered_v2.sha256` (sha256 fa0aac733c)
+
+**Bearing on objectives O2.** Pre-registration: thresholds (90% / 95% agreement levels, at least 3 informative rungs) fixed before data.
 
 ---

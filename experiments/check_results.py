@@ -84,7 +84,8 @@ def check_enc(final):
     ok, spec = True, [("results/stage_b1_e25", ["main"], 5, range(30, 35)), ("results/stage_b1_e26", ["main", "shuffled_rung2"], 10, range(30, 35)),
                       ("results/stage_b1_e27/mirror_lejepa", ["main"], 5, range(30, 35)), ("results/stage_b1_e27/mlp_lejepa", ["main"], 5, range(30, 35)),
                       ("results/stage_b1_e27/mirror_predict", ["main"], 5, range(30, 35)), ("results/stage_b1_e28", ["main"], 5, range(30, 35)),
-                      ("results/stage_b1_e29", ["main"], 10, range(35, 45))]
+                      ("results/stage_b1_e29", ["main"], 10, range(35, 45)),
+                      ("results/stage_b1_e30/A", ["main"], 10, range(45, 55)), ("results/stage_b1_e30/B", ["main"], 10, range(45, 55))]
     for folder, arms, want, seed_range in spec:
         bad, n = [], 0
         for a in arms:

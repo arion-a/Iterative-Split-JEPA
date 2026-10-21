@@ -75,5 +75,5 @@ noop_control: true                # E10 no-op control: Tier 1 on the B1 arm's cl
 save_subspaces: true              # store rung-2 V per arm for the E10c position check
 
 cluster:
-  spectral_k: false
+  spectral_k: true            # E18 selector on the same encoder, for a same-run comparison with the slow-subspace selector
   slow_k: true                # G4-K: adds arms b2_slowk and b2_slowk_purified (cluster count in the slow subspace of the invariant output); all other arms unchanged

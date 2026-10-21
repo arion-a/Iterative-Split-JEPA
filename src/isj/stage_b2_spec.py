@@ -165,9 +165,9 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         world._g.set_state(gstate)
         ia, ib = R(ta) @ fit1.Q, R(tb) @ fit1.Q
         k_slow, sinfo = slow_subspace_k(inv, ia, ib, seed=seed)
-        _, shinfo = slow_subspace_k(inv, ia, ib[torch.randperm(len(ib), generator=torch.Generator().manual_seed(seed + 7))], seed=seed)   # control: time order destroyed
+        k_shuf, shinfo = slow_subspace_k(inv, ia, ib[torch.randperm(len(ib), generator=torch.Generator().manual_seed(seed + 7))], seed=seed)   # control: time order destroyed
         slowk = {"k": None if k_slow is None else int(k_slow), "abstained": k_slow is None, "d": sinfo["d"], "ratio": sinfo["ratio"],
-                 "change_eigvals": sinfo["eigvals"], "control_shuffled_time": {"abstained": shinfo["abstained"], "ratio": shinfo["ratio"], "d": shinfo["d"]}}
+                 "change_eigvals": sinfo["eigvals"], "control_shuffled_time": {"k": None if k_shuf is None else int(k_shuf), "abstained": shinfo["abstained"], "ratio": shinfo["ratio"], "d": shinfo["d"]}}
         if k_slow is not None:
             basis = sinfo["basis"]
             slow_lab, _, _ = kmeans(inv @ basis, k_slow, restarts=s["kmeans_restarts"], seed=seed)

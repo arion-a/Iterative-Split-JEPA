@@ -1,0 +1,45 @@
+experiment: E31/E32 (plan Phase G4-K)
+seeds:
+- 60
+- 61
+- 62
+- 63
+- 64
+- 65
+- 66
+- 67
+- 68
+- 69
+E31:
+  sigmas:
+  - 0.1
+  - 0.4
+  - 0.6
+  k_true: 6
+  a_k6_min_runs_per_sigma: 9
+  b_purity_min: 0.9
+  b_purity_min_runs_per_sigma: 9
+  b_sigmas:
+  - 0.1
+  - 0.4
+  c_control_k6_max_runs_per_sigma: 3
+  d_equal_speed_abstain_min_runs: 9
+  d_sigma: 0.4
+E32:
+  sigmas:
+  - 0.8
+  - 1.0
+  k6_min_runs:
+    '0.8': 8
+    '1.0': 5
+  purity_ceiling:
+    '0.8': 0.87
+    '1.0': 0.77
+  purity_ceiling_slack: 0.02
+  boundary_rule: largest sigma with K = 6 in at least 8 of 10 runs
+d14:
+  min_perfect_gap: 3.0
+  fraction_of_perfect_gap: 0.6
+slowk_constants:
+  min_ratio: 2.0
+  spectral_selector: frozen E18 constants

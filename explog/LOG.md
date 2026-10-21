@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 565 entries, head 179fb938700b
+Chain status at render time: **VALID** — 568 entries, head 726e9d77a50b
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12376,6 +12376,37 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 `179fb938700b9488` ← `1106d8c1f1a9cf16` · recorded 2026-10-21T12:23:29+00:00
 
 **What.** Housekeeping: entry 296 fingerprinted src/isj/cluster.py, which was extended afterwards (G4K.1: slow-subspace option added, off by default); reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #565 · plan · stage B · plan §E31-E32 registration
+`a10dbe03482c4aba` ← `179fb938700b9488` · recorded 2026-10-21T12:48:27+00:00
+
+**What.** Owner asked to finish all steps of the E18 fix. Registered E31 (slow-subspace cluster count with the trained encoder on fresh seeds 60-69 at sigma_cat 0.1 / 0.4 / 0.6, with a time-shuffled control and an equal-speed control) and E32 (boundary sweep at sigma_cat 0.8 / 1.0) before any run. Criteria frozen by hash (configs/slowk.criteria.yaml), analysis rule written first (experiments/analyse_slowk.py, dry-run on a fake tree), the pipeline now also records the shuffled-time control's K. 60 runs planned.
+
+**How.** docs/EVIDENCE.md E31, E32; configs/slowk.criteria.yaml; experiments/analyse_slowk.py
+
+**Artifacts.** `configs/slowk.criteria.yaml` (sha256 3badf5aaaa); `configs/slowk.criteria.sha256` (sha256 73b1cbe757); `experiments/analyse_slowk.py` (sha256 15ab668458); `configs/stage_b2_slowk.yaml` (sha256 7840eb5cf5); `configs/stage_b2_slowk_equal.yaml` (sha256 b367758e2d)
+
+**Bearing on objectives O2.** Pre-registration: thresholds (9 of 10 runs, purity 0.9, control at most 3 of 10, abstain at least 9 of 10; boundary 8 of 10 / 5 of 10) fixed before data.
+
+---
+
+## #566 · note · stage B · plan §—
+`c45a4aecbd2d2288` ← `a10dbe03482c4aba` · recorded 2026-10-21T12:48:27+00:00
+
+**What.** Housekeeping: entry 563 fingerprinted src/isj/stage_b2_spec.py, which was extended afterwards; reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #567 · note · stage B · plan §—
+`726e9d77a50b6f1f` ← `c45a4aecbd2d2288` · recorded 2026-10-21T12:48:27+00:00
+
+**What.** Housekeeping: entry 563 fingerprinted configs/stage_b2_slowk.yaml, which was extended afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
 

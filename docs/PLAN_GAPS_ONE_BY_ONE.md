@@ -45,7 +45,7 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 - **Solution:** generalise the evaluator to K blocks (same quantities, per rung) and run the plan's Stage C: 4 and 5 blocks (depth 3 and 4 rungs; 3 blocks is E21), ground-truth pairs as in B1/E21, mirror encoder with the paper objective, 5 seeds each (10 runs); then the plan's scaling check at the deepest K: pairs per rung 10^4, 10^5, 10^6, 5 seeds each (15 runs). No other depth, no other encoder.
 - [x] 3.1 Generalise the evaluator and `seed_checks` to a list of rungs. **Done when:** a 3-block run reproduces a stored E21 run file's numbers exactly, and a 5-block smoke run writes every field.
 - [x] 3.2 Register (draft): the four acceptance checks hold at every rung of every depth tested on at least 4 of 5 seeds (the E23 level); if not, the first violated check and its depth are the result. Scaling: the fitted log-log slope of angle against pairs per rung, with its bootstrap interval, contains -0.5 (the plan's 1/sqrt(n)).
-- [ ] 3.3 Run (25 runs), score, record. **A located limit is a result**; no tuning.
+- [x] 3.3 Run (25 runs), score, record. **A located limit is a result**; no tuning.
 - Gate. (Block speeds for K blocks: evenly spaced between 0.2 and 0.95 as in the 3-block world; the mirror encoder does not drop blocks, so this does not affect the outcome.)
 
 ### Gap 4: the encoder may not keep the content  [objective O2, §9 reconstruction-free training, D15 / D15a]

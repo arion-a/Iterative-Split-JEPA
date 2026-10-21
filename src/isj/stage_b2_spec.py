@@ -5,6 +5,7 @@ Rung 1 uses generator twins (as in B1). For rung 2 we compare, on the SAME train
   b1_generator      generator twins (B1 with ground-truth pairs: the reference)
   b2_kmeans         clusters discovered from the rung-1 INVARIANT output, pairs within clusters (the real B2)
   b2_kmeans_oracleK the same with the planted count of 6 (informational)
+  b2_slowk          (option cluster.slow_k, plan G4-K) count chosen in the slow subspace of the invariant output, pairs within clusters there
   label_pairs       pairs sharing the true category (what perfect clustering would give; informational)
   c1_cross_cluster  pairs drawn from DIFFERENT discovered clusters
   c2_variant_clusters  clusters built from the rung-1 VARIANT (texture) output instead
@@ -21,7 +22,7 @@ import time
 import torch
 
 from . import audits
-from .cluster import kmeans, pairs_within_clusters, purity, spectral_k
+from .cluster import kmeans, pairs_within_clusters, purity, slow_subspace_k, spectral_k
 from .encoder import EncoderConfig, encode, train_encoder
 from .engine import fit_rung, fit_whitener, purify_pairs
 from .worlds import CouplingMap, HierarchicalMixtureWorld
@@ -157,6 +158,21 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
         k_spec, spec_info = spectral_k(inv, seed=seed)
         spec_lab, _, _ = kmeans(inv, k_spec, restarts=s["kmeans_restarts"], seed=seed)
         spec = {"k": int(k_spec), "info": spec_info, "purity": purity(spec_lab, cat_c)}
+    slowk, slow_lab = None, None
+    if cfg.get("cluster", {}).get("slow_k", False):               # G4-K: cluster count in the slow subspace of the invariant output
+        gstate = world._g.get_state()                              # adjacent frames drawn without disturbing the random state the other arms use
+        ta, tb = world.transition_pairs(s.get("slowk_pairs", 20000))
+        world._g.set_state(gstate)
+        ia, ib = R(ta) @ fit1.Q, R(tb) @ fit1.Q
+        k_slow, sinfo = slow_subspace_k(inv, ia, ib, seed=seed)
+        _, shinfo = slow_subspace_k(inv, ia, ib[torch.randperm(len(ib), generator=torch.Generator().manual_seed(seed + 7))], seed=seed)   # control: time order destroyed
+        slowk = {"k": None if k_slow is None else int(k_slow), "abstained": k_slow is None, "d": sinfo["d"], "ratio": sinfo["ratio"],
+                 "change_eigvals": sinfo["eigvals"], "control_shuffled_time": {"abstained": shinfo["abstained"], "ratio": shinfo["ratio"], "d": shinfo["d"]}}
+        if k_slow is not None:
+            basis = sinfo["basis"]
+            slow_lab, _, _ = kmeans(inv @ basis, k_slow, restarts=s["kmeans_restarts"], seed=seed)
+            slowk["purity"] = purity(slow_lab, cat_c)
+            slowk["subspace_angle_deg"] = float(audits.principal_angles_deg(fit1.Q @ basis, image[3]).max())   # evaluation only: slow subspace vs the true category image
     shuffled_lab = km_lab[torch.randperm(len(km_lab), generator=torch.Generator().manual_seed(seed + 5))]
 
     # ---- pairs for each arm: (representation u, representation v, true latents u, true latents v)
@@ -197,6 +213,12 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
             ru_s, rv_s, zu_s, zv_s, cu_s, cv_s = pairs["b2_spectral"]
             keep_s, _ = purify_pairs(ru_s, rv_s, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
             pairs["b2_spectral_purified"] = (ru_s[keep_s], rv_s[keep_s], zu_s[keep_s], zv_s[keep_s], cu_s[keep_s], cv_s[keep_s])
+    if slow_lab is not None:
+        pairs["b2_slowk"] = idx_arm(*pairs_within_clusters(slow_lab, seed))
+        if cfg.get("purify"):
+            ru_k, rv_k, zu_k, zv_k, cu_k, cv_k = pairs["b2_slowk"]
+            keep_k, _ = purify_pairs(ru_k, rv_k, fit1.Q, 4, factor=cfg["purify"]["factor"], max_iter=cfg["purify"]["max_iter"])
+            pairs["b2_slowk_purified"] = (ru_k[keep_k], rv_k[keep_k], zu_k[keep_k], zv_k[keep_k], cu_k[keep_k], cv_k[keep_k])
     singleton_pairs = len(pairs_within_clusters(torch.arange(len(inv)))[0])        # C3: every sample alone -> zero pairs
 
     arms, construction = {}, {}
@@ -222,7 +244,7 @@ def run_stage_b2_spec(cfg: dict, seed: int, sigma_cat: float, verbose: bool = Fa
     construction["label_pairs"]["pair_validity"] = 1.0
     construction["c3_singleton"] = {"n_pairs": singleton_pairs, "pair_validity": None}
     quality = {"cluster_purity": purity(km_lab, cat_c), "cluster_purity_oracleK": purity(km6_lab, cat_c),
-               "variant_cluster_purity": purity(var_lab, cat_c), "k_discovered": int(k_star), "k_true": k_true, "spectral": spec,
+               "variant_cluster_purity": purity(var_lab, cat_c), "k_discovered": int(k_star), "k_true": k_true, "spectral": spec, "slowk": slowk,
                "silhouette_by_k": {str(k): v for k, v in sil.items()},
                "misgroup_rate": 1 - purity(km_lab, cat_c)}
 

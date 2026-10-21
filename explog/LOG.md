@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 563 entries, head 0a73f7b0100c
+Chain status at render time: **VALID** — 565 entries, head 179fb938700b
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12356,5 +12356,27 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **Artifacts.** `experiments/diag_k_selection_space.py` (sha256 338e19d7ac); `results/diagnostics/k_selection/output.txt` (sha256 9a7e830959)
 
 **Bearing on objectives O2.** Exploratory (not a result): in the idealised setting the E18 failure is explained by the selection space.
+
+---
+
+## #563 · implementation · stage B · plan §G4K.1
+`1106d8c1f1a9cf16` ← `0a73f7b0100c13f6` · recorded 2026-10-21T12:23:29+00:00
+
+**What.** G4K.1: slow-subspace cluster-count selection implemented. slow_subspace_k in src/isj/cluster.py (directions of smallest adjacent-frame change; their number from the largest eigenvalue ratio, abstain below 2.0; the E18 spectral selector with its frozen constants then runs in that subspace). Option cluster.slow_k in the B2 pipeline (off by default; adds arms b2_slowk, b2_slowk_purified and a time-shuffled control; other arms identical with the option on or off, checked). Tests: K = 6 and d = 4 where the full-space selector fails, abstains with equal speeds or shuffled time, deterministic. Smoke run with an undertrained encoder (not a result): K = 6, d = 4, control abstained.
+
+**How.** docs/PLAN_CLOSE_GAPS.md Phase G4-K step 1; tests/test_slow_k.py; configs/stage_b2_slowk.yaml
+
+**Artifacts.** `src/isj/cluster.py` (sha256 87594ada2c); `src/isj/stage_b2_spec.py` (sha256 7d6100c603); `tests/test_slow_k.py` (sha256 dac91fee8e); `configs/stage_b2_slowk.yaml` (sha256 c0ba937744)
+
+**Bearing on objectives O2.** Implementation only; no prediction registered and no evaluation run yet (step G4K.2).
+
+---
+
+## #564 · note · stage B · plan §—
+`179fb938700b9488` ← `1106d8c1f1a9cf16` · recorded 2026-10-21T12:23:29+00:00
+
+**What.** Housekeeping: entry 296 fingerprinted src/isj/cluster.py, which was extended afterwards (G4K.1: slow-subspace option added, off by default); reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
 
 ---

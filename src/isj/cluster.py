@@ -72,3 +72,27 @@ def spectral_k(x: torch.Tensor, k_range=range(2, 13), subsample: int = 3000, n_n
     gaps = {int(k): float(ev[k] - ev[k - 1]) for k in k_range}                           # gap after the k-th eigenvalue
     k_star = max(gaps, key=gaps.get)
     return k_star, {"eigenvalues": [float(v) for v in ev], "gaps": gaps}
+
+
+def slow_subspace_k(x: torch.Tensor, a: torch.Tensor, b: torch.Tensor, min_ratio: float = 2.0, k_range=range(2, 13),
+                    subsample: int = 3000, seed: int = 0):
+    """Choose the cluster count in the SLOW subspace of x (plan G4-K, the E18 follow-up; unsupervised, uses no labels).
+
+    E18 ran `spectral_k` in the whole rung-1 invariant output, where the identity block adds its own cluster structure (in the B2 world
+    6 x 20 = 120 blobs), so the count it found was not the category count. Here the space is first reduced to the directions that change
+    least between adjacent frames (a, b): the eigenvectors of E[(b - a)(b - a)^T] with the smallest eigenvalues. Their number d is set by the
+    largest ratio between consecutive eigenvalues (ascending order); if that ratio is below `min_ratio` there is no slow block and the
+    function abstains. Then `spectral_k` runs in that subspace with its frozen constants (unchanged).
+    `min_ratio` = 2.0 is fixed before any use on trained-encoder data and is not to be adjusted after seeing results.
+    Returns (K or None, info); info holds the change-moment eigenvalues, d, the ratio, the abstain flag and the basis (m x d)."""
+    diff = (b - a).double()
+    vals, vecs = torch.linalg.eigh(diff.T @ diff / len(diff))                 # ascending: slowest directions first
+    ratios = vals[1:] / vals[:-1].clamp_min(1e-12)
+    j = int(ratios.argmax())
+    info = {"eigvals": [float(v) for v in vals], "ratio": float(ratios[j]), "d": j + 1, "abstained": bool(ratios[j] < min_ratio)}
+    if info["abstained"]:
+        return None, info
+    basis = vecs[:, : j + 1]
+    k, spec = spectral_k(x.double() @ basis, k_range=k_range, subsample=subsample, seed=seed)
+    return k, {**info, "basis": basis.to(x.dtype), "spectral": spec}
+

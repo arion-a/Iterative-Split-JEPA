@@ -1,0 +1,6 @@
+experiment: E36 (Gap 5, paper block sizes on the E24 pipeline)
+tasks: {PickCube: {fixed_d1: 64, pca: 128}, PushCube: {fixed_d1: 128, pca: 256}}
+split_seeds: [0, 1, 2]
+out: results/stage_c_fixed
+criteria: "P1-P4 exactly as registered for E24 (viewpoint ratio V1/Q1 >= 3; trajectory ratio V2/Q2 >= 1.5; controls: shuffled-pair gap < 2 and random-split ratios < 1.5; camera accuracy >= 0.9 from V1 and <= 0.65 from Q1), every one on every split seed"
+rung2: "block size by the unchanged gap rule"

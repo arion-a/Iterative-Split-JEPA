@@ -1,0 +1,25 @@
+{
+ "seed": 0,
+ "n_frames": 11361,
+ "abs_spearman": {
+  "main": {
+   "total_energy": 0.9046929991370778,
+   "kinetic_energy": 0.5088217877021632,
+   "potential_energy": 0.5429103754063126,
+   "amplitude": 0.9078892783173006
+  },
+  "flat": {
+   "total_energy": 0.7303860201846349,
+   "kinetic_energy": 0.570453933876387,
+   "potential_energy": 0.2813474864068802,
+   "amplitude": 0.6956699457008473
+  }
+ },
+ "partial": {
+  "psi_energy_given_amplitude": 0.48447527076522817,
+  "psi_amplitude_given_energy": 0.509058143828313,
+  "energy_amplitude_abs_spearman": 0.8980947052780431
+ },
+ "c2_main_naming": 0.9045028128767202,
+ "reproduction_diff": 0.00019018626035760544
+}

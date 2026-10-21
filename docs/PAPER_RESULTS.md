@@ -19,6 +19,8 @@ A one-dimensional core is found from real pixels and tracks the tracked total en
 ## Real clips, full video-level experiment (Columbia C2, 100 videos, 2026-10-21) — supersedes the clip-level C1 as the main real result
 No shared video between train (70), validation (10) and test (20). Naming |Spearman| with tracked energy 0.905 / 0.914 / 0.912; seed agreement 0.97; V ≤ 0.025, L 0.985, 8-step rollout 0.29-0.30 (all pass). Not met: between-video ICC 0.685 (≥ 0.9; the tracked energy itself has 0.553 because real energy decays within a video) and the flat control on one seed (0.731, 0.482, 0.472 against < 0.5). Temporal-only = main; shuffled-pair arm clearly below main (0.75-0.83), so on real video temporal structure matters beyond release grouping. C2 is NOT CONFIRMED as registered (4 predictions, 2 fully met).
 
+**Confound check (C3, 2026-10-21).** The Columbia coordinate correlates 0.91 with total energy but only about 0.5 with kinetic and 0.55 with potential energy alone, so it is energy-like, not purely kinetic or positional. It correlates equally (0.91) with local swing amplitude, and energy and amplitude correlate 0.90 with each other, so "energy" cannot be separated from "amplitude" on this data (partial correlations about 0.5 both ways). The name "energy" is therefore supported as "energy-like slow coordinate", not as energy opposed to amplitude.
+
 ## Sec 2-3 (theory and mechanism) — what the experiments touch
 * Prediction fixes content, correspondences fix the partition: confirmed in the AR world; with correct pairs the lag ladder recovers a clean cut (variant R² 0.96-0.98, invariant 0.98-0.99, gap ratio 19-33 in E36's world).
 * The cut gap cannot exceed the adjacent timescale ratio; measured eigenvalues follow 2(1−a) (hierarchical run). With the 2× criterion (D18) only one of four cuts in the planted five-level world is taken (E35 refuted as worded).
@@ -40,6 +42,7 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 | C1 (Columbia real clips) | refuted as worded: naming 0.88-0.90 met, certificate partly met |
 | C1b (Columbia controls) | confirmed: flat 0.38-0.48 |
 | C2 (Columbia full, video level) | not confirmed: (b) naming 0.91 and (d) agreement 0.97 met; (a) ICC 0.685 (target's own 0.553) and (c) flat 0.73 on seed 0 not met |
+| C3 (Columbia confound check) | confirmed: total 0.91 > kinetic 0.51, potential 0.55; amplitude 0.91, not separable from energy |
 | E44-E47 | blocked on the owner's footage |
 
 ## Sec 5 (boundaries) — what is guaranteed, measured, open

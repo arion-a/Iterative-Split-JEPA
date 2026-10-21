@@ -50,3 +50,5 @@
 | - | **Stage V Columbia real clips C1 / C1b (2026-10-20)** | 1100 real clips, 3 seeds, tracked energy as evaluator | C1 refuted as worded (naming [0.893, 0.895, 0.88] passes ≥ 0.5; rollout 0.43-0.45 and ICC 0.898 on seed 1 miss the sim-calibrated certificate); C1b confirmed (flat [0.477, 0.38, 0.471]) | `results/columbia`, `results/columbia_controls` |
 
 | - | **Stage V C2 Columbia full (2026-10-21)** | 100 videos, video-level split 70/10/20, 3 seeds, 8000 steps | not confirmed: (a) not met, (b) naming [0.905, 0.914, 0.912], (c) flat [0.731, 0.482, 0.472], (d) agreement [0.967, 0.965, 0.966] | `results/columbia_full/REPORT.md` |
+
+| - | **Stage V C3 confound check (2026-10-21)** | Columbia, same pipelines as C2 | confirmed: psi vs total [0.905, 0.915, 0.913], kinetic [0.509, 0.517, 0.514], potential [0.543, 0.549, 0.555], amplitude [0.908, 0.912, 0.908]; energy and amplitude not separable (partials [0.484, 0.528, 0.527] / [0.509, 0.512, 0.492]) | `results/columbia_confound/*.json` |

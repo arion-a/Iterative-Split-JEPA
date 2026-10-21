@@ -48,3 +48,12 @@ def test_columbia_full_statements():
     assert rs[0]["arms"]["flat"]["naming_abs_spearman"] > 0.5 > rs[1]["arms"]["flat"]["naming_abs_spearman"]
     assert all(0.6 < r["arms"]["main"]["icc"] < 0.75 and 0.5 < r["tracked_energy_between_video_icc_test"] < 0.6 for r in rs)
     assert all(r["arms"]["shuffled"]["naming_abs_spearman"] < r["arms"]["main"]["naming_abs_spearman"] - 0.05 for r in rs)
+
+
+@pytest.mark.skipif(not os.path.exists("results/columbia_confound/2.json"), reason="results not present")
+def test_confound_statements():
+    for r in _load("results/columbia_confound/[0-9].json"):
+        a = r["abs_spearman"]["main"]
+        assert a["total_energy"] > a["kinetic_energy"] + 0.3 and a["total_energy"] > a["potential_energy"] + 0.3
+        assert abs(a["amplitude"] - a["total_energy"]) < 0.02 and r["reproduction_diff"] < 0.005
+        assert 0.4 < r["partial"]["psi_energy_given_amplitude"] < 0.6 and 0.4 < r["partial"]["psi_amplitude_given_energy"] < 0.6

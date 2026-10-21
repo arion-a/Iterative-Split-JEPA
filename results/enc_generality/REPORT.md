@@ -98,3 +98,18 @@
 |---|---|---|---|---|
 | rung 1 (texture) | 0 | 0 | 0 | 5 |
 | rung 2 (identity) | 0 | 0 | 0 | 5 |
+
+## E28: generic MLP + paper objective, regulariser weight chosen by the training-health rule (5 seeds)
+
+**E28 prediction (all blocks present on at least 4 of 5 seeds and both rungs SPLIT on at least 4 of 5): COLLAPSED OR ABSENT.** All blocks present on 2 of 5; both rungs SPLIT on 2 of 5; seeds with a PRESENT_NOT_SEPARABLE rung: 1.
+
+| Block | Presence, nonlinear probe R² | Presence, linear R² | Seeds present (≥ 0.9) |
+|---|---|---|---|
+| texture (block 1) | 0.925 ± 0.047 | 0.927 ± 0.051 | 3 of 5 |
+| identity (block 2) | 0.908 ± 0.066 | 0.910 ± 0.067 | 2 of 5 |
+| category (block 3) | 0.944 ± 0.036 | 0.945 ± 0.038 | 4 of 5 |
+
+| Rung | ABSENT | PARTIAL | PRESENT_NOT_SEPARABLE | SPLIT |
+|---|---|---|---|---|
+| rung 1 (texture) | 0 | 2 | 1 | 2 |
+| rung 2 (identity) | 0 | 3 | 0 | 2 |

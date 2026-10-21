@@ -131,3 +131,4 @@
 | 30-34 | B1 [E25, MLP + prediction, original speeds] | confirmed: texture block absent from the embedding (presence -0.012), identity partial 0.74, category 0.99 | rung 1 ABSENT 5/5 | `results/enc_generality/REPORT.md` |
 | 30-34 | B1 [E26, MLP + prediction, equal speeds] | confirmed: all blocks present 0.991, both rungs SPLIT 5/5, every B1 criterion 5/5 | rung-1 gap 76-97 (E23: 1.1) | `results/enc_generality/REPORT.md` |
 | 30-34 | B1 [E27, architecture x objective, equal speeds] | confirmed as registered, vacuous in MLP + paper cell (encoder collapsed); the other 3 cells SPLIT 5/5 | presence 0.99+ | `results/enc_generality/REPORT.md` |
+| 30-34 | B1 [E28, MLP + paper objective, weight 0.01] | not confirmed: no collapse, but 2 of 5 seeds keep all blocks (presence 0.97) and split like the mirror; 3 seeds partial (0.82-0.95), splits fail | gap ratios 80 / 54 on the good seeds, 1.2-6 on the others | `results/enc_generality/REPORT.md` |

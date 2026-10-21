@@ -81,12 +81,14 @@ def check_feat(final):
 
 
 def check_enc(final):
-    ok, spec = True, [("results/stage_b1_e25", ["main"], 5), ("results/stage_b1_e26", ["main", "shuffled_rung2"], 10),
-                      ("results/stage_b1_e27/mirror_lejepa", ["main"], 5), ("results/stage_b1_e27/mlp_lejepa", ["main"], 5), ("results/stage_b1_e27/mirror_predict", ["main"], 5)]
-    for folder, arms, want in spec:
+    ok, spec = True, [("results/stage_b1_e25", ["main"], 5, range(30, 35)), ("results/stage_b1_e26", ["main", "shuffled_rung2"], 10, range(30, 35)),
+                      ("results/stage_b1_e27/mirror_lejepa", ["main"], 5, range(30, 35)), ("results/stage_b1_e27/mlp_lejepa", ["main"], 5, range(30, 35)),
+                      ("results/stage_b1_e27/mirror_predict", ["main"], 5, range(30, 35)), ("results/stage_b1_e28", ["main"], 5, range(30, 35)),
+                      ("results/stage_b1_e29", ["main"], 10, range(35, 45))]
+    for folder, arms, want, seed_range in spec:
         bad, n = [], 0
         for a in arms:
-            for s in range(30, 35):
+            for s in seed_range:
                 p = f"{folder}/{a}_seed{s}.json"
                 if not os.path.exists(p): continue
                 n += 1

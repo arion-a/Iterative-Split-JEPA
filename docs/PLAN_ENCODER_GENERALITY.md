@@ -27,12 +27,15 @@ Question: the owner holds that splitting is a property of the representation, so
 - [ ] D3 (triggered by E27, not E26: the MLP + paper-objective cell collapsed to a constant; cause found in the saved training state: regulariser weight 1e-6 copied from the mirror setup) Repair = E28, registered before its pilot:
   - [x] D3a Pilot: 5 regulariser weights {1e-4, 1e-3, 1e-2, 1e-1, 1} on seed 99, `configs/pilot/`, `results/stage_b1_e28_pilot/`.
   - [x] D3b Select the smallest weight with final minimum embedding std at least 0.5 (rule in EVIDENCE E28), write the chosen weight to the log and make `configs/stage_b1_eqrho_mlp_lejepa_w<chosen>.yaml` BEFORE launching E28.
-  - [ ] D3c E28 runs: 5 seeds (30-34), main arm, `results/stage_b1_e28`.
-  - [ ] D3d Score with `analyse_layered.py` (E28 section written before the runs), outcome in EVIDENCE, STATUS, log.
+  - [x] D3c E28 runs: 5 seeds (30-34), main arm, `results/stage_b1_e28`.
+  - [x] D3d Score with `analyse_layered.py` (E28 section written before the runs), outcome in EVIDENCE, STATUS, log.
   - Original D3 text: check training state (final loss, minimum embedding std) and probe capacity (a second probe size on the saved fields is not possible: encoders are not saved) and report what is and is not established.
 - **Done when:** each open item is either explained with numbers or stated as not testable from the saved files.
 
 ## Phase E: close-out
+  - [ ] D4 Prospective test of the stricter presence threshold (found in the descriptive analysis `PRESENCE_VS_SPLIT.md` after E28): E29, registered before its runs with `configs/layered_v2.yaml` frozen by hash.
+    - [ ] D4a E29 runs: E28 cell, seeds 35-44, `results/stage_b1_e29` (10 files); step check `check_results.py enc --final`.
+    - [ ] D4b Score with `experiments/analyse_e29.py` (rule written before the runs); outcome in EVIDENCE, STATUS, log; D15a stays a candidate unless E29 confirms it (then adopted in D15 as an amendment).
 - [ ] E1 Layered re-reading of earlier results (E21 mirror, E23, E24) from existing numbers, labelled analysis not new claims.
 - [ ] E2 Final report `docs/ENCODER_GENERALITY_REPORT.md`: per test the prediction, result with numbers, outcome; what the evidence says about "any encoder"; limits.
 - [ ] E3 Consistency pass, tests, `explog.verify()`, final push. No merge to main.
@@ -45,6 +48,7 @@ Question: the owner holds that splitting is a property of the representation, so
 - 2026-10-21 (later): Phases B and C done. E25 confirmed, E26 confirmed, E27 confirmed as registered but vacuous in the MLP + paper-objective cell (collapsed encoder). D1/D2 not needed. D3 triggered: E28 registered (repair of the collapsed cell); pilot next.
 - 2026-10-21: E28 pilot: four of five pilot runs crashed at start (config typo: weights written as 1e-4 etc. are read by YAML as text, not numbers); fixed the number format in `configs/pilot/` and in the supervisor's E28 config step; no result was affected (the runs crashed before writing anything); the 1.0 pilot had run (minimum embedding std 0.944). The four were relaunched.
 - 2026-10-21: E28 pilot done (minimum embedding std 1.3e-5 / 0.41 / 0.79 / 0.95 / 0.94 for weights 1e-4 / 1e-3 / 1e-2 / 1e-1 / 1.0). Weight chosen by the registered rule: 0.01; logged in the chain before any E28 run. E28 runs started.
+- 2026-10-21: E28 scored: not confirmed (2 of 5 seeds split like the mirror, 3 partial). Descriptive analysis of 60 rungs: split rungs all had presence at least 0.972, partly present non-split rungs at most 0.911. E29 registered (prospective test of a 0.95 threshold, seeds 35-44) before its runs.
 
 ## Noted, not started
 - (empty)

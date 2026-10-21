@@ -1,0 +1,10 @@
+experiment: E34 (Gap 3, depth and scaling)
+depth_seeds: [100, 101, 102, 103, 104]
+scaling_seeds: [110, 111, 112, 113, 114]
+depths: [4, 5]
+check_min_seeds: 4
+scaling_pairs: [10000, 100000, 1000000]
+scaling_statistic: mean over rungs of the rung angle to the true block (deg), per run
+scaling_target_slope: -0.5
+bootstrap: {resamples: 1000, interval: 0.95, resample: seeds within each pairs setting, rng_seed: 0}
+checks: "criteria_keys(n_rungs) of src/isj/stage_b1.py with the frozen B1 criteria (configs/stage_b1.criteria.sha256)"

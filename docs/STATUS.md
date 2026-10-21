@@ -182,3 +182,6 @@
 | 65 | B2 [E18] sigma_cat=0.8 | purity 0.71, K found 9 | rung-2 angle B1 12.8 deg, B2 36.3 deg | `results/stage_b2_slowk/sigma_cat_0.8/65.json` |
 | 67 | B2 [E18] sigma_cat=0.8 | purity 0.74, K found 9 | rung-2 angle B1 8.4 deg, B2 18.8 deg | `results/stage_b2_slowk/sigma_cat_0.8/67.json` |
 | 66 | B2 [E18] sigma_cat=0.8 | purity 0.76, K found 11 | rung-2 angle B1 11.4 deg, B2 31.5 deg | `results/stage_b2_slowk/sigma_cat_0.8/66.json` |
+| 68 | B2 [E18] sigma_cat=0.8 | purity 0.74, K found 7 | rung-2 angle B1 11.8 deg, B2 25.7 deg | `results/stage_b2_slowk/sigma_cat_0.8/68.json` |
+| 69 | B2 [E18] sigma_cat=0.8 | purity 0.76, K found 6 | rung-2 angle B1 10.7 deg, B2 30.7 deg | `results/stage_b2_slowk/sigma_cat_0.8/69.json` |
+| 60 | B2 [E18] sigma_cat=1.0 | purity 0.63, K found 10 | rung-2 angle B1 8.0 deg, B2 55.0 deg | `results/stage_b2_slowk/sigma_cat_1.0/60.json` |

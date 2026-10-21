@@ -65,8 +65,8 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 
 ### Gap 6: no payoff test  [objective O4, plan Stage D]
 - **Where:** nothing downstream is defined. The plan's Stage D (five matched methods, six metrics) is **not attempted**: it would expand the experiments; it stays "not started". What is done instead is two small tests with existing quantities only, giving provisional verdicts for two of the three Stage D questions in the synthetic world; the third (identification works) is Gaps 2-3.
-- [ ] 6.1 Hierarchy is real: on the same pairs and encoder, a single-shot split (one eigendecomposition for all blocks at once) against the ladder: the existing angle per block. Prediction (draft): the ladder's angle is below 5 deg on at least 4 of 5 seeds, the single-shot split's is not.
-- [ ] 6.2 It pays: the readout of the slowest block (the existing core R2) after rung 1 versus after rung 2, trained on one nuisance distribution and tested after shifting the identity block's distribution (one design parameter, set before the run). Prediction (draft): the R2 loss under the shift is smaller after rung 2 than after rung 1 on at least 4 of 5 seeds (a sign test, no new threshold).
+- [x] 6.1 Hierarchy is real: on the same pairs and encoder, a single-shot split (one eigendecomposition for all blocks at once) against the ladder: the existing angle per block. Prediction (draft): the ladder's angle is below 5 deg on at least 4 of 5 seeds, the single-shot split's is not.
+- [x] 6.2 It pays: the readout of the slowest block (the existing core R2) after rung 1 versus after rung 2, trained on one nuisance distribution and tested after shifting the identity block's distribution (one design parameter, set before the run). Prediction (draft): the R2 loss under the shift is smaller after rung 2 than after rung 1 on at least 4 of 5 seeds (a sign test, no new threshold).
 - [ ] 6.3 Run (about 10 runs), score, record. Both are stated as synthetic-world verdicts only.
 - Gate.
 

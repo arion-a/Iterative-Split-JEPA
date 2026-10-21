@@ -127,7 +127,25 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     blocks = [world.block_slice(k) for k in range(1, world.n_blocks + 1)]
     presence = {"linear": [audits.linear_r2(rtr, ztr[:, b], rte, zte[:, b]) for b in blocks],
                 "mlp": [audits.mlp_r2(rtr, ztr[:, b], rte, zte[:, b], seed=seed) for b in blocks]}
-    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence,
+    payoff = None
+    if cfg.get("payoff"):                                  # Gap 6 (E37), off by default: single-shot split and readout under an identity shift, existing quantities only
+        pc = cfg["payoff"]
+        pu, pv = world.transition_pairs(budgets[0])
+        delta = (wh(encode(enc, observe, pu)) - wh(encode(enc, observe, pv))).double()
+        _, vecs = torch.linalg.eigh(delta.T @ delta / len(delta))
+        vecs = vecs.flip(1).float()                          # one eigendecomposition for all blocks, descending
+        db = [world.block_slice(k).stop - world.block_slice(k).start for k in (1, 2)]
+        single = [audits.max_angle_deg(vecs[:, :db[0]], image[1]), audits.max_angle_deg(vecs[:, db[0]:db[0] + db[1]], image[2])]
+        z_sh = zte.clone(); z_sh[:, world.block_slice(2)] += pc["shift"]
+        r_sh = wh(encode(enc, observe, z_sh))
+        tgt = lambda z: z[:, world.block_slice(world.n_blocks)]
+        n = pc["train_n"]; loss = []
+        for h in (rungs[0].Q, rungs[1].Q):                   # content after rung 1, after rung 2
+            r_in = audits.linear_r2(rtr[:n] @ h, tgt(ztr)[:n], rte @ h, tgt(zte))
+            r_out = audits.linear_r2(rtr[:n] @ h, tgt(ztr)[:n], r_sh @ h, tgt(z_sh))
+            loss.append({"r2_unshifted": r_in, "r2_shifted": r_out, "loss": r_in - r_out})
+        payoff = {"single_shot_angles_deg": single, "ladder_angles_deg": [out[0]["angle_deg"], out[1]["angle_deg"]], "shift_readout": loss}
+    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

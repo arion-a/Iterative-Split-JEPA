@@ -1,0 +1,5 @@
+experiment: E37 (Gap 6, hierarchy and payoff, synthetic world only)
+seeds: [120, 121, 122, 123, 124]
+hierarchy: "ladder angle below 5 deg at both rungs on at least 4 of 5 seeds, and the single-shot split (one eigendecomposition of the adjacent-frame difference moment, blocks read off in order of eigenvalue) has an angle of 5 deg or more at one of the two blocks on at least 4 of 5 seeds"
+payoff: "loss of the category readout R2 under the identity shift (readout trained on 300 samples, test with the identity block shifted by 3.0 on every coordinate) is smaller from the content after rung 2 than after rung 1 on at least 4 of 5 seeds"
+design: {readout_train_n: 300, identity_shift: 3.0}

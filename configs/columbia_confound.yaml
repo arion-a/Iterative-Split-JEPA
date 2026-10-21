@@ -1,0 +1,13 @@
+stage: V-C3
+plan_ref: 'owner request 2026-10-21: kinetic, potential and amplitude correlation
+  check on Columbia'
+criteria:
+  energy_vs_components:
+    rule: abs Spearman(psi, total energy) exceeds abs Spearman(psi, kinetic) and abs
+      Spearman(psi, potential) on every seed
+  reproduction:
+    max_abs_diff_main_naming_vs_C2: 0.005
+data: 'as C2 (configs/columbia_full.yaml): same seeds, split, recipe'
+amplitude:
+  half_window_frames: 30
+  min_valid: 20

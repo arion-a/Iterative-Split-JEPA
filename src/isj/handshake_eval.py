@@ -73,3 +73,28 @@ def anova_icc(values: np.ndarray, valid: np.ndarray) -> float:
     msw = sum(((x - x.mean()) ** 2).sum() for x in g) / (n - k)
     n0 = (n - (n_i ** 2).sum() / n) / (k - 1)
     return float((msb - msw) / (msb + (n0 - 1) * msw))
+
+
+def local_amplitude(theta1: np.ndarray, theta2: np.ndarray, half: int = 30, min_valid: int = 20) -> np.ndarray:
+    """Local swing amplitude per frame from the tracked angles: sqrt of the summed variances of (sin t1, cos t1, sin t2, cos t2) over a centred
+    window of +-`half` frames (valid samples only). Inputs (videos, frames); NaN where fewer than `min_valid` samples are valid. Evaluator side."""
+    feats = np.stack([np.sin(theta1), np.cos(theta1), np.sin(theta2), np.cos(theta2)], axis=-1)        # (V, T, 4), NaN where tracking failed
+    v, t, _ = feats.shape
+    out = np.full((v, t), np.nan)
+    for i in range(t):
+        w = feats[:, max(0, i - half): i + half + 1]
+        ok = np.isfinite(w).all(-1)
+        for j in range(v):
+            if ok[j].sum() >= min_valid:
+                out[j, i] = np.sqrt(w[j][ok[j]].var(0).sum())
+    return out
+
+
+def partial_spearman(x: np.ndarray, y: np.ndarray, z: np.ndarray) -> float:
+    """Spearman correlation of x and y after removing the (rank) linear dependence of each on z."""
+    from scipy.stats import rankdata
+    rx, ry, rz = (rankdata(a) for a in (x, y, z))
+    def resid(a, b):
+        b1 = np.stack([b, np.ones_like(b)], 1)
+        return a - b1 @ np.linalg.lstsq(b1, a, rcond=None)[0]
+    return float(np.corrcoef(resid(rx, rz), resid(ry, rz))[0, 1])

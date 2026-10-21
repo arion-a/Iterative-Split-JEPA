@@ -1,0 +1,19 @@
+== S0.1 (phase 0) attempt 1: registered before any run: hash matches, prediction text present, no H1/R1 result exists
+   done S0.1
+== S0.2 (phase 0) attempt 1: ManiSkill environment usable on CPU (software Vulkan)
+   done S0.2
+== S1.1 (phase 1) attempt 1: decode the HF pendulum videos and labels
+   done S1.1
+== S1.2 (phase 1) attempt 1: generate 150 PickCube episodes x 60 steps x 2 cameras (CPU, ~20 min)
+   done S1.2
+== S1.3 (phase 1) attempt 1: data tests for both datasets + audit
+   HALT at S1.3: real failure: fix the cause, then rerun the supervisor (it resumes here)
+ object at 0x7f4223bedef0> = array([0.05642512, 0.05572792, 0.        ]).min
+E        +      where array([0.05642512, 0.05572792, 0.        ]) = <built-in method std of numpy.ndarray object at 0x7f4223bedb30>(0)
+E        +        where <built-in method std of numpy.ndarray object at 0x7f4223bedb30> = array([[-0.00074868,  0.05364437,  0.02      ],\n       [ 0.05152632, -0.04413782,  0.02      ],\n       [ 0.02293901, -...5752287,  0.02      ],\n       [-0.0392202 , -0.08374001,  0.02      ],\n       [ 0.02294675, -0.0398129 ,  0.02      ]]).std
+
+tests/test_other_data.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_other_data.py::test_maniskill_data - assert (np.float64(0.0...
+1 failed, 1 passed, 2 deselected in 0.18s
+

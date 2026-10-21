@@ -23,6 +23,8 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 
 **Gap study (G2, G3; 2026-10-21).** *Second systems:* on the real Columbia single and elastic pendulum clips (clip-level, grouping not recoverable) the coordinate names total energy at 0.95 and 0.83 (flat baseline below on every seed, seed agreement 0.92-0.93 and 0.88-0.89); energy is separated from amplitude on both (0.95 vs 0.71; 0.83 vs 0.74) and psi ignores the spring extension and angles. *Depth:* in a world with timescale ratios of about 10 the ladder finds all 3 levels while the single-lag arm finds 2 and shuffled pairs find none (the registered mechanism); the registered precision (gap ratio ≥ 5, R² ≥ 0.9) is narrowly missed on two seeds. Study not confirmed as worded; marked-bob footage (G1) still blocked.
 
+**Other controlled data (H1, R1; 2026-10-21).** *HF controlled pendulum* (simulated, independent renderer, independently controlled lighting, exact energy): naming 0.96-0.97, flat baseline 0.02-0.09, correlation with the controlled light 0.07, seed agreement 0.95-0.96, all registered criteria met; but the ladder does not cut (the first family ends in S2), the shuffled-pair arm equals main and the temporal-only arm fails, so the coordinate comes from release grouping here, not temporal slowness (the opposite of the Columbia real videos). *ManiSkill PickCube* (the SplitJEPA robotics setting, regenerated on the CPU): not testable with the current representation, since even the full latent does not encode the small cube (R² ≈ 0.04 at 32×32 gray); the prediction that the cross-view core keeps the cube but not the one-view goal is untested. Not confirmed as worded.
+
 ## Sec 2-3 (theory and mechanism) — what the experiments touch
 * Prediction fixes content, correspondences fix the partition: confirmed in the AR world; with correct pairs the lag ladder recovers a clean cut (variant R² 0.96-0.98, invariant 0.98-0.99, gap ratio 19-33 in E36's world).
 * The cut gap cannot exceed the adjacent timescale ratio; measured eigenvalues follow 2(1−a) (hierarchical run). With the 2× criterion (D18) only one of four cuts in the planted five-level world is taken (E35 refuted as worded).
@@ -47,6 +49,8 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 | C3 (Columbia confound check) | confirmed: total 0.91 > kinetic 0.51, potential 0.55; amplitude 0.91, not separable from energy |
 | G2 depth world | mechanism confirmed (ladder 3 cuts, single-lag 2, shuffled 0); precision (ratio ≥ 5, R² ≥ 0.9) narrowly missed on 2 seeds |
 | G3 second systems | single pendulum naming 0.95 (met), elastic 0.83 (met; agreement 0.88-0.89 vs 0.9 missed); grouping not recoverable (fallback) |
+| H1 (HF controlled pendulum) | all four criteria met (naming 0.96-0.97, light 0.07); carried by release grouping, ladder did not cut |
+| R1 (ManiSkill PickCube) | untestable with this encoder (full-latent R² ≈ 0.04 for the cube); not confirmed |
 | E44-E47 | blocked on the owner's footage |
 
 ## Sec 5 (boundaries) — what is guaranteed, measured, open

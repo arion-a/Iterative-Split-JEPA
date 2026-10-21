@@ -1,0 +1,75 @@
+{
+ "steps": {
+  "S0.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:22:22+00:00",
+   "tail": ""
+  },
+  "S0.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:22:33+00:00",
+   "tail": "\u001b[33;1m2026-10-21 14:22:25,339 - mani_skill  - WARNING - Requested to use render device \"sapien_cuda\", but CUDA device was not found. Falling back to \"cpu\" device. Rendering might be disabled.\u001b[0m\n"
+  },
+  "S1.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:22:53+00:00",
+   "tail": "videos 200 split sizes [140, 20, 40] energy range 0.04621493123426522 2.2807300897462124\n"
+  },
+  "S1.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:40:42+00:00",
+   "tail": ""
+  },
+  "S1.3": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:44:04+00:00",
+   "tail": "..                                                                       [100%]\n2 passed, 2 deselected in 0.33s\nPASS chain links + artifact digests \u2014 382 entries, head d6d253fc305d, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS criteria hash configs/columbia_confound.yaml\nPASS criteria hash configs/gaps.yaml\nPASS criteria hash configs/other_data.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nPASS EVIDENCE has an outcome for C2\nPASS EVIDENCE has an outcome for the G study\nPASS EVIDENCE has an outcome for C3\nAUDIT PASSED\n"
+  },
+  "S2.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:49:42+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 3 deselected in 0.07s\n"
+  },
+  "S2.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:58:55+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 3 deselected in 0.07s\n"
+  },
+  "S3.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:58:55+00:00",
+   "tail": "recorded False {'Ha': True, 'Hb': True, 'Hc': True, 'Hd': True, 'Ra': False, 'Rb': False, 'Rc': False}\n\n[check] "
+  },
+  "S4.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:59:23+00:00",
+   "tail": "PASS test suite \u2014 89 passed, 4 warnings in 24.91s\nPASS chain links + artifact digests \u2014 395 entries, head c15068004dd3, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS criteria hash configs/columbia_confound.yaml\nPASS criteria hash configs/gaps.yaml\nPASS criteria hash configs/other_data.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nPASS EVIDENCE has an outcome for C2\nPASS EVIDENCE has an outcome for the G study\nPASS EVIDENCE has an outcome for H1/R1\nPASS EVIDENCE has an outcome for C3\nAUDIT PASSED\n"
+  },
+  "S4.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T14:59:23+00:00",
+   "tail": "ALIGNMENT OK\n"
+  }
+ },
+ "complete": "2026-10-21T14:59:23+00:00"
+}

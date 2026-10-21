@@ -1,0 +1,6 @@
+# Stage V other-data report (H1, R1)
+
+Criteria frozen in `configs/other_data.yaml`; predictions in `docs/EVIDENCE.md` (H1 and R1).
+
+* **H1 HF controlled pendulum** (test = 40 provided val videos): H-a naming met [0.967, 0.963, 0.96]; H-b main minus flat met (flat [0.094, 0.05, 0.016]); H-c |Spearman| with the controlled light angle met [0.067, 0.061, 0.08] (< 0.3); H-d seed agreement met [0.962, 0.945, 0.946]. Correlations of psi with every label (mean over seeds): {'energy': 0.963, 'theta': 0.018, 'omega': 0.032, 'light_angle': 0.069, 'kinetic': 0.515, 'potential': 0.458}. Shuffled [0.967, 0.963, 0.975], temporal-only [0.003, 0.112, 0.021]; stop ['S2', 'S2', 'S2'].
+* **R1 ManiSkill PickCube** (held-out test episodes; core dim [64, 64, 64], rendering-pair family outcome ['S2', 'S2', 'S2']): R-a core readout of the cube's initial position R² [0.042, 0.006, -0.015] not met; R-b flat top-PC readout [0.042, 0.006, -0.015], difference ≥ 0.1 not met; R-c tcp readout from the variant block [nan, nan, nan] vs from the core [0.291, 0.236, 0.286], difference ≥ 0.2 not met. Informational: goal (visible in the side view only) from the core [-0.182, -0.133, -0.175], from the full latent [-0.182, -0.133, -0.175]; cube over time from the core [0.047, 0.009, -0.006]; arm joints from the core [0.063, 0.042, 0.061], from the variant block [nan, nan, nan].

@@ -32,7 +32,24 @@ The SplitJEPA setting has a *correspondence family that is a real nuisance*: two
 Text in EVIDENCE ("H1 and R1"); thresholds frozen in `configs/other_data.yaml`: H-a naming ≥ 0.5, H-b main − flat ≥ 0.1, H-c |Spearman| with the controlled light < 0.3, H-d agreement ≥ 0.9; R-a core readout of the cube's initial position R² ≥ 0.5, R-b flat lower by ≥ 0.1, R-c tcp better from the variant block by ≥ 0.2. Goal (side view only) is informational: expected absent from the cross-view core.
 
 ## 5. Issue log
-_(halts and fixes are recorded here and in the chain)_
+* **2026-10-21, S1.3 halted (supervisor worked as designed).** The data test asserted a non-zero spread of the cube's height, which is constant (the cube sits on the table and random actions never moved it: median displacement 0.000), and the runner's readout would have divided by that zero variance. Fix before any run: the cube target is its (x, y) position in the test and in `run_robot.py`. Consequence worth stating: with random actions the cube never moves, so 'cube initial' and 'cube over time' coincide; the goal varies in all three coordinates. The data themselves (150 episodes, goal std 0.056-0.087, cube xy std 0.056, arm moving, cameras differing) are as intended. Criteria and their hash untouched.
 
 ## 6. Tracker
-`python experiments/supervisor.py plans/other_data.yaml --status` (final state copied here when the plan completes).
+`python experiments/supervisor.py plans/other_data.yaml --status`. Final state (plan complete, 2026-10-21):
+
+| Step | Status | Attempts | Finished (UTC) |
+|---|---|---|---|
+| S0.1 | done | attempts 1 | 2026-10-21T14:22:22+00:00 |
+| S0.2 | done | attempts 1 | 2026-10-21T14:22:33+00:00 |
+| S1.1 | done | attempts 1 | 2026-10-21T14:22:53+00:00 |
+| S1.2 | done | attempts 1 | 2026-10-21T14:40:42+00:00 |
+| S1.3 | done | attempts 1 | 2026-10-21T14:44:04+00:00 |
+| S2.1 | done | attempts 1 | 2026-10-21T14:49:42+00:00 |
+| S2.2 | done | attempts 1 | 2026-10-21T14:58:55+00:00 |
+| S3.1 | done | attempts 1 | 2026-10-21T14:58:55+00:00 |
+| S4.1 | done | attempts 1 | 2026-10-21T14:59:23+00:00 |
+| S4.2 | done | attempts 1 | 2026-10-21T14:59:23+00:00 |
+
+**Result:** not confirmed as worded. H1 all criteria met but carried by release grouping; R1 untestable with the current representation. See `docs/EVIDENCE.md` (H1/R1 outcome and interpretation) and `results/robot/REPORT.md`.
+
+* **2026-10-21, S2.2 halted.** A syntax error in my own fix to `run_robot.py` (a comment placed mid-line commented out the rest of the dict). Corrected; no result had been written for R1, H1 (S2.1) had already finished and is unaffected.

@@ -17,7 +17,8 @@ torch.set_num_threads(4)
 views = np.load("data/maniskill/views.npy"); au = np.load("data/maniskill/audit.npz")
 nr, T = views.shape[0], views.shape[2]
 split = np.zeros(nr, int); a, b = rb["split"][0], rb["split"][0] + rb["split"][1]; split[a:b] = 1; split[b:] = 2
-tg = {"cube0": np.repeat(au["cube"][:, :1], T - 1, 1), "goal": np.repeat(au["goal"][:, None], T - 1, 1), "cube_t": au["cube"][:, 1:], "tcp": au["tcp"][:, 1:], "qpos": au["qpos"][:, 1:]}
+tg = {"cube0": np.repeat(au["cube"][:, :1, :2], T - 1, 1), "goal": np.repeat(au["goal"][:, None], T - 1, 1), "cube_t": au["cube"][:, 1:, :2],
+      "tcp": au["tcp"][:, 1:], "qpos": au["qpos"][:, 1:]}                                          # cube (x, y) only: its height is constant (on the table)
 
 
 def readout(x, name):

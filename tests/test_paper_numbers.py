@@ -68,3 +68,12 @@ def test_gap_study_statements():
     assert all(0.80 < r["arms"]["main"]["naming_abs_spearman"] < 0.85 for r in e)
     assert all(r["arms"]["main"]["abs_spearman_with"]["amplitude"] < r["arms"]["main"]["naming_abs_spearman"] - 0.05 for r in s + e)
     assert all(r["arms"]["main"]["abs_spearman_with"]["z"] < 0.1 for r in e)
+
+
+@pytest.mark.skipif(not os.path.exists("results/robot/2.json"), reason="results not present")
+def test_other_data_statements():
+    h = _load("results/hf_pendulum/[0-9].json"); r = _load("results/robot/[0-9].json")
+    assert all(0.95 < x["arms"]["main"]["naming_abs_spearman"] < 0.98 and x["arms"]["main"]["abs_spearman_with"]["light_angle"] < 0.1 for x in h)
+    assert all(x["arms"]["temporal_only"]["naming_abs_spearman"] < 0.2 and x["arms"]["shuffled"]["naming_abs_spearman"] > 0.95 for x in h)
+    assert all(x["stop"] == "S2" and x["core_dim"] == 64 for x in h + r)                    # the ladder did not cut on either dataset
+    assert all(x["r2"]["full"]["cube0"] < 0.1 for x in r)                                    # the full latent does not encode the cube

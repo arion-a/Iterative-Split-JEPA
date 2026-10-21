@@ -54,3 +54,5 @@
 | - | **Stage V C3 confound check (2026-10-21)** | Columbia, same pipelines as C2 | confirmed: psi vs total [0.905, 0.915, 0.913], kinetic [0.509, 0.517, 0.514], potential [0.543, 0.549, 0.555], amplitude [0.908, 0.912, 0.908]; energy and amplitude not separable (partials [0.484, 0.528, 0.527] / [0.509, 0.512, 0.492]) | `results/columbia_confound/*.json` |
 
 | - | **Stage V gap study G2/G3 (2026-10-21)** | single and elastic pendulum (Columbia, real) and a depth world | not confirmed: systems {"single_pendulum": {"S1": false, "S2": true, "S3": true, "S4": true}, "elastic_pendulum": {"S1": false, "S2": true, "S3": true, "S4": false}}, depth {"D1": false, "D2": true, "D3": true} | `results/depth/REPORT.md` |
+
+| - | **Stage V H1/R1 other data (2026-10-21)** | HF controlled pendulum and ManiSkill PickCube | not confirmed: {"Ha": true, "Hb": true, "Hc": true, "Hd": true, "Ra": false, "Rb": false, "Rc": false} | `results/robot/REPORT.md` |

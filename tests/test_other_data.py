@@ -20,7 +20,7 @@ def test_hf_pendulum_data():
 def test_maniskill_data():
     v = np.load("data/maniskill/views.npy"); a = np.load("data/maniskill/audit.npz")
     assert v.shape == (150, 2, 60, 1024) and np.isfinite(v).all()
-    assert a["goal"].std(0).min() > 0.01 and a["cube"][:, 0].std(0).min() > 0.005          # goal and initial cube vary across episodes
+    assert a["goal"].std(0).min() > 0.01 and a["cube"][:, 0, :2].std(0).min() > 0.005       # goal and initial cube (x, y) vary across episodes; the cube height is constant (it sits on the table)
     assert np.abs(a["cube"][:, 5:10].mean(1) - a["cube"][:, :1].mean(1)).max() < 0.05        # the cube is (nearly) still early in an episode
     assert a["tcp"].std(1).mean() > 0.01                                                    # the arm moves
     assert np.abs(v[:, 0] - v[:, 1]).mean() > 0.01                                          # the two cameras really differ

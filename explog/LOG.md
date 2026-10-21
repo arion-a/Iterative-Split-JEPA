@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 494 entries, head ed3700c91a24
+Chain status at render time: **VALID** — 518 entries, head 3d8ed31b5899
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -10882,6 +10882,510 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 `ed3700c91a2417ab` ← `a02948308e46cac2` · recorded 2026-10-21T02:29:51+00:00
 
 **What.** Housekeeping: entry 466 fingerprinted configs/pilot/stage_b1_eqrho_mlp_lejepa_w1e-1.yaml, which was extended afterwards; reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #494 · run · stage B · plan §4.2
+`0db858553c7e123e` ← `ed3700c91a2417ab` · recorded 2026-10-21T02:30:05+00:00
+
+**What.** Stage B1 run started: seeds [35], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  35
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #495 · run · stage B · plan §4.2
+`efcfbca2125f8618` ← `0db858553c7e123e` · recorded 2026-10-21T02:30:08+00:00
+
+**What.** Stage B1 run started: seeds [36], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  36
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #496 · run · stage B · plan §4.2
+`907bfa65e3a9db55` ← `efcfbca2125f8618` · recorded 2026-10-21T02:30:11+00:00
+
+**What.** Stage B1 run started: seeds [37], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  37
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #497 · run · stage B · plan §4.2
+`d8b3bd7f854654cd` ← `907bfa65e3a9db55` · recorded 2026-10-21T02:30:14+00:00
+
+**What.** Stage B1 run started: seeds [38], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  38
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #498 · run · stage B · plan §4.2
+`7e77fd8b43eeccd1` ← `d8b3bd7f854654cd` · recorded 2026-10-21T02:33:51+00:00
+
+**What.** Stage B1 arm=main seed=35 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.967,
+ "rung_angles_deg": [
+  1.66,
+  1.27
+ ],
+ "seconds": 225.5,
+ "variant_r2": [
+  0.959,
+  0.975
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed35.json` (sha256 798480988f)
+
+---
+
+## #499 · run · stage B · plan §4.2
+`af461726143ab9e6` ← `7e77fd8b43eeccd1` · recorded 2026-10-21T02:33:54+00:00
+
+**What.** Stage B1 arm=main seed=36 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.975,
+ "rung_angles_deg": [
+  0.45,
+  1.0
+ ],
+ "seconds": 225.9,
+ "variant_r2": [
+  0.975,
+  0.978
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed36.json` (sha256 47664b7056)
+
+---
+
+## #500 · run · stage B · plan §4.2
+`e01e84d2830e2ac8` ← `af461726143ab9e6` · recorded 2026-10-21T02:33:56+00:00
+
+**What.** Stage B1 arm=main seed=37 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.979,
+ "rung_angles_deg": [
+  0.42,
+  1.16
+ ],
+ "seconds": 224.3,
+ "variant_r2": [
+  0.977,
+  0.978
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed37.json` (sha256 e3d01556df)
+
+---
+
+## #501 · run · stage B · plan §4.2
+`611459be21d43dc9` ← `e01e84d2830e2ac8` · recorded 2026-10-21T02:33:58+00:00
+
+**What.** Stage B1 run started: seeds [39], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  39
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #502 · run · stage B · plan §4.2
+`a640c1529f248b09` ← `611459be21d43dc9` · recorded 2026-10-21T02:34:01+00:00
+
+**What.** Stage B1 run started: seeds [40], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  40
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #503 · run · stage B · plan §4.2
+`e4fb82a6366935c9` ← `a640c1529f248b09` · recorded 2026-10-21T02:34:03+00:00
+
+**What.** Stage B1 arm=main seed=38 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.892,
+ "rung_angles_deg": [
+  1.23,
+  89.51
+ ],
+ "seconds": 228.3,
+ "variant_r2": [
+  0.876,
+  0.723
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed38.json` (sha256 5c52a0f743)
+
+---
+
+## #504 · run · stage B · plan §4.2
+`6f3fa67653298f33` ← `e4fb82a6366935c9` · recorded 2026-10-21T02:34:04+00:00
+
+**What.** Stage B1 run started: seeds [41], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  41
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #505 · run · stage B · plan §4.2
+`fd08e01c87c52900` ← `6f3fa67653298f33` · recorded 2026-10-21T02:34:07+00:00
+
+**What.** Stage B1 run started: seeds [42], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  42
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #506 · run · stage B · plan §4.2
+`f09bf2b77d2d671a` ← `fd08e01c87c52900` · recorded 2026-10-21T02:37:44+00:00
+
+**What.** Stage B1 arm=main seed=39 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.976,
+ "rung_angles_deg": [
+  0.34,
+  1.01
+ ],
+ "seconds": 226.1,
+ "variant_r2": [
+  0.976,
+  0.976
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed39.json` (sha256 2e4102236f)
+
+---
+
+## #507 · run · stage B · plan §4.2
+`6344a0d035a1150c` ← `f09bf2b77d2d671a` · recorded 2026-10-21T02:37:46+00:00
+
+**What.** Stage B1 arm=main seed=40 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.865,
+ "rung_angles_deg": [
+  2.6,
+  86.38
+ ],
+ "seconds": 225.1,
+ "variant_r2": [
+  0.945,
+  0.734
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed40.json` (sha256 f74a8eed1d)
+
+---
+
+## #508 · run · stage B · plan §4.2
+`201d6c46b62541d5` ← `6344a0d035a1150c` · recorded 2026-10-21T02:37:50+00:00
+
+**What.** Stage B1 run started: seeds [43], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  43
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #509 · run · stage B · plan §4.2
+`0ee3040b4806ff0b` ← `201d6c46b62541d5` · recorded 2026-10-21T02:37:51+00:00
+
+**What.** Stage B1 arm=main seed=41 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.804,
+ "rung_angles_deg": [
+  10.03,
+  17.17
+ ],
+ "seconds": 227.4,
+ "variant_r2": [
+  0.902,
+  0.943
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed41.json` (sha256 5ee9a37a4e)
+
+---
+
+## #510 · run · stage B · plan §4.2
+`0ab71f7b534948d8` ← `0ee3040b4806ff0b` · recorded 2026-10-21T02:37:53+00:00
+
+**What.** Stage B1 run started: seeds [44], arms ['main']
+
+**Output.**
+```json
+{
+ "criteria_sha256": "5d924c59ef363fc8420eec3f2d27412d12f3156c206e1cd464bfab61d8631403",
+ "label": "ground-truth pairs",
+ "seeds": [
+  44
+ ]
+}
+```
+
+**Artifacts.** `configs/stage_b1_eqrho_mlp_lejepa_w1e-2.yaml` (sha256 de0c8de8ca)
+
+---
+
+## #511 · run · stage B · plan §4.2
+`81fe581596360f30` ← `0ab71f7b534948d8` · recorded 2026-10-21T02:37:53+00:00
+
+**What.** Stage B1 arm=main seed=42 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.878,
+ "rung_angles_deg": [
+  55.47,
+  22.01
+ ],
+ "seconds": 226.6,
+ "variant_r2": [
+  0.775,
+  0.907
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed42.json` (sha256 f44d95ce73)
+
+---
+
+## #512 · run · stage B · plan §4.2
+`c9b0784551c37a15` ← `81fe581596360f30` · recorded 2026-10-21T02:41:33+00:00
+
+**What.** Stage B1 arm=main seed=43 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.887,
+ "rung_angles_deg": [
+  87.83,
+  17.73
+ ],
+ "seconds": 223.2,
+ "variant_r2": [
+  0.727,
+  0.923
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed43.json` (sha256 2110c309fc)
+
+---
+
+## #513 · run · stage B · plan §4.2
+`7cf8de759662e94e` ← `c9b0784551c37a15` · recorded 2026-10-21T02:41:38+00:00
+
+**What.** Stage B1 arm=main seed=44 finished
+
+**Output.**
+```json
+{
+ "core_invariant_r2": 0.774,
+ "rung_angles_deg": [
+  59.85,
+  87.11
+ ],
+ "seconds": 224.8,
+ "variant_r2": [
+  0.728,
+  0.677
+ ]
+}
+```
+
+**Artifacts.** `results/stage_b1_e29/main_seed44.json` (sha256 ba1c209b79)
+
+---
+
+## #514 · result · stage B · plan §E29
+`9147ff294238180d` ← `7cf8de759662e94e` · recorded 2026-10-21T02:43:00+00:00
+
+**What.** E29 (prospective test of the 0.95 presence threshold, 10 fresh seeds of the MLP + paper-objective cell): REFUTED as registered. Part (ii) held (0 of 11 rungs with presence in [0.5, 0.95) split); part (i) had one violation (seed 41 rung 2: presence 0.971 but not split, in a run whose rung 1 had failed). Descriptive: 'presence at least 0.95 AND previous rung split' explains 80 of 80 rungs of E25-E29 (presence alone 79 of 80 at 0.95, 74 of 80 at 0.9). D15a not adopted as an unconditional threshold; the conditional version is a candidate needing its own prospective test (not run).
+
+**How.** experiments/analyse_e29.py (frozen layered_v2); experiments/analyse_presence_vs_split.py (descriptive)
+
+**Output.**
+```json
+{
+ "E29": "refuted as registered",
+ "conditional_rule_explains": "80/80",
+ "mid_split": 0,
+ "of_which_split": 8,
+ "rungs_ge_0.95": 9,
+ "rungs_mid": 11
+}
+```
+
+**Artifacts.** `results/enc_generality/E29_REPORT.md` (sha256 d12472e57d); `results/enc_generality/PRESENCE_VS_SPLIT.md` (sha256 8d4ee8c076)
+
+**Bearing on objectives O2.** A block must be recovered almost fully for its rung to split, and rung 2 additionally depends on rung 1 having worked; the conditional description fits all 80 rungs but was formed after seeing them.
+
+**Verdict.** refuted
+
+---
+
+## #515 · note · stage B · plan §—
+`ca2436dee959f81a` ← `9147ff294238180d` · recorded 2026-10-21T02:43:00+00:00
+
+**What.** Housekeeping: entry 488 fingerprinted results/enc_generality/PRESENCE_VS_SPLIT.md, which was regenerated or extended afterwards; reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #516 · note · stage B · plan §close-out
+`d91f8e4097faf542` ← `ca2436dee959f81a` · recorded 2026-10-21T02:43:51+00:00
+
+**What.** Plan docs/PLAN_ENCODER_GENERALITY.md finished (Phases A-E). Final report docs/ENCODER_GENERALITY_REPORT.md: E25 confirmed (the prediction-trained MLP drops the fast block), E26 confirmed (equal speeds: all blocks present, both rungs split 5/5), E27 confirmed as registered but empty in the collapsed cell, E28 not confirmed, E29 refuted as registered; across 80 rungs: none below presence 0.95 split (0 of 37), 42 of 43 at 0.95 or more split, and the conditional rule (presence at least 0.95 and previous rung split) fits all 80 (post hoc). docs/FINAL_REPORT.md carries an update note on the E23 reading. Tests 45 passed; predictions unedited.
+
+**Bearing on objectives O2.** The split works on a learned encoder's latents when the encoder keeps the content almost fully; the earlier failure was the encoder dropping the fast block.
+
+---
+
+## #517 · note · stage B · plan §—
+`3d8ed31b589956b2` ← `d91f8e4097faf542` · recorded 2026-10-21T02:43:51+00:00
+
+**What.** Housekeeping: entry 419 fingerprinted docs/FINAL_REPORT.md, which was regenerated or extended afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
 

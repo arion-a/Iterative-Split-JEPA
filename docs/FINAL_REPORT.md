@@ -34,3 +34,6 @@ E21: clean and hierarchical worlds are our own constructions. E23: the run does 
 ## Where everything is
 
 Plan and tick-off tracker `docs/COMPLETION_PLAN.md`; predictions and outcomes `docs/EVIDENCE.md`; run status `docs/STATUS.md`; hash-chained log `explog/chain.jsonl` with table view `docs/EXPERIMENT_TABLE.md`, `explog/LOG.md`, `explog/log_page.html`; reports `results/stage_b1_e21/E21_REPORT.md`, `results/stage_b2_e21/E21_E22_REPORT.md`, `results/stage_b1_e23/E23_REPORT.md`, `results/stage_c/REPORT.md`.
+
+## Update 2026-10-21: the E23 reading above is superseded
+E25 and E26 (`docs/ENCODER_GENERALITY_REPORT.md`) showed that the E23 failure came from the prediction-trained MLP discarding the fast block at speed 0.2 (texture presence about 0, 5 of 5 seeds). With equal speeds the same MLP and recipe kept every block and split both rungs on 5 of 5 seeds. So the sentence "with a generic MLP encoder the first split is not recovered" should be read as "...when the encoder has dropped the block"; it is not evidence that the splitter depends on the mirror encoder. The E23 verdict as registered (refuted) stands.

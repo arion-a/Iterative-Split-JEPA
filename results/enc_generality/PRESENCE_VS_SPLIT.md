@@ -1,10 +1,13 @@
-# Presence versus splitting across E25-E28 (retrospective, descriptive)
+# Presence versus splitting across E25-E29 (retrospective, descriptive)
 
-Rungs examined: 60 (34 split, 11 not split although the block is at least partly present (presence >= 0.5), 15 absent).
+Rungs examined: 80 (42 split, 23 not split although the block is at least partly present (presence >= 0.5), 15 absent).
 
-- Lowest presence among rungs that split: **0.972** (n = 34).
-- Highest presence among rungs that did not split but are at least partly present: **0.911** (n = 11).
-- Reading: if the first number is above the second, a presence level separates them in these runs. The registered presence threshold (0.9, D15) lies below that level, so a block at 0.90-0.95 can be 'present' and still not split. This is read off the data after the fact and is not a new criterion; see the plan's 'Noted, not started'.
+- Lowest presence among rungs that split: **0.966** (n = 42).
+- Highest presence among rungs that did not split but are at least partly present: **0.971** (n = 23).
+- Reading: when the first number is above the second, presence alone separates split from not split; when they overlap, it does not. The conditional rule (a rung splits when its block presence is at least the threshold AND the previous rung split) is tested below. All of this is read off the data after the fact and is not a criterion; E29 (fresh seeds) tested the unconditional 0.95 version prospectively.
+
+- Rule at presence threshold 0.9: block presence alone explains 74 of 80 rungs; presence AND previous rung split explains 77 of 80.
+- Rule at presence threshold 0.95: block presence alone explains 79 of 80 rungs; presence AND previous rung split explains 80 of 80.
 
 | Set | Seed | Rung | Presence of the block (nonlinear probe) | Gap ratio | Angle (deg) | Split |
 |---|---|---|---|---|---|---|
@@ -53,3 +56,23 @@ Rungs examined: 60 (34 split, 11 not split although the block is at least partly
 | E28 MLP+paper, weight 0.01 | 33 | 2 | 0.972 | 52.4 | 0.8 | yes |
 | E28 MLP+paper, weight 0.01 | 34 | 1 | 0.897 | 1.7 | 1.6 | no |
 | E28 MLP+paper, weight 0.01 | 34 | 2 | 0.890 | 1.3 | 89.1 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 35 | 1 | 0.966 | 24.8 | 1.7 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 35 | 2 | 0.975 | 18.8 | 1.3 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 36 | 1 | 0.972 | 59.1 | 0.4 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 36 | 2 | 0.976 | 43.4 | 1.0 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 37 | 1 | 0.973 | 79.1 | 0.4 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 37 | 2 | 0.974 | 54.5 | 1.2 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 38 | 1 | 0.871 | 1.6 | 1.2 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 38 | 2 | 0.874 | 2.5 | 89.5 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 39 | 1 | 0.974 | 69.1 | 0.3 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 39 | 2 | 0.974 | 48.1 | 1.0 | yes |
+| E29 MLP+paper, weight 0.01, fresh seeds | 40 | 1 | 0.943 | 1.5 | 2.6 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 40 | 2 | 0.855 | 1.8 | 86.4 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 41 | 1 | 0.932 | 2.5 | 10.0 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 41 | 2 | 0.971 | 1.6 | 17.2 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 42 | 1 | 0.894 | 1.5 | 55.5 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 42 | 2 | 0.940 | 2.4 | 22.0 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 43 | 1 | 0.850 | 1.6 | 87.8 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 43 | 2 | 0.940 | 2.7 | 17.7 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 44 | 1 | 0.823 | 1.1 | 59.8 | no |
+| E29 MLP+paper, weight 0.01, fresh seeds | 44 | 2 | 0.787 | 1.5 | 87.1 | no |

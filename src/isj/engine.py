@@ -101,6 +101,7 @@ class RungFit:
     M: torch.Tensor = field(repr=False, default=None)
     max_sq_diff: float = 1.0            # max ||pair difference||^2 in content coordinates (enters the rank-noise floor)
     nesting_enforcement: str = "hard"
+    applied: bool = True            # False when the rung failed the gap gate (Gap 2): nothing was removed; V, Q and gap_ratio are its (unused) estimate
 
 
 
@@ -207,13 +208,19 @@ PairsFn = Callable[[int], "tuple[torch.Tensor, torch.Tensor] | None"]
 def fit_ladder(pairs_fn: PairsFn, dim: int, d_ks: list[int] | None = None,
                gamma_min: float | None = None, max_rungs: int | None = None,
                gauge_ref: torch.Tensor | None = None, pair_budgets: list[int] | None = None,
-               nesting_enforcement: str = "hard", soft_lambda: float = 100.0) -> list[RungFit]:
+               nesting_enforcement: str = "hard", soft_lambda: float = 100.0,
+               gate_gap_ratio: float | None = None) -> list[RungFit]:
     """Iterate the engine along its own invariant output (Theorem 5.2).
 
     pairs_fn(k) returns whitened (ru, rv) for family D_k in full representation coordinates, or
     None when no correspondence family is available (termination relative to available
     correspondences, Remark 5.4). With `pair_budgets` (one entry per rung) it is called as pairs_fn(k, budget[k-1]),
     so each rung can have its own pair budget (decision D9).
+
+    gate_gap_ratio (Gap 2 of docs/PLAN_GAPS_ONE_BY_ONE.md; default None = the original behaviour): a rung whose own gap ratio does not exceed
+    this value (the existing acceptance check, monograph §6.2: a block exists where there is a gap) is NOT applied: nothing is removed and the
+    content passes unchanged to the next rung (Remark 5.4, termination relative to the available correspondences); the rung is kept in the
+    list with `applied = False` and its own estimate, so it is still reported.
     """
     h = torch.eye(dim)
     rungs: list[RungFit] = []
@@ -228,6 +235,8 @@ def fit_ladder(pairs_fn: PairsFn, dim: int, d_ks: list[int] | None = None,
                        d_k=None if d_ks is None else d_ks[k - 1],
                        gamma_min=gamma_min, gauge_ref=gauge_ref,
                        nesting_enforcement=nesting_enforcement, soft_lambda=soft_lambda)
+        fit.applied = gate_gap_ratio is None or fit.gap_ratio > gate_gap_ratio
         rungs.append(fit)
-        h = fit.Q
+        if fit.applied:
+            h = fit.Q
     return rungs

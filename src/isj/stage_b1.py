@@ -58,7 +58,8 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         max_sq_diff[k] = float((ru - rv).square().sum(1).max())
         return ru, rv
 
-    rungs = fit_ladder(pairs_fn, d, d_ks=list(s["d_ks"]), nesting_enforcement=nest)
+    gate = cfg["criteria"]["gap_ratio_min"] if cfg.get("rung_gate") else None          # Gap 2: a rung that fails the frozen gap criterion is not applied
+    rungs = fit_ladder(pairs_fn, d, d_ks=list(s["d_ks"]), nesting_enforcement=nest, gate_gap_ratio=gate)
     if ablation == "no_inv":      # no spectral head: read blocks off the encoder's coordinates
         eye, off, ident, h_prev = torch.eye(d), 0, [], torch.eye(d)
         for r in rungs:
@@ -84,7 +85,8 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     for r in rungs:
         k = r.k
         slower = list(range(k + 1, world.n_blocks + 1))
-        v_tr, v_te, q_tr, q_te = rtr @ r.V, rte @ r.V, rtr @ r.Q, rte @ r.Q
+        qm = r.Q if r.applied else r.H_prev                  # content after this rung (unchanged when the rung was not applied)
+        v_tr, v_te, q_tr, q_te = rtr @ r.V, rte @ r.V, rtr @ qm, rte @ qm
         z_own, z_slow = (lambda z: z[:, world.block_slice(k)]), (lambda z: z[:, cols(slower)])
         est_v = audits.ridge_fit(ztr, v_tr)[:-1].T         # variant coords from true latents (d_k, d)
         est_q = audits.ridge_fit(ztr, q_tr)[:-1].T         # invariant-content coords (m_k, d)
@@ -99,7 +101,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
             alpha=sig["alpha"], n_perm=sig["n_perm"], seed=seed + k)
         lam = float(r.eigvals[r.d_k - 1])
         out.append({
-            "k": k, "angle_deg": audits.max_angle_deg(r.V, image[k]),
+            "k": k, "applied": bool(r.applied), "angle_deg": audits.max_angle_deg(r.V, image[k]),
             "variant_r2": audits.linear_r2(v_tr, ztr[:, world.block_slice(k)], v_te, zte[:, world.block_slice(k)]),
             "invariant_content_r2": audits.linear_r2(q_tr, z_slow(ztr), q_te, z_slow(zte)),
             "gap_ratio": r.gap_ratio, "lambda_dk": lam, "eigvals": [float(x) for x in r.eigvals],
@@ -111,14 +113,15 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
             "leak_r2": {key: v["r2"] for key, v in leak["entries"].items()},
         })
     last = rungs[-1]
-    core_r2 = audits.linear_r2(rtr @ last.Q, ztr[:, world.block_slice(3)], rte @ last.Q, zte[:, world.block_slice(3)])
+    core = last.Q if last.applied else last.H_prev
+    core_r2 = audits.linear_r2(rtr @ core, ztr[:, world.block_slice(3)], rte @ core, zte[:, world.block_slice(3)])
     span = torch.cat([image[2], image[3]], dim=1)
     nesting = float(audits.principal_angles_deg(rungs[1].V, span).max())
     u_, _, _ = torch.linalg.svd(image[1], full_matrices=True)
     h_perp = u_[:, world.block_slice(1).stop - world.block_slice(1).start:]
     extra = {"nesting_perp_deg": float(audits.principal_angles_deg(rungs[1].V, h_perp).max()),
-             "inherited_span_deg": float(audits.principal_angles_deg(rungs[0].Q, span).max()),
-             "inherited_perp_deg": float(audits.principal_angles_deg(rungs[0].Q, h_perp).max()),
+             "inherited_span_deg": float(audits.principal_angles_deg(rungs[0].Q if rungs[0].applied else rungs[0].H_prev, span).max()),
+             "inherited_perp_deg": float(audits.principal_angles_deg(rungs[0].Q if rungs[0].applied else rungs[0].H_prev, h_perp).max()),
              "pair_budgets": list(budgets), "nesting_enforcement": nest}
     blocks = [world.block_slice(k) for k in range(1, world.n_blocks + 1)]
     presence = {"linear": [audits.linear_r2(rtr, ztr[:, b], rte, zte[:, b]) for b in blocks],

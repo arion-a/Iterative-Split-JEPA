@@ -35,8 +35,8 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 ### Gap 2: a failed rung damages the next one (carry-over)  [objective O2/O3, Theorem 5.2, Remark 5.4, §6.2]
 - **Where / cause:** `fit_ladder` / `fit_rung`. A rung with fixed block size removes `d_k` directions even when its own split has no gap (E30: rung 2 split on only 3 of 10 seeds after a failed rung 1). The mechanism (arbitrary directions removed from content the next rung needs) is a hypothesis.
 - **Solution (no new rule):** a rung is applied only if it passes the existing gap-ratio acceptance check (above 10); otherwise it is not applied: nothing is removed, the representation passes unchanged to the next rung, and the rung is reported as "no block found". That is the theory's own certificate (§6.2: a block exists where there is a gap) and termination relative to the available correspondences (Remark 5.4). Default behaviour unchanged.
-- [ ] 2.1 Implement the gate as an option of `fit_ladder` (off by default). **Done when:** unit tests show a rung with ratio below the criterion is not applied, a rung above it is applied exactly as before, and a clean 3-block run is identical with the option on and off.
-- [ ] 2.2 Register before running (draft, same levels as before): E30 cell B setup (`configs/stage_b1_mlp_midrho.yaml`), fresh seeds 80-89: rung 1 not applied and rung 2 SPLIT by the existing criteria on at least 9 of 10 seeds (E30 without the gate: 3 of 10); clean world (the E21 Part A setup, seeds 80-89): every existing criterion as in E21 with the gate on (no regression). Criteria and analysis rule frozen first.
+- [x] 2.1 (done: `gate_gap_ratio` in `fit_ladder`, 2 tests) Implement the gate as an option of `fit_ladder` (off by default). **Done when:** unit tests show a rung with ratio below the criterion is not applied, a rung above it is applied exactly as before, and a clean 3-block run is identical with the option on and off.
+- [x] 2.2 (registered as E33, criteria frozen by hash, before any run) Register before running (draft, same levels as before): E30 cell B setup (`configs/stage_b1_mlp_midrho.yaml`), fresh seeds 80-89: rung 1 not applied and rung 2 SPLIT by the existing criteria on at least 9 of 10 seeds (E30 without the gate: 3 of 10); clean world (the E21 Part A setup, seeds 80-89): every existing criterion as in E21 with the gate on (no regression). Criteria and analysis rule frozen first.
 - [ ] 2.3 Run (20 runs), score, record. **If refuted:** the carry-over is not caused by the removed directions; stop and report with the per-seed rung-2 angle against the nesting angle (already recorded fields).
 - Gate.
 
@@ -102,6 +102,8 @@ About 80 runs for Gaps 2-6 (20 + 25 + 20 + 6 + about 10), plus the 60 already ru
 ## Log (newest last)
 - 2026-10-21: plan written; nothing registered or run for Gaps 2-6. Gap 1 (E31, E32) running.
 - 2026-10-21 (later): Gap 1 closed (E31 refuted as registered at sigma_cat 0.6 only, cause fixed; E32 boundary 0.4). Gaps 2-6 not started.
+
+- 2026-10-21 (Gap 2): gate implemented (`gate_gap_ratio` in `fit_ladder`, `rung_gate` in the B1 config; off by default; 2 tests, 50 tests pass); E33 registered before any run (20 runs, seeds 80-89). Executing the gaps in sequence on the owner's instruction.
 
 ## Noted, not started
 - Pair-building from data beyond rung 2 (nested clustering for depth 3 and deeper).

@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 632 entries, head 31e959bb773d
+Chain status at render time: **VALID** — 633 entries, head 6e38717ef598
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -13640,5 +13640,18 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Housekeeping: entry 609 fingerprinted results/stage_b2_slowk/SLOWK_REPORT.md, which was regenerated or extended afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #632 · plan · stage B · plan §E33 registration
+`6e38717ef59867d0` ← `31e959bb773de931` · recorded 2026-10-21T15:13:43+00:00
+
+**What.** Gap 2 (a failed rung damages the next one): gate implemented (a rung that fails the frozen gap criterion is not applied; default off; 2 tests) and E33 registered before any run: cell B (E30 cell B setup with the gate, seeds 80-89): rung 1 not applied on at least 9/10 and rung 2 SPLIT on at least 9/10 (E30 without the gate: 3/10); clean control (E21 Part A setup with the gate): all rungs applied 10/10 and every B1 criterion at least 9/10. Criteria frozen by hash, analysis rule written first. Owner instructed that all gaps be closed in sequence.
+
+**How.** docs/EVIDENCE.md E33; configs/gate.criteria.yaml; experiments/analyse_gate.py; src/isj/engine.py gate_gap_ratio
+
+**Artifacts.** `configs/gate.criteria.yaml` (sha256 382cdce685); `configs/gate.criteria.sha256` (sha256 78fed29974); `experiments/analyse_gate.py` (sha256 2ceea0de1d); `configs/stage_b1_mlp_midrho_gate.yaml` (sha256 43f590423e); `configs/stage_b1_gate_clean.yaml` (sha256 c1e30127bf); `tests/test_rung_gate.py` (sha256 5495d71cd0)
+
+**Bearing on objectives O2, O3.** Pre-registration; no new constant (the gate is the existing gap criterion).
 
 ---

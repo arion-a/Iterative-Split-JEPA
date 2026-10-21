@@ -1,0 +1,24 @@
+experiment: E33 (Gap 2, rung gate)
+seeds:
+- 80
+- 81
+- 82
+- 83
+- 84
+- 85
+- 86
+- 87
+- 88
+- 89
+cell_B:
+  rung1_not_applied_min_runs: 9
+  rung2_split_min_runs: 9
+  split_keys:
+  - rung2_angle
+  - rung2_variant_r2
+  - rung2_gap
+  reference_without_gate: 'E30 cell B: rung 2 split on 3 of 10'
+clean:
+  each_b1_criterion_min_runs: 9
+  rungs_applied_min_runs: 10
+  leakage_floor: 0.01

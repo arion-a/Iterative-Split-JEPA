@@ -1,0 +1,6 @@
+experiment: E35 (Gap 4, regulariser weight)
+weights: [0.1, 1.0]
+seeds: [90, 91, 92, 93, 94, 95, 96, 97, 98, 99]
+qualifies_if: "presence (nonlinear probe, configs/layered_v2.yaml) at least 0.95 for every one of the 3 blocks and both rungs SPLIT (frozen B1 angle, variant R2, gap ratio), on at least 9 of 10 seeds"
+verdict: "confirmed if at least one weight qualifies; otherwise refuted, and the paper-objective MLP is declared unreliable at this budget"
+reference: "E28/E29 weight 0.01: kept all blocks on 6 of 15 seeds"

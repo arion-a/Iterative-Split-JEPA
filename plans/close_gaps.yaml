@@ -1,0 +1,20 @@
+# Supervisor plan: close the named gaps (G2 depth world, G3 second systems). Run: python experiments/supervisor.py plans/close_gaps.yaml
+name: close_gaps
+chain: true
+state: results/depth/supervisor_state.json
+transient: ["Killed", "No space left", "Connection reset", "Connection aborted", "Temporary failure", "classifier"]
+steps:
+  - id: S0.1
+    phase: 0
+    desc: "G registered before any run: hash matches, prediction text present, no G result exists"
+    run: "python -c \"import hashlib,json,yaml,glob; c=yaml.safe_load(open('configs/gaps.yaml')); assert hashlib.sha256(json.dumps(c['criteria'],sort_keys=True).encode()).hexdigest()==open('configs/gaps.criteria.sha256').read().strip(); assert '## G1-G3 gap-closing study (registered' in open('docs/EVIDENCE.md').read(); assert not glob.glob('results/depth/[0-9].json') and not glob.glob('results/system_*/[0-9].json')\""
+  - {id: S0.2, phase: 0, desc: "depth-world arithmetic and helper tests", run: "python -m pytest tests/test_gaps.py -q -k arithmetic"}
+  - {id: S1.1, phase: 1, desc: "prep single pendulum (decode, safe phys_vars, recover grouping)", run: "python experiments/prep_system.py single_pendulum"}
+  - {id: S1.2, phase: 1, desc: "prep elastic pendulum", run: "python experiments/prep_system.py elastic_pendulum"}
+  - {id: S1.3, phase: 1, desc: "data tests for both systems + audit", run: "python -m pytest tests/test_gaps.py -q -k grouping && python experiments/audit_stage_v.py --no-tests"}
+  - {id: S2.1, phase: 2, desc: "G2 depth world: ladder / single-lag / shuffled, 3 seeds", run: "python experiments/run_depth.py > logs_v/depth_run.log 2>&1", check: "python -m pytest tests/test_gaps.py -q -k depth_results_sanity", retries: 1}
+  - {id: S2.2, phase: 2, desc: "G3 single pendulum, 3 seeds x 4 arms", run: "python experiments/run_system.py single_pendulum > logs_v/system_single.log 2>&1", check: "python -m pytest tests/test_gaps.py -q -k 'results_sanity and single'", retries: 1}
+  - {id: S2.3, phase: 2, desc: "G3 elastic pendulum, 3 seeds x 4 arms", run: "python experiments/run_system.py elastic_pendulum > logs_v/system_elastic.log 2>&1", check: "python -m pytest tests/test_gaps.py -q -k 'results_sanity and elastic'", retries: 1}
+  - {id: S3.1, phase: 3, desc: "mechanical outcomes S1-S4, D1-D3 into EVIDENCE, STATUS, report, chain", run: "python experiments/record_gaps.py", check: "grep -q '### G outcome' docs/EVIDENCE.md"}
+  - {id: S4.1, phase: 4, desc: "full audit", run: "python experiments/audit_stage_v.py"}
+  - {id: S4.2, phase: 4, desc: "plan-alignment check", run: "python experiments/check_gaps_alignment.py"}

@@ -1,0 +1,202 @@
+{
+ "seed": 2,
+ "train_releases": 71,
+ "sets": {
+  "A": {
+   "lags": [
+    8,
+    32
+   ],
+   "stop": "S2",
+   "core_dim": 1,
+   "cut_gap_ratios": [
+    2.634
+   ],
+   "shuffled_stop": "S2",
+   "shuffled_cut_gap_ratios": [],
+   "ladder": [
+    {
+     "k": 1,
+     "family": "aug",
+     "floor": 0.00222493162034298,
+     "b2": 0.1585808384875548,
+     "n_above_floor": 0,
+     "best_ratio": 0.0,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.00079545036518797,
+     "stop": "S1"
+    },
+    {
+     "k": 2,
+     "family": "lag8",
+     "floor": 3.276404342260953,
+     "b2": 328.24212784244156,
+     "n_above_floor": 64,
+     "best_ratio": 2.634464206238551,
+     "d_k": 63,
+     "content_dim": 64,
+     "lambda_max_over_chance": 1.6060045564951158,
+     "gap_ratio": 2.634464206238551
+    },
+    {
+     "k": 3,
+     "family": "lag32",
+     "floor": 0.04723461721346721,
+     "b2": 4.644088666085335,
+     "n_above_floor": 1,
+     "best_ratio": 0.0,
+     "d_k": 0,
+     "content_dim": 1,
+     "lambda_max_over_chance": 0.18201250533345548,
+     "stop": "S2"
+    }
+   ],
+   "main": {
+    "V": 0.01,
+    "n_pairs_found": 200.0,
+    "eps": 2.1071470934002208,
+    "drift_q95_val": 1.0035735467001103,
+    "icc": 0.3415578995943004,
+    "L": 0.9290957372422363,
+    "rollout_nmse": 0.795229803703687
+   },
+   "shuffled": {
+    "V": 0.015,
+    "n_pairs_found": 200.0,
+    "eps": 2.524091323065024,
+    "drift_q95_val": 1.212045661532512,
+    "icc": 0.24132193254839232,
+    "L": 0.8996055570508256,
+    "rollout_nmse": 0.9032657176570787
+   },
+   "seed_agreement": {
+    "0-1": 0.8429894679332268,
+    "0-2": 0.8324448426314267,
+    "1-2": 0.8216611870410697
+   }
+  },
+  "B": {
+   "lags": [
+    1,
+    4,
+    16,
+    64
+   ],
+   "stop": "S2",
+   "core_dim": 64,
+   "cut_gap_ratios": [],
+   "shuffled_stop": "S2",
+   "shuffled_cut_gap_ratios": [],
+   "ladder": [
+    {
+     "k": 1,
+     "family": "aug",
+     "floor": 0.00222493162034298,
+     "b2": 0.1585808384875548,
+     "n_above_floor": 0,
+     "best_ratio": 0.0,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.00079545036518797,
+     "stop": "S1"
+    },
+    {
+     "k": 2,
+     "family": "lag1",
+     "floor": 1.9788382622580734,
+     "b2": 199.31022441936034,
+     "n_above_floor": 61,
+     "best_ratio": 1.3400753893552984,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.848921986437648,
+     "stop": "S2"
+    }
+   ],
+   "main": {
+    "V": 0.015,
+    "n_pairs_found": 200.0,
+    "eps": 2.524091323065024,
+    "drift_q95_val": 1.212045661532512,
+    "icc": 0.24132193254839232,
+    "L": 0.8996055570508256,
+    "rollout_nmse": 0.9032657176570787
+   },
+   "shuffled": {
+    "V": 0.015,
+    "n_pairs_found": 200.0,
+    "eps": 2.524091323065024,
+    "drift_q95_val": 1.212045661532512,
+    "icc": 0.24132193254839232,
+    "L": 0.8996055570508256,
+    "rollout_nmse": 0.9032657176570787
+   },
+   "seed_agreement": {
+    "0-1": 0.7002112264698716,
+    "0-2": 0.6971974038887766,
+    "1-2": 0.729762198095448
+   }
+  }
+ },
+ "flat": {
+  "V": 0.0,
+  "n_pairs_found": 200.0,
+  "eps": 3.379106282249411,
+  "drift_q95_val": 1.6395531411247055,
+  "icc": 0.1921821177972683,
+  "L": 0.9071014240438264,
+  "rollout_nmse": 0.963463398687201
+ },
+ "temporal_only": {
+  "V": 0.01,
+  "n_pairs_found": 200.0,
+  "eps": 2.1071472194759155,
+  "drift_q95_val": 1.0035736097379577,
+  "icc": 0.3415579038159083,
+  "L": 0.9290957370574777,
+  "rollout_nmse": 0.7952298020587262
+ },
+ "per_lag_best_ratio": {
+  "1": {
+   "best_ratio": 1.3400753893552984,
+   "lambda_max_over_chance": 0.848921986437648,
+   "cut": false
+  },
+  "2": {
+   "best_ratio": 1.4729906689723216,
+   "lambda_max_over_chance": 1.41528285900433,
+   "cut": false
+  },
+  "4": {
+   "best_ratio": 1.579561920852723,
+   "lambda_max_over_chance": 1.5292879219612319,
+   "cut": false
+  },
+  "8": {
+   "best_ratio": 2.634464206238551,
+   "lambda_max_over_chance": 1.6060045564951158,
+   "cut": true
+  },
+  "16": {
+   "best_ratio": 3.7455601022965164,
+   "lambda_max_over_chance": 1.761771492823355,
+   "cut": true
+  },
+  "32": {
+   "best_ratio": 2.581348268214117,
+   "lambda_max_over_chance": 1.7728183876163253,
+   "cut": true
+  },
+  "64": {
+   "best_ratio": 2.461613145151746,
+   "lambda_max_over_chance": 1.252144298431975,
+   "cut": true
+  },
+  "128": {
+   "best_ratio": 2.4725998826974824,
+   "lambda_max_over_chance": 1.2118539025050663,
+   "cut": true
+  }
+ }
+}

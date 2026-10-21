@@ -1,0 +1,19 @@
+# Supervisor plan: H1 (HF controlled pendulum) and R1 (ManiSkill PickCube, the SplitJEPA robotics setting). Run: python experiments/supervisor.py plans/other_data.yaml
+name: other_data
+chain: true
+state: results/robot/supervisor_state.json
+transient: ["Killed", "No space left", "Connection reset", "Connection aborted", "Temporary failure", "classifier"]
+steps:
+  - id: S0.1
+    phase: 0
+    desc: "registered before any run: hash matches, prediction text present, no H1/R1 result exists"
+    run: "python -c \"import hashlib,json,yaml,glob; c=yaml.safe_load(open('configs/other_data.yaml')); assert hashlib.sha256(json.dumps(c['criteria'],sort_keys=True).encode()).hexdigest()==open('configs/other_data.criteria.sha256').read().strip(); assert '## H1 and R1: other controlled data (registered' in open('docs/EVIDENCE.md').read(); assert not glob.glob('results/hf_pendulum/[0-9].json') and not glob.glob('results/robot/[0-9].json')\""
+  - {id: S0.2, phase: 0, desc: "ManiSkill environment usable on CPU (software Vulkan)", run: "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json /tmp/claude-0/msvenv/bin/python -c \"import gymnasium as gym, mani_skill.envs; e=gym.make('PickCube-v1',obs_mode='rgb',num_envs=1,render_mode='rgb_array',sim_backend='cpu'); o,_=e.reset(seed=0); assert o['sensor_data']['base_camera']['rgb'].shape[-1]==3 and e.render().shape[-1]==3\""}
+  - {id: S1.1, phase: 1, desc: "decode the HF pendulum videos and labels", run: "python experiments/prep_hfpend.py"}
+  - {id: S1.2, phase: 1, desc: "generate 150 PickCube episodes x 60 steps x 2 cameras (CPU, ~20 min)", run: "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json /tmp/claude-0/msvenv/bin/python experiments/gen_maniskill.py > logs_v/maniskill_gen.log 2>&1", retries: 1}
+  - {id: S1.3, phase: 1, desc: "data tests for both datasets + audit", run: "python -m pytest tests/test_other_data.py -q -k 'hf_pendulum_data or maniskill_data' && python experiments/audit_stage_v.py --no-tests"}
+  - {id: S2.1, phase: 2, desc: "H1: HF pendulum, 3 seeds x 4 arms", run: "python experiments/run_hfpend.py > logs_v/hfpend_run.log 2>&1", check: "python -m pytest tests/test_other_data.py -q -k hf_results_sanity", retries: 1}
+  - {id: S2.2, phase: 2, desc: "R1: robot episodes, 3 seeds", run: "python experiments/run_robot.py > logs_v/robot_run.log 2>&1", check: "python -m pytest tests/test_other_data.py -q -k robot_results_sanity", retries: 1}
+  - {id: S3.1, phase: 3, desc: "mechanical verdicts H-a..H-d, R-a..R-c into EVIDENCE, STATUS, report, chain", run: "python experiments/record_other.py", check: "grep -q '### H1/R1 outcome' docs/EVIDENCE.md"}
+  - {id: S4.1, phase: 4, desc: "full audit", run: "python experiments/audit_stage_v.py"}
+  - {id: S4.2, phase: 4, desc: "plan-alignment check", run: "python experiments/check_other_alignment.py"}

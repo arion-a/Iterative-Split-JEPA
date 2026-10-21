@@ -1,0 +1,52 @@
+stage: V-O
+plan_ref: docs/OTHER_DATA_PLAN.md
+criteria:
+  hf_pendulum:
+    naming_min: 0.5
+    main_minus_flat_min: 0.1
+    nuisance_max_abs_spearman: 0.3
+    seed_agreement_min: 0.9
+  robot:
+    core_cube0_r2_min: 0.5
+    core_minus_flat_min: 0.1
+    variant_minus_core_tcp_min: 0.2
+seeds:
+- 0
+- 1
+- 2
+nuisance_amp: 0.4
+encoder:
+  latent_dim: 64
+  hidden: 256
+  steps: 4000
+  batch_size: 256
+  lr: 0.003
+  horizons:
+  - 1
+  - 8
+  - 32
+  var_weight: 0.01
+  cov_weight: 0.04
+  zca_eps: 1.0e-05
+  aug_weight: 0.2
+hf_pendulum:
+  train_val_split:
+  - 140
+  - 20
+  test: provided val (40 videos)
+robot:
+  env: PickCube-v1
+  n_episodes: 150
+  steps: 60
+  split:
+  - 100
+  - 25
+  - 25
+  action_smoothing: 0.9
+  action_noise: 0.3
+  views:
+  - base_camera 128x128
+  - render_camera 512x512 (side)
+  lags:
+  - 8
+  - 32

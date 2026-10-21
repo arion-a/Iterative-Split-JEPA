@@ -34,7 +34,7 @@ if "--no-tests" not in sys.argv:
 v, msg = explog.verify()
 check("chain links + artifact digests", v, msg)
 
-for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36", "scaling", "live", "columbia", "columbia_controls", "columbia_full", "columbia_confound", "gaps") if glob.glob(f"configs/{n}.yaml")]:
+for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36", "scaling", "live", "columbia", "columbia_controls", "columbia_full", "columbia_confound", "gaps", "other_data") if glob.glob(f"configs/{n}.yaml")]:
     sha = cfg.replace(".yaml", ".criteria.sha256")
     c = yaml.safe_load(open(cfg))
     if "criteria" in c:
@@ -47,7 +47,7 @@ for cfg in [f"configs/{n}.yaml" for n in ("handshake", "hier", "followup", "e36"
         check(f"criteria hash {cfg}", got == want)
 
 logged = {a["path"] for e in explog.read_all() for a in e["artifacts"]}
-raw = [p for d in ("system_single_pendulum", "system_elastic_pendulum", "depth", "handshake/main", "hier/ladder", "hier/shuffled", "followup", "e36", "real", "scaling", "live", "columbia", "columbia_controls", "columbia_full", "columbia_confound") for p in glob.glob(f"results/{d}/*.json") if not p.endswith("supervisor_state.json")]
+raw = [p for d in ("hf_pendulum", "robot", "system_single_pendulum", "system_elastic_pendulum", "depth", "handshake/main", "hier/ladder", "hier/shuffled", "followup", "e36", "real", "scaling", "live", "columbia", "columbia_controls", "columbia_full", "columbia_confound") for p in glob.glob(f"results/{d}/*.json") if not p.endswith("supervisor_state.json")]
 missing = [p for p in raw if p not in logged]
 check("every raw result JSON is in the chain", not missing, str(missing[:3]))
 
@@ -58,6 +58,8 @@ if glob.glob("results/columbia_full/[0-9].json"):                    # C2 outcom
     check("EVIDENCE has an outcome for C2", "C2 outcome" in ev)
 if glob.glob("results/depth/[0-9].json"):
     check("EVIDENCE has an outcome for the G study", "G outcome" in ev)
+if glob.glob("results/robot/[0-9].json"):
+    check("EVIDENCE has an outcome for H1/R1", "H1/R1 outcome" in ev)
 if glob.glob("results/columbia_confound/[0-9].json"):
     check("EVIDENCE has an outcome for C3", "C3 outcome" in ev)
 

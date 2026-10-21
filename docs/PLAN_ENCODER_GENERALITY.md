@@ -43,9 +43,9 @@ Question: the owner holds that splitting is a property of the representation, so
 ## Phase F: check and run the three criteria claims (owner request, 2026-10-21 later)
 - [x] F1 Re-check claims 1-3 from the raw files with both probes (`experiments/verify_claims.py` -> `VERIFY_CLAIMS.md`). Result: claims 1 and 2 reproduce exactly (0 of 37 below 0.95 split; 42 of 43 at or above), claim 3 fits 80 of 80 but rests on a single distinguishing rung.
 - [x] F2 Register E30 (prospective test, cells A and B, seeds 45-54, `configs/layered_v2.yaml` frozen) and write `analyse_e30.py` before any run; commit and push.
-- [ ] F3 E30 runs: 20 files (`results/stage_b1_e30/A`, `.../B`); step check `check_results.py enc --final`.
-- [ ] F4 Score with `analyse_e30.py`; outcome lines in EVIDENCE (additions only), STATUS, log; update the criteria paragraph of `docs/ENCODER_GENERALITY_REPORT.md` and D15a with the result.
-- [ ] F5 Phase gate: earlier checks rerun, `explog.verify()`, pytest, plan reread; final push.
+- [x] F3 E30 runs: 20 files (`results/stage_b1_e30/A`, `.../B`); step check `check_results.py enc --final`.
+- [x] F4 Score with `analyse_e30.py`; outcome lines in EVIDENCE (additions only), STATUS, log; update the criteria paragraph of `docs/ENCODER_GENERALITY_REPORT.md` and D15a with the result.
+- [x] F5 Phase gate: earlier checks rerun, `explog.verify()`, pytest, plan reread; final push.
 
 ## Supervisor
 `scratchpad/supervise_enc.sh` runs inside a Monitor: it launches up to 4 runs at a time from the job list (E25, E26, E27 cells; every runner resumes by file), relaunches after a container restart, and reports each change in file counts. The container restarts whenever the session is idle and kills background jobs, so a Monitor (30 minutes, re-armed on expiry) is kept active during Phase B.
@@ -59,6 +59,7 @@ Question: the owner holds that splitting is a property of the representation, so
 - 2026-10-21 (later): E29 scored: refuted as registered (8 of 9 rungs at 0.95+ split; 0 of 11 below split); the one exception sits in a run whose rung 1 had failed. Conditional descriptive rule fits 80 of 80 rungs. D15a not adopted as unconditional. Phase D done. Phase E next.
 - 2026-10-21 (final): Phase E done. Layered re-reading and report `docs/ENCODER_GENERALITY_REPORT.md`; `docs/FINAL_REPORT.md` has an update note on the E23 reading. Plan complete; branch not merged to main (owner decides).
 - 2026-10-21 (Phase F): re-check done; E30 registered (see EVIDENCE) and runs next.
+- 2026-10-21 (Phase F done): E30 scored: claim 2 refuted (below 0.95 never splits, but 7 of 18 rungs at 0.95+ did not, all after a failed rung 1), claim 3 refuted (3 of 10 rungs after a failed rung split). D15a adopted as two one-sided criteria (necessary 0.95; sufficient when the previous rung split); 'previous rung must split' refuted. Report updated.
 
 ## Noted, not started
 - (empty)

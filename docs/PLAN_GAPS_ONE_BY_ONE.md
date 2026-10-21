@@ -71,7 +71,7 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 - Gate.
 
 ### Close-out
-- [ ] H1 Report with each objective's status and located limits; refresh `explog/stages.json` (stale); consistency pass, tests, `explog.verify()`, final push; no merge to main.
+- [x] H1 Report with each objective's status and located limits; refresh `explog/stages.json` (stale); consistency pass, tests, `explog.verify()`, final push; no merge to main.
 
 ## 3. Supervision
 - **Runs:** one Monitor-based supervisor per gap (`supervise_*.sh` pattern: at most 4 runs at a time, resumable, counts reported on every change, relaunch after a container restart); the Monitor is re-armed on expiry and kept active while runs go (the container restarts when idle).
@@ -104,6 +104,7 @@ About 80 runs for Gaps 2-6 (20 + 25 + 20 + 6 + about 10), plus the 60 already ru
 - 2026-10-21 (later): Gap 1 closed (E31 refuted as registered at sigma_cat 0.6 only, cause fixed; E32 boundary 0.4). Gaps 2-6 not started.
 
 - 2026-10-21 (Gap 2): gate implemented (`gate_gap_ratio` in `fit_ladder`, `rung_gate` in the B1 config; off by default; 2 tests, 50 tests pass); E33 registered before any run (20 runs, seeds 80-89). Executing the gaps in sequence on the owner's instruction.
+- 2026-10-21 (close): Gaps 2-6 executed in sequence: E33 confirmed; E34, E35, E36, E37 refuted as registered, each with its located limit; report `docs/GAPS_REPORT.md`.
 
 ## Noted, not started
 - Pair-building from data beyond rung 2 (nested clustering for depth 3 and deeper).

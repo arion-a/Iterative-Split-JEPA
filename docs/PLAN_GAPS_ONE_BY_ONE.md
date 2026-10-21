@@ -52,7 +52,7 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 - **Where / cause:** representation learning, before the engine. Prediction-trained encoders drop an unpredictable fast block (E25: presence about 0); the MLP with the paper objective kept all blocks on only 6 of 15 seeds at weight 0.01 (E28, E29).
 - **Theory anchor:** §9: the encoder is trained without reconstruction, with a regulariser whose job is to prevent collapse. So the fix stays inside it: a stronger regulariser (SIGReg weight), nothing else. No decoder, no unsupervised presence proxy (that would add a metric and run against §9's spirit); presence stays the existing precondition, measured with the true latents in the synthetic worlds and stated as an unverifiable precondition on real data.
 - [x] 4.1 Register (draft): the E28 cell with weight 0.1 and with weight 1.0 (both passed the training-health rule in the pilot; `configs/pilot/`), fresh seeds 90-99 each (20 runs): for at least one weight, presence at least 0.95 for every block on at least 9 of 10 seeds and both rungs SPLIT on those seeds (existing criteria; the 90% level as in E21/E31).
-- [ ] 4.2 Run, score, record. **If neither weight qualifies:** the paper-objective MLP is declared unreliable at this budget, presence stays a stated precondition, and the gap stops there (no longer training, no other architecture; those go to "Noted, not started").
+- [x] 4.2 Run, score, record. **If neither weight qualifies:** the paper-objective MLP is declared unreliable at this budget, presence stays a stated precondition, and the gap stops there (no longer training, no other architecture; those go to "Noted, not started").
 - Gate.
 
 ### Gap 5: real-image features  [objective O2 on image data, paper Appendix D]

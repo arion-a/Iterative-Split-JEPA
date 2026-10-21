@@ -21,7 +21,7 @@ encoder:
   steps: 10000
   batch_size: 256
   lr: 3.0e-3
-  sigreg_weight: 1e-3
+  sigreg_weight: 0.001
   hidden: 64
   reg: sigreg
   var_weight: 0.0

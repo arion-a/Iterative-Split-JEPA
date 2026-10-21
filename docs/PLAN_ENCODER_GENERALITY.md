@@ -43,6 +43,7 @@ Question: the owner holds that splitting is a property of the representation, so
 ## Log (newest last)
 - 2026-10-21: plan written; Phase A done; Phase B starting.
 - 2026-10-21 (later): Phases B and C done. E25 confirmed, E26 confirmed, E27 confirmed as registered but vacuous in the MLP + paper-objective cell (collapsed encoder). D1/D2 not needed. D3 triggered: E28 registered (repair of the collapsed cell); pilot next.
+- 2026-10-21: E28 pilot: four of five pilot runs crashed at start (config typo: weights written as 1e-4 etc. are read by YAML as text, not numbers); fixed the number format in `configs/pilot/` and in the supervisor's E28 config step; no result was affected (the runs crashed before writing anything); the 1.0 pilot had run (minimum embedding std 0.944). The four were relaunched.
 
 ## Noted, not started
 - (empty)

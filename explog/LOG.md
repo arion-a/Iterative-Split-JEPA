@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 561 entries, head 993638dc58d5
+Chain status at render time: **VALID** — 562 entries, head e6657880db36
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12336,5 +12336,14 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Housekeeping: entry 518 fingerprinted experiments/verify_claims.py, which was extended or regenerated afterwards; reference declared superseded. No recorded result changed.
 
 **Bearing on objectives —.** Housekeeping only.
+
+---
+
+## #561 · plan · stage C · plan §gap plan
+`e6657880db3695ff` ← `993638dc58d51f68` · recorded 2026-10-21T11:58:50+00:00
+
+**What.** Owner asked what is needed to make the claim work in all cases, especially for deeper ladders: the gaps, where exactly they sit in the process, their causes, solutions, and a plan. Wrote docs/PLAN_CLOSE_GAPS.md (gap table G-a to G-f, phases G0-G6 and H, steps with done-when conditions, checks, supervision, size estimate, priorities). Nothing was registered or run. Key finding from the code: the engine's ladder loop and the world's pair construction already work for any number of blocks; the 3-block / 2-rung assumption is in the B1 evaluator (stage_b1.py lines 114-121 and seed_checks), so the deeper ladder has never been measured.
+
+**Bearing on objectives O2, O3, O4.** Planning only; predictions will be registered at the start of each phase before its runs.
 
 ---

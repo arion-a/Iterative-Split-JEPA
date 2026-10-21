@@ -27,7 +27,23 @@ One command: `python experiments/supervisor.py plans/close_gaps.yaml` (resumes a
 Per system, all seeds: grouping contrast ≥ 0.5; naming ≥ 0.5; main beats flat by ≥ 0.1; seed agreement ≥ 0.9. Depth: ladder finds exactly 3 cuts (R² ≥ 0.9, gap ratio ≥ 5); single-lag finds ≤ 2; shuffled finds 0. Confirmed only if all hold; reported as measured; nothing tuned.
 
 ## 4. Issue log
-_(halts and fixes are recorded here and in the chain)_
+* **2026-10-21, S1.1 halted (supervisor worked as designed).** The single-pendulum clips are not in temporal order, so the video grouping cannot be recovered (adjacent-clip distance equals random-pair distance). Fix: a fallback fixed in `docs/EVIDENCE.md` before any run (release = clip, contiguous-block split, S1 reported not met, leakage risk stated); `prep_system.py` and the tests implement it, the criteria block and its hash are unchanged.
 
 ## 5. Tracker
-`python experiments/supervisor.py plans/close_gaps.yaml --status` (final state copied here when the plan completes).
+`python experiments/supervisor.py plans/close_gaps.yaml --status`. Final state (plan complete, 2026-10-21):
+
+| Step | Status | Attempts | Finished (UTC) |
+|---|---|---|---|
+| S0.1 | done | attempts 1 | 2026-10-21T09:03:25+00:00 |
+| S0.2 | done | attempts 1 | 2026-10-21T09:03:25+00:00 |
+| S1.1 | done | attempts 1 | 2026-10-21T09:16:02+00:00 |
+| S1.2 | done | attempts 1 | 2026-10-21T09:17:13+00:00 |
+| S1.3 | done | attempts 1 | 2026-10-21T09:17:14+00:00 |
+| S2.1 | done | attempts 1 | 2026-10-21T09:18:43+00:00 |
+| S2.2 | done | attempts 1 | 2026-10-21T09:31:49+00:00 |
+| S2.3 | done | attempts 1 | 2026-10-21T09:43:20+00:00 |
+| S3.1 | done | attempts 1 | 2026-10-21T09:43:20+00:00 |
+| S4.1 | done | attempts 1 | 2026-10-21T09:43:43+00:00 |
+| S4.2 | done | attempts 1 | 2026-10-21T09:43:43+00:00 |
+
+**Result:** not confirmed as worded; see `docs/EVIDENCE.md` (G outcome and interpretation) and `results/depth/REPORT.md`.

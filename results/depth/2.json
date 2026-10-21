@@ -1,0 +1,143 @@
+{
+ "seed": 2,
+ "arms": {
+  "ladder": {
+   "cuts": 3,
+   "stop": "split",
+   "families": [
+    [
+     "lag1",
+     4,
+     7.69,
+     "split",
+     0.84
+    ],
+    [
+     "lag4",
+     4,
+     6.83,
+     "split",
+     0.356
+    ],
+    [
+     "lag16",
+     4,
+     4.64,
+     "split",
+     0.16
+    ]
+   ],
+   "per_rung": [
+    {
+     "family": "lag1",
+     "best_ratio": 7.685463283547655,
+     "variant_blocks": [
+      1
+     ],
+     "invariant_blocks": [
+      2,
+      3,
+      4
+     ],
+     "variant_r2": 0.8945405945254815,
+     "invariant_r2": 0.9749098635585391
+    },
+    {
+     "family": "lag4",
+     "best_ratio": 6.830375075272292,
+     "variant_blocks": [
+      2
+     ],
+     "invariant_blocks": [
+      3,
+      4
+     ],
+     "variant_r2": 0.9566570413406105,
+     "invariant_r2": 0.9835800504120481
+    },
+    {
+     "family": "lag16",
+     "best_ratio": 4.640612717290363,
+     "variant_blocks": [
+      3
+     ],
+     "invariant_blocks": [
+      4
+     ],
+     "variant_r2": 0.9871934074775682,
+     "invariant_r2": 0.9787096236918347
+    }
+   ]
+  },
+  "single_lag": {
+   "cuts": 2,
+   "stop": "S1",
+   "families": [
+    [
+     "lag1",
+     4,
+     7.69,
+     "split",
+     0.84
+    ],
+    [
+     "lag1",
+     4,
+     6.01,
+     "split",
+     0.104
+    ],
+    [
+     "lag1",
+     0,
+     0.0,
+     "S1",
+     0.016
+    ]
+   ],
+   "per_rung": [
+    {
+     "family": "lag1",
+     "best_ratio": 7.685463283547655,
+     "variant_blocks": [
+      1
+     ],
+     "invariant_blocks": [
+      2,
+      3,
+      4
+     ],
+     "variant_r2": 0.8945405945254815,
+     "invariant_r2": 0.9749098635585391
+    },
+    {
+     "family": "lag1",
+     "best_ratio": 6.008960598934461,
+     "variant_blocks": [
+      2
+     ],
+     "invariant_blocks": [
+      3,
+      4
+     ],
+     "variant_r2": 0.955763826885384,
+     "invariant_r2": 0.9835087230229429
+    }
+   ]
+  },
+  "shuffled": {
+   "cuts": 0,
+   "stop": "S2",
+   "families": [
+    [
+     "lag1",
+     0,
+     1.1,
+     "S2",
+     1.243
+    ]
+   ],
+   "per_rung": []
+  }
+ }
+}

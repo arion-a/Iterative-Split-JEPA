@@ -143,3 +143,5 @@ Downloaded on request into `data/public/` (not committed): **Columbia** rigid do
 **Update (2026-10-20):** Columbia was parsed safely (`src/isj/safe_npy.py`) and run (C1, C1b; `docs/EVIDENCE.md`, `docs/PAPER_RESULTS.md`): naming 0.88–0.90 against tracked energy, flat baseline 0.38–0.48, certificate partly met. This is real-data evidence from 1100 clips, but it does not replace the owner's footage for E44–E47 (clips are 60 frames, tracked energy is noisy, no controlled markers).
 
 **Update (2026-10-21):** the Columbia full experiment (C2) ran to completion under the supervisor (`docs/COLUMBIA_FULL_PLAN.md`): not confirmed as registered; naming 0.91 and seed agreement 0.97 on 100 real videos with video-level splits. It is the strongest real-data evidence so far and replaces C1 as the main real result; the owner-footage test (E44-E47) remains the only open evidence step.
+
+**Update (2026-10-21):** the gap study ran under the supervisor (`docs/GAPS_PLAN.md`): depth world (ladder 3 cuts vs single-lag 2) and two more real systems; G1 marked-bob footage still blocked (IBM `dax-cdn.cdn.appdomain.cloud` denied by the network policy; Mendeley has no video).

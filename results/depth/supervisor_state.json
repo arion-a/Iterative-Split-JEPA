@@ -1,0 +1,82 @@
+{
+ "steps": {
+  "S0.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:03:25+00:00",
+   "tail": ""
+  },
+  "S0.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:03:25+00:00",
+   "tail": ".                                                                        [100%]\n1 passed, 5 deselected in 0.12s\n"
+  },
+  "S1.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:16:02+00:00",
+   "tail": "{'system': 'single_pendulum', 'n_clips': 1200, 'best_period': 50, 'contrast_by_period': {'5': 0.025, '6': -0.04, '8': 0.01, '10': 0.026, '12': -0.02, '15': -0.006, '16': 0.03, '20': 0.033, '24': 0.001, '25': 0.02, '30': -0.021, '40': 0.049, '48': 0.042, '50': 0.084, '60': 0.03}, 'pixel_break_fraction_on_boundaries': 1.0, 'pixel_break_fraction_within_videos': 0.9158163265306123, 'adjacent_vs_random_distance': [0.029445912688970566, 0.029359664767980576], 'ok': False, 'fallback': 'release = clip'}\nvideos 1200 frames per video 60 keys ['theta', 'potential energy', 'reject', 'total energy', 'vel_theta', 'kinetic energy']\n"
+  },
+  "S1.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:17:13+00:00",
+   "tail": "{'system': 'elastic_pendulum', 'n_clips': 1200, 'best_period': 25, 'contrast_by_period': {'5': -0.021, '6': -0.049, '8': -0.018, '10': -0.029, '12': -0.062, '15': -0.029, '16': 0.018, '20': -0.029, '24': -0.082, '25': 0.019, '30': -0.03, '40': -0.013, '48': -0.042, '50': -0.05, '60': -0.087}, 'pixel_break_fraction_on_boundaries': 0.8936170212765957, 'pixel_break_fraction_within_videos': 0.8741319444444444, 'adjacent_vs_random_distance': [0.01502222940325737, 0.015102331526577473], 'ok': False, 'fallback': 'release = clip'}\nvideos 1200 frames per video 60 keys ['theta_1', 'kinetic energy', 'reject', 'potential energy', 'theta_2', 'vel_theta_1', 'total energy', 'z', 'vel_z', 'vel_theta_2']\n"
+  },
+  "S1.3": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:17:14+00:00",
+   "tail": "..                                                                       [100%]\n2 passed, 4 deselected in 0.44s\nPASS chain links + artifact digests \u2014 357 entries, head 99a9781f30f0, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS criteria hash configs/columbia_confound.yaml\nPASS criteria hash configs/gaps.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nPASS EVIDENCE has an outcome for C2\nPASS EVIDENCE has an outcome for C3\nAUDIT PASSED\n"
+  },
+  "S2.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:18:43+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 5 deselected in 0.13s\n"
+  },
+  "S2.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:31:49+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 5 deselected in 0.09s\n"
+  },
+  "S2.3": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:43:20+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 5 deselected in 0.09s\n"
+  },
+  "S3.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:43:20+00:00",
+   "tail": "recorded False {'single_pendulum': {'S1': False, 'S2': True, 'S3': True, 'S4': True}, 'elastic_pendulum': {'S1': False, 'S2': True, 'S3': True, 'S4': False}, 'depth': {'D1': False, 'D2': True, 'D3': True}}\n\n[check] "
+  },
+  "S4.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:43:43+00:00",
+   "tail": "PASS test suite \u2014 84 passed, 4 warnings in 21.15s\nPASS chain links + artifact digests \u2014 372 entries, head 914183663860, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS criteria hash configs/columbia_confound.yaml\nPASS criteria hash configs/gaps.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nPASS EVIDENCE has an outcome for C2\nPASS EVIDENCE has an outcome for the G study\nPASS EVIDENCE has an outcome for C3\nAUDIT PASSED\n"
+  },
+  "S4.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T09:43:43+00:00",
+   "tail": "ALIGNMENT OK\n"
+  }
+ },
+ "complete": "2026-10-21T09:43:43+00:00"
+}

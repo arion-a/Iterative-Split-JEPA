@@ -33,9 +33,13 @@ check = {"system": name, "n_clips": n_clips, "best_period": int(k), "contrast_by
          "pixel_break_fraction_on_boundaries": float(pix[on].mean()), "pixel_break_fraction_within_videos": float(pix[~on].mean()),
          "adjacent_vs_random_distance": [float(np.median(cont)), float(np.median([np.abs(frames[i, -1] - frames[(i * 7 + 13) % n_clips, 0]).mean() for i in range(n_clips - 1)]))]}
 check["ok"] = bool(scores[k] >= crit["grouping_min_contrast"] and check["pixel_break_fraction_within_videos"] <= 0.02)
+check["fallback"] = None
+if not check["ok"]:
+    # registered fallback (EVIDENCE G1-G3 amendment): clips are not in temporal order, so videos cannot be recovered; release = clip, 60 frames each
+    # (as in C1), contiguous-block split; S1 stays "not met"; the shared-video leakage risk is stated.
+    check["fallback"] = "release = clip"; k = 1
 out = f"data/{name}_full"; os.makedirs(out, exist_ok=True)
 json.dump(check, open(f"{out}/grouping_check.json", "w"), indent=1); print(check)
-assert check["ok"], "grouping not recovered"
 nv = n_clips // k
 np.save(f"{out}/frames.npy", frames.reshape(nv, k * 60, 1024))
 np.savez(f"{out}/audit.npz", **{key.replace(" ", "_"): np.asarray(v).reshape(nv, k * 60) for key, v in ph.items()})

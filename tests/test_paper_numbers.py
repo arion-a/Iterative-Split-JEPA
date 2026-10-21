@@ -57,3 +57,14 @@ def test_confound_statements():
         assert a["total_energy"] > a["kinetic_energy"] + 0.3 and a["total_energy"] > a["potential_energy"] + 0.3
         assert abs(a["amplitude"] - a["total_energy"]) < 0.02 and r["reproduction_diff"] < 0.005
         assert 0.4 < r["partial"]["psi_energy_given_amplitude"] < 0.6 and 0.4 < r["partial"]["psi_amplitude_given_energy"] < 0.6
+
+
+@pytest.mark.skipif(not os.path.exists("results/depth/2.json"), reason="results not present")
+def test_gap_study_statements():
+    d = _load("results/depth/[0-9].json")
+    assert all(r["arms"]["ladder"]["cuts"] == 3 and r["arms"]["single_lag"]["cuts"] == 2 and r["arms"]["shuffled"]["cuts"] == 0 for r in d)
+    s = _load("results/system_single_pendulum/[0-9].json"); e = _load("results/system_elastic_pendulum/[0-9].json")
+    assert all(0.94 < r["arms"]["main"]["naming_abs_spearman"] < 0.96 for r in s)
+    assert all(0.80 < r["arms"]["main"]["naming_abs_spearman"] < 0.85 for r in e)
+    assert all(r["arms"]["main"]["abs_spearman_with"]["amplitude"] < r["arms"]["main"]["naming_abs_spearman"] - 0.05 for r in s + e)
+    assert all(r["arms"]["main"]["abs_spearman_with"]["z"] < 0.1 for r in e)

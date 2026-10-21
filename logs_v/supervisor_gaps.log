@@ -1,0 +1,13 @@
+== S0.1 (phase 0) attempt 1: G registered before any run: hash matches, prediction text present, no G result exists
+   done S0.1
+== S0.2 (phase 0) attempt 1: depth-world arithmetic and helper tests
+   done S0.2
+== S1.1 (phase 1) attempt 1: prep single pendulum (decode, safe phys_vars, recover grouping)
+   HALT at S1.1: real failure: fix the cause, then rerun the supervisor (it resumes here)
+{'system': 'single_pendulum', 'n_clips': 1200, 'best_period': 50, 'contrast_by_period': {'5': 0.025, '6': -0.04, '8': 0.01, '10': 0.026, '12': -0.02, '15': -0.006, '16': 0.03, '20': 0.033, '24': 0.001, '25': 0.02, '30': -0.021, '40': 0.049, '48': 0.042, '50': 0.084, '60': 0.03}, 'pixel_break_fraction_on_boundaries': 1.0, 'pixel_break_fraction_within_videos': 0.9158163265306123, 'adjacent_vs_random_distance': [0.029445912688970566, 0.029359664767980576], 'ok': False}
+Traceback (most recent call last):
+  File "/home/user/Iterative-Split-JEPA/experiments/prep_system.py", line 38, in <module>
+    assert check["ok"], "grouping not recovered"
+           ~~~~~^^^^^^
+AssertionError: grouping not recovered
+

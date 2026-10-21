@@ -26,9 +26,13 @@ def test_system_grouping(name):
     if not os.path.exists(p):
         pytest.skip("not prepared")
     g = json.load(open(p))
-    assert g["ok"] and g["contrast_by_period"][str(g["best_period"])] >= 0.5 and g["pixel_break_fraction_within_videos"] <= 0.02
     f = np.load(f"data/{name}_full/frames.npy"); a = np.load(f"data/{name}_full/audit.npz")
-    assert f.shape[0] * g["best_period"] == g["n_clips"] and np.isfinite(f).all() and a["total_energy"].shape == f.shape[:2]
+    k = 1 if g["fallback"] else g["best_period"]
+    if not g["fallback"]:
+        assert g["ok"] and g["contrast_by_period"][str(g["best_period"])] >= 0.5 and g["pixel_break_fraction_within_videos"] <= 0.02
+    else:                                                                            # fallback is only legitimate if the contrast test really found nothing
+        assert g["contrast_by_period"][str(g["best_period"])] < 0.5
+    assert f.shape[0] * k == g["n_clips"] and np.isfinite(f).all() and a["total_energy"].shape == f.shape[:2]
 
 
 @pytest.mark.parametrize("name", ["single_pendulum", "elastic_pendulum"])

@@ -1,0 +1,26 @@
+== S1.1 (phase 1) attempt 1: group 1100 clips into 100 videos (rule checked against pixel continuity), build video-level sequences and evaluator table
+   done S1.1
+== S1.2 (phase 1) attempt 1: data tests: grouping, shapes, valid-energy fraction
+   done S1.2
+== S1.3 (phase 1) attempt 1: phase 1 gate: safe loader and quotient/statistic tests, sealed-audit scan, audit
+   HALT at S1.3: real failure: fix the cause, then rerun the supervisor (it resumes here)
+s, head c4b909bfd512, 48 declared-superseded artifact references
+PASS criteria hash configs/handshake.yaml
+PASS criteria hash configs/hier.yaml
+PASS criteria hash configs/followup.yaml
+PASS criteria hash configs/e36.yaml
+PASS criteria hash configs/scaling.yaml
+PASS criteria hash configs/columbia.yaml
+PASS criteria hash configs/columbia_controls.yaml
+PASS criteria hash configs/columbia_full.yaml
+FAIL every raw result JSON is in the chain — ['results/columbia_full/supervisor_state.json']
+PASS EVIDENCE has an outcome for E31c′
+PASS EVIDENCE has an outcome for E31d
+PASS EVIDENCE has an outcome for E35
+PASS EVIDENCE has an outcome for F1
+PASS EVIDENCE has an outcome for E36
+PASS EVIDENCE has an outcome for B1
+PASS EVIDENCE has an outcome for C1
+PASS EVIDENCE has an outcome for C1b
+AUDIT FAILED
+

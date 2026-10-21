@@ -15,12 +15,61 @@
    "tail": ""
   },
   "S1.1": {
-   "status": "failed",
+   "status": "done",
    "attempts": 1,
-   "rc": 1,
-   "at": "2026-10-21T01:39:49+00:00",
-   "tail": "{'clips_per_video': 11, 'n_breaks': 88, 'fraction_on_k_boundary': 0.9090909090909091, 'threshold': 0.012734759598970413, 'adjacent_vs_random_distance': [0.005598240531980991, 0.018847178667783737], 'ok': False}\nTraceback (most recent call last):\n  File \"/home/user/Iterative-Split-JEPA/experiments/prep_columbia_full.py\", line 28, in <module>\n    assert check[\"ok\"], \"grouping rule failed: breaks off the multiple-of-k boundaries\"\n           ~~~~~^^^^^^\nAssertionError: grouping rule failed: breaks off the multiple-of-k boundaries\n",
-   "diagnosis": "real failure: fix the cause, then rerun the supervisor (it resumes here)"
+   "rc": 0,
+   "at": "2026-10-21T01:41:15+00:00",
+   "tail": "{'clips_per_video': 11, 'threshold': 0.012734759598970413, 'pixel_break_fraction_on_boundaries': 0.8080808080808081, 'pixel_break_fraction_within_videos': 0.008, 'contrast_by_period': {'5': 0.003, '10': 0.003, '11': 0.8, '20': -0.006, '22': 0.771, '25': -0.011, '44': 0.77, '50': -0.033, '55': 0.775}, 'best_period': 11, 'angle_discontinuous_fraction_on_boundaries': 0.9797979797979798, 'angle_discontinuous_fraction_within_videos': 0.252, 'adjacent_vs_random_distance': [0.005598240531980991, 0.018847178667783737], 'ok': True}\nvideos 100 frames per video 660\n"
+  },
+  "S1.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:41:16+00:00",
+   "tail": ".                                                                        [100%]\n1 passed, 1 deselected in 0.19s\n"
+  },
+  "S1.3": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:42:05+00:00",
+   "tail": ".........                                                                [100%]\n9 passed in 1.34s\nPASS chain links + artifact digests \u2014 333 entries, head ef3f64e218ae, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nAUDIT PASSED\n"
+  },
+  "S2.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:51:01+00:00",
+   "tail": "\n[check] .                                                                        [100%]\n1 passed, 1 deselected in 0.06s\n"
+  },
+  "S3.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:51:01+00:00",
+   "tail": "C2 Columbia full: gates passed 5/7; confirmed only if all four predictions (a)-(d) hold: NOT CONFIRMED.\n\n[check] "
+  },
+  "S3.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:51:01+00:00",
+   "tail": "recorded False\n\n[check] "
+  },
+  "S4.1": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:51:19+00:00",
+   "tail": "PASS test suite \u2014 74 passed, 4 warnings in 16.34s\nPASS chain links + artifact digests \u2014 341 entries, head 7e32007c0a2f, 48 declared-superseded artifact references\nPASS criteria hash configs/handshake.yaml\nPASS criteria hash configs/hier.yaml\nPASS criteria hash configs/followup.yaml\nPASS criteria hash configs/e36.yaml\nPASS criteria hash configs/scaling.yaml\nPASS criteria hash configs/columbia.yaml\nPASS criteria hash configs/columbia_controls.yaml\nPASS criteria hash configs/columbia_full.yaml\nPASS every raw result JSON is in the chain \u2014 []\nPASS EVIDENCE has an outcome for E31c\u2032\nPASS EVIDENCE has an outcome for E31d\nPASS EVIDENCE has an outcome for E35\nPASS EVIDENCE has an outcome for F1\nPASS EVIDENCE has an outcome for E36\nPASS EVIDENCE has an outcome for B1\nPASS EVIDENCE has an outcome for C1\nPASS EVIDENCE has an outcome for C1b\nPASS EVIDENCE has an outcome for C2\nAUDIT PASSED\n"
+  },
+  "S4.2": {
+   "status": "done",
+   "attempts": 1,
+   "rc": 0,
+   "at": "2026-10-21T01:51:19+00:00",
+   "tail": "ALIGNMENT OK\n"
   }
- }
+ },
+ "complete": "2026-10-21T01:51:19+00:00"
 }

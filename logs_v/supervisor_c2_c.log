@@ -1,0 +1,13 @@
+== S1.3 (phase 1) attempt 1: phase 1 gate: safe loader and quotient/statistic tests, sealed-audit scan, audit
+   done S1.3
+== S2.1 (phase 2) attempt 1: full run: 3 seeds x arms main/flat/shuffled/temporal-only, 8000 encoder steps, video-level split
+   done S2.1
+== S3.1 (phase 3) attempt 1: render the report (gate table, controls, informational, C1 comparison)
+   done S3.1
+== S3.2 (phase 3) attempt 1: record the mechanical outcome (a)-(d) in EVIDENCE, STATUS and the chain
+   done S3.2
+== S4.1 (phase 4) attempt 1: full audit: tests, chain, hashes, raw JSONs, outcomes
+   done S4.1
+== S4.2 (phase 4) attempt 1: plan-alignment check: every step done, registration intact, outcome after registration, all seeds logged
+   done S4.2
+PLAN COMPLETE

@@ -38,3 +38,13 @@ def test_columbia_statements():
     co, cc = _load("results/columbia/*.json"), _load("results/columbia_controls/*.json")
     assert all(0.85 < r["certificate"]["naming_abs_spearman"] < 0.92 for r in co)
     assert all(r["flat"] < 0.5 and r["reproduction_diff"] < 0.005 for r in cc)
+
+
+@pytest.mark.skipif(not os.path.exists("results/columbia_full/2.json"), reason="results not present")
+def test_columbia_full_statements():
+    rs = _load("results/columbia_full/[0-9].json")
+    assert all(0.90 < r["arms"]["main"]["naming_abs_spearman"] < 0.92 for r in rs)
+    assert all(abs(r["arms"]["main"]["naming_abs_spearman"] - r["arms"]["temporal_only"]["naming_abs_spearman"]) < 1e-6 for r in rs)
+    assert rs[0]["arms"]["flat"]["naming_abs_spearman"] > 0.5 > rs[1]["arms"]["flat"]["naming_abs_spearman"]
+    assert all(0.6 < r["arms"]["main"]["icc"] < 0.75 and 0.5 < r["tracked_energy_between_video_icc_test"] < 0.6 for r in rs)
+    assert all(r["arms"]["shuffled"]["naming_abs_spearman"] < r["arms"]["main"]["naming_abs_spearman"] - 0.05 for r in rs)

@@ -48,3 +48,5 @@
 | - | **Stage V B1 scaling probe (2026-10-20)** | 450 releases, 8000 steps, 3 seeds | confirmed: naming [0.848, 0.683, 0.828] → [0.97, 0.976, 0.978]; E31d still refuted (0.99); seed agreement 0.976-0.981; certificate holds | `results/scaling/main/*.json` |
 
 | - | **Stage V Columbia real clips C1 / C1b (2026-10-20)** | 1100 real clips, 3 seeds, tracked energy as evaluator | C1 refuted as worded (naming [0.893, 0.895, 0.88] passes ≥ 0.5; rollout 0.43-0.45 and ICC 0.898 on seed 1 miss the sim-calibrated certificate); C1b confirmed (flat [0.477, 0.38, 0.471]) | `results/columbia`, `results/columbia_controls` |
+
+| - | **Stage V C2 Columbia full (2026-10-21)** | 100 videos, video-level split 70/10/20, 3 seeds, 8000 steps | not confirmed: (a) not met, (b) naming [0.905, 0.914, 0.912], (c) flat [0.731, 0.482, 0.472], (d) agreement [0.967, 0.965, 0.966] | `results/columbia_full/REPORT.md` |

@@ -80,6 +80,25 @@ def check_feat(final):
     return ok
 
 
+def check_enc(final):
+    ok, spec = True, [("results/stage_b1_e25", ["main"], 5), ("results/stage_b1_e26", ["main", "shuffled_rung2"], 10),
+                      ("results/stage_b1_e27/mirror_lejepa", ["main"], 5), ("results/stage_b1_e27/mlp_lejepa", ["main"], 5), ("results/stage_b1_e27/mirror_predict", ["main"], 5)]
+    for folder, arms, want in spec:
+        bad, n = [], 0
+        for a in arms:
+            for s in range(30, 35):
+                p = f"{folder}/{a}_seed{s}.json"
+                if not os.path.exists(p): continue
+                n += 1
+                d = json.load(open(p))
+                pr = d.get("presence", {})
+                if d.get("seed") != s or not finite(d): bad.append(f"{p}: seed/finite")
+                if any(len(pr.get(k, [])) != 3 or not all(-1 <= x <= 1.01 for x in pr.get(k, [])) for k in ("linear", "mlp")): bad.append(f"{p}: presence field")
+                if d["encoder_final"]["min_std"] < 0.1: bad.append(f"{p}: encoder collapsed (min std {d['encoder_final']['min_std']:.3f})")
+        ok &= report(folder, bad, n, want, final)
+    return ok
+
+
 def check_evidence():
     out = subprocess.run(["git", "diff", "--numstat", BASE, "--", "docs/EVIDENCE.md"], capture_output=True, text=True).stdout.split()
     dele = int(out[1]) if len(out) >= 2 else 0
@@ -93,5 +112,5 @@ if __name__ == "__main__":
     ok = {"e21b1": lambda: check_b1("results/stage_b1_e21", seeds, ["main", "shuffled_rung2", "rank1_rung2"], final),
           "e21b2": lambda: check_b2("results/stage_b2_e21", seeds, [0.1, 0.4], final),
           "e23": lambda: check_b1("results/stage_b1_e23", list(range(30, 35)), ["main", "shuffled_rung2"], final),
-          "data": lambda: check_data(final), "feat": lambda: check_feat(final), "evidence": check_evidence}[mode]()
+          "data": lambda: check_data(final), "feat": lambda: check_feat(final), "enc": lambda: check_enc(final), "evidence": check_evidence}[mode]()
     sys.exit(0 if ok else 1)

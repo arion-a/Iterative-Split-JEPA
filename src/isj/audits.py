@@ -55,6 +55,28 @@ def linear_r2(x_tr, y_tr, x_te, y_te, ridge: float = 1e-6) -> float:
     return r2(ridge_fit(x_tr, y_tr, ridge), x_te, y_te)
 
 
+def mlp_r2(x_tr, y_tr, x_te, y_te, hidden: int = 64, steps: int = 800, lr: float = 3e-3, seed: int = 0) -> float:
+    """Held-out R2 of a small two-layer tanh network fitted from x to y (a nonlinear 'is it present' probe).
+    Uses its own generator, so it never touches the global random state."""
+    g = torch.Generator().manual_seed(seed)
+    mu, sd = x_tr.mean(0), x_tr.std(0) + 1e-8
+    ym, ys = y_tr.mean(0), y_tr.std(0) + 1e-8
+    xt, yt = (x_tr - mu) / sd, (y_tr - ym) / ys
+    xe = (x_te - mu) / sd
+    w1 = (torch.randn(xt.shape[1], hidden, generator=g) / xt.shape[1] ** 0.5).requires_grad_()
+    b1 = torch.zeros(hidden, requires_grad=True)
+    w2 = (torch.randn(hidden, yt.shape[1], generator=g) / hidden ** 0.5).requires_grad_()
+    b2 = torch.zeros(yt.shape[1], requires_grad=True)
+    opt = torch.optim.Adam([w1, b1, w2, b2], lr=lr)
+    for _ in range(steps):
+        idx = torch.randint(0, xt.shape[0], (1024,), generator=g)
+        loss = ((torch.tanh(xt[idx] @ w1 + b1) @ w2 + b2 - yt[idx]) ** 2).mean()
+        opt.zero_grad(); loss.backward(); opt.step()
+    with torch.no_grad():
+        pred = (torch.tanh(xe @ w1 + b1) @ w2 + b2) * ys + ym
+        return float(1 - (y_te - pred).square().sum() / (y_te - y_te.mean(0)).square().sum())
+
+
 # ---------------------------------------------------------------- permutation tests
 def holm(pvals: list[float], alpha: float) -> list[bool]:
     """Holm step-down: True where the null is rejected."""

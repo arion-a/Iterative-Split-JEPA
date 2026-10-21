@@ -1,0 +1,13 @@
+# Layered criteria for iterative splitting of any encoder's latent space (docs/DECISIONS.md D15). Frozen BEFORE E25-E27 were run.
+# A block can only be split if it is in the representation, so presence is judged first and separability only for present blocks.
+presence:
+  probe: "two-layer tanh network (64 hidden, 800 Adam steps), held-out R2 of each true block's latents from the whole whitened embedding; linear R2 is reported alongside"
+  present_min: 0.9          # at or above: the block is present
+  absent_max: 0.5           # below: the block is absent; in between: partial
+separability:
+  source: "the hash-frozen B1 criteria (configs/stage_b1.yaml, hash configs/stage_b1.criteria.sha256): per rung angle, variant R2 and gap ratio"
+classes:                    # per rung k, for the block that rung splits off (rung 1 = texture, rung 2 = identity)
+  ABSENT: "presence of block k below absent_max"
+  PARTIAL: "presence between absent_max and present_min"
+  PRESENT_NOT_SEPARABLE: "presence at or above present_min and at least one of angle, variant R2, gap fails for that rung"
+  SPLIT: "presence at or above present_min and angle, variant R2 and gap all hold for that rung"

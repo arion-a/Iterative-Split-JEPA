@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 422 entries, head e7e38133efd2
+Chain status at render time: **VALID** — 423 entries, head 2f5fd47aace3
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -9292,5 +9292,18 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Entry 419 (completion close-out) fingerprinted docs/COMPLETION_PLAN.md before the plan's last ticks were written; the plan is a living tracker, so that reference is declared superseded. (The previous housekeeping entry named index 420 by mistake; entry 419 is the correct one.)
 
 **Bearing on objectives —.** Housekeeping only; no result changed.
+
+---
+
+## #422 · plan · stage B · plan §E25-E27 registration
+`2f5fd47aace3c7d1` ← `e7e38133efd22b75` · recorded 2026-10-21T01:28:28+00:00
+
+**What.** Owner request 2026-10-21: test whether iterative splitting works on the latent space of any encoder. Registered E25 (is the fast block absent from the prediction-trained MLP at the original speeds), E26 (equal predictability, generic MLP + prediction recipe), E27 (architecture x objective at equal predictability; the owner's claim that no present block is unseparable). Decision D15 adds layered criteria (presence first, then separability), frozen by hash before any run. Instruments added: nonlinear presence probe in the B1 runner.
+
+**How.** docs/EVIDENCE.md E25-E27 and docs/DECISIONS.md D15 written before the runs; plan docs/PLAN_ENCODER_GENERALITY.md; criteria configs/layered.yaml (sha in configs/layered.sha256)
+
+**Artifacts.** `configs/layered.yaml` (sha256 9700adeee8); `configs/layered.sha256` (sha256 b372c3bd14); `configs/stage_b1_mlp.yaml` (sha256 2ef82b4ccc); `configs/stage_b1_eqrho_mlp_predict.yaml` (sha256 ed2af0d144); `configs/stage_b1_eqrho_mirror_lejepa.yaml` (sha256 c47f81349d); `configs/stage_b1_eqrho_mlp_lejepa.yaml` (sha256 69e5527e20) … +2 more
+
+**Bearing on objectives O2.** Pre-registration: thresholds (presence 0.9 present, 0.5 absent) and the verdict rules are fixed before data.
 
 ---

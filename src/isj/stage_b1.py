@@ -120,7 +120,10 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
              "inherited_span_deg": float(audits.principal_angles_deg(rungs[0].Q, span).max()),
              "inherited_perp_deg": float(audits.principal_angles_deg(rungs[0].Q, h_perp).max()),
              "pair_budgets": list(budgets), "nesting_enforcement": nest}
-    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs",
+    blocks = [world.block_slice(k) for k in range(1, world.n_blocks + 1)]
+    presence = {"linear": [audits.linear_r2(rtr, ztr[:, b], rte, zte[:, b]) for b in blocks],
+                "mlp": [audits.mlp_r2(rtr, ztr[:, b], rte, zte[:, b], seed=seed) for b in blocks]}
+    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

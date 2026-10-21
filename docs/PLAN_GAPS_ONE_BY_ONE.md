@@ -60,7 +60,7 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 - **Solution within the paper's design:** re-run the existing Stage C pipeline (`experiments/robot/run_stage_c.py`) with the paper's fixed block sizes instead of the gap-selected ones; same P1-P4, same 6 runs (3 split seeds x 2 tasks), same data and features. No new rule, no new metric.
 - [x] 5.1 (reproduction NOT exact: with the option off, PickCube split 0 gave rung-1 size 29 and P1 1.46 against the stored 26 and 1.38; the option-off code path is unchanged text, so this is run-to-run variation in the head training on this machine, same qualitative result; stated, not chased) Add the fixed-size option to `run_stage_c.py` (off by default; existing results untouched). **Done when:** unit smoke on the saved features reproduces an existing split run with the option off.
 - [x] 5.2 Register (draft): P1-P4 as registered for E24, with the paper's block sizes. 5.3 Run (6 runs), score, record.
-- [ ] 5.4 If P1 still fails: the frozen-feature encoder cannot concentrate the viewpoint factor; fine-tuning the ResNet-50 (the paper's actual setup) needs a GPU outside this sandbox, so the step is a handoff (`docs/HANDOFF_E24_GPU.md` pattern), not something run here. That is the located limit.
+- [x] 5.4 If P1 still fails: the frozen-feature encoder cannot concentrate the viewpoint factor; fine-tuning the ResNet-50 (the paper's actual setup) needs a GPU outside this sandbox, so the step is a handoff (`docs/HANDOFF_E24_GPU.md` pattern), not something run here. That is the located limit.
 - Gate.
 
 ### Gap 6: no payoff test  [objective O4, plan Stage D]

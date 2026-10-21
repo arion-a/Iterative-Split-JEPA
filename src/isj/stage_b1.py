@@ -102,6 +102,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         lam = float(r.eigvals[r.d_k - 1])
         out.append({
             "k": k, "applied": bool(r.applied), "angle_deg": audits.max_angle_deg(r.V, image[k]),
+            "nesting_deg": None if k == 1 else float(audits.principal_angles_deg(r.V, torch.cat([image[j] for j in range(k, world.n_blocks + 1)], dim=1)).max()),
             "variant_r2": audits.linear_r2(v_tr, ztr[:, world.block_slice(k)], v_te, zte[:, world.block_slice(k)]),
             "invariant_content_r2": audits.linear_r2(q_tr, z_slow(ztr), q_te, z_slow(zte)),
             "gap_ratio": r.gap_ratio, "lambda_dk": lam, "eigvals": [float(x) for x in r.eigvals],
@@ -114,8 +115,8 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         })
     last = rungs[-1]
     core = last.Q if last.applied else last.H_prev
-    core_r2 = audits.linear_r2(rtr @ core, ztr[:, world.block_slice(3)], rte @ core, zte[:, world.block_slice(3)])
-    span = torch.cat([image[2], image[3]], dim=1)
+    core_r2 = audits.linear_r2(rtr @ core, ztr[:, world.block_slice(world.n_blocks)], rte @ core, zte[:, world.block_slice(world.n_blocks)])
+    span = torch.cat([image[j] for j in range(2, world.n_blocks + 1)], dim=1)
     nesting = float(audits.principal_angles_deg(rungs[1].V, span).max())
     u_, _, _ = torch.linalg.svd(image[1], full_matrices=True)
     h_perp = u_[:, world.block_slice(1).stop - world.block_slice(1).start:]
@@ -136,17 +137,27 @@ CRITERIA_KEYS = ["rung1_angle", "rung2_angle", "rung1_variant_r2", "rung2_varian
                  "nesting", "rung1_gap", "rung2_gap", "leakage", "rank_test"]
 
 
+def criteria_keys(n_rungs: int) -> list[str]:
+    """Names of the per-seed checks for a ladder of n rungs (2 rungs: CRITERIA_KEYS; deeper rungs add their own angle, variant R2, gap and nesting)."""
+    ks = [f"rung{i}_angle" for i in range(1, n_rungs + 1)] + [f"rung{i}_variant_r2" for i in range(1, n_rungs + 1)] + ["core_invariant_r2", "nesting"]
+    return ks + [f"nesting{i}" for i in range(3, n_rungs + 1)] + [f"rung{i}_gap" for i in range(1, n_rungs + 1)] + ["leakage", "rank_test"]
+
+
 def seed_checks(r: dict, c: dict) -> dict:
-    r1, r2 = r["rungs"]
-    return {"rung1_angle": r1["angle_deg"] < c["rung_angle_max_deg"],
-            "rung2_angle": r2["angle_deg"] < c["rung_angle_max_deg"],
-            "rung1_variant_r2": r1["variant_r2"] > c["variant_r2_min"],
-            "rung2_variant_r2": r2["variant_r2"] > c["variant_r2_min"],
-            "core_invariant_r2": r["core_invariant_r2"] > c["core_invariant_r2_min"],
-            "nesting": r["nesting_angle_deg"] < c["nesting_angle_max_deg"],
-            "rung1_gap": r1["gap_ratio"] > c["gap_ratio_min"], "rung2_gap": r2["gap_ratio"] > c["gap_ratio_min"],
-            "leakage": not (r1["leak_any_significant"] or r2["leak_any_significant"]),
-            "rank_test": not (r1["rank_deficient"] or r2["rank_deficient"])}
+    """The per-seed acceptance checks, for any number of rungs (the plan's Stage C: the same checks at every rung)."""
+    rg = r["rungs"]
+    out = {}
+    for i, g in enumerate(rg, 1):
+        out[f"rung{i}_angle"] = g["angle_deg"] < c["rung_angle_max_deg"]
+        out[f"rung{i}_variant_r2"] = g["variant_r2"] > c["variant_r2_min"]
+        out[f"rung{i}_gap"] = g["gap_ratio"] > c["gap_ratio_min"]
+        if i >= 3:
+            out[f"nesting{i}"] = g["nesting_deg"] < c["nesting_angle_max_deg"]
+    out["core_invariant_r2"] = r["core_invariant_r2"] > c["core_invariant_r2_min"]
+    out["nesting"] = r["nesting_angle_deg"] < c["nesting_angle_max_deg"]
+    out["leakage"] = not any(g["leak_any_significant"] for g in rg)
+    out["rank_test"] = not any(g["rank_deficient"] for g in rg)
+    return out
 
 
 def evaluate(runs: dict, cfg: dict) -> dict:

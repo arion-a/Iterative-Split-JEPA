@@ -29,6 +29,7 @@ Written 2026-10-21 at the owner's request. **Planning only: nothing below is reg
 - **Where / cause:** the correspondence builder for rung 2 (`src/isj/cluster.py`). The count was read in the 120-blob invariant space; the category structure lives in the slow subspace (exploratory diagnostic, 9 of 9).
 - **Theory anchor:** Stage B (pairs from the data), Remark 5.4 (abstain when the correspondence structure is not there). The selector keeps its E18 constants; only the space changes.
 - **Steps:** G4K.1 implemented; G4K.2 registered (E31, E32, criteria frozen); G4K.3 runs (60 in progress); G4K.4 fallback only if the data has no usable time order (not part of the B2 setting; conditional); G4K.5 boundary (E32, inside the same 60 runs).
+- [x] 1.1 Slow-subspace selector implemented and tested (G4K.1). - [x] 1.2 E31 and E32 registered, criteria frozen by hash before any run (G4K.2). - [x] 1.3 60 runs, scored (E31 refuted as registered at sigma_cat 0.6 only; E32 refuted; boundary 0.4). - [x] 1.4 Fallback without time order: not triggered, not built. **Gap 1 closed: `docs/E18_FIX_REPORT.md`.**
 - **Nothing added here:** its numbers and controls are already registered.
 
 ### Gap 2: a failed rung damages the next one (carry-over)  [objective O2/O3, Theorem 5.2, Remark 5.4, §6.2]
@@ -100,6 +101,7 @@ About 80 runs for Gaps 2-6 (20 + 25 + 20 + 6 + about 10), plus the 60 already ru
 
 ## Log (newest last)
 - 2026-10-21: plan written; nothing registered or run for Gaps 2-6. Gap 1 (E31, E32) running.
+- 2026-10-21 (later): Gap 1 closed (E31 refuted as registered at sigma_cat 0.6 only, cause fixed; E32 boundary 0.4). Gaps 2-6 not started.
 
 ## Noted, not started
 - Pair-building from data beyond rung 2 (nested clustering for depth 3 and deeper).

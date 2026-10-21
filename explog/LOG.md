@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 573 entries, head c5b0ec788e70
+Chain status at render time: **VALID** — 632 entries, head 31e959bb773d
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12494,5 +12494,1151 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Owner asked for a plan that attacks each gap one by one, with steps and a supervisor, matched to the theory and the experimental plan, without expanding experiments or increasing criteria, metrics or numbers. Wrote docs/PLAN_GAPS_ONE_BY_ONE.md: six gaps in dependency order (cluster count [running], carry-over from a failed rung, deeper ladder, encoder keeping the content, real-image features, payoff), each with its theory anchor, steps and done-when conditions; only existing criteria are used (the four per-rung acceptance checks, presence 0.95, the plan's 1/sqrt(n) scaling); about 80 further runs (earlier plan: about 150); proposals that went beyond the theory were dropped (decoder-based presence proxy, energy-based block size, new abstention level, soft pairs and BIC, full Stage D). Supervisor: per-gap monitor scripts and experiments/plan_status.py. Nothing registered or run for gaps 2-6.
 
 **Bearing on objectives O2, O3, O4.** Planning only; each gap registers its prediction and freezes its criteria before its first run.
+
+---
+
+## #573 · run · stage B · plan §4.2
+`b959a1c72568f3e3` ← `c5b0ec788e70912b` · recorded 2026-10-21T13:01:50+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.01,
+ "angle_b2": 9.37,
+ "k_found": 5,
+ "purity": 0.835
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/64.json` (sha256 d01facf3ec)
+
+---
+
+## #574 · run · stage B · plan §4.2
+`20634bbcb38305e7` ← `b959a1c72568f3e3` · recorded 2026-10-21T13:01:59+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 15.08,
+ "angle_b2": 16.82,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/65.json` (sha256 f0979b0b17)
+
+---
+
+## #575 · run · stage B · plan §4.2
+`136a66a75d6d648f` ← `20634bbcb38305e7` · recorded 2026-10-21T13:02:06+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.31,
+ "angle_b2": 8.36,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/67.json` (sha256 16ff75d885)
+
+---
+
+## #576 · run · stage B · plan §4.2
+`92db0f2ede4a07c8` ← `136a66a75d6d648f` · recorded 2026-10-21T13:02:08+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.68,
+ "angle_b2": 11.7,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/66.json` (sha256 c9e919a31f)
+
+---
+
+## #577 · run · stage B · plan §4.2
+`1cd0efd16a804e5e` ← `92db0f2ede4a07c8` · recorded 2026-10-21T13:08:42+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.04,
+ "angle_b2": 14.94,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/68.json` (sha256 6eac0374b7)
+
+---
+
+## #578 · run · stage B · plan §4.2
+`ed5a2ec2f0f9ed2f` ← `1cd0efd16a804e5e` · recorded 2026-10-21T13:08:45+00:00
+
+**What.** Stage B2 sigma_cat=0.1 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.47,
+ "angle_b2": 11.48,
+ "k_found": 6,
+ "purity": 1.0
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.1/69.json` (sha256 6d2c8d4cfb)
+
+---
+
+## #579 · run · stage B · plan §4.2
+`b1b76726e35dae53` ← `ed5a2ec2f0f9ed2f` · recorded 2026-10-21T13:09:05+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.37,
+ "angle_b2": 9.21,
+ "k_found": 5,
+ "purity": 0.83
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/60.json` (sha256 5586a3ab22)
+
+---
+
+## #580 · run · stage B · plan §4.2
+`15d5b6ac1cf23a84` ← `b1b76726e35dae53` · recorded 2026-10-21T13:09:15+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.8,
+ "angle_b2": 10.92,
+ "k_found": 5,
+ "purity": 0.832
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/61.json` (sha256 067d939bfe)
+
+---
+
+## #581 · run · stage B · plan §4.2
+`f023c096e71d643c` ← `15d5b6ac1cf23a84` · recorded 2026-10-21T13:15:22+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.95,
+ "angle_b2": 8.14,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/62.json` (sha256 9761a59cdb)
+
+---
+
+## #582 · run · stage B · plan §4.2
+`6b19edb6b413db8d` ← `f023c096e71d643c` · recorded 2026-10-21T13:15:28+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.07,
+ "angle_b2": 8.49,
+ "k_found": 6,
+ "purity": 0.996
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/63.json` (sha256 d8768ed6f8)
+
+---
+
+## #583 · run · stage B · plan §4.2
+`019b8685495cab9e` ← `6b19edb6b413db8d` · recorded 2026-10-21T13:15:51+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.47,
+ "angle_b2": 10.64,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/64.json` (sha256 6e452ce512)
+
+---
+
+## #584 · run · stage B · plan §4.2
+`822dd9041f57c356` ← `019b8685495cab9e` · recorded 2026-10-21T13:15:57+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.49,
+ "angle_b2": 14.35,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/65.json` (sha256 168110a918)
+
+---
+
+## #585 · run · stage B · plan §4.2
+`9405973e3ee03591` ← `822dd9041f57c356` · recorded 2026-10-21T13:25:11+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.79,
+ "angle_b2": 8.84,
+ "k_found": 5,
+ "purity": 0.834
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/67.json` (sha256 bfcbf77b72)
+
+---
+
+## #586 · run · stage B · plan §4.2
+`421a8359f513f710` ← `9405973e3ee03591` · recorded 2026-10-21T13:25:13+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.67,
+ "angle_b2": 11.8,
+ "k_found": 5,
+ "purity": 0.832
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/66.json` (sha256 3c4dd20766)
+
+---
+
+## #587 · run · stage B · plan §4.2
+`825a3b92d8c6a6e0` ← `421a8359f513f710` · recorded 2026-10-21T13:25:23+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.78,
+ "angle_b2": 10.95,
+ "k_found": 6,
+ "purity": 0.996
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/69.json` (sha256 ce5959a5b2)
+
+---
+
+## #588 · run · stage B · plan §4.2
+`3368c2be1e407e42` ← `825a3b92d8c6a6e0` · recorded 2026-10-21T13:25:26+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.64,
+ "angle_b2": 12.99,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.4/68.json` (sha256 1b8a06b76a)
+
+---
+
+## #589 · run · stage B · plan §4.2
+`5234e7d94930a31b` ← `3368c2be1e407e42` · recorded 2026-10-21T13:31:53+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.62,
+ "angle_b2": 9.57,
+ "k_found": 5,
+ "purity": 0.815
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/60.json` (sha256 3393fb5b99)
+
+---
+
+## #590 · run · stage B · plan §4.2
+`2553249e4fc2b9b4` ← `5234e7d94930a31b` · recorded 2026-10-21T13:32:00+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.77,
+ "angle_b2": 8.36,
+ "k_found": 5,
+ "purity": 0.824
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/62.json` (sha256 7ad4e2990a)
+
+---
+
+## #591 · run · stage B · plan §4.2
+`852dad2ba9b9d8d1` ← `2553249e4fc2b9b4` · recorded 2026-10-21T13:32:08+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.58,
+ "angle_b2": 10.67,
+ "k_found": 5,
+ "purity": 0.814
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/61.json` (sha256 50d947d668)
+
+---
+
+## #592 · run · stage B · plan §4.2
+`fd252e4dc74a11d1` ← `852dad2ba9b9d8d1` · recorded 2026-10-21T13:32:20+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 6.77,
+ "angle_b2": 9.26,
+ "k_found": 6,
+ "purity": 0.957
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/63.json` (sha256 b471bfdc00)
+
+---
+
+## #593 · run · stage B · plan §4.2
+`4f46b0a994602749` ← `fd252e4dc74a11d1` · recorded 2026-10-21T13:38:59+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.23,
+ "angle_b2": 13.67,
+ "k_found": 5,
+ "purity": 0.824
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/65.json` (sha256 e14efa2909)
+
+---
+
+## #594 · run · stage B · plan §4.2
+`08b5c2f0ad34ff59` ← `4f46b0a994602749` · recorded 2026-10-21T13:39:03+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.95,
+ "angle_b2": 21.89,
+ "k_found": 12,
+ "purity": 0.809
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/64.json` (sha256 39d43c8c56)
+
+---
+
+## #595 · run · stage B · plan §4.2
+`448c4d1d97d8892f` ← `08b5c2f0ad34ff59` · recorded 2026-10-21T13:39:08+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.56,
+ "angle_b2": 9.35,
+ "k_found": 5,
+ "purity": 0.821
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/67.json` (sha256 340c1b6fec)
+
+---
+
+## #596 · run · stage B · plan §4.2
+`4e7888e5937d6ad0` ← `448c4d1d97d8892f` · recorded 2026-10-21T13:39:17+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.41,
+ "angle_b2": 17.84,
+ "k_found": 7,
+ "purity": 0.826
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/66.json` (sha256 5c25a5479b)
+
+---
+
+## #597 · run · stage B · plan §4.2
+`81ee614fa6f8a6de` ← `4e7888e5937d6ad0` · recorded 2026-10-21T13:45:49+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.74,
+ "angle_b2": 9.58,
+ "k_found": 5,
+ "purity": 0.83
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/60.json` (sha256 dd2766d2c5)
+
+---
+
+## #598 · run · stage B · plan §4.2
+`7035a75b39f8434b` ← `81ee614fa6f8a6de` · recorded 2026-10-21T13:45:54+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.28,
+ "angle_b2": 12.84,
+ "k_found": 5,
+ "purity": 0.825
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/68.json` (sha256 1d1338d725)
+
+---
+
+## #599 · run · stage B · plan §4.2
+`ea51214edfc55ff7` ← `7035a75b39f8434b` · recorded 2026-10-21T13:46:01+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.68,
+ "angle_b2": 10.7,
+ "k_found": 5,
+ "purity": 0.83
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/61.json` (sha256 d8db65186a)
+
+---
+
+## #600 · run · stage B · plan §4.2
+`dac8a25bc1361a00` ← `ea51214edfc55ff7` · recorded 2026-10-21T13:46:04+00:00
+
+**What.** Stage B2 sigma_cat=0.6 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.01,
+ "angle_b2": 11.51,
+ "k_found": 6,
+ "purity": 0.95
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.6/69.json` (sha256 4bc13322f9)
+
+---
+
+## #601 · run · stage B · plan §4.2
+`b7358b4e9d2daa90` ← `dac8a25bc1361a00` · recorded 2026-10-21T13:55:26+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.37,
+ "angle_b2": 9.03,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/62.json` (sha256 a3b2246fcf)
+
+---
+
+## #602 · run · stage B · plan §4.2
+`40509a1ca799cdbf` ← `b7358b4e9d2daa90` · recorded 2026-10-21T13:55:29+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.42,
+ "angle_b2": 8.27,
+ "k_found": 6,
+ "purity": 0.995
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/63.json` (sha256 bce8354840)
+
+---
+
+## #603 · run · stage B · plan §4.2
+`6629ff1d6e1f2fc4` ← `40509a1ca799cdbf` · recorded 2026-10-21T13:55:33+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.37,
+ "angle_b2": 9.8,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/64.json` (sha256 e1d9ce5144)
+
+---
+
+## #604 · run · stage B · plan §4.2
+`84e62435b3760647` ← `6629ff1d6e1f2fc4` · recorded 2026-10-21T13:55:35+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.16,
+ "angle_b2": 14.44,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/65.json` (sha256 5c254a5a05)
+
+---
+
+## #605 · run · stage B · plan §4.2
+`82376ec828e781ab` ← `84e62435b3760647` · recorded 2026-10-21T14:02:08+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.89,
+ "angle_b2": 12.52,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/66.json` (sha256 8ef9960d7f)
+
+---
+
+## #606 · run · stage B · plan §4.2
+`466fc865388d435b` ← `82376ec828e781ab` · recorded 2026-10-21T14:02:11+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 9.01,
+ "angle_b2": 9.77,
+ "k_found": 5,
+ "purity": 0.833
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/67.json` (sha256 673505b515)
+
+---
+
+## #607 · run · stage B · plan §4.2
+`f6619fd53c70075f` ← `466fc865388d435b` · recorded 2026-10-21T14:02:14+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.05,
+ "angle_b2": 11.16,
+ "k_found": 6,
+ "purity": 0.996
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/69.json` (sha256 100f074d1f)
+
+---
+
+## #608 · run · stage B · plan §4.2
+`f7c2bd3b5390a2c0` ← `f6619fd53c70075f` · recorded 2026-10-21T14:02:14+00:00
+
+**What.** Stage B2 sigma_cat=0.4 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 13.01,
+ "angle_b2": 14.7,
+ "k_found": 5,
+ "purity": 0.831
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk_equal/sigma_cat_0.4/68.json` (sha256 3ddd59c1d7)
+
+---
+
+## #609 · result · stage B · plan §E31
+`9e1cc56fcd3e5add` ← `f7c2bd3b5390a2c0` · recorded 2026-10-21T14:03:33+00:00
+
+**What.** E31 (slow-subspace cluster count, 40 runs on fresh seeds 60-69): REFUTED as registered by part (a) at sigma_cat 0.6 only. K = 6 in 10/10 at sigma_cat 0.1, 9/10 at 0.4, 6/10 at 0.6; purity condition held; shuffled-time control K = 6 in 0/10 at every level; equal-speed control abstained 10/10. Same runs: E18 selector K = 6 in 1, 2, 0 of 10 and silhouette 3, 2, 2 of 10. D14 criterion (rung-2 gap after Tier 1) met by the slow-subspace arm in 10/10, 10/10, 9/9 (silhouette 10/10, 10/10, 7/9; E18 9/10, 3/10, 1/9). All five misses are K = 5 (two categories merged); block size right in all runs; subspace angle not different between hits and misses; mostly worlds with two close category centres but not a clean threshold.
+
+**How.** experiments/analyse_slowk.py (frozen configs/slowk.criteria.yaml), 40 runs of the B2 pipeline with cluster.slow_k
+
+**Output.**
+```json
+{
+ "D14_slow": {
+  "0.1": "10/10",
+  "0.4": "10/10",
+  "0.6": "9/9"
+ },
+ "K6_E18": {
+  "0.1": "1/10",
+  "0.4": "2/10",
+  "0.6": "0/10"
+ },
+ "K6_silhouette": {
+  "0.1": "3/10",
+  "0.4": "2/10",
+  "0.6": "2/10"
+ },
+ "K6_slow": {
+  "0.1": "10/10",
+  "0.4": "9/10",
+  "0.6": "6/10"
+ },
+ "control_shuffled_K6": "0/10 at every level",
+ "equal_speed_abstained": "10/10"
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/SLOWK_REPORT.md` (sha256 d8c5d9cbe2)
+
+**Bearing on objectives O2.** The E18 failure was the wrong space; in the right space the count is correct up to sigma_cat 0.4 and mostly right at 0.6, and the downstream pair-quality criterion is met at all three levels. The remaining misses are merges of nearby categories.
+
+**Verdict.** refuted
+
+---
+
+## #610 · run · stage B · plan §4.2
+`40d909b3590d3f0e` ← `9e1cc56fcd3e5add` · recorded 2026-10-21T14:08:58+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.85,
+ "angle_b2": 12.84,
+ "k_found": 6,
+ "purity": 0.782
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/62.json` (sha256 8ad0fa4653)
+
+---
+
+## #611 · run · stage B · plan §4.2
+`2075f94e3eb762a1` ← `40d909b3590d3f0e` · recorded 2026-10-21T14:09:12+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.9,
+ "angle_b2": 19.49,
+ "k_found": 11,
+ "purity": 0.803
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/60.json` (sha256 3db066da2e)
+
+---
+
+## #612 · run · stage B · plan §4.2
+`3a1dc24c1e77dfc1` ← `2075f94e3eb762a1` · recorded 2026-10-21T14:09:16+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.52,
+ "angle_b2": 46.43,
+ "k_found": 11,
+ "purity": 0.734
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/61.json` (sha256 3d8c76bda9)
+
+---
+
+## #613 · run · stage B · plan §4.2
+`c3e1bc1a06d0bd91` ← `3a1dc24c1e77dfc1` · recorded 2026-10-21T14:09:24+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.21,
+ "angle_b2": 13.07,
+ "k_found": 5,
+ "purity": 0.733
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/63.json` (sha256 3e5dba48b6)
+
+---
+
+## #614 · run · stage B · plan §4.2
+`091284eb69bd62f5` ← `c3e1bc1a06d0bd91` · recorded 2026-10-21T14:15:41+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.97,
+ "angle_b2": 74.91,
+ "k_found": 12,
+ "purity": 0.743
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/64.json` (sha256 12f19707e1)
+
+---
+
+## #615 · run · stage B · plan §4.2
+`9df9b6f5367136cb` ← `091284eb69bd62f5` · recorded 2026-10-21T14:15:53+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.77,
+ "angle_b2": 36.32,
+ "k_found": 9,
+ "purity": 0.715
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/65.json` (sha256 2b8e183086)
+
+---
+
+## #616 · run · stage B · plan §4.2
+`1057663bf1b6406d` ← `9df9b6f5367136cb` · recorded 2026-10-21T14:16:00+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.38,
+ "angle_b2": 18.78,
+ "k_found": 9,
+ "purity": 0.744
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/67.json` (sha256 3abd0790bc)
+
+---
+
+## #617 · run · stage B · plan §4.2
+`ad67478d6807b2db` ← `1057663bf1b6406d` · recorded 2026-10-21T14:16:05+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.4,
+ "angle_b2": 31.54,
+ "k_found": 11,
+ "purity": 0.758
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/66.json` (sha256 39e2324494)
+
+---
+
+## #618 · run · stage B · plan §4.2
+`1e147b125d92ac45` ← `ad67478d6807b2db` · recorded 2026-10-21T14:25:38+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.81,
+ "angle_b2": 25.66,
+ "k_found": 7,
+ "purity": 0.74
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/68.json` (sha256 10fd07505f)
+
+---
+
+## #619 · run · stage B · plan §4.2
+`9c95d0a92c4b57af` ← `1e147b125d92ac45` · recorded 2026-10-21T14:25:39+00:00
+
+**What.** Stage B2 sigma_cat=0.8 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.71,
+ "angle_b2": 30.65,
+ "k_found": 6,
+ "purity": 0.755
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_0.8/69.json` (sha256 7bdb0bbaaf)
+
+---
+
+## #620 · run · stage B · plan §4.2
+`7286c6c421dedb75` ← `9c95d0a92c4b57af` · recorded 2026-10-21T14:25:50+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=60 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.95,
+ "angle_b2": 54.99,
+ "k_found": 10,
+ "purity": 0.627
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/60.json` (sha256 9c0be79ed8)
+
+---
+
+## #621 · run · stage B · plan §4.2
+`60749e98e5e1ab9a` ← `7286c6c421dedb75` · recorded 2026-10-21T14:25:59+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=61 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.5,
+ "angle_b2": 58.19,
+ "k_found": 9,
+ "purity": 0.651
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/61.json` (sha256 d2155d5150)
+
+---
+
+## #622 · run · stage B · plan §4.2
+`23d5148cfaebd02a` ← `60749e98e5e1ab9a` · recorded 2026-10-21T14:32:48+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=62 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.96,
+ "angle_b2": 35.87,
+ "k_found": 12,
+ "purity": 0.71
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/62.json` (sha256 c75f40c83a)
+
+---
+
+## #623 · run · stage B · plan §4.2
+`5b1a753eccc77404` ← `23d5148cfaebd02a` · recorded 2026-10-21T14:32:52+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=64 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.76,
+ "angle_b2": 70.5,
+ "k_found": 12,
+ "purity": 0.674
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/64.json` (sha256 c5d1e48b36)
+
+---
+
+## #624 · run · stage B · plan §4.2
+`339e17468433f79b` ← `5b1a753eccc77404` · recorded 2026-10-21T14:33:00+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=63 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 7.07,
+ "angle_b2": 41.47,
+ "k_found": 9,
+ "purity": 0.631
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/63.json` (sha256 6c0bf1ca62)
+
+---
+
+## #625 · run · stage B · plan §4.2
+`976c254980e838c7` ← `339e17468433f79b` · recorded 2026-10-21T14:33:13+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=65 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.75,
+ "angle_b2": 87.87,
+ "k_found": 11,
+ "purity": 0.666
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/65.json` (sha256 3c8298a096)
+
+---
+
+## #626 · run · stage B · plan §4.2
+`2dee6ba63fba4ffd` ← `976c254980e838c7` · recorded 2026-10-21T14:39:14+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=67 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 8.39,
+ "angle_b2": 31.92,
+ "k_found": 8,
+ "purity": 0.664
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/67.json` (sha256 71fd676824)
+
+---
+
+## #627 · run · stage B · plan §4.2
+`1be50a899718dcc8` ← `2dee6ba63fba4ffd` · recorded 2026-10-21T14:39:23+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=66 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 11.4,
+ "angle_b2": 74.69,
+ "k_found": 11,
+ "purity": 0.643
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/66.json` (sha256 369c664349)
+
+---
+
+## #628 · run · stage B · plan §4.2
+`21585b607931b6d0` ← `1be50a899718dcc8` · recorded 2026-10-21T14:39:36+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=68 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 12.12,
+ "angle_b2": 30.81,
+ "k_found": 9,
+ "purity": 0.664
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/68.json` (sha256 dcbacbe8e6)
+
+---
+
+## #629 · run · stage B · plan §4.2
+`b79e1d4842d7f898` ← `21585b607931b6d0` · recorded 2026-10-21T14:39:57+00:00
+
+**What.** Stage B2 sigma_cat=1.0 seed=69 finished
+
+**Output.**
+```json
+{
+ "angle_b1": 10.51,
+ "angle_b2": 39.81,
+ "k_found": 11,
+ "purity": 0.667
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/sigma_cat_1.0/69.json` (sha256 2a8ea015d5)
+
+---
+
+## #630 · result · stage B · plan §E32
+`64244f471f64be3a` ← `b79e1d4842d7f898` · recorded 2026-10-21T14:41:16+00:00
+
+**What.** E32 (boundary sweep, 20 runs at sigma_cat 0.8 and 1.0): REFUTED. K = 6 with the slow-subspace selector in 3/10 runs at 0.8 (predicted at least 8) and 0/10 at 1.0 (predicted at least 5); at 1.0 it returns K = 5 on all 10 runs; purity never above the category ceiling plus 0.02 (held). Located boundary: sigma_cat 0.4 (K = 6 in at least 8 of 10). Across sigma_cat 0.1 / 0.4 / 0.6 / 0.8 / 1.0 the count is K = 6 in 10 / 9 / 6 / 3 / 0 of 10 runs: as the categories overlap two merge. E18 follow-up closed: cause (wrong space) found and removed; E31 refuted only at 0.6, both controls behave, rung-2 pair quality criterion met at 0.1, 0.4, 0.6. Report docs/E18_FIX_REPORT.md.
+
+**How.** experiments/analyse_slowk.py (frozen configs/slowk.criteria.yaml)
+
+**Output.**
+```json
+{
+ "K6_by_sigma": {
+  "0.1": "10/10",
+  "0.4": "9/10",
+  "0.6": "6/10",
+  "0.8": "3/10",
+  "1.0": "0/10"
+ },
+ "boundary_sigma": 0.4,
+ "purity_within_ceiling": true
+}
+```
+
+**Artifacts.** `results/stage_b2_slowk/SLOWK_REPORT.md` (sha256 6bfb347c93)
+
+**Bearing on objectives O2.** The fix removes the cause of the E18 failure; the cluster count stays right while the categories are resolvable (up to sigma_cat 0.4) and slides to 5 as they overlap, a resolution limit.
+
+**Verdict.** refuted
+
+---
+
+## #631 · note · stage B · plan §—
+`31e959bb773de931` ← `64244f471f64be3a` · recorded 2026-10-21T14:41:16+00:00
+
+**What.** Housekeeping: entry 609 fingerprinted results/stage_b2_slowk/SLOWK_REPORT.md, which was regenerated or extended afterwards; reference declared superseded. No recorded result changed.
+
+**Bearing on objectives —.** Housekeeping only.
 
 ---

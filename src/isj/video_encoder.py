@@ -14,6 +14,21 @@ import torch.nn.functional as F
 from .encoder import covariance_penalty, mlp, variance_hinge
 
 
+class ConvEncoder(torch.nn.Module):
+    """Small conv encoder over the descriptor [x_t ; x_t - x_{t-1}] viewed as 2 channels of size x size (for size 64: 4 stride-2 convs -> 4x4x64)."""
+
+    def __init__(self, i_dim: int, hidden: int, out: int):
+        super().__init__()
+        self.size = int(round((i_dim / 2) ** 0.5))
+        nn = torch.nn
+        self.conv = nn.Sequential(nn.Conv2d(2, 16, 5, 2, 2), nn.GELU(), nn.Conv2d(16, 32, 3, 2, 1), nn.GELU(), nn.Conv2d(32, 64, 3, 2, 1), nn.GELU(),
+                                  nn.Conv2d(64, 64, 3, 2, 1), nn.GELU(), nn.Flatten())
+        self.head = nn.Sequential(nn.Linear(64 * (self.size // 16) ** 2, hidden), nn.GELU(), nn.Linear(hidden, out))
+
+    def forward(self, x):
+        return self.head(self.conv(x.reshape(-1, 2, self.size, self.size)))
+
+
 def descriptors(frames: np.ndarray) -> np.ndarray:
     """(R, A, T, D) -> (R, A, T-1, 2D)."""
     x = frames[:, :, 1:]
@@ -39,7 +54,7 @@ def train_encoder(desc_train: np.ndarray, cfg: dict, seed: int, verbose: bool = 
     r_n, a_n, t_n, i_dim = x.shape
     hs = list(cfg["horizons"])
     d, hid = cfg["latent_dim"], cfg["hidden"]
-    enc = mlp(i_dim, hid, d)
+    enc = ConvEncoder(i_dim, hid, d) if cfg.get("arch") == "conv" else mlp(i_dim, hid, d)
     preds = torch.nn.ModuleList([mlp(d, 128, d) for _ in hs])
     opt = torch.optim.AdamW(list(enc.parameters()) + list(preds.parameters()), lr=cfg["lr"])
     steps, bs = cfg["steps"], cfg["batch_size"]
@@ -69,7 +84,7 @@ def train_encoder(desc_train: np.ndarray, cfg: dict, seed: int, verbose: bool = 
 
 
 @torch.no_grad()
-def encode(enc, desc: np.ndarray, chunk: int = 20000) -> np.ndarray:
+def encode(enc, desc: np.ndarray, chunk: int = 4000) -> np.ndarray:
     flat = torch.from_numpy(desc.reshape(-1, desc.shape[-1]))
     out = torch.cat([enc(flat[i:i + chunk]) for i in range(0, len(flat), chunk)])
     return out.numpy().reshape(*desc.shape[:-1], -1)

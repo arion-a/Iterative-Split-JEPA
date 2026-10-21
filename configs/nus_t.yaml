@@ -1,0 +1,37 @@
+stage: V-NT
+plan_ref: docs/EVIDENCE.md (T1-T3)
+criteria:
+  works:
+    cut_gap_ratio_min: 2.0
+    seed_agreement_min: 0.9
+    rollout_nmse_max: 0.35
+    V_max: 0.05
+    L_max: 1.02
+  report_only:
+    icc_min: 0.9
+  rule: a (variant, lag set) cell "works" iff on all 3 seeds the ladder takes at least one cut with gap ratio >= cut_gap_ratio_min, the minimum pairwise seed agreement on the test videos is >= seed_agreement_min, and rollout_nmse <= rollout_nmse_max, V <= V_max, L <= L_max for the main coordinate
+lag_sets:
+  A: [8, 32]
+  B: [1, 4, 16, 64]
+per_lag_table: [1, 2, 4, 8, 16, 32, 64, 128]
+variants:
+  S0: {arch: mlp, size: 32, train: base}
+  SH: {arch: mlp, size: 32, train: half}
+  SL: {arch: mlp, size: 32, train: long}
+  C0: {arch: conv, size: 64, train: base}
+  CL: {arch: conv, size: 64, train: long}
+base_training_videos: 65
+split_note: val 9 and test 19 videos exactly as in N (sorted video id, first 660 frames); train base = first 65 videos, first 660 frames; half = every second one of the 65; long = every full non-overlapping 660-frame segment of the 65 videos (each segment is one release)
+frames_per_segment: 660
+seeds: [0, 1, 2]
+nuisance_amp: 0.4
+ladder:
+  gamma_min: 2.0
+  s1_chance_fraction: 0.05
+  b2_quantile: 0.99
+certificate:
+  horizon_K: 8
+  delta_std: 0.1
+  n_pairs: 200
+encoder_mlp: {latent_dim: 64, hidden: 256, steps: 8000, batch_size: 256, lr: 0.003, horizons: [1, 8, 32], var_weight: 0.01, cov_weight: 0.04, zca_eps: 1.0e-05, aug_weight: 0.2}
+encoder_conv: {arch: conv, latent_dim: 64, hidden: 256, steps: 6000, batch_size: 128, lr: 0.003, horizons: [1, 8, 32], var_weight: 0.01, cov_weight: 0.04, zca_eps: 1.0e-05, aug_weight: 0.2}

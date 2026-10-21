@@ -42,6 +42,23 @@ class Standardizer:
         half = flat.shape[1] // 2
         self.scale = np.concatenate([np.full(half, flat[:, :half].std()), np.full(half, flat[:, half:].std() + 1e-6)])
 
+    @classmethod
+    def from_frames(cls, frames: np.ndarray) -> "Standardizer":
+        """Same statistics as Standardizer(descriptors(frames)), accumulated one release at a time (float64 sums) so no full descriptor array is built."""
+        n, s, q = 0, 0.0, 0.0
+        s_vec = None
+        for i in range(len(frames)):
+            d = descriptors(frames[i:i + 1]).reshape(-1, 2 * frames.shape[-1]).astype(np.float64)
+            half = d.shape[1] // 2
+            n += len(d); s_vec = d.sum(0) if s_vec is None else s_vec + d.sum(0)
+            q = q + np.array([(d[:, :half] ** 2).sum(), (d[:, half:] ** 2).sum()])
+        half = len(s_vec) // 2
+        m1, m2 = s_vec[:half].sum() / (n * half), s_vec[half:].sum() / (n * half)
+        obj = cls.__new__(cls)
+        obj.mean = (s_vec / n).astype(frames.dtype)
+        obj.scale = np.concatenate([np.full(half, np.sqrt(q[0] / (n * half) - m1 ** 2)), np.full(half, np.sqrt(q[1] / (n * half) - m2 ** 2) + 1e-6)])
+        return obj
+
     def __call__(self, desc: np.ndarray) -> np.ndarray:
         out = np.empty(desc.shape, np.float32)                  # chunked over the leading axis: same values, no full-size temporaries
         for i in range(len(desc)):

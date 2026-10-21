@@ -48,13 +48,16 @@ size = var["size"]
 
 def views_of(segs, seed):
     rng = np.random.default_rng(seed)
-    out = []
-    for s in segs:
+    out = None
+    for i, s in enumerate(segs):
         x = s.astype(np.float32) / 255.0
         if size == 32:
             x = x.reshape(-1, 32, 2, 32, 2).mean((2, 4)).reshape(len(x), -1)
-        out.append(rio.illumination_views(x, rng, cfg["nuisance_amp"], size))
-    return np.stack(out)
+        v = rio.illumination_views(x, rng, cfg["nuisance_amp"], size)
+        if out is None:
+            out = np.empty((len(segs),) + v.shape, v.dtype)               # preallocated: np.stack would double the peak
+        out[i] = v
+    return out
 
 
 v_tr, v_va, v_te = views_of(segs_tr, 0), views_of([seg(v, 0) for v in va_v], 1), views_of([seg(v, 0) for v in te_v], 2)

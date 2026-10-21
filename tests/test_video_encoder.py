@@ -11,3 +11,11 @@ def test_no_collapse_and_shapes():
     z = ve.encode(enc, x)
     assert z.shape == (8, 2, 60, 6)
     assert z.reshape(-1, 6).std(0).min() >= 0.5, log[-1]
+
+
+def test_streaming_standardizer_matches_full():
+    import numpy as np
+    from isj import video_encoder as ve
+    f = np.random.default_rng(0).random((5, 2, 40, 64))
+    a, b = ve.Standardizer(ve.descriptors(f)), ve.Standardizer.from_frames(f)
+    assert np.allclose(a.mean, b.mean, atol=1e-12) and np.allclose(a.scale, b.scale, atol=1e-12)

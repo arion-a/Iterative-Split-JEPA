@@ -1,6 +1,6 @@
 # Experiment log (generated from `explog/chain.jsonl`; do not edit)
 
-Chain status at render time: **VALID** — 562 entries, head e6657880db36
+Chain status at render time: **VALID** — 563 entries, head 0a73f7b0100c
 
 Head hash anchors this file; the same hash is quoted in the most recent git commit.
 
@@ -12345,5 +12345,16 @@ Head hash anchors this file; the same hash is quoted in the most recent git comm
 **What.** Owner asked what is needed to make the claim work in all cases, especially for deeper ladders: the gaps, where exactly they sit in the process, their causes, solutions, and a plan. Wrote docs/PLAN_CLOSE_GAPS.md (gap table G-a to G-f, phases G0-G6 and H, steps with done-when conditions, checks, supervision, size estimate, priorities). Nothing was registered or run. Key finding from the code: the engine's ladder loop and the world's pair construction already work for any number of blocks; the 3-block / 2-rung assumption is in the B1 evaluator (stage_b1.py lines 114-121 and seed_checks), so the deeper ladder has never been measured.
 
 **Bearing on objectives O2, O3, O4.** Planning only; predictions will be registered at the start of each phase before its runs.
+
+---
+
+## #562 · note · stage B · plan §E18 follow-up
+`0a73f7b0100c13f6` ← `e6657880db3695ff` · recorded 2026-10-21T12:02:25+00:00
+
+**What.** Owner asked to fix the E18 refutation (spectral cluster-count selection) and add the plan to the previous one. Exploratory diagnostic (true latents, 9 configurations, not registered): the spectral selector gives K = 9, 12, 12, 10, 8, 9, 12, 2, 7 in the full 8-d invariant space (the B2 world holds 6 x 20 = 120 blobs there), but K = 6 in 9 of 9 in the category block (oracle) and in the 4 slowest directions of adjacent-frame change (found without labels, 2.2-2.8 deg from the category block). Cause: the space the selector runs in, not the selector. Phase G4-K added to docs/PLAN_CLOSE_GAPS.md (slow-subspace K selection, with controls, fallback and boundary sweep). Nothing registered or run; with a trained encoder the fix is untested.
+
+**Artifacts.** `experiments/diag_k_selection_space.py` (sha256 338e19d7ac); `results/diagnostics/k_selection/output.txt` (sha256 9a7e830959)
+
+**Bearing on objectives O2.** Exploratory (not a result): in the idealised setting the E18 failure is explained by the selection space.
 
 ---

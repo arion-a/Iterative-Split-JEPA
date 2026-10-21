@@ -1,0 +1,11 @@
+(exploratory output, true latents; columns: spectral K in the full 8-d invariant space | in the category block (oracle) | in the 4 slowest directions of temporal change (no labels); and the largest principal angle between the slow subspace and the category block)
+sigma_cat seed  full  category  slow   angle(deg)
+0.1 0   9   6   6   2.5
+0.1 1  12   6   6   2.2
+0.1 2  12   6   6   2.7
+0.4 0  10   6   6   2.6
+0.4 1   8   6   6   2.3
+0.4 2   9   6   6   2.7
+0.6 0  12   6   6   2.7
+0.6 1   2   6   6   2.4
+0.6 2   7   6   6   2.8

@@ -128,3 +128,6 @@
 | 20-29 | B2 [E22 probe-image test] | confirmed: orthogonalised rung-2 angle 2.76 deg vs raw 10.07 deg, 20/20 runs | texture image 77.5 deg from identity+category images | `results/stage_b2_e21/E21_E22_REPORT.md` |
 | 0-2 | C [E24, PickCube] | not confirmed: P1 1.37 (needs 3), P2 1.74 (3/3 seeds), P3 held, P4 camera from invariant content 0.61 | rung-1 gap ratio 1.11, rank monitor 0/3 | `results/stage_c/REPORT.md` |
 | 0-2 | C [E24, PushCube] | not confirmed: P1 1.17 (needs 3), P2 1.51 (1/3 seeds), P3 held, P4 camera from invariant content 0.69 | rung-1 gap ratio 1.76, rank monitor 0/3 | `results/stage_c/REPORT.md` |
+| 30-34 | B1 [E25, MLP + prediction, original speeds] | confirmed: texture block absent from the embedding (presence -0.012), identity partial 0.74, category 0.99 | rung 1 ABSENT 5/5 | `results/enc_generality/REPORT.md` |
+| 30-34 | B1 [E26, MLP + prediction, equal speeds] | confirmed: all blocks present 0.991, both rungs SPLIT 5/5, every B1 criterion 5/5 | rung-1 gap 76-97 (E23: 1.1) | `results/enc_generality/REPORT.md` |
+| 30-34 | B1 [E27, architecture x objective, equal speeds] | confirmed as registered, vacuous in MLP + paper cell (encoder collapsed); the other 3 cells SPLIT 5/5 | presence 0.99+ | `results/enc_generality/REPORT.md` |

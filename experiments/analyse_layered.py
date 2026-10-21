@@ -74,4 +74,12 @@ if all(C.values()):
     md += ["## E27: architecture x objective at equal predictability (main arm, 5 seeds per cell)\n",
            f"**E27 prediction (in no cell is a present block not separable on 2 or more seeds): {v}.** Seeds with a PRESENT_NOT_SEPARABLE rung, per cell: {bad}.\n"]
     for k, R in C.items(): md += [f"### {k}\n", cell_table(R), ""]
+# ---- E28: repair of the collapsed E27 cell (generic MLP + paper objective, regulariser weight chosen by the training-health rule)
+B = load("results/stage_b1_e28/main_seed*.json")
+if B:
+    n = len(B); pa = present_all(B); bad = sum(any(classify(r, kk) == "PRESENT_NOT_SEPARABLE" for kk in (1, 2)) for r in B)
+    split = sum(all(classify(r, kk) == "SPLIT" for kk in (1, 2)) for r in B)
+    v = "CONFIRMED" if pa >= 4 and bad < 2 and split >= 4 and n >= 5 else ("PRESENT BUT NOT SEPARABLE" if pa >= 4 else "COLLAPSED OR ABSENT")
+    md += ["## E28: generic MLP + paper objective, regulariser weight chosen by the training-health rule (5 seeds)\n",
+           f"**E28 prediction (all blocks present on at least 4 of 5 seeds and both rungs SPLIT on at least 4 of 5): {v}.** All blocks present on {pa} of {n}; both rungs SPLIT on {split} of {n}; seeds with a PRESENT_NOT_SEPARABLE rung: {bad}.\n", cell_table(B), ""]
 open("results/enc_generality/REPORT.md", "w").write("\n".join(md)); print("\n".join(md))

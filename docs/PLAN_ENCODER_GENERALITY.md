@@ -11,20 +11,25 @@ Question: the owner holds that splitting is a property of the representation, so
 - [x] A4 Predictions E25-E27 registered in EVIDENCE, D15 in DECISIONS, plan entry in the log, committed and pushed before the first run. **Done when:** the commit exists. 
 
 ## Phase B: runs (30 runs, all B1 world, ground-truth pairs, seeds 30-34)
-- [ ] B1 E25: `stage_b1_mlp.yaml` -> `results/stage_b1_e25`, arm main (5 files).
-- [ ] B2 E26: `stage_b1_eqrho_mlp_predict.yaml` -> `results/stage_b1_e26`, arms main + shuffled_rung2 (10 files).
-- [ ] B3 E27: three cells -> `results/stage_b1_e27/{mirror_lejepa,mlp_lejepa,mirror_predict}`, arm main (15 files).
+- [x] B1 E25: `stage_b1_mlp.yaml` -> `results/stage_b1_e25`, arm main (5 files).
+- [x] B2 E26: `stage_b1_eqrho_mlp_predict.yaml` -> `results/stage_b1_e26`, arms main + shuffled_rung2 (10 files).
+- [x] B3 E27: three cells -> `results/stage_b1_e27/{mirror_lejepa,mlp_lejepa,mirror_predict}`, arm main (15 files).
 - **Step check:** `python experiments/check_results.py enc [--final]` (right files and seeds, finite numbers, `presence` field present with three values in [-1, 1.01], encoder trained: minimum embedding std above 0.1). **Gate:** earlier checks rerun, `explog.verify()`, pytest, plan reread.
 
 ## Phase C: analysis and verdicts
-- [ ] C1 `python experiments/analyse_layered.py` (rules written before the runs). **Done when:** `results/enc_generality/REPORT.md` has E25, E26, E27 verdicts.
-- [ ] C2 Outcome lines for E25, E26, E27 appended in EVIDENCE (additions only), STATUS lines, one explog entry per verdict, table and log page rebuilt.
+- [x] C1 `python experiments/analyse_layered.py` (rules written before the runs). **Done when:** `results/enc_generality/REPORT.md` has E25, E26, E27 verdicts.
+- [x] C2 Outcome lines for E25, E26, E27 appended in EVIDENCE (additions only), STATUS lines, one explog entry per verdict, table and log page rebuilt.
 - **Gate:** as above.
 
 ## Phase D: investigation of whatever the verdicts leave open (analysis of the saved run files only; any new run is written under "Noted, not started")
-- [ ] D1 If E25 is refuted (texture present): measure why the split still failed (pair-difference spectrum of the present block, effective rank of its image).
-- [ ] D2 If any cell has PRESENT_NOT_SEPARABLE rungs: measure the effective rank (participation ratio of singular values) of the block's linear image and the pair-difference spectrum, to say whether the block is spread over many directions (nonlinear encoder) or the criteria are the issue.
-- [ ] D3 If blocks are absent or partial even at equal speeds (E26 (a) fails): check training state (final loss, minimum embedding std) and probe capacity (a second probe size on the saved fields is not possible: encoders are not saved) and report what is and is not established.
+- [x] D1 (not needed: E25 confirmed, not refuted) If E25 is refuted (texture present): measure why the split still failed (pair-difference spectrum of the present block, effective rank of its image).
+- [x] D2 (not needed: no PRESENT_NOT_SEPARABLE rung in any cell) If any cell has PRESENT_NOT_SEPARABLE rungs: measure the effective rank (participation ratio of singular values) of the block's linear image and the pair-difference spectrum, to say whether the block is spread over many directions (nonlinear encoder) or the criteria are the issue.
+- [ ] D3 (triggered by E27, not E26: the MLP + paper-objective cell collapsed to a constant; cause found in the saved training state: regulariser weight 1e-6 copied from the mirror setup) Repair = E28, registered before its pilot:
+  - [ ] D3a Pilot: 5 regulariser weights {1e-4, 1e-3, 1e-2, 1e-1, 1} on seed 99, `configs/pilot/`, `results/stage_b1_e28_pilot/`.
+  - [ ] D3b Select the smallest weight with final minimum embedding std at least 0.5 (rule in EVIDENCE E28), write the chosen weight to the log and make `configs/stage_b1_eqrho_mlp_lejepa_w<chosen>.yaml` BEFORE launching E28.
+  - [ ] D3c E28 runs: 5 seeds (30-34), main arm, `results/stage_b1_e28`.
+  - [ ] D3d Score with `analyse_layered.py` (E28 section written before the runs), outcome in EVIDENCE, STATUS, log.
+  - Original D3 text: check training state (final loss, minimum embedding std) and probe capacity (a second probe size on the saved fields is not possible: encoders are not saved) and report what is and is not established.
 - **Done when:** each open item is either explained with numbers or stated as not testable from the saved files.
 
 ## Phase E: close-out
@@ -37,6 +42,7 @@ Question: the owner holds that splitting is a property of the representation, so
 
 ## Log (newest last)
 - 2026-10-21: plan written; Phase A done; Phase B starting.
+- 2026-10-21 (later): Phases B and C done. E25 confirmed, E26 confirmed, E27 confirmed as registered but vacuous in the MLP + paper-objective cell (collapsed encoder). D1/D2 not needed. D3 triggered: E28 registered (repair of the collapsed cell); pilot next.
 
 ## Noted, not started
 - (empty)

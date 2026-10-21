@@ -25,6 +25,8 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 
 **Other controlled data (H1, R1; 2026-10-21).** *HF controlled pendulum* (simulated, independent renderer, independently controlled lighting, exact energy): naming 0.96-0.97, flat baseline 0.02-0.09, correlation with the controlled light 0.07, seed agreement 0.95-0.96, all registered criteria met; but the ladder does not cut (the first family ends in S2), the shuffled-pair arm equals main and the temporal-only arm fails, so the coordinate comes from release grouping here, not temporal slowness (the opposite of the Columbia real videos). *ManiSkill PickCube* (the SplitJEPA robotics setting, regenerated on the CPU): not testable with the current representation, since even the full latent does not encode the small cube (R² ≈ 0.04 at 32×32 gray); the prediction that the cross-view core keeps the cube but not the one-view goal is untested. Not confirmed as worded.
 
+**NUS real double pendulum (N; 93 videos, no state labels; 2026-10-21).** Not confirmed. The ladder stops at S2 on all seeds; seeds disagree (agreement 0.07 / 0.07 / 0.79 against 0.9); 8-step rollout error 0.84-0.96 (target ≤ 0.35); ICC 0.29-0.37; V (0.005) and L (0.89-0.92) pass but only weakly informative here; main exceeds flat in ICC by about 0.15 (met). Naming could not be tested (no energy labels). No stable coordinate was found on this footage with the 32×32 gray representation; the cause is untested.
+
 ## Sec 2-3 (theory and mechanism) — what the experiments touch
 * Prediction fixes content, correspondences fix the partition: confirmed in the AR world; with correct pairs the lag ladder recovers a clean cut (variant R² 0.96-0.98, invariant 0.98-0.99, gap ratio 19-33 in E36's world).
 * The cut gap cannot exceed the adjacent timescale ratio; measured eigenvalues follow 2(1−a) (hierarchical run). With the 2× criterion (D18) only one of four cuts in the planted five-level world is taken (E35 refuted as worded).
@@ -51,6 +53,7 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 | G3 second systems | single pendulum naming 0.95 (met), elastic 0.83 (met; agreement 0.88-0.89 vs 0.9 missed); grouping not recoverable (fallback) |
 | H1 (HF controlled pendulum) | all four criteria met (naming 0.96-0.97, light 0.07); carried by release grouping, ladder did not cut |
 | R1 (ManiSkill PickCube) | untestable with this encoder (full-latent R² ≈ 0.04 for the cube); not confirmed |
+| N (NUS real double pendulum) | not confirmed: V, L, main-above-flat met; rollout 0.84-0.96, ICC 0.29-0.37, seed agreement 0.07 on two pairs; no labels, naming untested |
 | E44-E47 | blocked on the owner's footage |
 
 ## Sec 5 (boundaries) — what is guaranteed, measured, open

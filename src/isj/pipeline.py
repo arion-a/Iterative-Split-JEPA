@@ -13,8 +13,9 @@ class Pipeline:
     def __init__(self, frames_train: np.ndarray, cfg: dict, seed: int):
         desc = ve.descriptors(frames_train)
         self.std = ve.Standardizer(desc)
-        self.enc, self.log = ve.train_encoder(self.std(desc), cfg["encoder"], seed + 77_777)
-        z = ve.encode(self.enc, self.std(desc))
+        xs = self.std(desc); del desc
+        self.enc, self.log = ve.train_encoder(xs, cfg["encoder"], seed + 77_777)
+        z = ve.encode(self.enc, xs); del xs
         d = z.shape[-1]
         self.zmean = z.reshape(-1, d).mean(0)
         self.flat_dir = np.linalg.eigh(np.cov((z.reshape(-1, d) - self.zmean).T))[1][:, -1]

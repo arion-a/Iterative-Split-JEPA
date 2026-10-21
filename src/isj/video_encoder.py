@@ -43,7 +43,10 @@ class Standardizer:
         self.scale = np.concatenate([np.full(half, flat[:, :half].std()), np.full(half, flat[:, half:].std() + 1e-6)])
 
     def __call__(self, desc: np.ndarray) -> np.ndarray:
-        return ((desc - self.mean) / self.scale).astype(np.float32)
+        out = np.empty(desc.shape, np.float32)                  # chunked over the leading axis: same values, no full-size temporaries
+        for i in range(len(desc)):
+            out[i] = (desc[i] - self.mean) / self.scale
+        return out
 
 
 def train_encoder(desc_train: np.ndarray, cfg: dict, seed: int, verbose: bool = False):

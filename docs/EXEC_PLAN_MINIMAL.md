@@ -29,15 +29,15 @@ Verdict per claim: **confirmed** if every pass line holds; **refuted** if any fa
 ## Steps
 
 ### Phase 0: freeze (no runs)
-- [ ] 0.1 Owner approves, edits or drops claims; confirms the invariance weight (1.0) and the rho_k reading.
-- [ ] 0.2 Write the E38-E41 registration into `docs/EVIDENCE.md` (the table above, predictions flagged as Claude's), `configs/minimal.criteria.yaml` and its hash file, and `experiments/analyse_minimal.py` (reads only the numbers above and applies the rules). **Done when** `check_results.py evidence` passes and the hash is committed.
-- [ ] 0.3 One line in `docs/STATUS.md`: items cut in `docs/PLAN_MINIMAL_CLAIMS.md` section 3 are not used for these claims (nothing deleted).
+- [x] 0.1 Owner approves, edits or drops claims; confirms the invariance weight (1.0) and the rho_k reading.
+- [x] 0.2 Write the E38-E41 registration into `docs/EVIDENCE.md` (the table above, predictions flagged as Claude's), `configs/minimal.criteria.yaml` and its hash file, and `experiments/analyse_minimal.py` (reads only the numbers above and applies the rules). **Done when** `check_results.py evidence` passes and the hash is committed.
+- [x] 0.3 One line in `docs/STATUS.md`: items cut in `docs/PLAN_MINIMAL_CLAIMS.md` section 3 are not used for these claims (nothing deleted).
 
 ### Phase 1: code (smallest set)
-- [ ] 1.1 `BlockWorld.lag_pairs(n, h)` (the h-step AR(1) transition), plus the `predictive` option in `run_stage_b1.py` computing rho_k per rung, and a `minimal` option that skips the permutation-null leakage audit and the linear presence probe. **Done when** a 3-block smoke run writes rho_k and `pytest` passes (52 tests).
-- [ ] 1.2 `corr_inv_weight` in `train_encoder`: the existing objective plus, for each k, the mean squared distance between the later-block outputs of the two members of a pair from `world.correspondence_pairs(n, k)`. **Done when** a smoke run trains and writes presence.
-- [ ] 1.3 The shift-readout part of the `payoff` option removed (E37b is dropped); the analysis script reproduces the stored E37 single-shot and ladder angles. **Done when** they match.
-- [ ] 1.4 The six configs written. **Gate:** tests pass, evidence file unedited, every smoke output has its fields.
+- [x] 1.1 `BlockWorld.lag_pairs(n, h)` (the h-step AR(1) transition), plus the `predictive` option in `run_stage_b1.py` computing rho_k per rung, and a `minimal` option that skips the permutation-null leakage audit and the linear presence probe. **Done when** a 3-block smoke run writes rho_k and `pytest` passes (52 tests).
+- [x] 1.2 `corr_inv_weight` in `train_encoder`: the existing objective plus, for each k, the mean squared distance between the later-block outputs of the two members of a pair from `world.correspondence_pairs(n, k)`. **Done when** a smoke run trains and writes presence.
+- [x] 1.3 The shift-readout part of the `payoff` option removed (E37b is dropped); the analysis script reproduces the stored E37 single-shot and ladder angles. **Done when** they match.
+- [x] 1.4 The six configs written. **Gate:** tests pass, evidence file unedited, every smoke output has its fields.
 
 ### Phase 2: E38 (equal speeds; cheapest, no code beyond the config)
 - [ ] 2.1 Run the 5 runs. 2.2 Score, record the outcome in `EVIDENCE.md`. **Gate:** 5 of 5 files, finite numbers, evidence unedited. If refuted, report it and stop this claim.

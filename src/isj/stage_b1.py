@@ -9,6 +9,7 @@ Ground truth is used only to generate data and to evaluate.
 
 from __future__ import annotations
 
+import math
 import time
 
 import torch
@@ -32,7 +33,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
 
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"],
-                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), stop_grad=e.get("stop_grad", True),
+                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), stop_grad=e.get("stop_grad", True),
                          sigreg_weight=e["sigreg_weight"], arch=e["arch"], objective=e["objective"],
                          coupling_layers=w["coupling_layers"])
     if ablation == "no_pred":
@@ -128,24 +129,31 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     presence = {"linear": [audits.linear_r2(rtr, ztr[:, b], rte, zte[:, b]) for b in blocks],
                 "mlp": [audits.mlp_r2(rtr, ztr[:, b], rte, zte[:, b], seed=seed) for b in blocks]}
     payoff = None
-    if cfg.get("payoff"):                                  # Gap 6 (E37), off by default: single-shot split and readout under an identity shift, existing quantities only
-        pc = cfg["payoff"]
+    if cfg.get("payoff"):                                  # E38: one eigendecomposition of the adjacent-frame difference moment, blocks read off in eigenvalue order
         pu, pv = world.transition_pairs(budgets[0])
         delta = (wh(encode(enc, observe, pu)) - wh(encode(enc, observe, pv))).double()
         _, vecs = torch.linalg.eigh(delta.T @ delta / len(delta))
-        vecs = vecs.flip(1).float()                          # one eigendecomposition for all blocks, descending
+        vecs = vecs.flip(1).float()
         db = [world.block_slice(k).stop - world.block_slice(k).start for k in (1, 2)]
         single = [audits.max_angle_deg(vecs[:, :db[0]], image[1]), audits.max_angle_deg(vecs[:, db[0]:db[0] + db[1]], image[2])]
-        z_sh = zte.clone(); z_sh[:, world.block_slice(2)] += pc["shift"]
-        r_sh = wh(encode(enc, observe, z_sh))
-        tgt = lambda z: z[:, world.block_slice(world.n_blocks)]
-        n = pc["train_n"]; loss = []
-        for h in (rungs[0].Q, rungs[1].Q):                   # content after rung 1, after rung 2
-            r_in = audits.linear_r2(rtr[:n] @ h, tgt(ztr)[:n], rte @ h, tgt(zte))
-            r_out = audits.linear_r2(rtr[:n] @ h, tgt(ztr)[:n], r_sh @ h, tgt(z_sh))
-            loss.append({"r2_unshifted": r_in, "r2_shifted": r_out, "loss": r_in - r_out})
-        payoff = {"single_shot_angles_deg": single, "ladder_angles_deg": [out[0]["angle_deg"], out[1]["angle_deg"]], "shift_readout": loss}
-    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff,
+        payoff = {"single_shot_angles_deg": single, "ladder_angles_deg": [out[0]["angle_deg"], out[1]["angle_deg"]]}
+    predictive = None
+    if cfg.get("predictive"):                              # E39: monograph 8.1(c), rho_k = error of predicting the kept content's future from the kept content / from the content before the rung
+        predictive = []
+        for r in rungs:
+            h = max(1, math.ceil(-1 / math.log(world.rhos[r.k - 1])))
+            zt, zf = world.lag_pairs(n_tr + n_te, h)
+            rt, rf = wh(encode(enc, observe, zt)), wh(encode(enc, observe, zf))
+            after = r.Q if r.applied else r.H_prev
+            tgt = rf @ after
+            err = []
+            for basis in (r.H_prev, after):
+                x = rt @ basis
+                w = audits.ridge_fit(x[:n_tr], tgt[:n_tr])
+                pred = torch.cat([x[n_tr:], torch.ones(len(x) - n_tr, 1)], 1).to(w.dtype) @ w
+                err.append(float((pred - tgt[n_tr:].to(w.dtype)).square().mean()))
+            predictive.append({"k": r.k, "h": h, "rho": err[1] / err[0]})
+    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

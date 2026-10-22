@@ -65,6 +65,13 @@ class BlockWorld:
         eps = torch.randn(n, self.d, generator=self._g) * self._scale_vec()
         return z, rho * z + torch.sqrt(1 - rho**2) * eps
 
+    def lag_pairs(self, n: int, h: int) -> tuple[torch.Tensor, torch.Tensor]:
+        """(z_t, z_{t+h}) from the stationary chain (the h-step AR(1) transition)."""
+        z = self.sample(n)
+        rho = self._rho_vec() ** h
+        eps = torch.randn(n, self.d, generator=self._g) * self._scale_vec()
+        return z, rho * z + torch.sqrt(1 - rho**2) * eps
+
     def correspondence_pairs(
         self, n: int, k: int, rank: int | None = None
     ) -> tuple[torch.Tensor, torch.Tensor]:

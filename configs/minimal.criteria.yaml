@@ -1,0 +1,6 @@
+experiment: E38-E41 (minimal claims, docs/EXEC_PLAN_MINIMAL.md)
+thresholds: {angle_max_deg: 5.0, gap_min: 10.0, presence_min: 0.95, rho_max: 1.05}
+E38: {folder: results/minimal/e38, seeds: [120, 121, 122, 123, 124], ladder_below_deg: 5.0, single_shot_at_least_deg: 5.0, min_seeds: 5, separated_reference: results/stage_b1_e37}
+E39: {folder: results/minimal/e39, seeds: [130, 131, 132, 133, 134], each_check_min_seeds: 4, control_arm: shuffled_rung2, control_rung2_gap_below: 2.0, control_rho2_above: 1.05, control_min_seeds: 4, rho_dropped_if_control_fails: true}
+E40: {baseline: results/minimal/e40/baseline, treated: results/minimal/e40/treated, seeds: [140, 141, 142, 143, 144, 145, 146, 147, 148, 149], treated_min_seeds: 9, baseline_texture_presence_below: 0.5, baseline_min_seeds: 9}
+E41: {gap_over_10_and_present_clean_fraction_min: 0.95, gap_10_or_less_clean_fraction_max: 0.10, min_rungs_per_cell: 10, runs: main arms of E38, E39, E40}

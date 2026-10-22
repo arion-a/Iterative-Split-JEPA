@@ -92,6 +92,7 @@ class EncoderConfig:
     arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
     objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
     coupling_layers: int = 4
+    corr_inv_weight: float = 0.0  # E40: invariance on every correspondence family (monograph eq. 3 / Thm 5.1); 0 = off ("predict" objective only)
     horizon: int = 1              # E11a: alignment at lags 1..horizon (lejepa objective, worlds with transition_chain); 1 = the original objective
 
 
@@ -147,6 +148,12 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
             continue
         l_pred = F.mse_loss(pred(h1), h2.detach() if cfg.stop_grad else h2)
         loss = cfg.pred_weight * l_pred
+        if cfg.corr_inv_weight > 0:     # outputs are ordered by block; for family D_k the coordinates of every slower block must not move
+            for k in range(1, world.n_blocks):
+                u, v = world.correspondence_pairs(cfg.batch_size, k)
+                hk = enc(observe(torch.cat([u, v])))
+                tail = slice(world.block_slice(k).stop, cfg.latent_dim)
+                loss = loss + cfg.corr_inv_weight * (hk[: cfg.batch_size, tail] - hk[cfg.batch_size:, tail]).square().mean()
         l_reg = torch.zeros(())
         if cfg.reg == "hinge":
             l_reg = cfg.var_weight * variance_hinge(h) + cfg.cov_weight * covariance_penalty(h)

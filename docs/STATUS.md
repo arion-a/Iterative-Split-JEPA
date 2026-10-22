@@ -194,3 +194,4 @@
 | 66 | B2 [E18] sigma_cat=1.0 | purity 0.64, K found 11 | rung-2 angle B1 11.4 deg, B2 74.7 deg | `results/stage_b2_slowk/sigma_cat_1.0/66.json` |
 | 68 | B2 [E18] sigma_cat=1.0 | purity 0.66, K found 9 | rung-2 angle B1 12.1 deg, B2 30.8 deg | `results/stage_b2_slowk/sigma_cat_1.0/68.json` |
 | 69 | B2 [E18] sigma_cat=1.0 | purity 0.67, K found 11 | rung-2 angle B1 10.5 deg, B2 39.8 deg | `results/stage_b2_slowk/sigma_cat_1.0/69.json` |
+- 2026-10-22: owner gave the go for the minimal claims (E38-E41, `docs/EXEC_PLAN_MINIMAL.md`); cut items in `docs/PLAN_MINIMAL_CLAIMS.md` section 3 are not used for these claims (nothing deleted).

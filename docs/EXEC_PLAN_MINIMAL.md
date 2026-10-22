@@ -50,7 +50,7 @@ Verdict per claim: **confirmed** if every pass line holds; **refuted** if any fa
 - [x] 4.3 Score E41 over all 30 main-arm runs and record.
 
 ### Phase 5: close
-- [ ] 5.1 One page: each claim, its outcome, scope and located limit; the status of each theory statement. 5.2 Refresh `explog/stages.json`, rebuild the log table and page, run tests and `explog.verify()`, push. No merge to `main`.
+- [x] 5.1 One page: each claim, its outcome, scope and located limit; the status of each theory statement. 5.2 Refresh `explog/stages.json`, rebuild the log table and page, run tests and `explog.verify()`, push. No merge to `main`.
 
 ## How it is run
 - One supervisor job file per phase using the existing `supervise_b1.sh` (four at a time, `setsid nohup`, counts reported on change) with a Monitor re-armed every 30 minutes; commit and push at each stop.

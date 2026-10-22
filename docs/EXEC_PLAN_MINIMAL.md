@@ -40,14 +40,14 @@ Verdict per claim: **confirmed** if every pass line holds; **refuted** if any fa
 - [x] 1.4 The six configs written. **Gate:** tests pass, evidence file unedited, every smoke output has its fields.
 
 ### Phase 2: E38 (equal speeds; cheapest, no code beyond the config)
-- [ ] 2.1 Run the 5 runs. 2.2 Score, record the outcome in `EVIDENCE.md`. **Gate:** 5 of 5 files, finite numbers, evidence unedited. If refuted, report it and stop this claim.
+- [x] 2.1 Run the 5 runs. 2.2 Score, record the outcome in `EVIDENCE.md`. **Gate:** 5 of 5 files, finite numbers, evidence unedited. If refuted, report it and stop this claim.
 
 ### Phase 3: E39
-- [ ] 3.1 Run the 10 runs. 3.2 Score and record; state whether rho_k was informative. **Gate** as above.
+- [x] 3.1 Run the 10 runs. 3.2 Score and record; state whether rho_k was informative. **Gate** as above.
 
 ### Phase 4: E40 and E41
-- [ ] 4.1 Run the 20 runs (10 baseline, 10 treated). 4.2 Score E40 and record. **If the treated arm fails:** presence stays a stated precondition, no weight tuning, no other architecture; the programme continues with E41 on what exists.
-- [ ] 4.3 Score E41 over all 30 main-arm runs and record.
+- [x] 4.1 Run the 20 runs (10 baseline, 10 treated). 4.2 Score E40 and record. **If the treated arm fails:** presence stays a stated precondition, no weight tuning, no other architecture; the programme continues with E41 on what exists.
+- [x] 4.3 Score E41 over all 30 main-arm runs and record.
 
 ### Phase 5: close
 - [ ] 5.1 One page: each claim, its outcome, scope and located limit; the status of each theory statement. 5.2 Refresh `explog/stages.json`, rebuild the log table and page, run tests and `explog.verify()`, push. No merge to `main`.

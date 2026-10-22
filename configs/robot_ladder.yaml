@@ -1,0 +1,38 @@
+stage: V-RL
+plan_ref: docs/EVIDENCE.md (RL1-RL4)
+criteria:
+  gate:
+    full_latent_cube0_r2_min: 0.3
+  rungs:
+    cut_gap_ratio_min: 2.0
+    min_cuts_each_seed: 2
+  fast_content:
+    tcp_variant_block_minus_final_core_min: 0.2
+  slow_content:
+    final_core_cube0_r2_min: 0.3
+    final_core_minus_flat_min: 0.1
+  rule: gate first (full-latent cube0 R2); if met, the rung count, fast-content and slow-content conditions are judged separately on all 3 seeds; confirmed only if all hold; if the gate fails the test is untestable, not refuted
+families: [crossview, lag8, lag24]
+lags: [8, 24]
+episodes: 200
+steps: 60
+split: [130, 30, 40]
+ladder:
+  gamma_min: 2.0
+  s1_chance_fraction: 0.05
+  b2_quantile: 0.99
+aug_weight_rule: the largest value in [0.2, 0.05, 0.02] for which the cross-view rung is not S1 (lambda_max / chance >= 0.05) on a 1000-step label-free pilot on the training episodes
+seeds: [0, 1, 2]
+encoder:
+  arch: conv
+  channels: 3
+  latent_dim: 64
+  hidden: 256
+  steps: 6000
+  batch_size: 128
+  lr: 0.003
+  horizons: [1, 8, 24]
+  var_weight: 0.01
+  cov_weight: 0.04
+  zca_eps: 1.0e-05
+  aug_weight: null

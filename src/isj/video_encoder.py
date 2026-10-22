@@ -15,18 +15,19 @@ from .encoder import covariance_penalty, mlp, variance_hinge
 
 
 class ConvEncoder(torch.nn.Module):
-    """Small conv encoder over the descriptor [x_t ; x_t - x_{t-1}] viewed as 2 channels of size x size (for size 64: 4 stride-2 convs -> 4x4x64)."""
+    """Small conv encoder over the descriptor [x_t ; x_t - x_{t-1}] viewed as 2 channels of size x size (for size 64: 4 stride-2 convs -> 4x4x64); `channels` = 3 for RGB."""
 
-    def __init__(self, i_dim: int, hidden: int, out: int):
+    def __init__(self, i_dim: int, hidden: int, out: int, channels: int = 1):
         super().__init__()
-        self.size = int(round((i_dim / 2) ** 0.5))
+        self.channels = channels
+        self.size = int(round((i_dim / (2 * channels)) ** 0.5))     # descriptor = [x_t (C, S, S) ; x_t - x_{t-1} (C, S, S)], channel-major
         nn = torch.nn
-        self.conv = nn.Sequential(nn.Conv2d(2, 16, 5, 2, 2), nn.GELU(), nn.Conv2d(16, 32, 3, 2, 1), nn.GELU(), nn.Conv2d(32, 64, 3, 2, 1), nn.GELU(),
+        self.conv = nn.Sequential(nn.Conv2d(2 * channels, 16, 5, 2, 2), nn.GELU(), nn.Conv2d(16, 32, 3, 2, 1), nn.GELU(), nn.Conv2d(32, 64, 3, 2, 1), nn.GELU(),
                                   nn.Conv2d(64, 64, 3, 2, 1), nn.GELU(), nn.Flatten())
         self.head = nn.Sequential(nn.Linear(64 * (self.size // 16) ** 2, hidden), nn.GELU(), nn.Linear(hidden, out))
 
     def forward(self, x):
-        return self.head(self.conv(x.reshape(-1, 2, self.size, self.size)))
+        return self.head(self.conv(x.reshape(-1, 2 * self.channels, self.size, self.size)))
 
 
 def descriptors(frames: np.ndarray) -> np.ndarray:
@@ -74,7 +75,7 @@ def train_encoder(desc_train: np.ndarray, cfg: dict, seed: int, verbose: bool = 
     r_n, a_n, t_n, i_dim = x.shape
     hs = list(cfg["horizons"])
     d, hid = cfg["latent_dim"], cfg["hidden"]
-    enc = ConvEncoder(i_dim, hid, d) if cfg.get("arch") == "conv" else mlp(i_dim, hid, d)
+    enc = ConvEncoder(i_dim, hid, d, cfg.get("channels", 1)) if cfg.get("arch") == "conv" else mlp(i_dim, hid, d)
     preds = torch.nn.ModuleList([mlp(d, 128, d) for _ in hs])
     opt = torch.optim.AdamW(list(enc.parameters()) + list(preds.parameters()), lr=cfg["lr"])
     steps, bs = cfg["steps"], cfg["batch_size"]

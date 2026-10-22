@@ -1,0 +1,7 @@
+experiment: E42 (variance term where Theorem 4.2 needs it, generic MLP)
+folder: results/minimal/e42
+seeds: [140, 141, 142, 143, 144, 145, 146, 147, 148, 149]
+min_seeds: 9
+thresholds: {angle_max_deg: 5.0, gap_min: 10.0, presence_min: 0.95}
+pass: "presence at least 0.95 for all three blocks and both rungs with angle under 5 and gap over 10, on at least 9 of 10 seeds"
+references: {e40_baseline: results/minimal/e40/baseline, e40_invariance_only: results/minimal/e40/treated}

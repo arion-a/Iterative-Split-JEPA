@@ -92,6 +92,7 @@ class EncoderConfig:
     arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
     objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
     coupling_layers: int = 4
+    corr_var_weight: float = 0.0  # E42: the variance term where Theorem 4.2 needs it: block k's outputs must vary across the pairs of its own family D_k (hinge on the pair-difference std, target sqrt(2) = two independent unit-variance draws)
     corr_inv_weight: float = 0.0  # E40: invariance on every correspondence family (monograph eq. 3 / Thm 5.1); 0 = off ("predict" objective only)
     horizon: int = 1              # E11a: alignment at lags 1..horizon (lejepa objective, worlds with transition_chain); 1 = the original objective
 
@@ -154,6 +155,9 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
                 hk = enc(observe(torch.cat([u, v])))
                 tail = slice(world.block_slice(k).stop, cfg.latent_dim)
                 loss = loss + cfg.corr_inv_weight * (hk[: cfg.batch_size, tail] - hk[cfg.batch_size:, tail]).square().mean()
+                if cfg.corr_var_weight > 0:
+                    dk = hk[: cfg.batch_size, world.block_slice(k)] - hk[cfg.batch_size:, world.block_slice(k)]
+                    loss = loss + cfg.corr_var_weight * F.relu(math.sqrt(2.0) - dk.std(0)).mean()
         l_reg = torch.zeros(())
         if cfg.reg == "hinge":
             l_reg = cfg.var_weight * variance_hinge(h) + cfg.cov_weight * covariance_penalty(h)

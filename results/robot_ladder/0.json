@@ -1,0 +1,123 @@
+{
+ "seed": 0,
+ "aug_weight": 0.2,
+ "arms": {
+  "crossview_lag": {
+   "lags": [
+    8,
+    24
+   ],
+   "n_cuts": 0,
+   "cut_gap_ratios": [],
+   "block_dims": {
+    "final_core": 64,
+    "flat_top_pcs": 64,
+    "full": 64
+   },
+   "stop": "S2",
+   "ladder": [
+    {
+     "family": "aug",
+     "best_ratio": 1.1533,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.1503,
+     "stop": "S2"
+    }
+   ],
+   "shuffled_n_cuts": 0,
+   "shuffled_ladder": [
+    {
+     "family": "aug",
+     "best_ratio": 1.1533,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.1503,
+     "stop": "S2"
+    }
+   ],
+   "r2": {
+    "final_core": {
+     "cube0": 0.7834132698887721,
+     "goal": -0.20899439656936392,
+     "cube_t": 0.7255579509013163,
+     "tcp": 0.1893392855474456,
+     "qpos": -0.028754065963388253
+    },
+    "flat_top_pcs": {
+     "cube0": 0.783413268218826,
+     "goal": -0.20899439295118016,
+     "cube_t": 0.7255579479214085,
+     "tcp": 0.18933928721684803,
+     "qpos": -0.028754065867796323
+    },
+    "full": {
+     "cube0": 0.7834132698887721,
+     "goal": -0.20899439656936392,
+     "cube_t": 0.7255579509013163,
+     "tcp": 0.1893392855474456,
+     "qpos": -0.028754065963388253
+    }
+   }
+  },
+  "lag_only": {
+   "lags": [
+    4,
+    12,
+    36
+   ],
+   "n_cuts": 0,
+   "cut_gap_ratios": [],
+   "block_dims": {
+    "final_core": 64,
+    "flat_top_pcs": 64,
+    "full": 64
+   },
+   "stop": "S2",
+   "ladder": [
+    {
+     "family": "lag4",
+     "best_ratio": 1.204,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 0.2666,
+     "stop": "S2"
+    }
+   ],
+   "shuffled_n_cuts": 0,
+   "shuffled_ladder": [
+    {
+     "family": "lag4",
+     "best_ratio": 1.1144,
+     "d_k": 0,
+     "content_dim": 64,
+     "lambda_max_over_chance": 1.1191,
+     "stop": "S2"
+    }
+   ],
+   "r2": {
+    "final_core": {
+     "cube0": 0.7834132698887721,
+     "goal": -0.20899439656936392,
+     "cube_t": 0.7255579509013163,
+     "tcp": 0.1893392855474456,
+     "qpos": -0.028754065963388253
+    },
+    "flat_top_pcs": {
+     "cube0": 0.783413268218826,
+     "goal": -0.20899439295118016,
+     "cube_t": 0.7255579479214085,
+     "tcp": 0.18933928721684803,
+     "qpos": -0.028754065867796323
+    },
+    "full": {
+     "cube0": 0.7834132698887721,
+     "goal": -0.20899439656936392,
+     "cube_t": 0.7255579509013163,
+     "tcp": 0.1893392855474456,
+     "qpos": -0.028754065963388253
+    }
+   }
+  }
+ }
+}

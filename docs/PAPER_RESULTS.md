@@ -29,6 +29,8 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 
 **Why NUS fails: three tests (T1-T3; 5 variants × 3 seeds; 2026-10-21).** Not supported as registered; no cell meets the rule (cut on every seed, seed agreement ≥ 0.9, rollout ≤ 0.35). Lags (1, 4, 16, 64) are worse than (8, 32); more frames of the same videos change little (rollout 0.80-0.82); half the videos give a low rollout (0.27) only through seed-inconsistent, shuffle-insensitive coordinates (agreement 0.03). The conv encoder at 64×64 with more frames is nearest (cut on every seed, agreement 0.88, shuffled control no cut) but rollout stays 0.60-0.64 and ICC about 0.4. The per-lag gap ratio peaks near lag 16, not 8 (observation, untested). Colour not testable (gray footage).
 
+**Multi-rung ladder on ManiSkill PickCube (RL; 64×64 RGB, conv encoder, 200 episodes; 2026-10-22).** Not confirmed: no cut on any seed or arm (cross-view + lags 8, 24; lags 4, 12, 36): the first family ends in S2 with a gap ratio of 1.1-1.2. The gate was met (the full latent reads out the cube's initial position at R² 0.73-0.78, against 0.04 for the earlier 32×32 gray MLP), but the latent carries almost nothing about the arm (tcp and joint R² about 0) or the goal, so there is no fast content to split off. Multiple rungs have so far only been obtained in the planted multi-timescale simulations.
+
 ## Sec 2-3 (theory and mechanism) — what the experiments touch
 * Prediction fixes content, correspondences fix the partition: confirmed in the AR world; with correct pairs the lag ladder recovers a clean cut (variant R² 0.96-0.98, invariant 0.98-0.99, gap ratio 19-33 in E36's world).
 * The cut gap cannot exceed the adjacent timescale ratio; measured eigenvalues follow 2(1−a) (hierarchical run). With the 2× criterion (D18) only one of four cuts in the planted five-level world is taken (E35 refuted as worded).
@@ -57,6 +59,7 @@ No shared video between train (70), validation (10) and test (20). Naming |Spear
 | R1 (ManiSkill PickCube) | untestable with this encoder (full-latent R² ≈ 0.04 for the cube); not confirmed |
 | N (NUS real double pendulum) | not confirmed: V, L, main-above-flat met; rollout 0.84-0.96, ICC 0.29-0.37, seed agreement 0.07 on two pairs; no labels, naming untested |
 | T1-T3 (NUS: lags, representation, data) | not supported: no cell works; nearest CL(A): cut on all seeds, agreement 0.88, rollout 0.60-0.64 |
+| RL (robot multi-rung ladder, RGB conv) | not confirmed: gate met (cube R² 0.73-0.78), 0 cuts on every seed and arm, arm and goal not represented |
 | E44-E47 | blocked on the owner's footage |
 
 ## Sec 5 (boundaries) — what is guaranteed, measured, open

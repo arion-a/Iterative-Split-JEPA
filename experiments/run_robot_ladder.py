@@ -52,7 +52,7 @@ if "--pilot" in sys.argv:
     enc = dict(cfg["encoder"], steps=1000, aug_weight=w)
     pipe = Pipeline(views[split == 0], {"encoder": enc}, 0)
     zw = pipe.whiten(pipe.latent(views[split == 0]))
-    run = tl.run_ladder(zw, cfg["lags"], lad["gamma_min"], lad["b2_quantile"], False, 0, s1_chance_fraction=lad["s1_chance_fraction"])
+    run = tl.run_ladder(zw, cfg["arms"]["crossview_lag"]["lags"], lad["gamma_min"], lad["b2_quantile"], False, 0, s1_chance_fraction=lad["s1_chance_fraction"])
     print("PILOT aug_weight", w, rungs_of(run), flush=True)
     sys.exit(0)
 
@@ -61,20 +61,24 @@ os.makedirs("results/robot_ladder", exist_ok=True)
 for s in cfg["seeds"]:
     pipe = Pipeline(views[split == 0], {"encoder": cfg["encoder"]}, s)
     z = pipe.latent(views); zw = pipe.whiten(z); d = zw.shape[-1]
-    main = tl.run_ladder(zw[split == 0], cfg["lags"], lad["gamma_min"], lad["b2_quantile"], False, s, s1_chance_fraction=lad["s1_chance_fraction"])
-    shuf = tl.run_ladder(zw[split == 0], cfg["lags"], lad["gamma_min"], lad["b2_quantile"], True, s, s1_chance_fraction=lad["s1_chance_fraction"])
-    cuts = [r for r in main["rungs"] if "V" in r]
-    core = main["core"]; m = core.shape[1]
-    pcs = np.linalg.eigh(np.cov((z - pipe.zmean).reshape(-1, d).T))[1][:, ::-1][:, :max(m, 1)]
-    blocks = {f"variant_{r['family']}": zw @ r["V"] for r in cuts}
-    blocks |= {"final_core": zw @ core, "flat_top_pcs": (z - pipe.zmean) @ pcs, "full": zw}
-    rec = {"seed": s, "aug_weight": cfg["encoder"]["aug_weight"], "n_cuts": len(cuts), "cut_gap_ratios": [round(float(r["gap_ratio"]), 3) for r in cuts],
-           "block_dims": {k: int(v.shape[-1]) for k, v in blocks.items()}, "stop": main["stop"], "ladder": rungs_of(main),
-           "shuffled_n_cuts": sum("V" in r for r in shuf["rungs"]), "shuffled_ladder": rungs_of(shuf),
-           "r2": {k: {t: readout(x, t) for t in tg} for k, x in blocks.items()}}
+    rec = {"seed": s, "aug_weight": cfg["encoder"]["aug_weight"], "arms": {}}
+    for arm, ac in cfg["arms"].items():
+        args = (ac["lags"], lad["gamma_min"], lad["b2_quantile"])
+        kw = dict(s1_chance_fraction=lad["s1_chance_fraction"], use_aug=ac["use_cross_view_family"])
+        main = tl.run_ladder(zw[split == 0], *args, False, s, **kw)
+        shuf = tl.run_ladder(zw[split == 0], *args, True, s, **kw)
+        cuts = [r for r in main["rungs"] if "V" in r]
+        core = main["core"]; m = core.shape[1]
+        pcs = np.linalg.eigh(np.cov((z - pipe.zmean).reshape(-1, d).T))[1][:, ::-1][:, :max(m, 1)]
+        blocks = {f"variant_{r['family']}": zw @ r["V"] for r in cuts}
+        blocks |= {"final_core": zw @ core, "flat_top_pcs": (z - pipe.zmean) @ pcs, "full": zw}
+        rec["arms"][arm] = {"lags": ac["lags"], "n_cuts": len(cuts), "cut_gap_ratios": [round(float(r["gap_ratio"]), 3) for r in cuts],
+                            "block_dims": {k: int(v.shape[-1]) for k, v in blocks.items()}, "stop": main["stop"], "ladder": rungs_of(main),
+                            "shuffled_n_cuts": sum("V" in r for r in shuf["rungs"]), "shuffled_ladder": rungs_of(shuf),
+                            "r2": {k: {t: readout(x, t) for t in tg} for k, x in blocks.items()}}
+        print(s, arm, "cuts", rec["arms"][arm]["cut_gap_ratios"], "dims", rec["arms"][arm]["block_dims"], {k: {t: round(v, 2) for t, v in r.items()} for k, r in rec["arms"][arm]["r2"].items()}, flush=True)
     path = f"results/robot_ladder/{s}.json"
     with open(path, "x") as f:
         json.dump(rec, f, indent=1)
-    print(s, "cuts", rec["cut_gap_ratios"], "dims", rec["block_dims"], {k: {t: round(v, 2) for t, v in r.items()} for k, r in rec["r2"].items()}, flush=True)
     explog.append("run", f"Robot ladder (RL) seed {s} finished", stage="V", step="RL", how="experiments/run_robot_ladder.py", artifact_paths=[path],
-                  outputs={"cuts": rec["cut_gap_ratios"], "block_dims": rec["block_dims"], "r2_full_cube0": round(rec["r2"]["full"]["cube0"], 3), "r2_final_core": {t: round(v, 3) for t, v in rec["r2"]["final_core"].items()}})
+                  outputs={arm: {"cuts": r["cut_gap_ratios"], "block_dims": r["block_dims"], "r2_full_cube0": round(r["r2"]["full"]["cube0"], 3), "r2_final_core": {t: round(v, 3) for t, v in r["r2"]["final_core"].items()}} for arm, r in rec["arms"].items()})

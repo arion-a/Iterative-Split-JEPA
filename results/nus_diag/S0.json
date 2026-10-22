@@ -1,0 +1,117 @@
+{
+ "variant": "S0",
+ "core_dim": 1,
+ "core_orthonormal_err": 5.960464477539063e-08,
+ "rungs": [
+  {
+   "family": "aug",
+   "best_ratio": 0.0,
+   "d_k": 0,
+   "content_dim": 64,
+   "lambda_max_over_chance": 0.0006,
+   "stop": "S1",
+   "eig_top5": [
+    0.001,
+    0.001,
+    0.001,
+    0.001,
+    0.001
+   ],
+   "eig_bottom3": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "family": "lag8",
+   "best_ratio": 2.1771,
+   "d_k": 63,
+   "content_dim": 64,
+   "lambda_max_over_chance": 1.5843,
+   "gap_ratio": 2.1771,
+   "eig_top5": [
+    3.169,
+    3.149,
+    3.06,
+    2.97,
+    2.937
+   ],
+   "eig_bottom3": [
+    0.764,
+    0.743,
+    0.341
+   ]
+  },
+  {
+   "family": "lag32",
+   "best_ratio": 0.0,
+   "d_k": 0,
+   "content_dim": 1,
+   "lambda_max_over_chance": 0.2373,
+   "stop": "S2",
+   "eig_top5": [
+    0.475
+   ],
+   "eig_bottom3": [
+    0.475
+   ]
+  }
+ ],
+ "invariance_pair_diff": {
+  "full": {
+   "lighting_views": 0.00041531524038873613,
+   "lag8": 1.0043935775756836,
+   "lag32": 1.0057543516159058
+  },
+  "core": {
+   "lighting_views": 0.0005047334125265479,
+   "lag8": 0.35790860652923584,
+   "lag32": 0.3415316045284271
+  },
+  "variant": {
+   "lighting_views": 0.00041420914931222796,
+   "lag8": 1.0115187168121338,
+   "lag32": 1.0117560625076294
+  }
+ },
+ "lighting_readout_r2": {
+  "full": -0.05415801780094576,
+  "core": -0.05844239010707897,
+  "variant": -0.05672467662788638
+ },
+ "content_readout_r2": {
+  "full": {
+   "height": 0.7109465650350761,
+   "reach": 0.388460186794928,
+   "motion": 0.6397151517236914
+  },
+  "core": {
+   "height": 0.10621248151939755,
+   "reach": -0.34007580381508085,
+   "motion": 0.005844265609712962
+  },
+  "variant": {
+   "height": 0.13246134108505414,
+   "reach": 0.387390041534058,
+   "motion": 0.6159596427283325
+  }
+ },
+ "psi": {
+  "autocorr_lag1": 0.6664808586691532,
+  "autocorr_lag8": 0.37120247086399155,
+  "autocorr_lag32": 0.4142036397058142,
+  "autocorr_lag128": 0.41238421430155764,
+  "abs_spearman_instantaneous": {
+   "height": 0.3140117726466217,
+   "reach": 0.14546970283836377,
+   "motion": 0.09438319630087738
+  },
+  "abs_spearman_slow_envelope_w60": {
+   "motion_mean_w60": 0.4865286864228958,
+   "height_std_w60": 0.5149349574908577,
+   "reach_mean_w60": 0.2826729995019627
+  },
+  "between_video_icc_test": 0.27729601676814036
+ }
+}

@@ -1,0 +1,14 @@
+# Execution audit (2026-10-23): mistakes in how I ran things, found and what was done
+
+Owner's point: execution errors, more than theory, were causing the trouble. Each item below is a mistake in my implementation or test design, with the evidence and the action.
+
+| # | Mistake | Evidence | Action |
+|---|---|---|---|
+| 1 | **The whitening constraint was not enforced in the invariance-trained encoders.** The Stage A recipe's decorrelation weight (0.04) is swamped once invariance terms are added, and the std hinge is satisfied by perfectly correlated outputs. | Exploratory diagnostic, seed 0, 10,000 steps (`scratchpad/diag`, not registered): output-covariance eigenvalues of the E40 treated encoder: three of twelve at 0.003, 0.0005, 0.0 (effective rank 9.0); E42 encoder: two at 0.0009, 0.0 (rank 9.5); baseline full rank (12.0). | New terms enforcing Cov = I (E43), weight picked by the no-dead-dimension rule. |
+| 2 | **E42's hinge did not control rank.** It fixes each output's pair-difference scale, not the number of directions that respond. | Block 1's Jacobian singular values with the hinge: 1.7, 1.4, 0.11, 0.06 (two of four directions respond; presence 0.49). Baseline: 0.25, 0.16, 0.11, 0.07. | Replaced by the whitened pair-difference term (target 2I). |
+| 3 | **Presence readout under-reading was a possibility; it is not the cause.** | Stronger probe (4,000 steps, 256 hidden) and the linear probe gave the same texture presence (baseline -0.09 / -0.00 against -0.01; E42 encoder 0.43 / 0.48 against 0.49). | None needed; recorded so it is not suspected again. |
+| 4 | **E35's "weight 1.0" for the alignment objective was degenerate.** The objective is (1 - w) x alignment + w x SIGReg, so w = 1.0 removes alignment entirely. | `src/isj/encoder.py`, lejepa branch. | The sentence in `docs/GAPS_REPORT.md` and `EVIDENCE.md` that a stronger regulariser made it worse holds for weight 0.1 only; the 1.0 arm tested pure SIGReg. Noted in `EVIDENCE.md` (E43 header). Not re-run (a different objective from the one under test). |
+| 5 | **The correspondence terms were silently ignored with the alignment objective.** | Reading the encoder code. | An assertion now refuses that combination; `tests/test_corr_terms.py` runs each term and the refusal. |
+| 6 | **E39's rho_k could not discriminate because of the gate, not by chance.** A gated wrong rung discards nothing, so rho = 1. | E39 control: rung-2 gap 1 on 5 of 5, rho_2 1.000. | Already handled by the registered branch; noted as a property of the gated ladder. |
+| 7 | **Earlier test designs that could not have refuted the claim** (E34 scaling against the true block, E37a with separated speeds, E37b with independent blocks). | `docs/PLAN_MINIMAL_CLAIMS.md` section 1.3. | Replaced by E38-E41. |
+| 8 | **Stale comments in configs** ("separated speeds", "three times longer" in the pilot configs). | Reading the configs. | Fixed. |

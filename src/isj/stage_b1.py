@@ -33,7 +33,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
 
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"],
-                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), stop_grad=e.get("stop_grad", True),
+                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), corr_whiten_weight=e.get("corr_whiten_weight", 0.0), stop_grad=e.get("stop_grad", True),
                          sigreg_weight=e["sigreg_weight"], arch=e["arch"], objective=e["objective"],
                          coupling_layers=w["coupling_layers"])
     if ablation == "no_pred":

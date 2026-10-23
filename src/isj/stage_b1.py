@@ -153,7 +153,9 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
                 pred = torch.cat([x[n_tr:], torch.ones(len(x) - n_tr, 1)], 1).to(w.dtype) @ w
                 err.append(float((pred - tgt[n_tr:].to(w.dtype)).square().mean()))
             predictive.append({"k": r.k, "h": h, "rho": err[1] / err[0]})
-    return {"seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
+    h_raw = encode(enc, observe, z_all)
+    out_cov_min_eig = float(torch.linalg.eigvalsh(torch.cov(h_raw.T).double()).min())   # health: a dead output direction shows as ~0
+    return {"output_cov_min_eig": out_cov_min_eig, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

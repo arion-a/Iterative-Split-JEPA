@@ -1,6 +1,6 @@
 # E43: whitening constraint enforced, 30,000 steps; frozen criteria `configs/whiten.criteria.yaml`
 
-**E43: INCOMPLETE.** All presences at least 0.95 and both rungs clean on 0 of 8 seeds (needs 9); texture presence at least 0.95 on 0 of 8. References (same seeds): baseline 0, invariance only 0, variance hinge 0 of 10 with texture present.
+**E43: REFUTED.** All presences at least 0.95 and both rungs clean on 0 of 10 seeds (needs 9); texture presence at least 0.95 on 0 of 10. References (same seeds): baseline 0, invariance only 0, variance hinge 0 of 10 with texture present.
 
 | Seed | Baseline | Invariance only | Variance hinge (E42) | E43 presence | E43 angles | E43 gaps |
 |---|---|---|---|---|---|---|
@@ -12,3 +12,5 @@
 | 145 | -0.01, 0.74, 0.99 | -0.00, 0.99, 1.00 | 0.34, 0.99, 0.99 | 0.87, 0.93, 0.77 | 1.1, 2.7 | 236.5, 565.2 |
 | 146 | -0.00, 0.42, 0.99 | 0.02, 0.99, 1.00 | 0.30, 0.99, 0.99 | 0.70, 0.92, 0.76 | 6.4, 3.3 | 200.1, 411.4 |
 | 147 | -0.01, 0.99, 0.99 | 0.01, 0.99, 1.00 | 0.32, 0.99, 0.99 | 0.84, 0.92, 0.77 | 0.8, 3.8 | 224.0, 401.1 |
+| 148 | -0.01, 0.70, 0.99 | 0.04, 0.99, 1.00 | 0.27, 0.99, 0.99 | 0.84, 0.78, 0.99 | 1.1, 37.8 | 139.3, 698.3 |
+| 149 | -0.01, 0.99, 0.99 | 0.02, 0.99, 1.00 | 0.52, 0.99, 1.00 | 0.87, 0.94, 0.99 | 0.3, 1.3 | 217.8, 770.3 |

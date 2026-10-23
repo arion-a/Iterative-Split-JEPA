@@ -1,4 +1,4 @@
-experiment: E44 (more rungs: the E43 recipe at 4 and 5 blocks, generic MLP)
+experiment: "E44 (more rungs, the E43 recipe at 4 and 5 blocks, generic MLP)"
 depths: {4: results/minimal/e44/d4, 5: results/minimal/e44/d5}
 seeds: [160, 161, 162, 163, 164, 165, 166, 167, 168, 169]
 thresholds: {angle_max_deg: 5.0, gap_min: 10.0}

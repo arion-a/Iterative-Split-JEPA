@@ -15,14 +15,14 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Depth 3 to 5 with the mirror encoder (E34, E39)
 - [x] Generic MLP with the theory's terms keeps every rung and the slowest block to depth 5 (E40 to E45; the whitening scale was an execution error)
 - [x] Located the first failing check (strict leakage test with the mirror encoder; dead directions from the whitening scale with the generic encoder)
-- [ ] Open: the 1/sqrt(n) rate with a learned encoder (measure against the representation's own eigenspace)
-- [ ] Open: a confirmatory run of the E45 recipe on fresh seeds
+- [x] The 1/sqrt(n) rate with a learned encoder, measured against its own eigenspace: slope -0.48, interval contains -0.5 (E48)
+- [ ] Running: a confirmatory run of the E45 recipe on fresh seeds (E49, waits for Stage R)
 
 ## Stage D: does it help?: NOT DONE
 - [x] Identification works (synthetic, under the conditions)
 - [x] Correspondence, not speed, carries the split (E38)
-- [ ] Open: the ladder against one more baseline family at equal speeds
-- [ ] Open: a payoff test with a co-varying nuisance (the earlier shift test could not show one)
+- [x] The ladder against a pooled one-shot baseline: equal accuracy, but only the ladder has a detectable gap (E50)
+- [x] A payoff test with a co-varying nuisance (E51): the core is more robust (0.99-1.00 against 0.95-0.96) but by less than the registered 0.2: refuted as registered
 - [ ] Not attempted: the full Stage D (five matched methods, six metrics)
 
 ## Stage R: robot images (the real-data row): RUNNING

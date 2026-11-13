@@ -1,0 +1,32 @@
+{
+ "4": {
+  "pilot": {
+   "1": {
+    "min_eig": 0.9131,
+    "eff_rank": 15.989309441220707,
+    "last_block_presence_reported_only": 0.9783090353012085
+   },
+   "10": {
+    "min_eig": 0.9223,
+    "eff_rank": 15.987995012878889,
+    "last_block_presence_reported_only": 0.9281100034713745
+   }
+  },
+  "W": 1
+ },
+ "5": {
+  "pilot": {
+   "1": {
+    "min_eig": 0.8924,
+    "eff_rank": 19.983463399301698,
+    "last_block_presence_reported_only": 0.9810731410980225
+   },
+   "10": {
+    "min_eig": 0.8996,
+    "eff_rank": 19.98469378441917,
+    "last_block_presence_reported_only": 0.9100820422172546
+   }
+  },
+  "W": 1
+ }
+}

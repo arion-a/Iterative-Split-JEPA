@@ -47,3 +47,6 @@
 
 ## 6. Recommendation
 Write the technical report now from what is solid (section 1 rows 1-3 and 6 are enough for a clean story), with row 4 stated as a diagnosed, partly confirmed finding. Run items 1 and 2 first if you want the generic-encoder section to stand without a caveat. Do not claim real-data success or a payoff.
+
+## Update 2026-11-13
+Item 1 of section 5 is done: the whitening scale was fixed and the 4- and 5-block case re-run (E45, confirmed as registered): the generic MLP keeps every rung and the slowest block to depth 5 (every 5-block rung clean on 10 of 10 seeds, core presence 0.98, no dead output directions). Row 4 of section 1 is therefore much stronger, and the "unfinished generic-encoder story" threat in section 4 is largely closed for this world. Still open: a confirmatory run of the E43 recipe on fresh seeds (item 2 would now be the E45 result plus one more), a baseline family, and non-Gaussian or real-data worlds.

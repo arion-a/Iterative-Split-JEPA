@@ -153,9 +153,40 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
                 pred = torch.cat([x[n_tr:], torch.ones(len(x) - n_tr, 1)], 1).to(w.dtype) @ w
                 err.append(float((pred - tgt[n_tr:].to(w.dtype)).square().mean()))
             predictive.append({"k": r.k, "h": h, "rho": err[1] / err[0]})
+    stage_d = None
+    if cfg.get("stage_d"):                                  # E50 / E51: a flat one-shot split from the pooled correspondence families, and a readout under a spurious nuisance correlation
+        sd = cfg["stage_d"]; n1 = budgets[0]
+        assert world.block_dims[1] == world.block_dims[2], "the nuisance (block 2) is tied coordinate by coordinate to the target (block 3)"
+        u1, v1 = world.correspondence_pairs(n1, 1); u2, v2 = world.correspondence_pairs(n1, 2)
+        dl = torch.cat([wh(encode(enc, observe, u1)) - wh(encode(enc, observe, v1)), wh(encode(enc, observe, u2)) - wh(encode(enc, observe, v2))]).double()
+        pv, pw = torch.linalg.eigh(dl.T @ dl / len(dl)); pv, pw = pv.flip(0), pw.flip(1).float()
+        d1, d2 = world.block_dims[0], world.block_dims[1]
+        pooled = {"angles_deg": [audits.max_angle_deg(pw[:, :d1], image[1]), audits.max_angle_deg(pw[:, d1:d1 + d2], image[2])],
+                  "gap_b1_b2": float(pv[d1 - 1] / pv[d1]), "gap_b2_core": float(pv[d1 + d2 - 1] / pv[d1 + d2].clamp_min(1e-12))}
+        def corr_sample(n):
+            z = world.sample(n); z[:, world.block_slice(2)] = sd["spurious"] * z[:, world.block_slice(3)] + math.sqrt(1 - sd["spurious"] ** 2) * z[:, world.block_slice(2)]
+            return z
+        z_trc, z_tec, z_tei = corr_sample(sd["n_train"]), corr_sample(5000), world.sample(5000)
+        f_trc, f_tec, f_tei = (wh(encode(enc, observe, z)) for z in (z_trc, z_tec, z_tei))
+        yy = lambda z: z[:, world.block_slice(3)]
+        robust = {name: {"test_correlated_r2": audits.mlp_r2(f_trc @ B, yy(z_trc), f_tec @ B, yy(z_tec)), "test_shifted_r2": audits.mlp_r2(f_trc @ B, yy(z_trc), f_tei @ B, yy(z_tei))}
+                  for name, B in (("whole", torch.eye(d)), ("core", core))}
+        stage_d = {"pooled_one_shot": pooled, "ladder_gaps": [g["gap_ratio"] for g in out], "robust": robust}
+    rate = None
+    if cfg.get("rate"):                                      # E48: angle between the block found from n pairs and from 10^6 pairs, same encoder
+        rc = cfg["rate"]
+        def ladder_at(n):
+            def pf(k):
+                if k > world.n_blocks - 1:
+                    return None
+                u, v = world.correspondence_pairs(n, k)
+                return wh(encode(enc, observe, u)), wh(encode(enc, observe, v))
+            return fit_ladder(pf, d, d_ks=list(s["d_ks"]), nesting_enforcement=nest)
+        ref = ladder_at(rc["ref"])
+        rate = {str(n): [audits.max_angle_deg(f.V, rf.V) for f, rf in zip(ladder_at(n), ref)] for n in rc["ns"]}
     h_raw = encode(enc, observe, z_all)
     out_cov_min_eig = float(torch.linalg.eigvalsh(torch.cov(h_raw.T).double()).min())   # health: a dead output direction shows as ~0
-    return {"output_cov_min_eig": out_cov_min_eig, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
+    return {"output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

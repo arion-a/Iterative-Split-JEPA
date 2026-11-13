@@ -92,6 +92,7 @@ class EncoderConfig:
     arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
     objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
     coupling_layers: int = 4
+    corr_whiten_norm: str = "dim"  # "dim": penalties divided by the number of directions (E43, kept so it can be reproduced); "sum": plain sums, so one dead direction costs the same at any width (E45)
     corr_whiten_weight: float = 0.0  # E43: the whitening constraint of Lemma 3.1 / Thm 4.2 enforced as a penalty: Cov(h) = I on all outputs, and Cov(r_k(u) - r_k(v)) = 2 I on each family's own block
     corr_var_weight: float = 0.0  # E42: the variance term where Theorem 4.2 needs it: block k's outputs must vary across the pairs of its own family D_k (hinge on the pair-difference std, target sqrt(2) = two independent unit-variance draws)
     corr_inv_weight: float = 0.0  # E40: invariance on every correspondence family (monograph eq. 3 / Thm 5.1); 0 = off ("predict" objective only)
@@ -160,13 +161,13 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
                 if cfg.corr_whiten_weight > 0:
                     dk = hk[: cfg.batch_size, world.block_slice(k)] - hk[cfg.batch_size:, world.block_slice(k)]
                     cd = torch.cov(dk.T) if dk.shape[1] > 1 else dk.var(0, keepdim=True).reshape(1, 1)
-                    loss = loss + cfg.corr_whiten_weight * (cd - 2 * torch.eye(cd.shape[0])).square().sum() / cd.shape[0]
+                    loss = loss + cfg.corr_whiten_weight * (cd - 2 * torch.eye(cd.shape[0])).square().sum() / (cd.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
                 if cfg.corr_var_weight > 0:
                     dk = hk[: cfg.batch_size, world.block_slice(k)] - hk[cfg.batch_size:, world.block_slice(k)]
                     loss = loss + cfg.corr_var_weight * F.relu(math.sqrt(2.0) - dk.std(0)).mean()
         if cfg.corr_whiten_weight > 0:
             cf = torch.cov(h.T)
-            loss = loss + cfg.corr_whiten_weight * (cf - torch.eye(cf.shape[0])).square().sum() / cf.shape[0]
+            loss = loss + cfg.corr_whiten_weight * (cf - torch.eye(cf.shape[0])).square().sum() / (cf.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
         l_reg = torch.zeros(())
         if cfg.reg == "hinge":
             l_reg = cfg.var_weight * variance_hinge(h) + cfg.cov_weight * covariance_penalty(h)

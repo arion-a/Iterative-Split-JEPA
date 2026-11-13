@@ -14,7 +14,7 @@ def _train(**kw):
     return encode(enc, obs, world.sample(500)), log
 
 
-@pytest.mark.parametrize("kw", [dict(corr_inv_weight=1.0), dict(corr_inv_weight=1.0, corr_var_weight=1.0), dict(corr_inv_weight=1.0, corr_whiten_weight=1.0)])
+@pytest.mark.parametrize("kw", [dict(corr_inv_weight=1.0), dict(corr_inv_weight=1.0, corr_var_weight=1.0), dict(corr_inv_weight=1.0, corr_whiten_weight=1.0), dict(corr_inv_weight=1.0, corr_whiten_weight=1.0, corr_whiten_norm="sum")])
 def test_terms_run_and_stay_finite(kw):
     h, log = _train(**kw)
     assert torch.isfinite(h).all() and all(torch.isfinite(torch.tensor(r["pred"])) for r in log)

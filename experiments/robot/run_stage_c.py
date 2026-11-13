@@ -12,6 +12,9 @@ ap.add_argument("--task", required=True); ap.add_argument("--split-seed", type=i
 ap.add_argument("--data", default="data/robot"); ap.add_argument("--pca", type=int, default=128); ap.add_argument("--max-groups", type=int, default=None)
 ap.add_argument("--encoder", choices=["pca", "head"], default="head", help="pca = frozen features only; head = JEPA-trained MLP head on the frozen features (E24 main arm)")
 ap.add_argument("--fixed-d1", type=int, default=None, help="paper Appendix D: fix the rung-1 variant block to d_H dims (use --pca 2*d_H) instead of the gap rule; off by default")
+ap.add_argument("--inv-weight", type=float, default=0.0, help="Stage R (E47): invariance of the outputs after the first d_H coordinates across the two cameras of the same frame (needs --fixed-d1); 0 = off")
+ap.add_argument("--whiten-weight", type=float, default=0.0, help="Stage R (E47): the whitening constraint Cov(output) = I as a plain-sum penalty; 0 = off")
+ap.add_argument("--holdout-groups", type=int, default=0, help="Stage R: the last N groups are never seen by the head or the ladder and are used only for the held-out-scene readouts; 0 = off (E24/E36 protocol)")
 ap.add_argument("--head-steps", type=int, default=4000); ap.add_argument("--head-hidden", type=int, default=512)
 a = ap.parse_args()
 t0 = time.time(); torch.manual_seed(a.split_seed)
@@ -20,6 +23,8 @@ files = sorted(glob.glob(f"{a.data}/feat/{a.task}/group_*.npy"))
 if a.max_groups: files = files[: a.max_groups]
 F = torch.from_numpy(np.stack([np.load(f).astype(np.float32) for f in files]))                       # (G, 8, K, 2, 2048)
 S = torch.from_numpy(np.stack([np.load(f.replace("/feat/", "/").replace(".npy", ".npz"))["state"] for f in files]).astype(np.float32))   # (G, 8, K, 9)
+F_ho = S_ho = None
+if a.holdout_groups: F_ho, S_ho, F, S = F[-a.holdout_groups:], S[-a.holdout_groups:], F[:-a.holdout_groups], S[:-a.holdout_groups]
 G, T, K = F.shape[:3]; n_val = max(1, round(0.2 * T))
 g = torch.Generator().manual_seed(a.split_seed)
 perm = torch.stack([torch.randperm(T, generator=g) for _ in range(G)]); val_idx, tr_idx = perm[:, :n_val], perm[:, n_val:]
@@ -43,6 +48,12 @@ else:
         h0, h1 = enc(Xtr[gg, tt, kk, cc]), enc(Xtr[gg, tt, kk + 1, cc])
         l_pred = (pred(h0) - h1.detach()).square().mean(); h = torch.cat([h0, h1])
         loss = l_pred + 1e-2 * variance_hinge(h) + 0.04 * covariance_penalty(h)
+        if a.whiten_weight > 0:
+            cf = torch.cov(h.T); loss = loss + a.whiten_weight * (cf - torch.eye(cf.shape[0])).square().sum()
+        if a.inv_weight > 0:
+            assert a.fixed_d1, "--inv-weight needs --fixed-d1 (the first d_H outputs are the variant block)"
+            hv = enc(torch.cat([Xtr[gg, tt, kk, 0], Xtr[gg, tt, kk, 1]]))                 # the same frame from the two cameras
+            loss = loss + a.inv_weight * (hv[:512, a.fixed_d1:] - hv[512:, a.fixed_d1:]).square().mean()
         opt.zero_grad(); loss.backward(); opt.step()
         if step % 500 == 0 or step == a.head_steps - 1: head_log.append({"step": step, "pred": float(l_pred), "min_std": float(h.std(0).min())})
     enc.eval()
@@ -83,7 +94,10 @@ def resp(B, u, v):                 # normalized response of block B to pairs: 1 
 view_u, view_v = R_va[..., 0, :].reshape(-1, D), R_va[..., 1, :].reshape(-1, D)                    # validation viewpoint pairs
 tj_u, tj_v = R_va[:, 0].reshape(-1, D), R_va[:, 1].reshape(-1, D)                                   # validation trajectory pairs (the held-out pair of each group)
 VL = torch.cat([V1, V2], 1)                                                                          # all variant directions
-res = {"encoder": a.encoder, "head_log": head_log, "split_seed": a.split_seed, "task": a.task, "groups": G, "train_traj_per_group": int(tr_idx.shape[1]), "val_traj_per_group": int(n_val), "pca": D,
+hc = Ztr.reshape(-1, D).double(); _ev = torch.linalg.eigvalsh(torch.cov(hc.T)).flip(0); _p = _ev / _ev.sum()
+res = {"head_cov_min_eig": float(_ev.min()), "head_eff_rank": float(torch.exp(-(_p * _p.clamp_min(1e-12).log()).sum())), "head_cov_eigs": [round(float(x), 4) for x in _ev[:: max(1, len(_ev) // 16)]],
+       "head_terms": {"inv_weight": a.inv_weight, "whiten_weight": a.whiten_weight, "fixed_d1": a.fixed_d1},
+       "encoder": a.encoder, "head_log": head_log, "split_seed": a.split_seed, "task": a.task, "groups": G, "train_traj_per_group": int(tr_idx.shape[1]), "val_traj_per_group": int(n_val), "pca": D,
        "rung1": info1, "rung2": info2, "n_pairs": {"rung1": len(u1), "rung2": len(u2), "val_view": len(view_u), "val_traj": len(tj_u)}}
 res["response"] = {"view": {"V1": resp(V1, view_u, view_v), "Q1": resp(Q1, view_u, view_v), "V2": resp(V2, view_u, view_v), "Q2": resp(Q2, view_u, view_v), "V1V2": resp(VL, view_u, view_v)},
                    "traj": {"V1": resp(V1, tj_u, tj_v), "Q1": resp(Q1, tj_u, tj_v), "V2": resp(V2, tj_u, tj_v), "Q2": resp(Q2, tj_u, tj_v), "V1V2": resp(VL, tj_u, tj_v)}}
@@ -114,6 +128,13 @@ cur = lambda S_: S_[:, :, :, 3:6].reshape(-1, 3)                                
 res["probes"].update({"layout_r2_from_core_Q2": r2_from(Q2, lay(Str), lay(Sva)), "layout_r2_from_V1": r2_from(V1, lay(Str), lay(Sva)), "layout_r2_from_V2": r2_from(V2, lay(Str), lay(Sva)),
                       "progress_r2_from_core_Q2": r2_from(Q2, prog(Str), prog(Sva)), "progress_r2_from_V2": r2_from(V2, prog(Str), prog(Sva)),
                       "cube_pos_r2_from_core_Q2": r2_from(Q2, cur(Str), cur(Sva)), "layout_r2_from_all_features": r2_from(torch.eye(D), lay(Str), lay(Sva))})
+if F_ho is not None:                                  # held-out scenes: layouts the head and the ladder never saw
+    R_ho = wh(proj(F_ho).reshape(-1, D)).reshape(*F_ho.shape[:4], D)
+    hu, hv_ = R_ho[..., 0, :].reshape(-1, D), R_ho[..., 1, :].reshape(-1, D)
+    xtr0, xho0 = R_tr[..., 0, :].reshape(-1, D), R_ho[..., 0, :].reshape(-1, D)
+    res["heldout"] = {"groups": int(F_ho.shape[0]), "P1_view_V1_over_Q1": resp(V1, hu, hv_) / resp(Q1, hu, hv_),
+                      "layout_r2_from_core_Q2": audits.linear_r2(xtr0 @ Q2, lay(Str), xho0 @ Q2, lay(S_ho)), "layout_r2_from_all_features": audits.linear_r2(xtr0, lay(Str), xho0, lay(S_ho)),
+                      "progress_r2_from_core_Q2": audits.linear_r2(xtr0 @ Q2, prog(Str), xho0 @ Q2, prog(S_ho)), "progress_r2_from_all_features": audits.linear_r2(xtr0, prog(Str), xho0, prog(S_ho))}
 res["seconds"] = round(time.time() - t0, 1)
 os.makedirs(f"{a.out}/{a.task}", exist_ok=True)
 json.dump(res, open(f"{a.out}/{a.task}/split{a.split_seed}.json", "w"), indent=1)

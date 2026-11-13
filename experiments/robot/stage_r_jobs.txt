@@ -1,0 +1,12 @@
+PickCube 0 baseline
+PickCube 1 baseline
+PickCube 2 baseline
+PushCube 0 baseline
+PushCube 1 baseline
+PushCube 2 baseline
+PickCube 0 treated
+PickCube 1 treated
+PickCube 2 treated
+PushCube 0 treated
+PushCube 1 treated
+PushCube 2 treated

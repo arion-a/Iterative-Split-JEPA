@@ -44,3 +44,6 @@ So the claim "nothing worked" is not right: the core mechanism works in the sett
 - The robot test failed in the same way the synthetic generic encoder first failed (collapsed output directions); the synthetic case was fixed by enforcing the whitening constraint, and the same terms did not fix the robot case.
 
 Where the detail is: `docs/EVIDENCE.md` (every prediction and outcome), `docs/ROADMAP.md` (stage status), `docs/PROJECT_DRAFT.html` (diagrams).
+
+## Correction 2026-11-15
+An untrained identity encoder passes every check the trained encoders pass in the synthetic world (presence 0.99, angles under 2 degrees, gaps 63 to 107). So the synthetic results show that the eigen-splitting recovers planted layers from exact pairs when the observation is a mild nonlinear bijection; they do not show that encoder training does any work, and the E54 statement that it closes the generic-encoder question was too strong. A coupling-strength sweep (E55) tests where the world becomes hard enough that training matters.

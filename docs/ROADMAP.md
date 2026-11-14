@@ -13,7 +13,7 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Failed rung does not damage the next: the rung gate (E33)
 - [ ] Open (not started): build pairs from data for rung 3 and deeper
 
-## Stage C: the deep ladder: DONE in the synthetic worlds
+## Stage C: the deep ladder: DONE in the synthetic worlds as built; CORRECTION (2026-11-15): that world is easy enough that an untrained identity encoder passes every check, so these results show the spectral split, not encoder learning
 - [x] Depth 3 to 5 with the mirror encoder (E34, E39)
 - [x] Generic MLP with the theory's terms keeps every rung and the slowest block to depth 5 (E40 to E45; the whitening scale was an execution error)
 - [x] Located the first failing check (strict leakage test with the mirror encoder; dead directions from the whitening scale with the generic encoder)

@@ -23,7 +23,8 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Located: in a flagged seed one of block 2's four coordinates is mostly missing from the embedding (R2 0.34; another 0.70), not sign-folded, not nonlinear-hidden; block 3 unaffected (follow-up 2 in `EVIDENCE.md`)
 - [ ] Open (owner's call, nothing started): judge generic-encoder rungs by completeness (readout from the found block against readout from the whole embedding) instead of the angle to the linear image; and whether any training change can stop a coordinate being dropped
 
-- [ ] Running: an invertible coupling encoder with the E45 recipe at 4 and 5 blocks (E52, synthetic only; information retention by construction)
+- [x] Invertible coupling encoder with the E45 recipe at 4 and 5 blocks (E52, synthetic): information kept (presence 0.94+ on 99 of 100 blocks), but rungs aligned on only 2 of 10 (4 blocks) and 1 of 10 (5 blocks) seeds: refuted
+- [ ] Running: E53, the same encoder at 3x the steps on the four failing 4-block seeds (is it too few steps?)
 
 ## Stage D: does it help?: NOT DONE
 - [x] Identification works (synthetic, under the conditions)

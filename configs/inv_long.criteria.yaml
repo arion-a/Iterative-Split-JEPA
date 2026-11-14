@@ -1,0 +1,8 @@
+experiment: "E53 (is the E52 split failure at 4 blocks too few training steps? the same recipe at 3x the steps)"
+folder: results/minimal/e53
+seeds: [231, 233, 238, 239]
+reference: "E52 at 30,000 steps on the same seeds (results/minimal/e52/d4): every rung clean on 0 of these 4 seeds"
+thresholds: {angle_max_deg: 5.0, gap_min: 10.0}
+min_seeds: 3
+pass: "at 90,000 steps every rung (angle under 5, gap over 10) is clean on at least 3 of the 4 seeds"
+verdict: "confirmed (too few steps is the cause) if the line holds, otherwise refuted; per-rung angles and gaps are reported at 30,000 and 90,000 steps either way; no other change"

@@ -23,3 +23,14 @@ def test_terms_run_and_stay_finite(kw):
 def test_terms_refused_with_other_objective():
     with pytest.raises(AssertionError):
         _train(objective="lejepa", corr_whiten_weight=1.0)
+
+
+def test_invertible_encoder_inverts_exactly():
+    from isj.encoder import InvertibleCouplingEncoder
+    torch.manual_seed(0)
+    enc = InvertibleCouplingEncoder(12, 6, 16)
+    for c in enc.conds:                      # random weights, not only the identity initialisation
+        for p in c.parameters():
+            torch.nn.init.normal_(p, std=0.5)
+    x = torch.randn(64, 12)
+    assert torch.allclose(enc.inverse(enc(x)), x, atol=1e-4)

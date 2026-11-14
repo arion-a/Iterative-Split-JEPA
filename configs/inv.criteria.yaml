@@ -1,0 +1,11 @@
+experiment: "E52 (an invertible coupling encoder with the E45 recipe, 4 and 5 blocks, synthetic worlds)"
+depths: {4: results/minimal/e52/d4, 5: results/minimal/e52/d5}
+seeds: [230, 231, 232, 233, 234, 235, 236, 237, 238, 239]
+thresholds: {angle_max_deg: 5.0, gap_min: 10.0, presence_min: 0.95, completeness_min: 0.95, health_min_eig: 0.5}
+min_seeds: 9
+presence_line: "every block's presence at least 0.95 on at least 9 of 10 seeds"
+rung_line: "every rung clean (angle under 5, gap over 10) on at least 9 of 10 seeds"
+completeness_line: "for every rung, the readout of its layer from the found block alone (two-layer probe) is at least 0.95 of the readout from the whole embedding, on at least 9 of 10 seeds"
+reported_not_judged: "no dead output direction (smallest covariance eigenvalue at least 0.5); per-block presence; the E49 / E45 generic-MLP numbers as the reference"
+verdict: "confirmed if the three lines hold at both depths, otherwise refuted with the failing line named; no tuning; if refuted the generic-encoder question stays as recorded"
+architecture: "6 additive coupling layers, one-hidden-layer GELU conditioner of width 64, fixed random permutations; E45 training recipe unchanged (prediction, invariance 1.0, whitening plain sums W = 1, 30,000 steps)"

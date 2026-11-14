@@ -33,7 +33,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
 
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"],
-                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), corr_whiten_weight=e.get("corr_whiten_weight", 0.0), corr_whiten_norm=e.get("corr_whiten_norm", "dim"), stop_grad=e.get("stop_grad", True),
+                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), corr_whiten_weight=e.get("corr_whiten_weight", 0.0), corr_whiten_norm=e.get("corr_whiten_norm", "dim"), enc_layers=e.get("enc_layers", 6), stop_grad=e.get("stop_grad", True),
                          sigreg_weight=e["sigreg_weight"], arch=e["arch"], objective=e["objective"],
                          coupling_layers=w["coupling_layers"])
     if ablation == "no_pred":
@@ -105,6 +105,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
             "k": k, "applied": bool(r.applied), "angle_deg": audits.max_angle_deg(r.V, image[k]),
             "nesting_deg": None if k == 1 else float(audits.principal_angles_deg(r.V, torch.cat([image[j] for j in range(k, world.n_blocks + 1)], dim=1)).max()),
             "variant_r2": audits.linear_r2(v_tr, ztr[:, world.block_slice(k)], v_te, zte[:, world.block_slice(k)]),
+            "variant_mlp_r2": audits.mlp_r2(v_tr, ztr[:, world.block_slice(k)], v_te, zte[:, world.block_slice(k)]) if cfg.get("completeness") else None,   # readout of layer k from the found block alone (completeness, E52)
             "invariant_content_r2": audits.linear_r2(q_tr, z_slow(ztr), q_te, z_slow(zte)),
             "gap_ratio": r.gap_ratio, "lambda_dk": lam, "eigvals": [float(x) for x in r.eigvals],
             "rank_deficient": audits.rank_deficient(torch.diag(r.eigvals[: r.d_k]), budgets[k - 1],

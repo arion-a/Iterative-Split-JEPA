@@ -62,6 +62,35 @@ class InverseCouplingEncoder(nn.Module):
         return h
 
 
+class InvertibleCouplingEncoder(nn.Module):
+    """Generic invertible encoder (NICE-style additive couplings with learned MLP conditioners and fixed random permutations).
+    Exactly invertible and volume preserving by construction, so the embedding loses no information about the observation; it assumes
+    nothing about the generator's layers (unlike InverseCouplingEncoder). Needs output dimension = input dimension."""
+
+    def __init__(self, d: int, layers: int, hidden: int):
+        super().__init__()
+        self.h1 = d // 2
+        self.perms = [torch.randperm(d) for _ in range(layers)]
+        self.conds = nn.ModuleList(nn.Sequential(nn.Linear(self.h1, hidden), nn.GELU(), nn.Linear(hidden, d - self.h1)) for _ in range(layers))
+        for c in self.conds:
+            nn.init.zeros_(c[2].weight); nn.init.zeros_(c[2].bias)         # identity at initialisation
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        for perm, cond in zip(self.perms, self.conds):
+            x = x[:, perm]
+            a, b = x[:, : self.h1], x[:, self.h1:]
+            x = torch.cat([a, b + cond(a)], dim=1)
+        return x
+
+    def inverse(self, y: torch.Tensor) -> torch.Tensor:
+        for perm, cond in zip(reversed(self.perms), reversed(self.conds)):
+            a, b = y[:, : self.h1], y[:, self.h1:]
+            x = torch.cat([a, b - cond(a)], dim=1)
+            inv = torch.empty_like(perm); inv[perm] = torch.arange(len(perm))
+            y = x[:, inv]
+        return y
+
+
 def variance_hinge(h: torch.Tensor, gamma: float = 1.0) -> torch.Tensor:
     """L_var = sum_j max(0, gamma - std(h_j)) (monograph eq. 11)."""
     return F.relu(gamma - torch.sqrt(h.var(0) + 1e-4)).sum()
@@ -92,6 +121,7 @@ class EncoderConfig:
     arch: str = "mlp"             # "mlp" | "inverse_coupling" (mirror-style, needs obs_dim == d)
     objective: str = "predict"    # "predict" (predictor + regulariser) | "lejepa" (alignment + SIGReg)
     coupling_layers: int = 4
+    enc_layers: int = 6           # coupling_mlp: number of additive coupling layers
     corr_whiten_norm: str = "dim"  # "dim": penalties divided by the number of directions (E43, kept so it can be reproduced); "sum": plain sums, so one dead direction costs the same at any width (E45)
     corr_whiten_weight: float = 0.0  # E43: the whitening constraint of Lemma 3.1 / Thm 4.2 enforced as a penalty: Cov(h) = I on all outputs, and Cov(r_k(u) - r_k(v)) = 2 I on each family's own block
     corr_var_weight: float = 0.0  # E42: the variance term where Theorem 4.2 needs it: block k's outputs must vary across the pairs of its own family D_k (hinge on the pair-difference std, target sqrt(2) = two independent unit-variance draws)
@@ -106,6 +136,9 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
     if cfg.arch == "inverse_coupling":
         assert cfg.in_dim == cfg.latent_dim, "mirror-style encoder needs obs_dim == d"
         enc = InverseCouplingEncoder(cfg.latent_dim, cfg.coupling_layers)
+    elif cfg.arch == "coupling_mlp":
+        assert cfg.in_dim == cfg.latent_dim, "an invertible encoder needs output dimension = input dimension"
+        enc = InvertibleCouplingEncoder(cfg.latent_dim, cfg.enc_layers, cfg.hidden)
     else:
         enc = mlp(cfg.in_dim, cfg.hidden, cfg.latent_dim)
     pred = mlp(cfg.latent_dim, cfg.hidden, cfg.latent_dim)

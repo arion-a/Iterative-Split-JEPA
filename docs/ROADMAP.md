@@ -1,5 +1,7 @@
 # Roadmap and live status (updated at each step)
 
+**Scope (owner's decision, 2026-11-14): the project claims only the paper's setting: synthetic latent worlds plus the simulated robot data (ManiSkill3). No real-world video.**
+
 Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open" = not started or running. The owner decides what starts.
 
 ## Stage A: one split on a trained encoder: DONE
@@ -20,6 +22,8 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Why rung 2 at 4 blocks 'fails': it does not. It finds block 2's actual footprint to 1.0-1.3 deg in all 7 runs checked; the angle criterion measures the distance to the best linear image, which is 53-82 deg off when the encoder embeds block 2 non-linearly (readable to R2 about 0.7 in about one seed in three)
 - [x] Located: in a flagged seed one of block 2's four coordinates is mostly missing from the embedding (R2 0.34; another 0.70), not sign-folded, not nonlinear-hidden; block 3 unaffected (follow-up 2 in `EVIDENCE.md`)
 - [ ] Open (owner's call, nothing started): judge generic-encoder rungs by completeness (readout from the found block against readout from the whole embedding) instead of the angle to the linear image; and whether any training change can stop a coordinate being dropped
+
+- [ ] Running: an invertible coupling encoder with the E45 recipe at 4 and 5 blocks (E52, synthetic only; information retention by construction)
 
 ## Stage D: does it help?: NOT DONE
 - [x] Identification works (synthetic, under the conditions)

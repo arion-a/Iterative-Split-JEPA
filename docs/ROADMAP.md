@@ -25,11 +25,11 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] A payoff test with a co-varying nuisance (E51): the core is more robust (0.99-1.00 against 0.95-0.96) but by less than the registered 0.2: refuted as registered
 - [ ] Not attempted: the full Stage D (five matched methods, six metrics)
 
-## Stage R: robot images (the real-data row): RUNNING
-- [ ] R0 rebuild the robot data and features on this machine (running: generation, then ResNet-50 features)
-- [ ] R1 E46: dead output directions in the baseline head (6 runs)
-- [ ] R2 E47: the head with the invariance and whitening terms (6 runs); held-out-scene readouts
-- [ ] If E47 is refuted: handoff for fine-tuning the ResNet-50 (GPU), not run here
+## Stage R: robot images (the real-data row): RUN, NEGATIVE
+- [x] R0 rebuilt the robot data and features on this machine (100 groups x 8 trajectories per task)
+- [x] R1 E46: dead output directions in the baseline head on 6 of 6 runs (confirmed)
+- [x] R2 E47: the head with the invariance and whitening terms: rank fixed, viewpoint block still not formed (P1 1.1 to 1.25), refuted on both tasks
+- [ ] Handoff (E47 refuted): fine-tune the ResNet-50 as the paper does (needs a GPU); and a variant-block term for viewpoint pairs, not started
 
 ## Write-up
 - [x] Assessment and draft page (`docs/PAPER_ASSESSMENT.md`, `docs/PROJECT_DRAFT.html`)

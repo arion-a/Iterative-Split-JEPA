@@ -4,7 +4,7 @@
 |---|---|
 | E46 diagnostic | CONFIRMED |
 | E47 PickCube | REFUTED |
-| E47 PushCube | INCOMPLETE |
+| E47 PushCube | REFUTED |
 
 ## E46 (does the baseline robot head have dead output directions): CONFIRMED
 Dead direction (eigenvalue under 1% of the mean) on 6 of 6 baseline runs (prediction: at least 4 of 6).
@@ -31,3 +31,5 @@ Dead direction (eigenvalue under 1% of the mean) on 6 of 6 baseline runs (predic
 | PushCube | baseline | 1 | no | yes | yes | yes | 1.92 | 1.00 | 1.13 | 0.65 / 0.79 | 0.52 / 0.68 |
 | PushCube | baseline | 2 | no | yes | yes | yes | 1.92 | 1.00 | 1.16 | 0.65 / 0.80 | 0.70 / 0.77 |
 | PushCube | treated | 0 | no | no | yes | yes | 1.25 | 1.00 | 1.16 | 0.69 / 0.75 | 0.79 / 0.84 |
+| PushCube | treated | 1 | no | no | yes | no | 1.23 | 1.00 | 1.15 | 0.61 / 0.70 | 0.75 / 0.83 |
+| PushCube | treated | 2 | no | no | yes | no | 1.18 | 1.00 | 1.11 | 0.40 / 0.58 | 0.54 / 0.69 |

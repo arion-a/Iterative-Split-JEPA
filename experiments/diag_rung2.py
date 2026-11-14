@@ -37,5 +37,14 @@ for j in range(1, world.n_blocks + 1):                                # footprin
     dd = (wh(encode(enc, observe, u)) - wh(encode(enc, observe, v))).double(); ev = torch.linalg.eigvalsh(dd.T @ dd / len(dd)).flip(0)
     fp[j] = {"trace": round(float(ev.sum()), 2), "dims_above_5pct_of_top": int((ev > 0.05 * ev[0]).sum()), "top8": [round(float(x), 3) for x in ev[:8]]}
 out["footprint"] = fp
+fv = {}
+for j in range(1, world.n_blocks + 1):                                # the actual footprint subspace of block j in the output (top eigenvectors of the resample-only-j moment)
+    u = world.sample(20000); v = u.clone(); v[:, world.block_slice(j)] = world.sample(20000)[:, world.block_slice(j)]
+    dd = (wh(encode(enc, observe, u)) - wh(encode(enc, observe, v))).double(); fv[j] = torch.linalg.eigh(dd.T @ dd / len(dd))[1].flip(1)[:, :world.block_dims[j - 1]].float()
+out["angle_V_k_to_footprint_k_deg"] = [audits.max_angle_deg(rungs[0].V, fv[1]), audits.max_angle_deg(rungs[1].V, fv[2]), audits.max_angle_deg(rungs[2].V, fv[3])]
+out["angle_linear_image_to_footprint_deg"] = [audits.max_angle_deg(a_hat[:, world.block_slice(j)], fv[j]) for j in range(1, world.n_blocks + 1)]
+b2 = world.block_slice(2); ntr = 15000
+out["z2_readout_r2_mlp"] = {"from_whole_embedding": audits.mlp_r2(r[:ntr], z[:ntr][:, b2], r[ntr:], z[ntr:][:, b2]), "from_V2_coordinates_only": audits.mlp_r2(r[:ntr] @ rungs[1].V, z[:ntr][:, b2], r[ntr:] @ rungs[1].V, z[ntr:][:, b2]),
+                            "from_V2_linear": audits.linear_r2(r[:ntr] @ rungs[1].V, z[:ntr][:, b2], r[ntr:] @ rungs[1].V, z[ntr:][:, b2])}
 out["presence_mlp"] = [round(audits.mlp_r2(r[:15000], z[:15000][:, world.block_slice(j)], r[15000:], z[15000:][:, world.block_slice(j)]), 2) for j in range(1, world.n_blocks + 1)]
 print(json.dumps(out))

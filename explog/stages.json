@@ -20,7 +20,7 @@
    "name": "Deeper ladder and scaling",
    "status": "done",
    "question": "How many levels hold up, and does error shrink with more data?",
-   "result": "Depth 4 and 5 recover every block (angles 0.6-2.1 deg, gap ratios 47-73; E34); the strict leakage test is the first check to fail with depth; angle is flat at about 1.25 deg from 10^4 to 10^6 pairs (no 1/sqrt(n) fall). Robot data (E24, E36): the viewpoint factor does not form a clean block with frozen features, even at the paper's block sizes; fine-tuning needs a GPU."
+   "result": "Depth 4 and 5 recover every block (angles 0.6-2.1 deg, gap ratios 47-73; E34); the strict leakage test is the first check to fail with depth; angle is flat at about 1.25 deg from 10^4 to 10^6 pairs (no 1/sqrt(n) fall). Robot data (E24, E36): the viewpoint factor does not form a clean block with frozen features, even at the paper's block sizes; fine-tuning needs a GPU. Update 2026-11-15 (E54): a generic invertible coupling encoder with the paper's own objective finds every layer to 0.2-1.9 deg, every rung clean on 10 of 10 seeds at 4 and 5 blocks."
   },
   {
    "id": "D",

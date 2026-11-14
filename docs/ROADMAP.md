@@ -13,7 +13,7 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Failed rung does not damage the next: the rung gate (E33)
 - [ ] Open (not started): build pairs from data for rung 3 and deeper
 
-## Stage C: the deep ladder: MOSTLY DONE
+## Stage C: the deep ladder: DONE in the synthetic worlds
 - [x] Depth 3 to 5 with the mirror encoder (E34, E39)
 - [x] Generic MLP with the theory's terms keeps every rung and the slowest block to depth 5 (E40 to E45; the whitening scale was an execution error)
 - [x] Located the first failing check (strict leakage test with the mirror encoder; dead directions from the whitening scale with the generic encoder)
@@ -21,7 +21,7 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Confirmatory run of the E45 recipe on fresh seeds (E49): the core and covariance health hold on 20 of 20 runs; 5 blocks all lines met; 4 blocks rung 2 clean on only 6 of 10 (needs 7): refuted as registered
 - [x] Why rung 2 at 4 blocks 'fails': it does not. It finds block 2's actual footprint to 1.0-1.3 deg in all 7 runs checked; the angle criterion measures the distance to the best linear image, which is 53-82 deg off when the encoder embeds block 2 non-linearly (readable to R2 about 0.7 in about one seed in three)
 - [x] Located: in a flagged seed one of block 2's four coordinates is mostly missing from the embedding (R2 0.34; another 0.70), not sign-folded, not nonlinear-hidden; block 3 unaffected (follow-up 2 in `EVIDENCE.md`)
-- [ ] Open (owner's call, nothing started): judge generic-encoder rungs by completeness (readout from the found block against readout from the whole embedding) instead of the angle to the linear image; and whether any training change can stop a coordinate being dropped
+- [x] E54: a generic invertible coupling encoder with the paper's own objective: every block present at 0.99, every rung clean on 10 of 10 seeds at 4 and 5 blocks (angles 0.2-1.9 deg, gaps 85-347), completeness 1.0. Closes the generic-encoder question for the synthetic worlds. (The E45 terms were a patch for the MLP; with the invertible encoder they prevented alignment, E52.)
 
 - [x] Invertible coupling encoder with the E45 recipe at 4 and 5 blocks (E52, synthetic): information kept (presence 0.94+ on 99 of 100 blocks), but rungs aligned on only 2 of 10 (4 blocks) and 1 of 10 (5 blocks) seeds: refuted
 - [x] E53: the same encoder at 3x the steps on the four failing 4-block seeds: no change (0 of 4 clean): training length is not the cause of the E52 misalignment

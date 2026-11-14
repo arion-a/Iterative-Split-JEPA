@@ -17,7 +17,8 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Located the first failing check (strict leakage test with the mirror encoder; dead directions from the whitening scale with the generic encoder)
 - [x] The 1/sqrt(n) rate with a learned encoder, measured against its own eigenspace: slope -0.48, interval contains -0.5 (E48)
 - [x] Confirmatory run of the E45 recipe on fresh seeds (E49): the core and covariance health hold on 20 of 20 runs; 5 blocks all lines met; 4 blocks rung 2 clean on only 6 of 10 (needs 7): refuted as registered
-- [ ] Open: why rung 2 of the generic MLP at 4 blocks sometimes finds a wrong block with a real gap (4 of 10 fresh seeds)
+- [x] Why rung 2 at 4 blocks 'fails': it does not. It finds block 2's actual footprint to 1.0-1.3 deg in all 7 runs checked; the angle criterion measures the distance to the best linear image, which is 53-82 deg off when the encoder embeds block 2 non-linearly (readable to R2 about 0.7 in about one seed in three)
+- [ ] Open: why the generic MLP embeds block 2 only partly (R2 about 0.7) in about one 4-block seed in three; and a footprint-based angle stored in every run
 
 ## Stage D: does it help?: NOT DONE
 - [x] Identification works (synthetic, under the conditions)

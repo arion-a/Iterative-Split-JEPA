@@ -53,3 +53,6 @@ Item 1 of section 5 is done: the whitening scale was fixed and the 4- and 5-bloc
 
 ## Update 2026-11-15 (integrity control)
 The untrained identity encoder matches the trained results in the synthetic worlds (E54 controls). So the near-oracle-encoder threat in section 4 is stronger than stated: the positive synthetic results do not depend on encoder learning at all at coupling strength 0.5. Any claim about encoder training needs a world in which the identity fails (E55 searches for it). The paper-worthy positive result is narrower: the eigen-splitting recovers planted layers from exact pairs; correspondence, not speed, defines the split (E38); the ladder's gap is detectable where a flat split's is not (E50).
+
+## Update 2026-11-15 (E55)
+Encoder training does real work at coupling strength 1 (identity 0/5, trained 5/5) and none that suffices at 2, 4, 8 (0/5). The claim "a trained generic encoder works" therefore holds only for mild nonlinearity.

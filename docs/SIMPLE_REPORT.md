@@ -47,3 +47,6 @@ Where the detail is: `docs/EVIDENCE.md` (every prediction and outcome), `docs/RO
 
 ## Correction 2026-11-15
 An untrained identity encoder passes every check the trained encoders pass in the synthetic world (presence 0.99, angles under 2 degrees, gaps 63 to 107). So the synthetic results show that the eigen-splitting recovers planted layers from exact pairs when the observation is a mild nonlinear bijection; they do not show that encoder training does any work, and the E54 statement that it closes the generic-encoder question was too strong. A coupling-strength sweep (E55) tests where the world becomes hard enough that training matters.
+
+## Result of E55 (2026-11-15)
+In a harder world the untrained encoder fails from coupling strength 1. Training with the paper's objective repairs strength 1 (5 of 5 seeds clean) but not 2, 4 or 8 (0 of 5 each; layers 2 and 3 are not found at all). So encoder training matters, but only over a narrow range with this recipe.

@@ -45,3 +45,5 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 
 ## Counts
 Registered items E1 to E47; the latest 16 outcomes (E31 to E45, plus E46 and E47 pending): see `docs/EVIDENCE.md`.
+
+Update 2026-11-15: E55 (coupling-strength sweep) confirmed: training repairs strength 1 (5/5 clean, identity 0/5) but not strengths 2, 4, 8 (0/5 each). See `docs/EVIDENCE.md`.

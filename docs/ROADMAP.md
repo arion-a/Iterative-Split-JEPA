@@ -16,7 +16,8 @@ Last updated: 2026-11-13. Tick = done and recorded in `docs/EVIDENCE.md`. "Open"
 - [x] Generic MLP with the theory's terms keeps every rung and the slowest block to depth 5 (E40 to E45; the whitening scale was an execution error)
 - [x] Located the first failing check (strict leakage test with the mirror encoder; dead directions from the whitening scale with the generic encoder)
 - [x] The 1/sqrt(n) rate with a learned encoder, measured against its own eigenspace: slope -0.48, interval contains -0.5 (E48)
-- [ ] Running: a confirmatory run of the E45 recipe on fresh seeds (E49, waits for Stage R)
+- [x] Confirmatory run of the E45 recipe on fresh seeds (E49): the core and covariance health hold on 20 of 20 runs; 5 blocks all lines met; 4 blocks rung 2 clean on only 6 of 10 (needs 7): refuted as registered
+- [ ] Open: why rung 2 of the generic MLP at 4 blocks sometimes finds a wrong block with a real gap (4 of 10 fresh seeds)
 
 ## Stage D: does it help?: NOT DONE
 - [x] Identification works (synthetic, under the conditions)

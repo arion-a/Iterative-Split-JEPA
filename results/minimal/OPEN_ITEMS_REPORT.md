@@ -3,7 +3,7 @@
 | Item | Verdict |
 |---|---|
 | E48 | CONFIRMED |
-| E49 | INCOMPLETE |
+| E49 | REFUTED |
 | E50 | CONFIRMED |
 | E51 | REFUTED |
 
@@ -13,9 +13,9 @@
 | 1 | -0.48 | [-0.51, -0.44] | 0.379, 0.095, 0.042 |
 | 2 | -0.48 | [-0.52, -0.45] | 0.375, 0.097, 0.041 |
 
-## E49 (the E45 recipe on fresh seeds): INCOMPLETE
-- 4 blocks (0 seeds): clean rungs by rung [0, 0, 0] (needs 7), no dead direction 0 (needs 9), core present 0 (needs 7): NOT met
-- 5 blocks (0 seeds): clean rungs by rung [0, 0, 0, 0] (needs 7), no dead direction 0 (needs 9), core present 0 (needs 7): NOT met
+## E49 (the E45 recipe on fresh seeds): REFUTED
+- 4 blocks (10 seeds): clean rungs by rung [10, 6, 10] (needs 7), no dead direction 10 (needs 9), core present 10 (needs 7): NOT met
+- 5 blocks (10 seeds): clean rungs by rung [10, 9, 10, 10] (needs 7), no dead direction 10 (needs 9), core present 10 (needs 7): met
 
 ## E50 (a flat one-shot split from the pooled correspondence families, equal speeds): CONFIRMED
 Pooled one-shot worst angle under 5 on 5 of 5 (needs 4); its block-1 / block-2 gap under 5 on 5 of 5; the ladder's smallest rung gap over 10 on 5 of 5 (both need 5).

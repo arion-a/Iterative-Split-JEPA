@@ -29,3 +29,10 @@ The E43 recipe at 4 and 5 blocks (3 and 4 rungs), 10 seeds each: **confirmed as 
 
 ## Addendum 2026-11-13 (E45, the whitening scale fixed)
 The cause found in E44 (the whitening penalty divided by the number of outputs, so a dead direction cost 1/d of its weight) was fixed with plain sums. Re-run at 4 and 5 blocks on the same seeds: **confirmed as registered** on all three lines at both depths. Every 5-block rung is clean on 10 of 10 seeds (E44: 6 of 10 had every rung clean); no dead output direction on 20 of 20 runs (E44: 3 of 10 and 0 of 10 healthy); the slowest block is kept (presence 0.94 at 4 blocks, 0.98 at 5; E44: 0.56 and 0.33). So for a generic MLP with the theory's terms, the ladder now holds to depth 5 in this world, including the invariant core. Limits: the same world family as before; the earlier runs used another machine; two 4-block rungs still failed with large gaps (so the gap is not a certificate); the earlier blocks' presence is below 0.95 on average while their rungs are clean.
+
+## Addendum 2026-11-14 (E48-E51 and Stage R)
+- **E48 confirmed:** the sampling error of the generic MLP's blocks falls as n^(-1/2) (slope -0.48, intervals contain -0.5); E34's flat curve measured the wrong target.
+- **E49 refuted as registered, mostly confirmed in substance:** on 20 fresh runs the slowest block is kept and no output direction is dead (20 of 20); 5 blocks meet every line; at 4 blocks rung 2 is clean on 6 of 10 (needs 7), with a wrong block at a real gap on 4 seeds.
+- **E50 confirmed:** a pooled one-shot split from the same pairs is as accurate as the ladder, but its block gap is about 1.9 against 164 or more for the ladder: the hierarchy's benefit is a detectable gap, not accuracy.
+- **E51 refuted as registered:** the invariant core is more robust to a nuisance shift (0.99-1.00 against 0.95-0.96) but by far less than the 0.2 required.
+- **Stage R (E46, E47):** the robot head has the same rank collapse (6 of 6); fixing it did not form the viewpoint block (P1 1.1 to 1.25 against 3) and the head dropped much of the camera information; refuted on both tasks.

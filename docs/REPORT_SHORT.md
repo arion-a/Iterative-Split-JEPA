@@ -39,3 +39,6 @@ My earlier explanation (block 1's leftover alone) was only half right: the gate 
 
 ## 6. Bottom line
 The extension works where its assumptions hold: exact matched pairs and an observation map that does not strongly mix layers. It breaks when the map is strongly nonlinear (rung 1 leaks, the gate cascades) and on images. Not done: a fix for strength 2 or above, fine-tuned image encoders (needs a GPU), pairs built from data beyond one rung.
+
+## Update: gate off at strength 2 (E56)
+Turning the gate off fixes the cascade (rung-2 angle 61-86 degrees down to 5.0-8.2; rung 3 under 4) but no seed becomes clean: gaps stay 3.5-6.1, presence 0.84-0.86. So the remaining limit is the leak of each block under the nonlinear coupling, not the gate.

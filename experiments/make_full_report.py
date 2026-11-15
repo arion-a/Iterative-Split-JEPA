@@ -29,7 +29,7 @@ fig.tight_layout(); fig_mech = img(fig)
 fig, ax = plt.subplots(figsize=(9, 2.9)); ax.axis("off"); ax.set_xlim(0, 12); ax.set_ylim(0, 7.4)
 for i, dim in enumerate([28, 24, 20, 16, 12, 8, 4]):
     y = 6.9 - i * .98; w = 7 * dim / 28
-    ax.add_patch(FancyBboxPatch((0, y - .3), w, .6, boxstyle="round,pad=0.02", fc=BLUE if i == 6 else "#93c5fd", ec="none")); ax.text(.12, y, f"{dim} directions", va="center", fontsize=8.5, color="white" if i == 6 else "#1e293b")
+    ax.add_patch(FancyBboxPatch((0, y - .3), w, .6, boxstyle="round,pad=0.02", fc=BLUE if i == 6 else "#93c5fd", ec="none")); ax.text(.12, y, f"{dim} directions" if dim > 4 else "4", va="center", fontsize=8.5, color="white" if i == 6 else "#1e293b")
     ax.text(w + .15, y, f"rung {i+1}: block {i+1} removed (4 directions)" if i < 6 else "left: the slowest layer", va="center", fontsize=8.5, color=RED if i < 6 else BLUE)
 fig_ladder = img(fig, "75%")
 # ---------- baseline
@@ -46,18 +46,17 @@ axs[1].set_yscale("log"); axs[1].set_ylim(.8, 300); axs[1].set_xlabel("rung"); a
 for a in axs: a.set_xticks(x)
 fig.tight_layout(); fig_res = img(fig)
 rows6 = "".join(f"<tr><td>{k}</td><td>{np.median(ang[:,k-1]):.1f}°</td><td>{ang[:,k-1].min():.1f} – {ang[:,k-1].max():.1f}°</td><td>{np.median(gap[:,k-1]):.0f}</td></tr>" for k in range(1, 7))
-# ---------- bend strength
+# ---------- bend strength (method = trained encoder, every rung applied)
 worst = lambda rs: [max(g["angle_deg"] for g in r["rungs"]) for r in rs]
-series = [("no encoder training", GREY, -.22, {s_: worst(load(f"results/minimal/e55/u/s{s_}/main_seed*.json")) for s_ in (1, 2, 4, 8)}),
-          ("trained encoder", RED, 0.0, {0.5: worst(load("results/minimal/e54/d4/main_seed*.json")), **{s_: worst(load(f"results/minimal/e55/t/s{s_}/main_seed*.json")) for s_ in (1, 2, 4, 8)}}),
-          ("trained, weak cuts still applied", GRN, .22, {2: worst(load("results/minimal/e56/main_seed*.json")), 4: worst(load("results/minimal/e57/b4_s4/main_seed*.json"))})]
-pos = {0.5: 0, 1: 1, 2: 2, 4: 3, 8: 4}; fig, ax = plt.subplots(figsize=(10, 4.2))
+series = [("no encoder training", GREY, -.17, {s_: worst(load(f"results/minimal/e55/u/s{s_}/main_seed*.json")) for s_ in (1, 2, 4)}),
+          ("trained encoder", BLUE, .17, {0.5: worst(load("results/minimal/e54/d4/main_seed*.json")), 1: worst(load("results/minimal/e55/t/s1/main_seed*.json")), 2: worst(load("results/minimal/e56/main_seed*.json")), 4: worst(load("results/minimal/e57/b4_s4/main_seed*.json"))})]
+pos = {0.5: 0, 1: 1, 2: 2, 4: 3}; fig, ax = plt.subplots(figsize=(9, 3.9))
 for lab, col, off, d in series:
     for k_, vv in d.items():
-        ax.scatter(np.full(len(vv), pos[k_] + off) + np.random.default_rng(0).uniform(-.04, .04, len(vv)), vv, s=22, color=col, alpha=.8, label=lab if k_ == list(d)[0] else None); ax.plot([pos[k_] + off - .08, pos[k_] + off + .08], [np.median(vv)] * 2, color="k", lw=2)
-ax.axhline(80, color="#94a3b8", ls="--"); ax.text(4.45, 81.5, "unrelated ≈ 80°", ha="right", color="#64748b", fontsize=9); ax.axhline(5, color=GRN, ls=":"); ax.text(-.45, 6.3, "good < 5°", color=GRN, fontsize=9)
-ax.set_xticks(range(5)); ax.set_xticklabels(["0.5 (mild)", "1", "2", "4", "8 (strong)"]); ax.set_xlabel("how strongly the generator bends the hidden numbers"); ax.set_ylabel("worst rung: angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, loc="center left", fontsize=9)
-ax.set_title("Each dot is one run (4 layers); black bar = median", fontsize=10.5); fig_bend = img(fig)
+        ax.scatter(np.full(len(vv), pos[k_] + off) + np.random.default_rng(0).uniform(-.04, .04, len(vv)), vv, s=24, color=col, alpha=.85, label=lab if k_ == list(d)[0] else None); ax.plot([pos[k_] + off - .09, pos[k_] + off + .09], [np.median(vv)] * 2, color="k", lw=2)
+ax.axhline(80, color="#94a3b8", ls="--"); ax.text(3.45, 76, "unrelated directions ≈ 80°", ha="right", va="top", color="#64748b", fontsize=9)
+ax.set_xticks(range(4)); ax.set_xticklabels(["0.5 (mild)", "1", "2", "4"]); ax.set_xlabel("bend strength"); ax.set_ylabel("worst rung: angle to the truth (degrees)"); ax.set_ylim(0, 95); ax.legend(frameon=False, loc="center left", fontsize=9)
+fig_bend = img(fig, "88%")
 # ---------- equal speeds
 e38 = load("results/minimal/e38/main_seed*.json"); lad = np.array([r["payoff"]["ladder_angles_deg"] for r in e38]); sing = np.array([r["payoff"]["single_shot_angles_deg"] for r in e38])
 fig, ax = plt.subplots(figsize=(7.5, 3.4)); xs = np.arange(lad.shape[1])
@@ -66,26 +65,49 @@ ax.scatter([], [], color=GRN, label="iterated splitting (uses pairs)"); ax.scatt
 ax.set_xticks(xs); ax.set_xticklabels([f"rung {i+1}" for i in xs]); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 95); ax.legend(frameon=False, fontsize=9, loc="center right"); fig_eq = img(fig, "72%")
 sing_rng = f"{sing.min():.0f}–{sing.max():.0f}°"; lad_max = f"{lad.max():.1f}"
 # ---------- pairs from data
-e58 = load("results/minimal/e58/seed*.json"); arms = [("generator", "exact pairs", GRN), ("label", "same true cluster", BLUE), ("kmeans_slow", "clusters found from data (slow part)", ORG), ("kmeans_all", "clusters found from data (all)", RED), ("random", "random pairs", GREY)]
-fig, ax = plt.subplots(figsize=(8.5, 3.9))
+e58 = load("results/minimal/e58/seed*.json"); arms = [("generator", "exact pairs", GRN), ("label", "same true cluster", BLUE), ("kmeans_slow", "clusters found from the data", ORG), ("random", "random pairs", GREY)]
+fig, ax = plt.subplots(figsize=(8.5, 3.7))
 for key, lab, col in arms:
     m = np.array([[x["angle_deg"] for x in r["arms"][key]] for r in e58]); ax.plot(range(1, 6), np.median(m, 0), "-o", color=col, label=lab, lw=2)
-ax.axhline(80, color="#94a3b8", ls="--"); ax.set_xticks(range(1, 6)); ax.set_xlabel("rung"); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.2)); fig_pairs = img(fig, "85%")
+ax.set_xticks(range(1, 6)); ax.set_xlabel("rung"); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, fontsize=9, ncol=4, loc="upper center", bbox_to_anchor=(.5, -.2)); fig_pairs = img(fig, "82%")
+
+# ---------- explainers
+g_ = np.random.default_rng(2); T_ = 40; rho_ = [0.2, 0.6, 0.95]; ts = np.zeros((T_, 3)); ts[0] = g_.standard_normal(3)
+for t_ in range(1, T_): ts[t_] = [rho_[i] * ts[t_ - 1, i] + np.sqrt(1 - rho_[i] ** 2) * g_.standard_normal() for i in range(3)]
+fig, ax = plt.subplots(figsize=(8, 2.5))
+for i, (lab, col) in enumerate((("layer A: fast (ρ = 0.2)", RED), ("layer B: middle (ρ = 0.6)", ORG), ("layer C: slow (ρ = 0.95)", BLUE))): ax.plot(ts[:, i], color=col, lw=2, label=lab)
+ax.set_xlabel("time step (video frame)"); ax.set_ylabel("one hidden number"); ax.legend(ncol=3, frameon=False, loc="upper center", bbox_to_anchor=(.5, 1.28), fontsize=9); fig_speed = img(fig, "80%")
+def obs2(z, s_=1.0):
+    x = z.copy(); x[:, 0] = z[:, 0] + s_ * np.tanh(1.5 * z[:, 1]); x[:, 1] = z[:, 1] + s_ * np.tanh(1.5 * x[:, 0]); return x
+rot = lambda q: q @ np.array([[np.cos(.6), -np.sin(.6)], [np.sin(.6), np.cos(.6)]]).T
+zz = np.random.default_rng(5).standard_normal((20000, 2)); xx_ = rot(obs2(zz)); mu_ = xx_.mean(0); ev_, V_ = np.linalg.eigh(np.cov((xx_ - mu_).T)); W_ = V_ @ np.diag(ev_ ** -.5) @ V_.T
+def gridpanel(ax, f, lim, title):
+    for t_ in np.linspace(-2.5, 2.5, 11):
+        s_ = np.linspace(-2.5, 2.5, 80)
+        for ln in (np.c_[s_, np.full_like(s_, t_)], np.c_[np.full_like(s_, t_), s_]): q_ = f(ln); ax.plot(q_[:, 0], q_[:, 1], color="#cbd5e1", lw=.8)
+    q_ = f(zz[:500]); ax.scatter(q_[:, 0], q_[:, 1], s=4, color=GREY, alpha=.5); ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim); ax.set_aspect("equal"); ax.set_title(title, fontsize=10); ax.set_xticks([]); ax.set_yticks([])
+fig, axs = plt.subplots(1, 3, figsize=(12, 3.6))
+gridpanel(axs[0], lambda q: q, 3.2, "hidden numbers z"); gridpanel(axs[1], lambda q: rot(obs2(q)), 4, "after the bend (the points)"); gridpanel(axs[2], lambda q: (rot(obs2(q)) - mu_) @ W_, 3.2, "after whitening")
+fig_bendvis = img(fig)
+fig, axs = plt.subplots(1, 2, figsize=(10, 3.3)); ideal = [2, 2, 2, 2, 0, 0, 0, 0]; real = [1.998, 1.977, 1.955, 1.938, .527, .465, .414, .397]
+for ax, vals, t_ in ((axs[0], ideal, "exact pairs, no bend: sizes 2 and 0"), (axs[1], real, "measured, bend strength 2: sizes ≈ 1.95 and ≈ 0.45")):
+    ax.bar(range(1, 9), vals, color=[RED] * 4 + [BLUE] * 4); ax.set_xticks(range(1, 9)); ax.set_xlabel("axis number (sorted by size)"); ax.set_ylabel("size of the spread"); ax.set_title(t_, fontsize=10); ax.set_ylim(0, 2.4)
+fig_eig = img(fig, "85%")
+
 # ---------- robot: four ways of splitting, camera-change (viewpoint) ratio
 import json as _j
 pb = lambda t, k: _j.load(open(f"results/paper_baseline/{t}_paper_fixed_slice.json"))[k]
 lf = lambda n, t: _j.load(open(f"results/paper_baseline/{n}/{t}/split0.json"))["ratios"]["P1_view_V1_over_Q1"]
 old = lambda arm, t: np.mean([_j.load(open(f))["ratios"]["P1_view_V1_over_Q1"] for f in sorted(glob.glob(f"results/stage_r/{arm}/{t}/split*.json"))])
-rows_r = [("frozen features + small head\n(my earlier test)", [old("baseline", "PickCube"), old("baseline", "PushCube")], GREY),
+rows_r = [("frozen image features\n+ small head", [old("baseline", "PickCube"), old("baseline", "PushCube")], GREY),
           ("paper's method (trained\nencoder, fixed halves)", [pb("PickCube", "paper_ratio_view_L_over_H"), pb("PushCube", "paper_ratio_view_L_over_H")], BLUE),
           ("iterated splitting on the\npaper-trained embedding", [lf("ladder_fixed", "PickCube"), lf("ladder_fixed", "PushCube")], RED)]
 fig, ax = plt.subplots(figsize=(8.5, 3.6)); w = .26
 for i, (lab, v, col) in enumerate(rows_r):
     ax.bar(np.arange(2) + (i - 1) * w, v, w, color=col, label=lab)
     for j, y in enumerate(v): ax.text(j + (i - 1) * w, y + .15, f"{y:.1f}", ha="center", fontsize=9)
-ax.scatter([-.0, 1.0], [8.4, 14.0], marker="_", s=900, color="k", zorder=5); ax.text(1.42, 14.0, "paper reports", fontsize=8.5, va="center"); ax.text(1.42, 8.4, "(8.4 and 14.0)", fontsize=8.5, va="center")
-ax.set_xticks([0, 1]); ax.set_xticklabels(["PickCube", "PushCube"]); ax.set_ylabel("viewpoint ratio (bigger = blocks separate)"); ax.set_ylim(0, 16); ax.set_xlim(-.6, 1.9); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.12))
+ax.set_xticks([0, 1]); ax.set_xticklabels(["PickCube", "PushCube"]); ax.set_ylabel("viewpoint ratio (bigger = blocks separate)"); ax.set_ylim(0, 16); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.12))
 fig_rob = img(fig, "80%")
 html = open("experiments/full_report_template.html").read()
-for k, v in {"FIG_MECH": fig_mech, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob}.items(): html = html.replace("{{" + k + "}}", v)
+for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/FULL.html", "w").write(html); print("ok")

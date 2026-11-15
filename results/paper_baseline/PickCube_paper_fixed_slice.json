@@ -1,0 +1,15 @@
+{
+ "task": "PickCube",
+ "embedding_dim": 128,
+ "d_H": 64,
+ "view_response": {
+  "H(invariant)": 0.11202311515808105,
+  "L(variant)": 1.0473458766937256
+ },
+ "traj_response": {
+  "H(invariant)": 0.11649163067340851,
+  "L(variant)": 0.19027888774871826
+ },
+ "paper_ratio_view_L_over_H": 9.349372896975476,
+ "paper_ratio_traj_L_over_H": 1.6334125176956007
+}

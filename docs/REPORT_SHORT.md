@@ -45,3 +45,6 @@ Turning the gate off fixes the cascade (rung-2 angle 61-86 degrees down to 5.0-8
 
 ## Update: graded result at 4 and 5 blocks (E57, gate off)
 5 blocks, coupling strength 2: every rung found on 5 of 5 seeds (angles 3-8 degrees against about 80 for unrelated, gaps 3-5, presence 0.85-0.93). 4 blocks, strength 4: every rung found on 5 of 5 seeds (angles 4-15, gaps 2.3-3.4, presence 0.71-0.86). Moderate error, clear function; the earlier zeros at strengths 4 and 8 came from the gate cascade.
+
+## Update: pairs built from data, rungs 2-5 (E58, identity encoder, oracle cluster counts)
+Median angle at rungs 2, 3, 4, 5 (unrelated about 80 degrees): exact twins 14, 21, 32, 49; clusters of the slow subspace 17, 31, 48, 57; clusters of the whole content 73, 84, 79, 89. So cluster-built pairs work at rung 2 (17 degrees) and fade by rungs 4-5, mostly because the ladder itself loses accuracy with depth in this world and because same-cluster pairs carry extra noise (gap 1.4-2.2), not because the clustering fails (purity 0.88-1.0). Whole-content clustering does not work at all. Best-case numbers: the true cluster counts were given.

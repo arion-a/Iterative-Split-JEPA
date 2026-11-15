@@ -47,7 +47,19 @@ The real experiments use 5 layers of 4 numbers (20 numbers per sample). To draw 
 <h2><span class="n">2</span>From hidden numbers to a dot the method can see</h2>
 <p>The generator bends the 6 hidden numbers with a fixed function (this stands in for "a camera turning a scene into pixels"). An encoder then turns the result into a <b>vector of 6 coordinates</b>, called e1 to e6. That vector is the <b>dot</b>. In this example the encoder does nothing (untrained), so you see only the effect of the bend.</p>
 <p>The bend <b>mixes</b> the layers: no single embedding coordinate equals one hidden number any more.</p>
-{{FIG_MIX}}<p class="cap">Darker = that embedding coordinate moves together with that hidden number. Real data after the bend: every coordinate carries a bit of several layers. Finding which <i>directions</i> hold which layer is the whole task.</p>
+{{FIG_MIX}}<p class="cap">What this picture is: a <b>6 × 6 table of numbers</b>. Each cell is how strongly one hidden number (row) and one embedding coordinate (column) move together, measured over 4,000 samples (0 = unrelated, 1 = move in lockstep). It is a <i>summary</i> computed once; it does not change over time. Darker off-diagonal cells are the mixing described below.</p>
+<div class="box say"><b class="t">The exact rule behind it (the formula)</b>
+The 6 numbers are held as two halves: <b>left</b> = (A1, A2, B1) and <b>right</b> = (B2, C1, C2). Four steps, each adds a bent copy of one half onto the other:
+<table class="cmp" style="margin:6px 0"><tr><td><b>step 1</b></td><td class="sym">right = right + tanh( left × W1 )</td></tr><tr><td><b>step 2</b></td><td class="sym">left = left + tanh( right × W2 )</td></tr><tr><td><b>step 3</b></td><td class="sym">right = right + tanh( left × W3 )</td></tr><tr><td><b>step 4</b></td><td class="sym">left = left + tanh( right × W4 )</td></tr></table>
+W1…W4 are fixed 3 × 3 tables of numbers (shown below), "×" is the usual table-times-list multiplication, and tanh squashes a number smoothly into the range −1 to 1. The output is the 6 coordinates e1…e6. These steps are what the code does (checked to reproduce it exactly).</div>
+<h3>One sample, step by step</h3>
+<p>Hidden numbers (A1, A2, B1, B2, C1, C2) = <b>{{Z1}}</b>.</p>{{T_STEPS}}
+<p>Step 1 for e4, written out: the first column of W1 is ({{W0C}}), so tanh( left × that column ) = tanh({{ARG}}) = {{TH}}. Then B2 {{B2}} + {{TH}} = <b>{{B2NEW}}</b>. That is why e4 is correlated with A1 and A2 in the picture: e4 contains a bent copy of them. Steps 2 to 4 repeat this on the already-mixed values, so the mixing compounds.</p>
+<h3>The fixed weights</h3><div>{{T_W}}</div>
+<h3>A straight-line version, for intuition</h3>
+<p>If every bend were replaced by the best straight-line combination, each coordinate would be a weighted sum of the 6 hidden numbers, e ≈ (this table) × (hidden numbers). The diagonal is large (a coordinate is mostly its own number); the other entries are the mixing. This straight-line version explains about 95% of each coordinate's variation; the remaining 5% is the curvature of tanh.</p>{{T_A}}
+<div class="box warn"><b class="t">Is the picture a matrix that changes with time steps?</b>
+Two kinds of "matrix" appear here, and neither changes over time. (1) The weights W1…W4 are <b>fixed</b> for the whole experiment: the bend is the same at every time step. (2) The shaded picture is a <b>table of correlations</b>, computed once over many samples, so it is a fixed summary. What changes with time is only <b>the hidden numbers themselves</b> (the three curves in section 1); each new frame is a new list of 6 numbers pushed through the same four steps.</div>
 
 <h2 class="pb"><span class="n">3</span>Whitening, and what "covariance" means</h2>
 <div class="box say"><b class="t">Covariance, plainly</b>

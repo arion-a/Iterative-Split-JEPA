@@ -92,7 +92,24 @@ t_pair2 = rowtab([ub, vb, vb - ub], ["sample 1", "its partner", "difference"], [
 zs = z[:3].numpy(); xs = x[:3].numpy(); rs = r[:3].numpy()
 t_hidden = rowtab(zs, ["sample 1", "sample 2", "sample 3"], [[neutral] * 6] * 3)
 t_after = "<table class='nums'><tr><th></th>" + "".join(f"<th>e{i+1}</th>" for i in range(6)) + "</tr>" + "".join(f"<tr><td class='lab'>sample {i+1}</td>" + "".join(f"<td>{fmt(v)}</td>" for v in rs[i]) + "</tr>" for i in range(3)) + "</table>"
+
+# ---------------- the bend written out: worked example, straight-line version, weights
+torch.manual_seed(1); z1s = world.sample(1); xs_ = z1s.clone(); steps = [("start (hidden numbers)", xs_[0].numpy().copy())]
+for i, w in enumerate(obs.weights):
+    L_, R_ = xs_[:, :3], xs_[:, 3:]
+    if i % 2 == 0: R_ = R_ + torch.tanh(L_ @ w)
+    else: L_ = L_ + torch.tanh(R_ @ w)
+    xs_ = torch.cat([L_, R_], 1); steps.append((f"after step {i+1}", xs_[0].numpy().copy()))
+assert torch.allclose(xs_, obs(z1s))
+t_steps = "<table class='nums'><tr><th></th>" + "".join(f"<th>e{i+1}</th>" for i in range(6)) + "</tr>" + "".join(f"<tr><td class='lab'>{nm}</td>" + "".join(f"<td>{fmt(v)}</td>" for v in vals) + "</tr>" for nm, vals in steps) + "</table>"
+zz_ = world.sample(20000); xx_ = obs(zz_).numpy(); Zq = zz_.numpy(); Aq = np.linalg.lstsq(np.c_[Zq, np.ones(len(Zq))], xx_, rcond=None)[0][:-1].T
+t_A = "<table class='nums'><tr><th></th>" + "".join(f"<th class='{'a' if i<2 else 'b' if i<4 else 'c'}'>{nm}</th>" for i, nm in enumerate(names)) + "</tr>" + "".join(f"<tr><td class='lab'>e{r_+1}</td>" + "".join(f"<td style='background:rgba(29,78,216,{min(abs(v)/1.7,1)*.55:.2f})'>{v:+.2f}</td>" for v in Aq[r_]) + "</tr>" for r_ in range(6)) + "</table>"
+def wtab(w): return "<table class='nums' style='display:inline-table;margin:4px 10px 4px 0'>" + "".join("<tr>" + "".join(f"<td>{v:+.2f}</td>" for v in row) + "</tr>" for row in w.numpy()) + "</table>"
+t_W = "".join(f"<div style='display:inline-block;vertical-align:top'><div class='cap'>W{i+1} (step {i+1})</div>{wtab(w)}</div>" for i, w in enumerate(obs.weights))
+t4_term = float(np.tanh(z1s[0, :3].numpy() @ obs.weights[0].numpy()[:, 0]))
+w0c = obs.weights[0].numpy()[:, 0]
+
 html = open("experiments/report_template.html").read()
 for k, v in {"FIG_SPEED": fig_speed, "FIG_MIX": fig_mix, "FIG_WHITE": fig_white, "FIG_EIG1": fig_eig1, "FIG_FLOW": fig_flow, "FIG_EIG2": fig_eig2, "FIG_TRUTH": fig_truth, "T_HIDDEN": t_hidden, "T_AFTER": t_after, "T_PAIR1": t_pair1, "T_PAIR2": t_pair2,
-             "EV1": ", ".join(f"{v:.2f}" for v in ev1), "EV2": ", ".join(f"{v:.2f}" for v in ev2), "GAP1": f"{ev1[1]/ev1[2]:.0f}", "GAP2": f"{ev2[1]/ev2[2]:.0f}", "R2_AA": f"{T3[0,0]:.2f}", "R2_BB": f"{T3[1,1]:.2f}", "R2_CC": f"{T3[2,2]:.2f}"}.items(): html = html.replace("{{" + k + "}}", v)
+             "EV1": ", ".join(f"{v:.2f}" for v in ev1), "EV2": ", ".join(f"{v:.2f}" for v in ev2), "GAP1": f"{ev1[1]/ev1[2]:.0f}", "GAP2": f"{ev2[1]/ev2[2]:.0f}", "T_STEPS": t_steps, "T_A": t_A, "T_W": t_W, "Z1": ", ".join(f"{v:+.2f}" for v in z1s[0].numpy()), "W0C": ", ".join(f"{v:+.2f}" for v in w0c), "ARG": f"{float(z1s[0,:3].numpy() @ w0c):.2f}", "TH": f"{t4_term:.2f}", "B2": f"{float(z1s[0,3]):+.2f}", "B2NEW": f"{float(z1s[0,3])+t4_term:+.2f}", "R2_AA": f"{T3[0,0]:.2f}", "R2_BB": f"{T3[1,1]:.2f}", "R2_CC": f"{T3[2,2]:.2f}"}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/REPORT.html", "w").write(html); print("ok", ev1, ev2, T3.round(2))

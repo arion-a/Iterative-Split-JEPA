@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>How Iterative SplitJEPA works</title>
+<style>
+@page { size: Letter; margin: 16mm 14mm; }
+*{box-sizing:border-box} body{font:15px/1.55 "DejaVu Sans",system-ui,sans-serif;color:#1e293b;margin:0;background:#fff}
+.wrap{max-width:900px;margin:0 auto;padding:10px 6px}
+h1{font-size:30px;margin:0 0 4px;letter-spacing:-.5px}.sub{color:#64748b;margin:0 0 18px;font-size:16px}
+h2{font-size:21px;margin:30px 0 8px;padding-top:6px;border-top:3px solid #e2e8f0}
+h2 .n{display:inline-block;background:#1d4ed8;color:#fff;border-radius:50%;width:30px;height:30px;line-height:30px;text-align:center;font-size:15px;margin-right:8px}
+h3{font-size:16px;margin:16px 0 4px}
+p{margin:6px 0}
+.box{border-radius:10px;padding:10px 14px;margin:12px 0;border:1px solid}
+.say{background:#eff6ff;border-color:#bfdbfe}.warn{background:#fff7ed;border-color:#fed7aa}.ok{background:#f0fdf4;border-color:#bbf7d0}
+.box b.t{display:block;margin-bottom:2px}
+table{border-collapse:collapse;margin:8px 0}
+td,th{padding:5px 10px;text-align:center}
+.nums{font-family:"DejaVu Sans Mono",monospace;font-size:13px}
+.nums th{background:#f1f5f9;border:1px solid #e2e8f0}.nums td{border:1px solid #e2e8f0}
+.nums td.lab{text-align:left;font-family:"DejaVu Sans",sans-serif;background:#f8fafc;font-weight:600}
+.nums th.a{color:#c2410c}.nums th.b{color:#ea580c}.nums th.c{color:#1d4ed8}
+.same{background:#dcfce7}.diff{background:#fed7aa}
+.cmp td,.cmp th{border:1px solid #e2e8f0;text-align:left;font-size:14px;vertical-align:top}.cmp th{background:#f1f5f9}
+.legend span{display:inline-block;padding:1px 8px;border-radius:5px;margin-right:6px;font-size:13px}
+img{display:block;margin:8px auto}
+.pb{page-break-before:always}
+.cap{color:#64748b;font-size:13px;margin:2px 0 10px}
+.sym{font-family:"DejaVu Sans Mono",monospace;background:#f1f5f9;border-radius:4px;padding:0 5px}
+</style></head><body><div class="wrap">
+<h1>How Iterative SplitJEPA works</h1>
+<p class="sub">One worked example, real numbers from the real code. Nothing here needs mathematics beyond "subtract two lists" and "find the long direction of a cloud".</p>
+
+<div class="box say"><b class="t">The one-sentence idea</b>
+A video frame becomes a dot in a space with many coordinates. The things that change in the video (pose, position, identity…) change at different speeds. The method looks at pairs of dots that are the same in the slow things and different in a fast thing, and finds which directions in the space are "the fast thing". It removes them, and repeats for the next layer.</div>
+
+<h2><span class="n">1</span>The data: layers of hidden numbers</h2>
+<p>Everything starts from <b>hidden numbers</b> that the data generator picks. The method never sees them; they are the answer key used only for scoring.</p>
+<p><b>The example used on every page:</b> 3 layers, each layer holds <b>2 numbers</b>, so one sample is a list of <b>6 numbers</b>.</p>
+<table class="cmp"><tr><th>Layer</th><th>Numbers</th><th>Speed</th><th>Like, in a video</th></tr>
+<tr><td><b style="color:#c2410c">A</b> fast</td><td>A1, A2</td><td>changes almost every frame</td><td>pose, texture, lighting flicker</td></tr>
+<tr><td><b style="color:#ea580c">B</b> middle</td><td>B1, B2</td><td>changes now and then</td><td>where an object is</td></tr>
+<tr><td><b style="color:#1d4ed8">C</b> slow</td><td>C1, C2</td><td>almost constant</td><td>which object it is, the camera</td></tr></table>
+<div class="box warn"><b class="t">"Three numbers" vs "four numbers" — why you saw both</b>
+The real experiments use 5 layers of 4 numbers (20 numbers per sample). To draw something readable I used smaller examples (3 numbers, then this 6-number one). Same method, only smaller. From here on, only this 6-number example is used.</div>
+<p><b>How "fast" and "slow" are set:</b> I set it when I generate the data. At every time step each number becomes <i>keep% × old value + fresh random part</i>. Keep 20% means mostly fresh each frame (fast); keep 95% means almost unchanged (slow).</p>
+{{FIG_SPEED}}<p class="cap">Real rule, one number per layer over 40 frames.</p>
+<p>Three example samples (each row is one video frame's hidden numbers):</p>{{T_HIDDEN}}
+
+<h2><span class="n">2</span>From hidden numbers to a dot the method can see</h2>
+<p>The generator bends the 6 hidden numbers with a fixed function (this stands in for "a camera turning a scene into pixels"). An encoder then turns the result into a <b>vector of 6 coordinates</b>, called e1 to e6. That vector is the <b>dot</b>. In this example the encoder does nothing (untrained), so you see only the effect of the bend.</p>
+<p>The bend <b>mixes</b> the layers: no single embedding coordinate equals one hidden number any more.</p>
+{{FIG_MIX}}<p class="cap">Darker = that embedding coordinate moves together with that hidden number. Real data after the bend: every coordinate carries a bit of several layers. Finding which <i>directions</i> hold which layer is the whole task.</p>
+
+<h2 class="pb"><span class="n">3</span>Whitening, and what "covariance" means</h2>
+<div class="box say"><b class="t">Covariance, plainly</b>
+A <b>table that says how much each coordinate varies, and how much each pair of coordinates move together</b> across all the dots. It is a summary of the cloud's shape: a stretched, tilted cloud has big numbers along the stretch; a perfectly round cloud has the same number everywhere and zeros elsewhere. I will call it the <b>spread table</b>.</div>
+<p><b>Whitening</b> uses that table to remove the stretching: it shrinks the long directions and grows the short ones until the cloud is round. After it, the spread table is just "1 on the diagonal, 0 elsewhere", so no direction is special merely because it was stretched.</p>
+{{FIG_WHITE}}<p class="cap">Left: the real spread table of the embedding (strong colours = coordinates moving together). Second: after whitening, it is plain. Right: two of the coordinates before and after. The bend itself is still there; whitening only evens out the stretch.</p>
+<p>Three samples after whitening (these 6 numbers are what the splitter works with):</p>{{T_AFTER}}
+
+<h2 class="pb"><span class="n">4</span>Matched pairs: what they are and the basis of matching</h2>
+<p>A <b>pair is two whole samples</b> (two rows of 6 numbers). For the question "where is layer A?", the pair must <b>agree on every slower layer (B and C)</b> and be free to differ in A.</p>
+<div class="legend"><span class="same">same</span><span class="diff">redrawn (may differ)</span></div>
+<h3>Rung 1 pair (asks about A: B and C copied)</h3>{{T_PAIR1}}
+<h3>Rung 2 pair (asks about B: only C copied; A is redrawn too)</h3>{{T_PAIR2}}
+<div class="box warn"><b class="t">What the basis of matching is</b>
+In these experiments, <b>I know the hidden numbers because I wrote the generator</b>, so I simply copy the ones that must agree. That is the whole basis. The splitter itself never sees the hidden numbers, only the two dots. For the robot images the pairs came from the simulator's scene settings. On ordinary video nobody gives you this, and the only automatic way I tested (grouping dots into clusters and pairing dots within a cluster) worked at rung 2 and faded by rungs 4–5, in my own synthetic worlds only.</div>
+<p><b>Why rung 2's pair also redraws A:</b> rung 1 already removes A's direction, so whatever A does in a rung-2 pair is invisible. The pair only has to agree on what is slower than B, that is C.</p>
+
+<h2 class="pb"><span class="n">5</span>Rung 1: subtract, measure the spread, read off the long axes</h2>
+<ol>
+<li><b>Subtract.</b> For each rung-1 pair, subtract the two whitened dots coordinate by coordinate: a list of 6 numbers (the "difference" row above). The coordinates of A change, the others cancel (up to the bend). Do this for 30,000 pairs.</li>
+<li><b>Spread table of the differences.</b> This is where covariance is used: the same kind of table as in step 3, but computed on the <b>differences</b> instead of the dots. It shows which directions the pairs differ in.</li>
+<li><b>Find the long axes (eigendecomposition).</b> A cloud of differences is an oval. "Eigendecomposition" is just the operation that reads off the oval's axes: the long ones and how long, the short ones and how short. Here: the sizes are <b>{{EV1}}</b> (two big, four much smaller).</li>
+<li><b>Cut.</b> The 2 long axes = block of layer A (the "variant" block, V1). The 4 short axes = the directions that did not change between the pairs (the "invariant" content). <b>Gap = smallest long ÷ largest short = {{GAP1}} : 1</b>. A big gap = a clean cut; about 1 = no block there.</li></ol>
+{{FIG_EIG1}}<p class="cap">Left: spread table of the differences (real). Middle: the differences along the two long axes (red) are wide; along the four short axes (blue) they spread far less. Right: the eight sizes.</p>
+
+<h2 class="pb"><span class="n">6</span>What is passed on to rung 2, and why C appears at the end</h2>
+<p>What carries to the next rung is <b>the set of kept directions</b>: the 4 invariant directions from rung 1. That set is exactly "the part of the embedding that did not change when A changed". Rung 2 only looks inside it.</p>
+{{FIG_FLOW}}
+<ul><li>Rung 2 builds its pairs (agree on C, differ in B), subtracts the dots, but now <b>keeps only the 4 kept directions</b>, and computes the spread table of the differences there.</li>
+<li>It has <b>2 long axes (B)</b> and <b>2 much smaller ones</b>. Sizes: <b>{{EV2}}</b>, gap <b>{{GAP2}} : 1</b>.</li>
+<li><b>Rung 2 does not recover C.</b> It recovers B. C is what is <b>left over</b> after removing A and B: the 2 directions that did not change in any pair. This answers your question: <b>each step keeps the content that stayed the same, so the last thing standing is the most persistent layer</b>.</li></ul>
+{{FIG_EIG2}}
+<div class="box say"><b class="t">Who changes in which pairs</b>
+<table class="cmp"><tr><th>Pairs for</th><th>A</th><th>B</th><th>C</th><th>Found</th></tr><tr><td>rung 1</td><td>differs</td><td>same</td><td>same</td><td>block of A</td></tr><tr><td>rung 2</td><td>differs (hidden by rung 1)</td><td>differs</td><td>same</td><td>block of B</td></tr><tr><td>nothing left to ask</td><td colspan="3">what is left over</td><td>block of C (the most persistent)</td></tr></table></div>
+
+<h2 class="pb"><span class="n">7</span>Does the found block match the truth?</h2>
+<p>Check, using the hidden numbers (only allowed for scoring): how well can each <b>true layer</b> be predicted from each <b>found block</b>? 1.00 = perfectly, 0 = not at all.</p>
+{{FIG_TRUTH}}
+<p>The diagonal is {{R2_AA}}, {{R2_BB}}, {{R2_CC}}: each found block holds its own layer and almost nothing of the others. Rung 1 found A, rung 2 found B, the leftover is C.</p>
+<div class="box warn"><b class="t">This is the easy case</b>
+Mild bend, exact pairs, nothing trained. It shows the mechanism, not how hard the real problem is.</div>
+
+<h2><span class="n">8</span>What the full experiments found (20 numbers per sample, 5 layers)</h2>
+<table class="cmp"><tr><th>Setting</th><th>Result (angle between found and true block; unrelated ≈ 80°)</th></tr>
+<tr><td>Exact pairs, mild bend</td><td>0.2 – 2° at every rung, clean cut (gap 47 – 73), 5 layers</td></tr>
+<tr><td>Stronger bend (strength 2), 5 layers</td><td>3 – 8°, weaker cut (gap 3 – 5): partial but visible</td></tr>
+<tr><td>Pairs from clusters instead of exact</td><td>rung 2: 17°; rungs 4–5: 48°, 57° — fades</td></tr>
+<tr><td>Robot images, frozen features</td><td>no clean block</td></tr>
+<tr><td>Benefit for prediction</td><td>not shown</td></tr></table>
+<div class="box warn"><b class="t">How this relates to the SplitJEPA paper</b>
+The paper trains the encoder so that a <b>fixed slice</b> of its output stays the same across matched pairs. Here the encoder is only used as a frozen map and the split is found <b>afterwards</b> with the steps above. I did not run the paper's trained split side by side with this, so there is no claim that this is better, only that it works under the conditions listed.</div>
+<h3>Words used</h3>
+<table class="cmp"><tr><th>Word</th><th>Plain meaning</th></tr>
+<tr><td>layer</td><td>a group of hidden numbers that change at the same speed</td></tr>
+<tr><td>dot / embedding</td><td>the list of coordinates the encoder gives for one sample</td></tr>
+<tr><td>whitening</td><td>reshaping the cloud so it is equally spread in every direction</td></tr>
+<tr><td>spread table (covariance)</td><td>how much each coordinate varies and how pairs of coordinates move together</td></tr>
+<tr><td>matched pair</td><td>two samples that agree on everything slower than the layer being asked about</td></tr>
+<tr><td>rung</td><td>one round of subtract, spread table, long axes, cut</td></tr>
+<tr><td>block</td><td>the directions found for one layer</td></tr>
+<tr><td>gap</td><td>how clearly the long axes stand out from the short ones</td></tr></table>
+</div></body></html>

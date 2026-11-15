@@ -56,3 +56,6 @@ The untrained identity encoder matches the trained results in the synthetic worl
 
 ## Update 2026-11-15 (E55)
 Encoder training does real work at coupling strength 1 (identity 0/5, trained 5/5) and none that suffices at 2, 4, 8 (0/5). The claim "a trained generic encoder works" therefore holds only for mild nonlinearity.
+
+## Update 2026-11-15 (public code read)
+The paper's synthetic code uses the same whitening and eigen-split of pair differences as this project (see the correction in `docs/SIMPLE_REPORT.md`); its Table 4 also shows the same degradation with coupling strength (global R2 0.998, 0.957, 0.877 at strengths 0.5, 1, 2). The threat "no comparison with the paper's mechanism" therefore applies only to its robot training method.

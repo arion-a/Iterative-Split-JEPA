@@ -50,3 +50,6 @@ An untrained identity encoder passes every check the trained encoders pass in th
 
 ## Result of E55 (2026-11-15)
 In a harder world the untrained encoder fails from coupling strength 1. Training with the paper's objective repairs strength 1 (5 of 5 seeds clean) but not 2, 4 or 8 (0 of 5 each; layers 2 and 3 are not found at all). So encoder training matters, but only over a narrow range with this recipe.
+
+## Correction 2026-11-15 (after reading the paper's public code)
+Section 1 and 3 above describe the paper's split as a fixed slice trained with an invariance loss. That is how the paper's **robot** code works (`robot/hl_maniskill/`), but the paper's **synthetic** experiment (`simulation/`, repository splitjepa/splitjepa.github.io) does exactly what this project does: train a LeJEPA encoder, freeze it, ZCA-whiten, then take the eigenvectors of the covariance of matched-pair differences as the rotation (smallest directions = invariant block). So the iterated version here is the paper's synthetic split repeated rung by rung, not a replacement. The paper's robot data is not released (its README says the prepared episodes and pair files are not included).

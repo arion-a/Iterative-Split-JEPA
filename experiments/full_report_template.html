@@ -85,7 +85,7 @@ code,.eq{font-family:"DejaVu Sans Mono",monospace;background:#f1f5f9;border-radi
 <h2>7. What is not shown</h2>
 <ul><li>Anything on real images or video (the one image test failed).</li>
 <li>A benefit for prediction from having the layers.</li>
-<li>That this beats the paper's own trained split: I never ran the two side by side. The paper trains the encoder so a fixed slice of its output is the same across pairs; here the split is found afterwards from the pairs.</li>
+<li>A comparison with the paper's robot training method (an encoder fine-tuned so a fixed slice of its output stays the same across pairs): not run. For the synthetic world, the paper's own code already does the same whitening and eigen-split as here, once; this report repeats it layer by layer.</li>
 <li>Pairs built from data beyond about rung 2 or 3, or a clean cut under a strong bend.</li></ul>
 
 <h2>Where the numbers are</h2>

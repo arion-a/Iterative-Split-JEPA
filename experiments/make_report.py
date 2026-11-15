@@ -109,7 +109,20 @@ t_W = "".join(f"<div style='display:inline-block;vertical-align:top'><div class=
 t4_term = float(np.tanh(z1s[0, :3].numpy() @ obs.weights[0].numpy()[:, 0]))
 w0c = obs.weights[0].numpy()[:, 0]
 
+
+# ---------------- hand check: exact noise-free toy, hand answers vs the real fit_rung
+q = 1 / np.sqrt(2); Qm = torch.tensor([[q, q, 0], [q, -q, 0], [0, 0, 1.0]], dtype=torch.float32)           # r = Q z: orthogonal, so the embedding is already "whitened"
+da = np.array([2.0, -2.0, 1.0, -1.0]); db = np.array([3.0, -3.0, 1.0, -1.0]); da2 = np.array([1.0, -2.0, 3.0, 0.5])
+base = np.zeros((4, 3))
+u1h = torch.tensor(base, dtype=torch.float32); v1h = torch.tensor(np.c_[da, 0 * da, 0 * da], dtype=torch.float32)
+h1 = fit_rung(u1h @ Qm.T, v1h @ Qm.T, torch.eye(3), k=1, d_k=1)
+u2h = torch.tensor(base, dtype=torch.float32); v2h = torch.tensor(np.c_[da2, db, 0 * da], dtype=torch.float32)
+h2 = fit_rung(u2h @ Qm.T, v2h @ Qm.T, h1.Q, k=2, d_k=1)
+vec = lambda t: "(" + ", ".join(f"{abs(v):.3f}" if abs(v) < 1e-6 else f"{v:+.3f}" for v in t) + ")"
+hand = {"H_EV1": ", ".join(f"{v:.2f}" for v in h1.eigvals.numpy()), "H_V1": vec(h1.V.numpy()[:, 0] * np.sign(h1.V.numpy()[0, 0])), "H_EV2": ", ".join(f"{v:.2f}" for v in h2.eigvals.numpy()),
+        "H_V2": vec(h2.V.numpy()[:, 0] * np.sign(h2.V.numpy()[0, 0])), "H_CORE": vec(h2.Q.numpy()[:, 0] * np.sign(h2.Q.numpy()[2, 0]))}
+
 html = open("experiments/report_template.html").read()
-for k, v in {"FIG_SPEED": fig_speed, "FIG_MIX": fig_mix, "FIG_WHITE": fig_white, "FIG_EIG1": fig_eig1, "FIG_FLOW": fig_flow, "FIG_EIG2": fig_eig2, "FIG_TRUTH": fig_truth, "T_HIDDEN": t_hidden, "T_AFTER": t_after, "T_PAIR1": t_pair1, "T_PAIR2": t_pair2,
+for k, v in {**hand, "FIG_SPEED": fig_speed, "FIG_MIX": fig_mix, "FIG_WHITE": fig_white, "FIG_EIG1": fig_eig1, "FIG_FLOW": fig_flow, "FIG_EIG2": fig_eig2, "FIG_TRUTH": fig_truth, "T_HIDDEN": t_hidden, "T_AFTER": t_after, "T_PAIR1": t_pair1, "T_PAIR2": t_pair2,
              "EV1": ", ".join(f"{v:.2f}" for v in ev1), "EV2": ", ".join(f"{v:.2f}" for v in ev2), "GAP1": f"{ev1[1]/ev1[2]:.0f}", "GAP2": f"{ev2[1]/ev2[2]:.0f}", "T_STEPS": t_steps, "T_A": t_A, "T_W": t_W, "Z1": ", ".join(f"{v:+.2f}" for v in z1s[0].numpy()), "W0C": ", ".join(f"{v:+.2f}" for v in w0c), "ARG": f"{float(z1s[0,:3].numpy() @ w0c):.2f}", "TH": f"{t4_term:.2f}", "B2": f"{float(z1s[0,3]):+.2f}", "B2NEW": f"{float(z1s[0,3])+t4_term:+.2f}", "R2_AA": f"{T3[0,0]:.2f}", "R2_BB": f"{T3[1,1]:.2f}", "R2_CC": f"{T3[2,2]:.2f}"}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/REPORT.html", "w").write(html); print("ok", ev1, ev2, T3.round(2))

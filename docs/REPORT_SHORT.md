@@ -42,3 +42,6 @@ The extension works where its assumptions hold: exact matched pairs and an obser
 
 ## Update: gate off at strength 2 (E56)
 Turning the gate off fixes the cascade (rung-2 angle 61-86 degrees down to 5.0-8.2; rung 3 under 4) but no seed becomes clean: gaps stay 3.5-6.1, presence 0.84-0.86. So the remaining limit is the leak of each block under the nonlinear coupling, not the gate.
+
+## Update: graded result at 4 and 5 blocks (E57, gate off)
+5 blocks, coupling strength 2: every rung found on 5 of 5 seeds (angles 3-8 degrees against about 80 for unrelated, gaps 3-5, presence 0.85-0.93). 4 blocks, strength 4: every rung found on 5 of 5 seeds (angles 4-15, gaps 2.3-3.4, presence 0.71-0.86). Moderate error, clear function; the earlier zeros at strengths 4 and 8 came from the gate cascade.

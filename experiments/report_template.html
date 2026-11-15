@@ -31,6 +31,7 @@ img{display:block;margin:8px auto}
 <div class="box say"><b class="t">The one-sentence idea</b>
 A video frame becomes a dot in a space with many coordinates. The things that change in the video (pose, position, identity…) change at different speeds. The method looks at pairs of dots that are the same in the slow things and different in a fast thing, and finds which directions in the space are "the fast thing". It removes them, and repeats for the next layer.</div>
 
+<h2 style="border-top:none">The mechanism at a glance</h2>{{FIG_PIPE}}<p class="cap">Every box is a step of the real code. The rest of the report takes each box in turn, with one example, then shows the measured results.</p>
 <h2><span class="n">1</span>The data: layers of hidden numbers</h2>
 <p>Everything starts from <b>hidden numbers</b> that the data generator picks. The method never sees them; they are the answer key used only for scoring.</p>
 <p><b>The example used on every page:</b> 3 layers, each layer holds <b>2 numbers</b>, so one sample is a list of <b>6 numbers</b>.</p>
@@ -102,15 +103,21 @@ In these experiments, <b>I know the hidden numbers because I wrote the generator
 <div class="box warn"><b class="t">This is the easy case</b>
 Mild bend, exact pairs, nothing trained. It shows the mechanism, not how hard the real problem is.</div>
 
-<h2><span class="n">8</span>What the full experiments found (20 numbers per sample, 5 layers)</h2>
-<table class="cmp"><tr><th>Setting</th><th>Result (angle between found and true block; unrelated ≈ 80°)</th></tr>
-<tr><td>Exact pairs, mild bend</td><td>0.2 – 2° at every rung, clean cut (gap 47 – 73), 5 layers</td></tr>
-<tr><td>Stronger bend (strength 2), 5 layers</td><td>3 – 8°, weaker cut (gap 3 – 5): partial but visible</td></tr>
-<tr><td>Pairs from clusters instead of exact</td><td>rung 2: 17°; rungs 4–5: 48°, 57° — fades</td></tr>
-<tr><td>Robot images, frozen features</td><td>no clean block</td></tr>
+<h2 class="pb"><span class="n">8</span>Real results from the experiments (20 numbers per sample, 4 to 5 layers)</h2>
+<p>These are measured results, one dot or line per run. "Angle" is how far the found block's directions are from the true layer's directions: 0° is perfect, about 80° is what unrelated directions give. "Gap" is how clearly the long axes stand out; 10 or more is a clean cut and 1 is no cut.</p>
+{{FIG_R1}}<p class="cap">Reading it: with a mild bend (0.5) the trained encoder finds every layer to a couple of degrees. An untrained encoder (grey) already fails at strength 1, a trained one (red) fixes strength 1 but with the weak-rung gate on fails from 2 upward. Turning the gate off (green) restores most of the function at strengths 2 and 4. Strength 8 with the gate off was not run.</p>
+{{FIG_R2}}<p class="cap">Left panel: mild bend, 5 layers (4 rungs): angles about 1° and gaps above 100. Middle: strength 2, 5 layers: angles 3–8° and gaps 3–5 (visible, not clean). Right panel: strength 4, 4 layers (3 rungs): angles 4–15° and gaps 2–3.</p>
+{{FIG_R3}}<p class="cap">When all layers change at the same speed, the ladder (green) still finds each one to under {{LADMAX}}°, but a one-shot split that only looks at adjacent-frame differences cannot (red, {{SING}}). So the matched pairs, not speed, define the layers.</p>
+{{FIG_R4}}<p class="cap">Pairs from clusters of the data work at rung 2 (about 17°) and fade by rungs 4 to 5, as do perfect clusters and even exact twins in this world; clustering the whole content instead of the slow part never works.</p>
+{{FIG_R5}}<p class="cap">On simulated robot images, using frozen image features, the viewpoint block never reaches the required ratio of 3 and rung 1 has no gap (1.0).</p>
+<table class="cmp"><tr><th>Setting</th><th>Measured</th></tr>
+<tr><td>Exact pairs, mild bend, 4 and 5 layers (E54, 20 runs)</td><td>angles {{R54}} across all rungs</td></tr>
+<tr><td>Strength 2, 5 layers, gate off (E57)</td><td>3 – 8°, gap 3 – 5: partial but visible</td></tr>
+<tr><td>Pairs from data (E58, best case)</td><td>rung 2: 17°; rungs 4–5: 48°, 57°</td></tr>
+<tr><td>Robot images</td><td>no clean block</td></tr>
 <tr><td>Benefit for prediction</td><td>not shown</td></tr></table>
 <div class="box warn"><b class="t">How this relates to the SplitJEPA paper</b>
-The paper trains the encoder so that a <b>fixed slice</b> of its output stays the same across matched pairs. Here the encoder is only used as a frozen map and the split is found <b>afterwards</b> with the steps above. I did not run the paper's trained split side by side with this, so there is no claim that this is better, only that it works under the conditions listed.</div>
+The paper trains the encoder so that a <b>fixed slice</b> of its output stays the same across matched pairs. Here the encoder is only used as a frozen map and the split is found <b>afterwards</b> with the steps above. I did not run the paper's trained split side by side with this, so there is no claim that this is better, only that it works under the conditions shown.</div>
 <h3>Words used</h3>
 <table class="cmp"><tr><th>Word</th><th>Plain meaning</th></tr>
 <tr><td>layer</td><td>a group of hidden numbers that change at the same speed</td></tr>

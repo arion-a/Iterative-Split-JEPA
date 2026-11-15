@@ -122,7 +122,79 @@ vec = lambda t: "(" + ", ".join(f"{abs(v):.3f}" if abs(v) < 1e-6 else f"{v:+.3f}
 hand = {"H_EV1": ", ".join(f"{v:.2f}" for v in h1.eigvals.numpy()), "H_V1": vec(h1.V.numpy()[:, 0] * np.sign(h1.V.numpy()[0, 0])), "H_EV2": ", ".join(f"{v:.2f}" for v in h2.eigvals.numpy()),
         "H_V2": vec(h2.V.numpy()[:, 0] * np.sign(h2.V.numpy()[0, 0])), "H_CORE": vec(h2.Q.numpy()[:, 0] * np.sign(h2.Q.numpy()[2, 0]))}
 
+
+
+# ---------------- pipeline-at-a-glance figure with the formulas
+fig, ax = plt.subplots(figsize=(13, 5.2)); ax.axis("off"); ax.set_xlim(0, 13); ax.set_ylim(0, 5.2)
+def box(x0, y0, w, h, col, head, body, tc="white"):
+    ax.add_patch(FancyBboxPatch((x0, y0), w, h, boxstyle="round,pad=0.03", fc=col, ec="none")); ax.text(x0 + w / 2, y0 + h - .28, head, ha="center", va="center", color=tc, fontsize=10.5, weight="bold"); ax.text(x0 + w / 2, y0 + (h - .5) / 2, body, ha="center", va="center", color=tc, fontsize=8.6, linespacing=1.5)
+arr = lambda x0, y0, x1, y1: ax.annotate("", xy=(x1, y1), xytext=(x0, y0), arrowprops=dict(arrowstyle="-|>", color="#475569", lw=1.8))
+box(.1, 3.2, 2.9, 1.8, "#475569", "1  Hidden numbers z", "layers A, B, C\n(groups of numbers,\nfast to slow)\nthe method never sees z")
+box(3.5, 3.2, 3.1, 1.8, "#7c3aed", "2  Bend  e = f(z)", "4 steps, e.g.\nright = right + tanh(left × W1)\nleft = left + tanh(right × W2) …")
+box(7.0, 3.2, 2.7, 1.8, "#0f766e", "3  Whiten", "r = C^(-1/2) (e − mean)\nC = spread table (covariance)\nof all dots")
+box(10.1, 3.2, 2.8, 1.8, "#1d4ed8", "4  Matched pairs", "two samples that agree\non all layers slower\nthan the one asked about")
+arr(3.0, 4.1, 3.5, 4.1); arr(6.6, 4.1, 7.0, 4.1); arr(9.7, 4.1, 10.1, 4.1)
+box(10.1, .2, 2.8, 2.5, "#c2410c", "5  Differences", "D = r(u) − r(v)\nfor every pair\nspread table of the D's:\nM = average of D × Dᵀ")
+box(6.9, .2, 2.9, 2.5, "#b45309", "6  Long axes", "M = Σ λᵢ vᵢ vᵢᵀ\n(eigendecomposition)\ntop d eigenvectors = block V\ngap = λd / λ(d+1)")
+box(3.5, .2, 3.1, 2.5, "#15803d", "7  Cut and repeat", "V = layer found\nH = directions left (unchanged)\nnext rung: pairs for the next\nlayer, work only inside H")
+box(.1, .2, 2.9, 2.5, "#334155", "8  Check (tests only)", "angle between V and the\ntrue layer's directions;\nhidden numbers used only\nhere, for scoring")
+arr(11.5, 3.2, 11.5, 2.7); arr(10.1, 1.45, 9.8, 1.45); arr(6.9, 1.45, 6.6, 1.45); arr(3.5, 1.45, 3.0, 1.45)
+fig_pipe = img(fig)
+
+# ================= real results figures =================
+import glob, json
+def load(pat): return [json.load(open(f)) for f in sorted(glob.glob(pat))]
+worst = lambda rs: [max(g["angle_deg"] for g in r["rungs"]) for r in rs]
+RUN = {"u": load, "t": load}
+fig, ax = plt.subplots(figsize=(10, 4.4))
+series = [("untrained encoder, gate on", GREY, -.22, {s_: worst(load(f"results/minimal/e55/u/s{s_}/main_seed*.json")) for s_ in (1, 2, 4, 8)}),
+          ("trained encoder, gate on", RED, 0.0, {0.5: worst(load("results/minimal/e54/d4/main_seed*.json")), **{s_: worst(load(f"results/minimal/e55/t/s{s_}/main_seed*.json")) for s_ in (1, 2, 4, 8)}}),
+          ("trained encoder, gate off", GRN, .22, {2: worst(load("results/minimal/e56/main_seed*.json")), 4: worst(load("results/minimal/e57/b4_s4/main_seed*.json"))})]
+pos = {0.5: 0, 1: 1, 2: 2, 4: 3, 8: 4}
+for lab, col, off, d in series:
+    for k_, v in d.items():
+        ax.scatter(np.full(len(v), pos[k_] + off) + np.random.default_rng(0).uniform(-.04, .04, len(v)), v, s=22, color=col, alpha=.8, label=lab if k_ == list(d)[0] else None)
+        ax.plot([pos[k_] + off - .08, pos[k_] + off + .08], [np.median(v)] * 2, color="k", lw=2)
+ax.axhline(80, color="#94a3b8", ls="--"); ax.text(4.45, 81.5, "unrelated ≈ 80°", ha="right", color="#64748b", fontsize=9); ax.axhline(5, color="#16a34a", ls=":"); ax.text(-.45, 6.3, "clean < 5°", color="#16a34a", fontsize=9)
+ax.set_xticks(range(5)); ax.set_xticklabels(["0.5", "1", "2", "4", "8"]); ax.set_xlabel("how hard the bend is (coupling strength)"); ax.set_ylabel("worst-rung angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, loc="center left", fontsize=9)
+ax.set_title("Result 1: found blocks vs the truth as the bend gets stronger (each dot = one run, 4 layers; black = median)", fontsize=10.5); fig_r1 = img(fig)
+# per rung angle + gap for two cells
+def cell(ax_a, ax_g, rs, ttl, col):
+    nr = len(rs[0]["rungs"])
+    for r in rs:
+        ax_a.plot(range(1, nr + 1), [g["angle_deg"] for g in r["rungs"]], "-o", color=col, alpha=.6, ms=4); ax_g.plot(range(1, nr + 1), [g["gap_ratio"] for g in r["rungs"]], "-o", color=col, alpha=.6, ms=4)
+    ax_a.axhline(5, color="#16a34a", ls=":"); ax_a.axhline(80, color="#94a3b8", ls="--"); ax_a.set_ylim(0, 90); ax_a.set_title(ttl, fontsize=10); ax_a.set_xlabel("rung"); ax_a.set_xticks(range(1, nr + 1))
+    ax_g.axhline(10, color="#16a34a", ls=":"); ax_g.axhline(1, color="#94a3b8", ls="--"); ax_g.set_yscale("log"); ax_g.set_xlabel("rung"); ax_g.set_xticks(range(1, nr + 1))
+fig, axs = plt.subplots(2, 3, figsize=(12.5, 6.4)); axs[0, 0].set_ylabel("angle (degrees)"); axs[1, 0].set_ylabel("gap (log scale)")
+cell(axs[0, 0], axs[1, 0], load("results/minimal/e54/d5/main_seed*.json"), "5 layers, mild bend (E54)", BLUE)
+cell(axs[0, 1], axs[1, 1], load("results/minimal/e57/b5_s2/main_seed*.json"), "5 layers, strength 2, gate off (E57)", ORG)
+cell(axs[0, 2], axs[1, 2], load("results/minimal/e57/b4_s4/main_seed*.json"), "4 layers, strength 4, gate off (E57)", RED)
+fig.suptitle("Result 2: every rung, every run. Top: angle (green dotted = clean, grey dashed = unrelated). Bottom: gap (green dotted = 10, grey = no block)", fontsize=10.5); fig.tight_layout(rect=(0, 0, 1, .95)); fig_r2 = img(fig)
+# E38 equal speeds
+e38 = load("results/minimal/e38/main_seed*.json"); lad = np.array([r["payoff"]["ladder_angles_deg"] for r in e38]); sing = np.array([r["payoff"]["single_shot_angles_deg"] for r in e38])
+fig, ax = plt.subplots(figsize=(7.5, 3.6)); xs = np.arange(lad.shape[1]); w = .35
+for j in range(len(e38)): ax.scatter(xs - w / 2 + np.random.default_rng(j).uniform(-.06, .06), lad[j], color=GRN, s=26); ax.scatter(xs + w / 2 + np.random.default_rng(j + 9).uniform(-.06, .06), sing[j], color=RED, s=26)
+ax.scatter([], [], color=GRN, label="ladder (uses matched pairs)"); ax.scatter([], [], color=RED, label="one-shot split of adjacent-frame differences (no pairs)")
+ax.set_xticks(xs); ax.set_xticklabels([f"rung {i+1}" for i in xs]); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 95); ax.legend(frameon=False, fontsize=9, loc="center right")
+ax.set_title("Result 3: all layers change at the same speed (E38, 5 runs)", fontsize=10.5); fig_r3 = img(fig, "75%")
+# E58 cluster pairs
+e58 = load("results/minimal/e58/seed*.json"); arms = [("generator", "exact twins", GRN), ("label", "perfect clusters", BLUE), ("kmeans_slow", "clusters from data (slow part)", ORG), ("kmeans_all", "clusters from data (whole)", RED), ("random", "random pairs", GREY)]
+fig, ax = plt.subplots(figsize=(8.5, 3.9))
+for key, lab, col in arms:
+    m = np.array([[x["angle_deg"] for x in r["arms"][key]] for r in e58]); ax.plot(range(1, 6), np.median(m, 0), "-o", color=col, label=lab, lw=2)
+ax.axhline(80, color="#94a3b8", ls="--"); ax.set_xticks(range(1, 6)); ax.set_xlabel("rung"); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.2))
+ax.set_title("Result 4: pairs built from the data itself (E58; median of 5 runs; best case: true cluster counts given)", fontsize=10); fig_r4 = img(fig)
+# robot
+rows = [l.split("|") for l in open("results/stage_r/STAGE_R_REPORT.md") if l.startswith("| Push") or l.startswith("| Pick") or l.startswith("| Stack") or "treated" in l or "baseline" in l]
+vals = [(r[1].strip(), r[2].strip(), float(r[8])) for r in rows if len(r) > 10 and r[8].strip().replace(".", "").isdigit()]
+fig, ax = plt.subplots(figsize=(7.5, 3.2)); labs = [t[:4] + chr(10) + ("base" if a == "baseline" else "treat") for t, a, _ in vals]; ax.bar(range(len(vals)), [v for *_, v in vals], color=[RED if a == "treated" else GREY for _, a, _ in vals])
+ax.axhline(3, color="#16a34a", ls="--"); ax.text(len(vals) - .5, 2.8, "needed: 3", ha="right", color="#16a34a"); ax.set_xticks(range(len(vals))); ax.set_xticklabels(labs, fontsize=7); ax.set_ylabel("viewpoint-block ratio")
+ax.set_title("Result 5: simulated robot images (frozen image features): the block is not separated", fontsize=10.5); fig_r5 = img(fig, "75%")
+e54 = load("results/minimal/e54/d*/main_seed*.json"); ang54 = [g["angle_deg"] for r in e54 for g in r["rungs"]]; gap54 = [g["gap_ratio"] for r in e54 for g in r["rungs"]]
+sing_rng = f"{sing.min():.0f}–{sing.max():.0f}°"; lad_max = f"{lad.max():.1f}"
+r54 = f"{min(ang54):.1f} – {max(ang54):.1f}°, gap {min(gap54):.0f} – {max(gap54):.0f}"
+
 html = open("experiments/report_template.html").read()
-for k, v in {**hand, "FIG_SPEED": fig_speed, "FIG_MIX": fig_mix, "FIG_WHITE": fig_white, "FIG_EIG1": fig_eig1, "FIG_FLOW": fig_flow, "FIG_EIG2": fig_eig2, "FIG_TRUTH": fig_truth, "T_HIDDEN": t_hidden, "T_AFTER": t_after, "T_PAIR1": t_pair1, "T_PAIR2": t_pair2,
+for k, v in {"FIG_PIPE": fig_pipe, "FIG_R1": fig_r1, "FIG_R2": fig_r2, "FIG_R3": fig_r3, "FIG_R4": fig_r4, "FIG_R5": fig_r5, "R54": r54, "SING": sing_rng, "LADMAX": lad_max, **hand, "FIG_SPEED": fig_speed, "FIG_MIX": fig_mix, "FIG_WHITE": fig_white, "FIG_EIG1": fig_eig1, "FIG_FLOW": fig_flow, "FIG_EIG2": fig_eig2, "FIG_TRUTH": fig_truth, "T_HIDDEN": t_hidden, "T_AFTER": t_after, "T_PAIR1": t_pair1, "T_PAIR2": t_pair2,
              "EV1": ", ".join(f"{v:.2f}" for v in ev1), "EV2": ", ".join(f"{v:.2f}" for v in ev2), "GAP1": f"{ev1[1]/ev1[2]:.0f}", "GAP2": f"{ev2[1]/ev2[2]:.0f}", "T_STEPS": t_steps, "T_A": t_A, "T_W": t_W, "Z1": ", ".join(f"{v:+.2f}" for v in z1s[0].numpy()), "W0C": ", ".join(f"{v:+.2f}" for v in w0c), "ARG": f"{float(z1s[0,:3].numpy() @ w0c):.2f}", "TH": f"{t4_term:.2f}", "B2": f"{float(z1s[0,3]):+.2f}", "B2NEW": f"{float(z1s[0,3])+t4_term:+.2f}", "R2_AA": f"{T3[0,0]:.2f}", "R2_BB": f"{T3[1,1]:.2f}", "R2_CC": f"{T3[2,2]:.2f}"}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/REPORT.html", "w").write(html); print("ok", ev1, ev2, T3.round(2))

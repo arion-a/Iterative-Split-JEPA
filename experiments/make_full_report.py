@@ -71,12 +71,21 @@ fig, ax = plt.subplots(figsize=(8.5, 3.9))
 for key, lab, col in arms:
     m = np.array([[x["angle_deg"] for x in r["arms"][key]] for r in e58]); ax.plot(range(1, 6), np.median(m, 0), "-o", color=col, label=lab, lw=2)
 ax.axhline(80, color="#94a3b8", ls="--"); ax.set_xticks(range(1, 6)); ax.set_xlabel("rung"); ax.set_ylabel("angle to the truth (degrees)"); ax.set_ylim(0, 92); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.2)); fig_pairs = img(fig, "85%")
-# ---------- robot
-rows = [l.split("|") for l in open("results/stage_r/STAGE_R_REPORT.md") if "treated" in l or "baseline" in l]
-vals = [(r[1].strip(), r[2].strip(), float(r[8])) for r in rows if len(r) > 10 and r[8].strip().replace(".", "").isdigit()]
-fig, ax = plt.subplots(figsize=(7.5, 3.1)); labs = [t[:4] + chr(10) + ("base" if a == "baseline" else "treat") for t, a, _ in vals]
-ax.bar(range(len(vals)), [v for *_, v in vals], color=[RED if a == "treated" else GREY for _, a, _ in vals]); ax.axhline(3, color=GRN, ls="--"); ax.text(len(vals) - .5, 2.8, "needed: 3", ha="right", color=GRN)
-ax.set_xticks(range(len(vals))); ax.set_xticklabels(labs, fontsize=7); ax.set_ylabel("viewpoint-block ratio"); fig_rob = img(fig, "72%")
+# ---------- robot: four ways of splitting, camera-change (viewpoint) ratio
+import json as _j
+pb = lambda t, k: _j.load(open(f"results/paper_baseline/{t}_paper_fixed_slice.json"))[k]
+lf = lambda n, t: _j.load(open(f"results/paper_baseline/{n}/{t}/split0.json"))["ratios"]["P1_view_V1_over_Q1"]
+old = lambda arm, t: np.mean([_j.load(open(f))["ratios"]["P1_view_V1_over_Q1"] for f in sorted(glob.glob(f"results/stage_r/{arm}/{t}/split*.json"))])
+rows_r = [("frozen features + small head\n(my earlier test)", [old("baseline", "PickCube"), old("baseline", "PushCube")], GREY),
+          ("paper's method (trained\nencoder, fixed halves)", [pb("PickCube", "paper_ratio_view_L_over_H"), pb("PushCube", "paper_ratio_view_L_over_H")], BLUE),
+          ("iterated splitting on the\npaper-trained embedding", [lf("ladder_fixed", "PickCube"), lf("ladder_fixed", "PushCube")], RED)]
+fig, ax = plt.subplots(figsize=(8.5, 3.6)); w = .26
+for i, (lab, v, col) in enumerate(rows_r):
+    ax.bar(np.arange(2) + (i - 1) * w, v, w, color=col, label=lab)
+    for j, y in enumerate(v): ax.text(j + (i - 1) * w, y + .15, f"{y:.1f}", ha="center", fontsize=9)
+ax.scatter([-.0, 1.0], [8.4, 14.0], marker="_", s=900, color="k", zorder=5); ax.text(1.42, 14.0, "paper reports", fontsize=8.5, va="center"); ax.text(1.42, 8.4, "(8.4 and 14.0)", fontsize=8.5, va="center")
+ax.set_xticks([0, 1]); ax.set_xticklabels(["PickCube", "PushCube"]); ax.set_ylabel("viewpoint ratio (bigger = blocks separate)"); ax.set_ylim(0, 16); ax.set_xlim(-.6, 1.9); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.12))
+fig_rob = img(fig, "80%")
 html = open("experiments/full_report_template.html").read()
 for k, v in {"FIG_MECH": fig_mech, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/FULL.html", "w").write(html); print("ok")

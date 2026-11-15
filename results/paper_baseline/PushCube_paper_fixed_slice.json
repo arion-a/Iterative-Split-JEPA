@@ -1,0 +1,15 @@
+{
+ "task": "PushCube",
+ "embedding_dim": 256,
+ "d_H": 128,
+ "view_response": {
+  "H(invariant)": 0.0886150449514389,
+  "L(variant)": 1.0701972246170044
+ },
+ "traj_response": {
+  "H(invariant)": 0.1517886072397232,
+  "L(variant)": 0.5356566905975342
+ },
+ "paper_ratio_view_L_over_H": 12.076924693808744,
+ "paper_ratio_traj_L_over_H": 3.5289650543506164
+}

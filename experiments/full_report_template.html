@@ -67,9 +67,13 @@ code,.eq{font-family:"DejaVu Sans Mono",monospace;background:#f1f5f9;border-radi
 {{FIG_PAIRS}}
 <p>Without the generator, pairs can be made by grouping points into clusters and pairing points inside a cluster. This works at rung 2 (about 17°) and fades by rungs 4–5 (48°, 57°). Even perfect clusters and exact pairs lose accuracy with depth in this cluster world, because same-cluster pairs still differ a little in the slower layers. Grouping all the points, instead of only the slow part, never works. Best case: the true number of clusters was given.</p>
 
-<h3>5.5 Simulated robot images</h3>
+<h3>5.5 Simulated robot images: the paper's method, and splitting on top of it</h3>
 {{FIG_ROB}}
-<p>On images from a simulated robot (frozen image features, two ways of training a small head), the viewpoint block never reaches the required ratio of 3, and rung 1 has no gap (1.0).</p>
+<p>Data: the paper's two tasks (PickCube, PushCube), 800 trajectories each in 100 groups of 8, two cameras, 30 frames per trajectory (48,000 images per task). The score is how much farther apart a pair of views of the same frame (base camera vs side camera) land in the "variant" half than in the "invariant" half.</p>
+<ul><li><b>Grey</b> – my earlier test: frozen image features and a small trained head, then iterated splitting. Blocks barely separate (about 1.1 to 2).</li>
+<li><b>Blue</b> – the paper's own training code on this data (a ResNet-50 fine-tuned so the first half of its output ignores the camera). The halves separate strongly: <b>9.3</b> and <b>12.1</b>, close to the paper's 8.4 and 14.0. So the paper's method is reproduced here, even with shorter training.</li>
+<li><b>Red</b> – iterated splitting applied to that trained embedding, with the paper's block sizes: only <b>3.3</b> and <b>2.9</b>, and the cut has no gap (1.0 – 1.2 at both rungs), although the camera can be read perfectly from the found block. So splitting on top of the paper-trained embedding does worse than the paper's own split.</li></ul>
+<p class="cap">One possible reason, not tested: the trained embedding is far from whitened (its covariance penalty is still large), so whitening before the eigen-split mixes the two halves that the training had kept apart. Conditions: 30 epochs instead of the paper's 200, one run, and a stand-in for the robot's actions (the end-effector movement between frames) because our data has none.</p>
 
 <h2 class="pb">6. Assumptions</h2>
 <ol>

@@ -344,3 +344,97 @@ class HierarchicalMixtureWorld(BlockWorld):
 
     def random_pairs(self, n):
         return self.sample(n), self.sample(n)
+
+
+@dataclass
+class NestedMixtureWorld(BlockWorld):
+    """L nested cluster levels (docs/EVIDENCE.md E58). Block j (1 = fastest) is a Gaussian cluster around a centre that depends on the labels of
+    levels j..L, plus jitter: z_j = centre_j[lab_L, ..., lab_j] + sigma * noise. `counts[j-1]` labels at level j. The slowest level's centres have
+    isotropic between-cluster spread (needs counts[-1] > block size). Dynamics: a label persists with the block's rho only if every slower label
+    persisted (else redrawn), jitters follow AR(1)."""
+
+    counts: list[int] = field(default_factory=list)
+    sigma: float = 0.3
+    tables: list = field(init=False, repr=False, default=None)
+
+    def __post_init__(self):
+        super().__post_init__()
+        L = self.n_blocks
+        assert len(self.counts) == L and self.counts[-1] > self.block_dims[-1]
+        g = _gen(self.seed + 5151)
+        self.tables = []
+        for j in range(1, L + 1):
+            shape = tuple(self.counts[i] for i in range(L - 1, j - 2, -1)) + (self.block_dims[j - 1],)   # (n_L, ..., n_j, d_j)
+            t = torch.randn(*shape, generator=g)
+            if j == L:
+                t = t - t.mean(0)
+                vals, vecs = torch.linalg.eigh(t.T @ t / len(t))
+                t = t @ (vecs * vals.rsqrt()) @ vecs.T
+            self.tables.append(t)
+
+    def _build(self, lab, jit):
+        L = self.n_blocks
+        parts = []
+        for j in range(1, L + 1):
+            idx = tuple(lab[i - 1] for i in range(L, j - 1, -1))
+            parts.append(self.tables[j - 1][idx] + self.sigma * jit[j - 1])
+        return torch.cat(parts, 1)
+
+    def _draw(self, n, fixed=None):
+        g = self._g
+        lab = [torch.randint(0, c, (n,), generator=g) for c in self.counts]
+        if fixed:
+            for j, v in fixed.items():
+                lab[j - 1] = v
+        jit = [torch.randn(n, d, generator=g) for d in self.block_dims]
+        return lab, jit
+
+    def sample_with_labels(self, n, fixed=None):
+        lab, jit = self._draw(n, fixed)
+        return self._build(lab, jit), lab
+
+    def sample(self, n):
+        return self.sample_with_labels(n)[0]
+
+    def _step(self, lab, jit):
+        g, L = self._g, self.n_blocks
+        n = len(lab[0])
+        new, same = [None] * L, torch.ones(n, dtype=torch.bool)
+        for j in range(L, 0, -1):                      # slowest first
+            keep = (torch.rand(n, generator=g) < self.rhos[j - 1]) & same
+            new[j - 1] = torch.where(keep, lab[j - 1], torch.randint(0, self.counts[j - 1], (n,), generator=g))
+            same = same & (new[j - 1] == lab[j - 1])
+        nj = [self.rhos[j] * jit[j] + math.sqrt(1 - self.rhos[j] ** 2) * torch.randn(jit[j].shape, generator=g) for j in range(L)]
+        return new, nj
+
+    def transition_pairs(self, n):
+        lab, jit = self._draw(n)
+        lab2, jit2 = self._step(lab, jit)
+        return self._build(lab, jit), self._build(lab2, jit2)
+
+    def cell(self, lab, k):
+        """Integer id of the cell of levels k+1..L (the cluster rung k's pairs must share)."""
+        c, mult = torch.zeros_like(lab[0]), 1
+        for j in range(self.n_blocks, k, -1):
+            c = c + lab[j - 1] * mult
+            mult *= self.counts[j - 1]
+        return c
+
+    def n_cells(self, k):
+        out = 1
+        for j in range(k + 1, self.n_blocks + 1):
+            out *= self.counts[j - 1]
+        return out
+
+    def correspondence_pairs(self, n, k, rank=None):
+        """Twins: levels above k identical (labels and jitter), levels up to k fresh."""
+        u, lab = self.sample_with_labels(n)
+        v, _ = self.sample_with_labels(n, fixed={j: lab[j - 1] for j in range(k + 1, self.n_blocks + 1)})
+        v[:, self.block_slice(k).stop:] = u[:, self.block_slice(k).stop:]
+        return u, v
+
+    def label_pairs(self, n, k):
+        """Perfect clustering: same cell of levels above k, everything else independent."""
+        u, lab = self.sample_with_labels(n)
+        v, _ = self.sample_with_labels(n, fixed={j: lab[j - 1] for j in range(k + 1, self.n_blocks + 1)})
+        return u, v

@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Iterated splitting: the components</title>
+<style>
+@page { size: Letter; margin: 14mm 12mm; }
+body{font:15px/1.55 "DejaVu Sans",sans-serif;color:#1e293b;margin:0}.w{max-width:900px;margin:auto;padding:8px}
+h1{font-size:27px;margin:0 0 4px}.sub{color:#64748b;margin:0 0 14px}
+h2,h3{break-after:avoid}h2{font-size:19px;margin:26px 0 6px;border-top:2px solid #e2e8f0;padding-top:12px}h3{font-size:16px;margin:18px 0 4px}
+img{display:block;margin:8px auto}.cap{color:#64748b;font-size:13px;margin:2px 0 10px}
+.box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 14px;margin:10px 0}.ok{background:#f0fdf4;border-color:#bbf7d0}.note{background:#f8fafc;border-color:#e2e8f0}
+.trunk{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:8px 14px;margin:8px 0}
+table{border-collapse:collapse;margin:8px 0;break-inside:avoid}td,th{border:1px solid #e2e8f0;padding:5px 10px;text-align:left;font-size:13.5px}th{background:#f1f5f9}
+.eq{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 14px;margin:8px 0;text-align:center}
+math{font-family:"DejaVu Serif","STIX Two Math",serif;font-size:1.12em}.eq math{font-size:1.2em}
+.pb{page-break-before:always}ol li,ul li{margin:5px 0}
+.tag{display:inline-block;font-size:11.5px;font-weight:bold;border-radius:9px;padding:1px 9px;margin-left:6px;vertical-align:middle}
+.paper{background:#f4c27a}.ours{background:#8ec5e8}.new{background:#a8dba8}.gen{background:#ddd}
+</style></head><body><div class="w">
+<h1>Iterated splitting: the components</h1>
+<p class="sub">Every part used in the experiments, the critical "trunk" each one stands on, the equations, and a picture wherever a step is not obvious.
+Tags show where a part comes from: <span class="tag paper">paper</span> the SplitJEPA paper's own method or code, <span class="tag ours">ours</span> our iterated-splitting mechanism, <span class="tag new">new</span> added in the latest runs, <span class="tag gen">setup</span> data or tooling.</p>
+
+<div class="box ok"><b>The whole thing in one paragraph.</b> A <i>world</i> produces points from hidden layers that change at different speeds (A). <i>Matched pairs</i> that agree on all slower layers tell us which layer to look at (B). The <i>splitting engine</i> takes the pair differences, finds the few directions where they spread, and cuts those off as that layer's block; then it repeats inside what is left (C). An <i>encoder</i> turns raw images into the points when the data are pictures (D). The hidden numbers are used only to <i>score</i> the result (E).</div>
+
+<h2>A. The worlds that make the data</h2>
+
+<h3>A1. Layers of hidden numbers <span class="tag gen">setup</span></h3>
+<p>A sample is several <b>layers</b> of 4 numbers. Each number follows a first-order random walk with its own speed:</p>
+<div class="eq"><math display="block"><mi>z</mi><mo>←</mo><mi>ρ</mi><mo>·</mo><mi>z</mi><mo>+</mo><msqrt><mrow><mn>1</mn><mo>−</mo><msup><mi>ρ</mi><mn>2</mn></msup></mrow></msqrt><mo>·</mo><mi>ε</mi></math></div>
+<div class="trunk"><b>Trunk:</b> the factor √(1−ρ²) keeps every number at spread 1 whatever its speed, so layers differ <i>only</i> in how fast they change, never in size. Small ρ = fast layer, ρ near 1 = slow layer.</div>
+{{F_SPEED}}
+
+<h3>A2. The bend: turning hidden numbers into points <span class="tag gen">setup</span></h3>
+<p>Writing the numbers as a left half <i>L</i> and a right half <i>R</i>, four alternating steps add a bent copy of one half to the other:</p>
+<div class="eq"><math display="block"><mi>R</mi><mo>←</mo><mi>R</mi><mo>+</mo><mi>tanh</mi><mo stretchy="false">(</mo><mi>L</mi><msub><mi>W</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mspace width="2em"/><mi>L</mi><mo>←</mo><mi>L</mi><mo>+</mo><mi>tanh</mi><mo stretchy="false">(</mo><mi>R</mi><msub><mi>W</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mspace width="2em"/><mtext>then the same with</mtext><mspace width="1em"/><msub><mi>W</mi><mn>3</mn></msub><mo>,</mo><msub><mi>W</mi><mn>4</mn></msub></math></div>
+<div class="trunk"><b>Trunk:</b> each step only <i>adds</i> something to one half, so it can be undone exactly: no information is lost, the layers are bent but never merged. The size of the <i>W</i> tables is the <b>bend strength</b> (0.5 = mild; the bend sweep goes up to 4).</div>
+{{F_BEND}}
+<p class="cap">A square grid of hidden numbers (2 numbers, strength 1.3 for visibility) and the same grid after the four steps.</p>
+
+<h3>A3. Whitening <span class="tag ours">ours</span></h3>
+<div class="eq"><math display="block"><mi>r</mi><mo>=</mo><msup><mi>C</mi><mrow><mo>−</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup><mo stretchy="false">(</mo><mi>e</mi><mo>−</mo><mi>μ</mi><mo stretchy="false">)</mo><mspace width="2em"/><mi>C</mi><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><mo stretchy="false">(</mo><msub><mi>e</mi><mi>i</mi></msub><mo>−</mo><mi>μ</mi><mo stretchy="false">)</mo><msup><mrow><mo stretchy="false">(</mo><msub><mi>e</mi><mi>i</mi></msub><mo>−</mo><mi>μ</mi><mo stretchy="false">)</mo></mrow><mi>T</mi></msup></math></div>
+<div class="trunk"><b>Trunk:</b> after whitening the cloud is equally spread in every direction, so a direction can only stand out in the pair differences because a <i>layer changed there</i>, not because the data happened to be stretched that way. (On robot embeddings, whitening can mix halves that were already separated; the later runs also cut without it.)</div>
+{{F_WHITE}}
+
+<h3>A4. Robot data: groups, trajectories, frames, cameras <span class="tag gen">setup</span></h3>
+<p>ManiSkill3 (PickCube and PushCube). One <b>group</b> is one layout (same cube and goal) run 8 times with perturbed motions; each run is a <b>trajectory</b> of 30 frames seen by 2 <b>cameras</b>: 100 groups × 8 × 30 × 2 = 48,000 images per task. The slowest thing is the layout, then which trajectory, then progress along it, and the camera is the fastest nuisance. Training uses 6 of the 8 trajectories per group; scoring uses the other 2.</p>
+<div class="trunk"><b>Trunk:</b> the nesting is <i>layout &gt; trajectory &gt; progress &gt; camera</i>. The data supply matched pairs for exactly these three splits, which is why the robot ladder stops at rung 3.</div>
+
+<h3>A5. Re-rendered scene factors <span class="tag new">new</span></h3>
+<p>One PickCube scene is rendered again and again with nine nested factors set directly in the simulator (fast to slow): gripper opening (1 number), arm pose (2), cube yaw (1), cube position (2), cube colour (3), light tint (2), brightness (1), camera distance and elevation (2), camera azimuth (1). 96 × 96 images, one camera.</p>
+<div class="trunk"><b>Trunk:</b> the simulator lets us change <i>one named factor and nothing else</i>, so the pairs are exact and every recovered block can be named.</div>
+
+<h2 class="pb">B. Matched pairs: how a layer is chosen</h2>
+<h3>B1. The pair rule <span class="tag ours">ours</span></h3>
+<p>For rung <i>k</i>, take a sample <i>u</i> and make <i>v</i> by keeping every layer slower than <i>k</i> and drawing <b>fresh values for layers 1 … k</b>:</p>
+<div class="eq"><math display="block"><msub><mi>v</mi><mi>j</mi></msub><mo>=</mo><mo>{</mo><mtable columnalign="left"><mtr><mtd><msub><mi>u</mi><mi>j</mi></msub></mtd><mtd><mtext>&#160;&#160;if&#160;</mtext><mi>j</mi><mo>&gt;</mo><mi>k</mi><mtext>&#160;(slower layers agree)</mtext></mtd></mtr><mtr><mtd><mtext>a fresh draw</mtext></mtd><mtd><mtext>&#160;&#160;if&#160;</mtext><mi>j</mi><mo>≤</mo><mi>k</mi><mtext>&#160;(layers already cut, and the layer asked about)</mtext></mtd></mtr></mtable></math></div>
+<div class="trunk"><b>Trunk:</b> the pair is what <i>defines</i> a layer. The speeds play no role: with every layer at the same speed the pairs still pick them out (this is what a method that only compares adjacent frames cannot do).</div>
+{{F_SHARE}}
+<p class="cap">Left: the synthetic ladder (7 layers, 6 rungs). Right: the re-rendered scene factors (9 factors, 8 rungs). Red = redrawn, blue = shared. The same rule, applied to named factors.</p>
+
+<h3>B2. Pairs in the robot data <span class="tag ours">ours</span></h3>
+<table><tr><th>Rung</th><th>Pair</th><th>What differs</th></tr>
+<tr><td>1</td><td>same frame, two cameras</td><td>camera</td></tr>
+<tr><td>2</td><td>same layout, same progress, same camera, different trajectory</td><td>trajectory</td></tr>
+<tr><td>3</td><td>same layout, same trajectory, same camera, two time steps at least 3 apart</td><td>progress</td></tr></table>
+
+<h3>B3. Pairs built from the data instead of supplied <span class="tag ours">ours</span></h3>
+<p>When no generator supplies the pairs, points are grouped by <b>k-means</b> and two points inside the same cluster are paired (each point used once). The clusters stand in for "agrees on the slower layers".</p>
+<div class="trunk"><b>Trunk:</b> the quality of the clustering is the ceiling. Clusters mix points that differ a little in the slower layers, so the error grows with depth even though the splitting itself is the same.</div>
+
+<h2 class="pb">C. The splitting engine <span class="tag ours">ours</span></h2>
+<h3>C1. Pair difference and its spread</h3>
+<p>For each pair, <i>D</i> = <i>r</i>(<i>u</i>) − <i>r</i>(<i>v</i>) (whitened points). The spread of the differences is the matrix</p>
+<div class="eq"><math display="block"><mi>M</mi><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>D</mi><mi>i</mi></msub><msup><msub><mi>D</mi><mi>i</mi></msub><mi>T</mi></msup></math></div>
+<p><b>Why it isolates a layer.</b> In the ideal case whitening turns the hidden numbers into an orthogonal mixture <i>Q</i> of themselves, and the difference of two independent unit-spread numbers has spread 2. So a pair for rung <i>k</i> gives</p>
+<div class="eq"><math display="block"><mi>D</mi><mo>=</mo><mi>Q</mi><mo stretchy="false">(</mo><msub><mi>δ</mi><mn>1</mn></msub><mo>,</mo><mo>…</mo><mo>,</mo><msub><mi>δ</mi><mi>k</mi></msub><mo>,</mo><mn>0</mn><mo>,</mo><mo>…</mo><mo>,</mo><mn>0</mn><mo stretchy="false">)</mo><mspace width="2em"/><mi>M</mi><mo>=</mo><mi>Q</mi><mo>·</mo><mi>diag</mi><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo><mo>…</mo><mo>,</mo><mn>2</mn><mo>,</mo><mn>0</mn><mo>,</mo><mo>…</mo><mo>,</mo><mn>0</mn><mo stretchy="false">)</mo><msup><mi>Q</mi><mi>T</mi></msup></math></div>
+<div class="trunk"><b>Trunk:</b> eigenvalues are 2 where the pair differs and 0 where it agrees. That clean two-level pattern is what the splitting reads; the bend and finite samples only blur it.</div>
+{{F_DIFF}}
+
+<h3>C2. Eigen-split: the closed-form answer to the paper's invariance problem</h3>
+<div class="eq"><math display="block"><mi>M</mi><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><msub><mi>λ</mi><mi>j</mi></msub><msub><mi>v</mi><mi>j</mi></msub><msup><msub><mi>v</mi><mi>j</mi></msub><mi>T</mi></msup><mspace width="2em"/><mtext>variant block&#160;</mtext><mi>V</mi><mo>=</mo><mo stretchy="false">[</mo><msub><mi>v</mi><mn>1</mn></msub><mo>…</mo><msub><mi>v</mi><mi>d</mi></msub><mo stretchy="false">]</mo><mspace width="1em"/><mtext>left-over&#160;</mtext><mi>H</mi><mo>=</mo><mo stretchy="false">[</mo><msub><mi>v</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>…</mo><mo stretchy="false">]</mo></math></div>
+<p>Asking for the directions <i>Q</i> that change <b>least</b> across pairs is the paper's invariance objective:</p>
+<div class="eq"><math display="block"><munder><mi>min</mi><mrow><msup><mi>Q</mi><mi>T</mi></msup><mi>Q</mi><mo>=</mo><mi>I</mi></mrow></munder><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msup><mrow><mo stretchy="false">‖</mo><msup><mi>Q</mi><mi>T</mi></msup><msub><mi>D</mi><mi>i</mi></msub><mo stretchy="false">‖</mo></mrow><mn>2</mn></msup><mo>=</mo><munder><mo>∑</mo><mrow><mi>j</mi><mo>∈</mo><mtext>smallest</mtext></mrow></munder><msub><mi>λ</mi><mi>j</mi></msub></math></div>
+<div class="trunk"><b>Trunk:</b> that minimum has an exact solution, the eigenvectors of <i>M</i> with the smallest eigenvalues. The paper's synthetic code solves it once this way; its robot code approximates it by gradient descent during training. Here the exact solution is used, rung after rung.</div>
+
+<h3>C3. How big is the block, and how sharp is the cut</h3>
+<div class="eq"><math display="block"><mtext>gap</mtext><mo>=</mo><mfrac><msub><mi>λ</mi><mi>d</mi></msub><msub><mi>λ</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msub></mfrac><mspace width="3em"/><mi>d</mi><mo>=</mo><mtext>largest&#160;</mtext><mi>d</mi><mtext>&#160;with&#160;</mtext><msub><mi>λ</mi><mi>d</mi></msub><mo>−</mo><msub><mi>λ</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>≥</mo><mn>0.1</mn><mo>·</mo><msub><mi>λ</mi><mn>1</mn></msub></math></div>
+<div class="trunk"><b>Trunk:</b> the gap is the ladder's own confidence meter, with no hidden numbers needed: near 1 means no cut exists; large means the layer sits in a clean block. The synthetic runs give <i>d</i> = 4 directly; robot and scene runs use the absolute-gap rule (right-hand formula, with the largest-ratio fallback flagged).</div>
+{{F_EIG}}
+<p class="cap">Real eigenvalues from the 6-rung world: the 4 directions of the layer stand far above the rest, at rung 1 and again at rung 6.</p>
+
+<h3>C4. Nesting and the ladder</h3>
+<p>Rung <i>k</i> works <b>inside</b> the directions left by rung <i>k</i>−1, written as a basis <i>H</i><sub>k−1</sub>. The spread is measured there, and the answer is mapped back:</p>
+<div class="eq"><math display="block"><msub><mi>M</mi><mi>k</mi></msub><mo>=</mo><msubsup><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow><mi>T</mi></msubsup><mi>M</mi><msub><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub><mspace width="2em"/><msub><mi>M</mi><mi>k</mi></msub><mo>=</mo><mi>U</mi><mi>Λ</mi><msup><mi>U</mi><mi>T</mi></msup><mspace width="2em"/><msub><mi>V</mi><mi>k</mi></msub><mo>=</mo><msub><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>U</mi><mo stretchy="false">[</mo><mo>:</mo><mo>,</mo><mo>:</mo><mi>d</mi><mo stretchy="false">]</mo><mspace width="2em"/><msub><mi>H</mi><mi>k</mi></msub><mo>=</mo><msub><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub><mi>U</mi><mo stretchy="false">[</mo><mo>:</mo><mo>,</mo><mi>d</mi><mo>:</mo><mo stretchy="false">]</mo></math></div>
+<div class="trunk"><b>Trunk:</b> because each block is taken inside the previous left-over, blocks cannot overlap and the dimensions simply add up: each rung removes <i>d</i> directions, and the last left-over is the slowest layer.</div>
+{{F_LADDER}}
+
+<h2 class="pb">D. Encoders: from raw data to the points</h2>
+<h3>D1. No encoder (synthetic worlds) <span class="tag ours">ours</span></h3>
+<p>The bent points are simply whitened (A3). This isolates the splitting: any error is the engine's or the bend's.</p>
+<h3>D2. A trained encoder with the paper's objective <span class="tag paper">paper</span></h3>
+<p>For 4- and 5-layer synthetic tests an invertible coupling encoder is trained with the paper's own synthetic objective: pull the embeddings of neighbouring frames together, and a regulariser (SIGReg) keeps the embedding spread like a standard Gaussian so it cannot collapse. The trained embedding is then whitened and split exactly as above.
+<div class="trunk"><b>Trunk:</b> the encoder must <i>keep</i> the information (an invertible one cannot lose it) and the objective must stop collapse; the splitting needs nothing more.</div></p>
+<h3>D3. The paper's robot encoder <span class="tag paper">paper</span></h3>
+<p>A ResNet-50 (ImageNet start) with an invariant head (first <i>d</i><sub>H</sub> numbers) and a variant head, trained 200 epochs (batch 32, learning rate 3e-4) with four loss terms:</p>
+<div class="eq"><math display="block"><mi>L</mi><mo>=</mo><msub><mi>L</mi><mtext>pred</mtext></msub><mo>+</mo><msub><mi>L</mi><mtext>inv</mtext></msub><mo>+</mo><msub><mi>L</mi><mtext>var</mtext></msub><mo>+</mo><mn>0.04</mn><mo>·</mo><msub><mi>L</mi><mtext>cov</mtext></msub></math></div>
+<div class="eq"><math display="block"><msub><mi>L</mi><mtext>var</mtext></msub><mo>=</mo><munder><mo>∑</mo><mi>j</mi></munder><mi>max</mi><mo stretchy="false">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>std</mi><mo stretchy="false">(</mo><msub><mi>h</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mspace width="2em"/><msub><mi>L</mi><mtext>cov</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mi>d</mi></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>≠</mo><mi>j</mi></mrow></munder><msubsup><mi>C</mi><mrow><mi>i</mi><mi>j</mi></mrow><mn>2</mn></msubsup></math></div>
+<p><i>L</i><sub>inv</sub> makes the invariant half agree for the same frame seen by the two cameras; <i>L</i><sub>pred</sub> predicts the next frame's embedding from this frame and the action; the last two stop collapse (every number spread out, numbers uncorrelated). Term names are as printed in the training log; the predictor's internal details are the paper's code, which ran unchanged.</p>
+<div class="trunk"><b>Trunk:</b> the invariance term is the same quantity as the minimization in C2; training solves it by gradient descent, the eigen-split solves it in closed form on the finished embedding. This is why the two can be compared directly.</div>
+<h3>D4. The scene-factor autoencoder <span class="tag new">new</span></h3>
+<div class="eq"><math display="block"><mi>L</mi><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mi>i</mi></munder><msup><mrow><mo stretchy="false">‖</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>dec</mi><mo stretchy="false">(</mo><mi>enc</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo stretchy="false">‖</mo></mrow><mn>2</mn></msup></math></div>
+<p>Trained for 25 minutes on CPU, no labels, no pairs; 48 numbers per image. <b>Trunk:</b> an autoencoder is forced to keep whatever it needs to redraw the picture, so factors that are large in the image survive; very small ones (gripper, arm pose, cube yaw) do not, which is where the splitting finds no cut.</p>
+{{F_ARCH}}
+
+<h2 class="pb">E. Scoring: how a result is judged</h2>
+<h3>E1. Angle to the true block <span class="tag ours">ours</span></h3>
+<p>The hidden numbers are used <i>only here</i>. A ridge fit maps hidden numbers to the whitened points; the columns for one layer span the "true block". The largest principal angle θ between the found block <i>V</i> and the true block <i>T</i>:</p>
+<div class="eq"><math display="block"><mi>cos</mi><msub><mi>θ</mi><mi>i</mi></msub><mo>=</mo><msub><mi>σ</mi><mi>i</mi></msub><mo stretchy="false">(</mo><msubsup><mi>Q</mi><mi>V</mi><mi>T</mi></msubsup><msub><mi>Q</mi><mi>T</mi></msub><mo stretchy="false">)</mo></math></div>
+<p>(<i>Q</i> = an orthonormal basis, σ = singular values.) 0° is perfect; unrelated directions sit near 80°.</p>
+{{F_ANGLE}}
+<h3>E2. Readouts and the reading matrix <span class="tag new">new</span></h3>
+<p>When the layers are named factors, how well a factor can be read from a block is the held-out ridge <i>R</i>²:</p>
+<div class="eq"><math display="block"><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>−</mo><mfrac><mrow><mo>∑</mo><msup><mrow><mo stretchy="false">(</mo><mi>y</mi><mo>−</mo><mover><mi>y</mi><mo>^</mo></mover><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mrow><mrow><mo>∑</mo><msup><mrow><mo stretchy="false">(</mo><mi>y</mi><mo>−</mo><mover><mi>y</mi><mo>¯</mo></mover><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></mrow></mfrac></math></div>
+<p>Rows = rungs, columns = factors: a good ladder is a diagonal. A factor counts as <b>retained</b> when the whole embedding reads it at <i>R</i>² ≥ 0.5; a factor the encoder dropped cannot be expected from any block.</p>
+{{F_READ}}
+<h3>E3. The camera ratio (robot) <span class="tag paper">paper</span></h3>
+<p>For pairs of views of the same frame, how far apart they land in a block, divided by the same for random frames, then variant over invariant:</p>
+<div class="eq"><math display="block"><mtext>resp</mtext><mo stretchy="false">(</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><msqrt><mrow><mtext>mean&#160;</mtext><msup><mrow><mo stretchy="false">‖</mo><mo stretchy="false">(</mo><mi>u</mi><mo>−</mo><mi>v</mi><mo stretchy="false">)</mo><mi>B</mi><mo stretchy="false">‖</mo></mrow><mn>2</mn></msup></mrow></msqrt><mrow><msqrt><mn>2</mn></msqrt><mo>·</mo><mtext>rms spread of the points in&#160;</mtext><mi>B</mi></mrow></mfrac><mspace width="2em"/><mtext>ratio</mtext><mo>=</mo><mfrac><mrow><mtext>resp</mtext><mo stretchy="false">(</mo><mtext>variant half</mtext><mo stretchy="false">)</mo></mrow><mrow><mtext>resp</mtext><mo stretchy="false">(</mo><mtext>invariant half</mtext><mo stretchy="false">)</mo></mrow></mfrac></math></div>
+<div class="trunk"><b>Trunk:</b> the same ratio scores the paper's fixed halves and our eigen-split blocks, on the same held-out trajectories, so they are directly comparable.</div>
+<h3>E4. Controls <span class="tag ours">ours</span></h3>
+<ul><li><b>Shuffled pairs:</b> keep the pair rows but permute the partners. The gap must fall to about 1 (it does, 1.0 – 1.2).</li>
+<li><b>Random block of the same size:</b> a block of random directions reads a factor at the level chance alone allows; a found block must beat it.</li></ul>
+
+<h2 class="pb">F. Which component is used where</h2>
+<table><tr><th>Component</th><th>Synthetic ladder (6 / 8 / 10)</th><th>Bend sweep</th><th>Pairs from data</th><th>Robot: paper's method</th><th>Robot: our splitting</th><th>Scene factors</th></tr>
+<tr><td>A1 layers · A2 bend</td><td>✓</td><td>✓ (strength 0.5 – 4)</td><td>✓</td><td></td><td></td><td></td></tr>
+<tr><td>A3 whitening</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>✓ (and without it)</td><td>✓</td></tr>
+<tr><td>A4 robot data</td><td></td><td></td><td></td><td>✓</td><td>✓</td><td></td></tr>
+<tr><td>A5 scene factors</td><td></td><td></td><td></td><td></td><td></td><td>✓</td></tr>
+<tr><td>B1 exact pairs</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td>✓</td></tr>
+<tr><td>B2 robot pairs</td><td></td><td></td><td></td><td></td><td>✓</td><td></td></tr>
+<tr><td>B3 cluster pairs</td><td></td><td></td><td>✓</td><td></td><td></td><td></td></tr>
+<tr><td>C1–C4 engine</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>✓</td><td>✓</td></tr>
+<tr><td>D1 no encoder</td><td>✓</td><td></td><td>✓</td><td></td><td></td><td></td></tr>
+<tr><td>D2 paper objective, coupling encoder</td><td>(4 – 5 layers)</td><td>(strength 1 repair)</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>D3 paper's robot encoder</td><td></td><td></td><td></td><td>✓</td><td>✓</td><td></td></tr>
+<tr><td>D4 autoencoder</td><td></td><td></td><td></td><td></td><td></td><td>✓</td></tr>
+<tr><td>E1 angle · E4 controls</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>(controls)</td><td>(controls)</td></tr>
+<tr><td>E2 reading matrix</td><td></td><td></td><td></td><td></td><td>✓</td><td>✓</td></tr>
+<tr><td>E3 camera ratio</td><td></td><td></td><td></td><td>✓</td><td>✓</td><td></td></tr></table>
+
+<div class="box note"><b>What the latest runs added compared with the earlier ones:</b> the paper's full 200-epoch encoder training on our robot data (D3), the eigen-split taken without whitening and with the paper's halves as rung 1 (C, A3), the camera ratio used as a common score (E3), the third robot rung (B2), the scene-factor worlds with their autoencoder and reading matrix (A5, D4, E2), and the synthetic ladder carried to 10 rungs.</div>
+</div></body></html>

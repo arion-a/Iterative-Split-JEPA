@@ -1,0 +1,24 @@
+{
+ "task": "PickCube",
+ "paper_halves": {
+  "paper_def_ratio_mean_of_norms": 5.0791763205346045,
+  "paper_def_ratio_rms": 3.6974832473709935,
+  "our_resp_ratio": 3.6898790249191036,
+  "D_L": 1.2376029529482426,
+  "D_H": 0.24366213630834924
+ },
+ "A_uncentered": {
+  "paper_def_ratio_mean_of_norms": 6.875567600228186,
+  "paper_def_ratio_rms": 5.212324090586879,
+  "our_resp_ratio": 5.054057609570231,
+  "D_L": 1.373746318588726,
+  "D_H": 0.19980115075054083
+ },
+ "A_centered": {
+  "paper_def_ratio_mean_of_norms": 6.090068909404246,
+  "paper_def_ratio_rms": 5.015743230269842,
+  "our_resp_ratio": 4.679440973324393,
+  "D_L": 1.408994566963743,
+  "D_H": 0.23135937998796408
+ }
+}

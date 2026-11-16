@@ -1,0 +1,24 @@
+{
+ "task": "PushCube",
+ "paper_halves": {
+  "paper_def_ratio_mean_of_norms": 5.945871430378281,
+  "paper_def_ratio_rms": 4.496453081114533,
+  "our_resp_ratio": 4.492542735958779,
+  "D_L": 1.2785778107399897,
+  "D_H": 0.21503623576647798
+ },
+ "A_uncentered": {
+  "paper_def_ratio_mean_of_norms": 9.257450107148912,
+  "paper_def_ratio_rms": 6.3419949694805675,
+  "our_resp_ratio": 7.340976516539114,
+  "D_L": 1.105483004732445,
+  "D_H": 0.11941549691731573
+ },
+ "A_centered": {
+  "paper_def_ratio_mean_of_norms": 9.237780426334947,
+  "paper_def_ratio_rms": 6.415467548329416,
+  "our_resp_ratio": 7.29917954601599,
+  "D_L": 1.1313080507793467,
+  "D_H": 0.12246535407512264
+ }
+}

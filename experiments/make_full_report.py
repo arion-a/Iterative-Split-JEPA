@@ -108,6 +108,19 @@ for i, (lab, v, col) in enumerate(rows_r):
     for j, y in enumerate(v): ax.text(j + (i - 1) * w, y + .15, f"{y:.1f}", ha="center", fontsize=9)
 ax.set_xticks([0, 1]); ax.set_xticklabels(["PickCube", "PushCube"]); ax.set_ylabel("viewpoint ratio (bigger = blocks separate)"); ax.set_ylim(0, 16); ax.legend(frameon=False, fontsize=8.5, ncol=3, loc="upper center", bbox_to_anchor=(.5, -.12))
 fig_rob = img(fig, "80%")
+
+# ---------- deeper ladders (E61) and nameable factors (E62)
+dl = json.load(open("results/deep_ladder.json")); sd = json.load(open("results/simple_depth.json"))
+sets = [("6 rungs", [(r["angle"], r["gap"]) for r in sd], GREY), ("8 rungs", [(r["angle"], r["gap"]) for r in dl if r["rungs"] == 8], BLUE), ("10 rungs", [(r["angle"], r["gap"]) for r in dl if r["rungs"] == 10], RED)]
+fig, axs = plt.subplots(1, 2, figsize=(10, 3.4))
+for lab, runs, col in sets:
+    A = np.array([r[0] for r in runs]); G = np.array([r[1] for r in runs]); x = np.arange(1, A.shape[1] + 1)
+    axs[0].plot(x, A.mean(0), "-o", color=col, ms=4, label=lab); axs[0].fill_between(x, A.min(0), A.max(0), color=col, alpha=.15)
+    axs[1].plot(x, G.mean(0), "-o", color=col, ms=4, label=lab)
+axs[0].set_xlabel("rung"); axs[0].set_ylabel("angle to true layer (degrees)"); axs[0].set_title("Error grows slowly and levels off", fontsize=10.5); axs[0].set_ylim(0, 5); axs[0].legend(frameon=False)
+axs[1].set_xlabel("rung"); axs[1].set_ylabel("gap"); axs[1].set_yscale("log"); axs[1].set_ylim(10, 300); axs[1].set_title("Every cut stays sharp", fontsize=10.5)
+fig_deep = img(fig, "88%")
+fig_e62 = '<img src="data:image/png;base64,' + base64.b64encode(open("docs/img/e62_ladder.png", "rb").read()).decode() + '" style="width:100%">'
 html = open("experiments/full_report_template.html").read()
-for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob}.items(): html = html.replace("{{" + k + "}}", v)
+for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob, "FIG_DEEP": fig_deep, "FIG_E62": fig_e62}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/FULL.html", "w").write(html); print("ok")

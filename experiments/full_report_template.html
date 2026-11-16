@@ -17,8 +17,10 @@ math{font-family:"DejaVu Serif","STIX Two Math",serif;font-size:1.12em}.eq math{
 <div class="box ok"><b>Result in brief</b>
 <ul>
 <li>Splitting a point cloud into one block per layer, fastest to slowest, using only matched pairs, <b>works over 6 rungs</b>: every block is found to within 0.3 – 2.2° of the true layer, with sharp cuts (gap 70 – 140).</li>
+<li>The ladder <b>carries on to 10 rungs</b> (11 layers): every rung stays under 3° with gaps of 72 or more, and the error levels off instead of running away.</li>
 <li>It is the <b>pairs, not the speeds</b>, that define the layers: with all layers moving at the same speed the method still finds each one, while a split without pairs does not.</li>
 <li>The method holds up under a <b>moderate bend</b> of the data (tested up to strength 4), with blocks degrading gradually as the bend grows.</li>
+<li>On re-rendered simulator scenes where each rung removes one nameable factor, the blocks come out in order: <b>cube position, cube colour, light tint, brightness, camera distance and elevation</b>, with camera azimuth left in the core; moving along a block changes only that factor in the image.</li>
 <li>On simulated robot images the paper's trained encoder separates the camera variation strongly, and iterated splitting reads the camera out of its embedding exactly (accuracy 1.00).</li></ul></div>
 
 <h2 style="border-top:none">1. Setup</h2>
@@ -70,24 +72,37 @@ The <i>d</i> = 4 directions with the largest <i>λ</i> form the block <i>V</i> o
 <table><tr><th>Rung</th><th>Angle, median</th><th>Angle, range</th><th>Gap, median</th></tr>{{ROWS6}}</table>
 <div class="box ok">Every one of the 6 rungs finds its layer: angles 0.3 – 2.2° and gaps above 70. The error grows slowly with depth, from 0.4° at rung 1 to about 2° at rung 6. With a trained encoder on 4 and 5 layers (20 runs) the angles are 0.2 – 1.9°.</div>
 
-<h3 class="pb">3.3 How far the bend can go</h3>
+<h3 class="pb">3.3 Deeper: 8 and 10 rungs</h3>
+<p>The same experiment with 9 and 11 layers of 4 numbers (layer speeds spread so neighbours stay distinct), exact pairs, mild bend, 5 runs at each depth.</p>
+{{FIG_DEEP}}
+<div class="box ok">Every rung of every run is under 3° with a gap of 72 or more (8 rungs: largest angle 2.8°; 10 rungs: 2.7°). The last rung is 0.4° to 2.4° off, so ten cuts in a row cost little more than six.</div>
+
+<h3>3.4 How far the bend can go</h3>
 {{FIG_BEND}}
 <p>At bend strength 0.5 and 1 the trained encoder gives blocks within a few degrees (5 of 5 runs at strength 1). At strength 2 and 4 the blocks stay well away from unrelated directions (3 – 15°, gaps 2 – 6) and degrade gradually. Without encoder training the cut already fails at strength 1. (At these strengths every rung is applied; a safeguard that skips weak rungs was switched off because it removed the benefit.)</p>
 
-<h3>3.4 The pairs define the layers</h3>
+<h3>3.5 The pairs define the layers</h3>
 {{FIG_EQ}}
 <p>With all layers changing at the same speed, iterated splitting still finds each layer (under {{LADMAX}}°). A single split that only looks at adjacent-frame differences cannot ({{SING}}). Which layer is found is decided by the pairs.</p>
 
-<h3 class="pb">3.5 Pairs built from the data</h3>
+<h3 class="pb">3.6 Pairs built from the data</h3>
 {{FIG_PAIRS}}
 <p>When the generator does not supply the pairs, grouping points into clusters and pairing points inside a cluster recovers the layers at rung 2 (about 17°), well below the level of unrelated directions. In this world the accuracy declines with depth for every kind of pair, including exact ones, because the cluster layers differ slightly in the slower layers.</p>
 
-<h3>3.6 Simulated robot images</h3>
+<h3>3.7 Simulated robot images</h3>
 {{FIG_ROB}}
 <p>Data: the two tasks PickCube and PushCube, 800 trajectories each, two cameras (48,000 images per task). The score is how much farther apart a pair of views of the same frame (base vs side camera) lands in the "variant" half than in the "invariant" half.</p>
 <ul><li>The paper's own training (a fine-tuned ResNet-50) separates the camera variation strongly into one half: <b>9.3</b> (PickCube) and <b>12.1</b> (PushCube), in line with the paper's reported 8.4 and 14.0 (30 training epochs here). Trained for the paper's full 200 epochs, the paper's own halves score 3.7 (PickCube) and 4.5 (PushCube). On those embeddings, the eigen-split of the camera-pair differences, taken directly in the raw embedding and fit on training trajectories, scores <b>5.1</b> and <b>7.3</b> on held-out trajectories, higher than the paper's own halves on both tasks.</li>
 <li>Iterated splitting applied to that embedding finds the camera exactly: the found block predicts which camera took a frame with accuracy 1.00, against 0.5 (chance) from the rest. Its halves separate with ratios 3.3 and 2.9, and the cut is not sharp (gap about 1.1); the paper's own halves separate more strongly.</li>
 <li>Frozen image features with a small head, before any fine-tuning, give 1 – 2.</li></ul>
+
+<h3>3.8 Nameable factors: what each block carries</h3>
+<p>To see what the blocks mean, one simulator scene (PickCube, one camera, 96 × 96 images) was re-rendered with nine nested factors: gripper opening, arm pose, cube yaw, cube position, cube colour, light tint, brightness, camera distance and elevation, camera azimuth. A pair for rung <i>k</i> shares the slowest factors and redraws the <i>k</i> fastest; 6,000 pairs per rung. A small autoencoder, trained without labels, gives the points.</p>
+{{FIG_E62}}
+<p>Left: how well each factor can be read from each rung's block (held-out R², 1 = perfectly). Right: what the image does as you move along a block's main direction.</p>
+<ul><li>Five rungs recover their own factor in order: <b>cube position 0.75, cube colour 0.59, light tint 0.94, brightness 0.97, camera distance and elevation 0.89</b>, with sharp cuts (gaps 2.9 – 49). The left-over core carries the slowest factor, camera azimuth (0.94).</li>
+<li>Moving along each block changes only its factor: the cube slides, recolours, the light shifts colour, brightens, or the camera moves back.</li>
+<li>The three smallest factors in the image (gripper, arm pose, cube yaw) are not kept by this 25-minute autoencoder, and their rungs find no sharp cut.</li></ul>
 
 <h2>4. Assumptions</h2>
 <ol>
@@ -97,5 +112,5 @@ The <i>d</i> = 4 directions with the largest <i>λ</i> form the block <i>V</i> o
 <li>Each layer's change lives in its own directions, which the bend increasingly blurs.</li>
 <li>30,000 samples are used to whiten and 30,000 pairs per rung.</li></ol>
 
-<div class="box note"><b>Scope.</b> The results are on synthetic worlds generated for this study and one simulated-robot test. Iterated splitting is shown through 6 rungs with generator-supplied pairs; with pairs built from the data it is shown to rung 2 – 3.</div>
+<div class="box note"><b>Scope.</b> The results are on synthetic worlds generated for this study and one simulated-robot test. Iterated splitting is shown through 10 rungs with generator-supplied pairs and through five nameable image factors with simulator-supplied pairs; with pairs built from the data it is shown to rung 2 – 3.</div>
 </div></body></html>

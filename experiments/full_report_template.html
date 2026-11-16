@@ -38,6 +38,16 @@ math{font-family:"DejaVu Serif","STIX Two Math",serif;font-size:1.12em}.eq math{
 {{FIG_BENDVIS}}
 <p class="cap">Left: the hidden numbers on a grid. Middle: the bend mixes them. Right: whitening evens out the spread; the layers are still there, rotated and bent.</p>
 
+<h3 class="pb">What a layer is in each experiment</h3>
+<p>A <b>layer</b> is a group of hidden quantities that change together, at one speed. Layers are ordered from fastest to slowest, and rung <i>k</i> cuts off layer <i>k</i>; the slowest layer is what is left at the end. The pairs, not any speed, decide what counts as a layer.</p>
+{{FIG_LAYERS}}
+<table><tr><th>Experiment</th><th>Layers, fastest to slowest</th><th>What they mean</th></tr>
+<tr><td>Synthetic worlds (6, 8, 10 rungs)</td><td>7, 9 or 11 layers of 4 numbers</td><td>Hidden numbers with no real-world meaning. Each follows <i>z</i> ← ρ<i>z</i> + √(1−ρ²)<i>ε</i>; layer 1 is the fastest (ρ = 0.2 in the 6-rung world), the last the slowest (0.95).</td></tr>
+<tr><td>Pairs built from the data</td><td>levels of clusters</td><td>A cluster at one level contains smaller clusters at the next; the layers are these levels, with the same bend and whitening.</td></tr>
+<tr><td>Robot images</td><td>camera, trajectory, progress; layout left over</td><td>Camera: base or side view of the same frame. Trajectory: which of the 8 runs in a group. Progress: which of the 30 frames. Layout: where the cube and the goal are.</td></tr>
+<tr><td>Scene factors</td><td>gripper, arm pose, cube yaw, cube position, cube colour, light tint, brightness, camera distance and elevation; camera azimuth left over</td><td>Nameable things set directly in the simulator. The order is our choice: the pairs define it.</td></tr></table>
+<p>In the synthetic worlds the speeds are real. In the robot and scene experiments, "fast" and "slow" only mean the order in which factors are removed, which the matched pairs define.</p>
+
 <h2 class="pb">2. The method</h2>
 {{FIG_MECH}}
 <p>One <b>rung</b> asks about one layer, from fastest to slowest.</p>

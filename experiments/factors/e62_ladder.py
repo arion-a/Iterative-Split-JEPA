@@ -4,7 +4,7 @@ import sys, json, os, numpy as np, torch
 from isj import audits
 from isj.engine import fit_rung, fit_whitener, select_block_count
 from train_ae import AE
-from gen_factors import SIZES, OFF
+SIZES = [1, 2, 1, 2, 3, 2, 1, 2, 1]; OFF = np.cumsum([0] + SIZES)   # same as gen_factors.py (not imported: it needs the ManiSkill venv)
 data, out = sys.argv[1], sys.argv[2]; os.makedirs(out, exist_ok=True); torch.set_num_threads(4)
 ck = torch.load(f"{data}/ae.pt"); ae = AE(); ae.load_state_dict(ck["state"]); ae.eval()
 def enc(x):

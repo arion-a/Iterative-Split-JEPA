@@ -22,6 +22,12 @@ def read(g):                                                        # values of 
         outs.append((p * Fp[:, j].std() + Fp[:, j].mean()).numpy())
     return np.stack(outs, 1)
 vals = {g: read(g) for g in EXTR}; true = {g: Fc[:, OFF[g]:OFF[g + 1]] for g in EXTR}
+coords = {}; ndim = {}
+for g_ in EXTR:
+    r_ = vals[g_]; coords[g_] = (r_ - r_.mean(0)) / (r_.std(0) + 1e-9); ndim[g_] = r_.shape[1]
+cyc = {}
+for g_ in EXTR:
+    f_ = np.abs(np.fft.rfft(vals[g_][:, 0] - vals[g_][:, 0].mean())); cyc[g_] = int(np.argmax(f_[1:9]) + 1)
 names = ["where the cube is", "what colour the cube is", "the colour of the light", "how bright the scene is", "how far the camera is"]
 short = ["cube position", "cube colour", "light colour", "brightness", "camera"]; cols = ["#15803d", "#0e7490", "#3b5bdb", "#7c3aed", "#a21caf"]
 LO = np.array([0.0, -1, -1, -np.pi / 2, -0.06, -0.06, 0.1, 0.1, 0.1, -0.4, -0.4, 0.25, 0.38, 0.6, -0.5]); HI = np.array([0.04, 1, 1, np.pi / 2, 0.06, 0.06, 1, 1, 1, 0.4, 0.4, 0.75, 0.52, 0.95, 0.5])
@@ -56,7 +62,7 @@ W, H, TH, DY, Y0 = 1280, 720, 92, 104, 96; frames = []
 for t in range(T):
     fig = plt.figure(figsize=(12.8, 7.2), dpi=100); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W); ax.set_ylim(H, 0); ax.axis("off"); ax.imshow(bg, extent=(0, W, H, 0), aspect="auto", zorder=0)
     ax.text(40, 30, "Sieving patterns out of video data", fontsize=22, fontweight="bold", color="#1e293b", va="center", zorder=5)
-    ax.text(40, 62, "each rung of the sieve catches one hidden pattern (right, redrawn from that rung's numbers) and lets the rest fall through (down)", fontsize=11, color="#475569", va="center", zorder=5)
+    ax.text(40, 62, "each rung of the sieve catches one hidden pattern (right: that rung's own numbers over time) and lets the rest fall through (down)", fontsize=11, color="#475569", va="center", zorder=5)
     for i in range(6):
         y = Y0 + i * DY; yc = y + TH / 2
         if i in (0, 5):                                              # real video thumbnails: the whole video, and what is left at the end
@@ -72,16 +78,22 @@ for t in range(T):
         col = cols[i]; nx = 490; n_ = np.array([nx, yc])
         ax.plot(*bez(np.array([290, yc]), np.array([nx - 100, yc]), np.array([nx - 50, yc]), n_).T, color="#8b5e83", lw=2.6, alpha=.8, zorder=3)
         ax.add_patch(Circle((nx, yc), 27, fc="#fdf1d6", ec="#e4c88b", lw=2, zorder=4)); ax.text(nx, yc - 4, "Sieve", fontsize=9, ha="center", va="center", fontweight="bold", color="#6b4f2a", zorder=5); ax.text(nx, yc + 9, f"rung {EXTR[i]+1}", fontsize=7.5, ha="center", va="center", color="#6b4f2a", zorder=5)
-        up = bez(n_ + [27, -5], n_ + [150, -30], np.array([640, yc - 12]), np.array([700, yc - 2])); ax.plot(up[:, 0], up[:, 1], color=col, lw=2.6, alpha=.85, zorder=3)
+        up = bez(n_ + [27, -5], n_ + [100, -30], np.array([600, yc - 12]), np.array([647, yc - 6])); ax.plot(up[:, 0], up[:, 1], color=col, lw=2.6, alpha=.85, zorder=3)
         down = bez(n_ + [-8, 27], n_ + [-14, 62], np.array([372, y + DY - 6]), np.array([346, y + DY + 8])); ax.plot(down[:, 0], down[:, 1], color="#94a3b8", lw=2.6, alpha=.85, zorder=3)
         for path, c in ((up, col), (down, "#64748b")):
             for ph in (0, .5): p = path[int(((t / T * 3 + ph) % 1) * 59)]; ax.add_patch(Circle(p, 4.5, fc=c, ec="white", lw=1, zorder=6))
-        xr = 700; ax.add_patch(FancyBboxPatch((xr - 3, y - 3), TH + 6, TH + 6, boxstyle="round,pad=0.5,rounding_size=6", fc="white", ec=col, lw=2.6, zorder=1)); glyph(ax, i, t, xr, y)
-        ax.text(xr + TH + 18, y + 14, f"PATTERN {i+1}", fontsize=8, color=col, fontweight="bold", va="center", zorder=5); ax.text(xr + TH + 18, y + 34, names[i], fontsize=11.5, color="#1e293b", va="center", fontweight="bold", zorder=5)
-        g = EXTR[i]; tr, pr = true[g][:, 0], vals[g][:, 0]; tx0, tw, th = xr + TH + 18, 330, 34; lo, hi = tr.min(), tr.max(); sx = lambda a: tx0 + a * tw / (T - 1); sy = lambda v_: np.clip(y + 74 - (v_ - lo) / (hi - lo + 1e-9) * th, y + 36, y + 80)
-        ax.plot(sx(np.arange(T)), sy(tr), color="#cbd5e1", lw=3, zorder=3); ax.plot(sx(np.arange(T)), sy(pr), color=col, lw=1.6, zorder=4); ax.scatter([sx(t)], [sy(pr[t])], color=col, s=22, zorder=5)
-    ax.text(700, Y0 + 5 * DY + 40, "grey line: true value over time   ·   coloured line: read from this rung's numbers", fontsize=9, color="#64748b", va="center", zorder=5)
-    ax.text(700, 678, "the two videos are decoded from the autoencoder's numbers (soft);\neach pattern is drawn from the values its rung's numbers give", fontsize=8.3, color="#64748b", va="center", zorder=5)
+        xr = 650; g = EXTR[i]; HW, HH = 210, 80; Mk = coords[g]                                                 # the rung's own numbers over time, drawn as a strip
+        ax.add_patch(FancyBboxPatch((xr - 3, y - 3), HW + 6, HH + 6, boxstyle="round,pad=0.5,rounding_size=6", fc="white", ec=col, lw=2.6, zorder=1))
+        ax.imshow(Mk.T, extent=(xr, xr + HW, y + HH, y), cmap="coolwarm", vmin=-2, vmax=2, aspect="auto", interpolation="nearest", zorder=2)
+        cxp = xr + (t + .5) / T * HW; ax.plot([cxp, cxp], [y, y + HH], color="#111827", lw=1.8, zorder=4)
+        ax.text(xr, y + HH + 13, f"{ndim[g]} read-out{'s' if ndim[g] > 1 else ''}", fontsize=8.2, color="#475569", va="center", zorder=5); ax.annotate("", (xr + HW, y + HH + 13), (xr + HW - 52, y + HH + 13), arrowprops=dict(arrowstyle="-|>", color=col, lw=1.8), zorder=5); ax.text(xr + HW - 56, y + HH + 13, "time", fontsize=8.2, color=col, fontweight="bold", ha="right", va="center", zorder=5)
+        tx0, tw, th = 892, 340, 42; ax.text(tx0, y + 8, f"PATTERN {i+1}", fontsize=8, color=col, fontweight="bold", va="center", zorder=5); ax.text(tx0 + 74, y + 8, names[i], fontsize=11.5, color="#1e293b", fontweight="bold", va="center", zorder=5)
+        tr, pr = true[g][:, 0], vals[g][:, 0]; lo, hi = tr.min(), tr.max(); sx = lambda a: tx0 + a * tw / (T - 1); sy = lambda v_: np.clip(y + 62 - (v_ - lo) / (hi - lo + 1e-9) * th, y + 20, y + 66)
+        ax.plot(sx(np.arange(T)), sy(tr), color="#cbd5e1", lw=3, zorder=3); ax.plot(sx(np.arange(T)), sy(pr), color=col, lw=1.8, zorder=4); ax.scatter([sx(t)], [sy(pr[t])], color=col, s=24, zorder=5)
+        ax.annotate("", (tx0 + tw, y + HH + 13), (tx0 + tw - 52, y + HH + 13), arrowprops=dict(arrowstyle="-|>", color=col, lw=1.8), zorder=5); ax.text(tx0 + tw - 56, y + HH + 13, "time", fontsize=8.2, color=col, fontweight="bold", ha="right", va="center", zorder=5)
+        ax.text(tx0, y + HH + 13, f"repeats about {cyc[g]}× in the clip", fontsize=8.6, color="#334155", va="center", zorder=5)
+    ax.text(650, Y0 + 5 * DY + 26, "left strip: values read from the numbers the rung caught (blue low, red high; black line = now)\nright: grey = true value of the factor, colour = read from those numbers", fontsize=9, color="#64748b", va="center", zorder=5)
+    ax.text(650, 672, "the two videos are decoded from the autoencoder's numbers (soft);\n'repeats' = strongest rhythm in the reading", fontsize=8.3, color="#64748b", va="center", zorder=5)
     b_ = io.BytesIO(); fig.savefig(b_, format="png", dpi=100); plt.close(fig); b_.seek(0); frames.append(Image.open(b_).convert("RGB").resize((960, 540), Image.LANCZOS))
 Image.fromarray(np.concatenate([np.array(frames[i]) for i in (0, 12, 30)], 0)).save("/tmp/sieve_check.png")
 frames[0].save("docs/img/video_sieve_flow.gif", save_all=True, append_images=frames[1:], duration=95, loop=0, optimize=True)

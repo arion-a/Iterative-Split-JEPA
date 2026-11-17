@@ -60,7 +60,8 @@ Tags show where a part comes from: <span class="tag paper">paper</span> the Spli
 <table><tr><th>Rung</th><th>Pair</th><th>What differs</th></tr>
 <tr><td>1</td><td>same frame, two cameras</td><td>camera</td></tr>
 <tr><td>2</td><td>same layout, same progress, same camera, different trajectory</td><td>trajectory</td></tr>
-<tr><td>3</td><td>same layout, same trajectory, same camera, two time steps at least 3 apart</td><td>progress</td></tr></table>
+<tr><td>3</td><td>same layout, same trajectory, same camera, two time steps at least 10 apart</td><td>everything that changes within a trajectory (progress is one part of it)</td></tr></table>
+<p>On the robot data the third rung cleanly separates what stays fixed within a trajectory (the layout) from the rest. It does not isolate progress itself: the left-over part still reads progress almost as well as the cut block does (see section 3.7 of the full report).</p>
 
 <h3>B3. Pairs built from the data instead of supplied <span class="tag ours">ours</span></h3>
 <p>When no generator supplies the pairs, points are grouped by <b>k-means</b> and two points inside the same cluster are paired (each point used once). The clusters stand in for "agrees on the slower layers". In the tests here the world is a nested mixture (layers are cluster levels, with the same bend and whitening), rung 1 uses supplied pairs, and the number of clusters is the <b>true</b> number (supplied, not estimated).</p>

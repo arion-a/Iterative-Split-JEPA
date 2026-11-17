@@ -23,6 +23,9 @@ math{font-family:"DejaVu Serif","STIX Two Math",serif;font-size:1.12em}.eq math{
 <li>On re-rendered simulator scenes where each rung removes one nameable factor, the blocks come out in order: <b>cube position, cube colour, light tint, brightness, camera distance and elevation</b>, with camera azimuth left in the core; moving along a block changes only that factor in the image.</li>
 <li>On simulated robot images the paper's trained encoder separates the camera variation strongly, and iterated splitting reads the camera out of its embedding exactly (accuracy 1.00).</li></ul></div>
 
+{{FIG_HERO}}
+<p class="cap">The whole method (left), its accuracy over 10 rungs on synthetic worlds (middle), and what each rung's block carries on re-rendered simulator scenes (right).</p>
+
 <h2 style="border-top:none">1. Setup</h2>
 <p>A video frame becomes a <b>point</b> in a space with many coordinates. A frame is built from <b>layers</b> of hidden numbers that change at different speeds. The aim is to split the space layer by layer, fastest layer first, using only <b>pairs</b> of points.</p>
 <h3>Hidden numbers</h3>
@@ -119,6 +122,17 @@ The <i>d</i> = 4 directions with the largest <i>λ</i> form the block <i>V</i> o
 {{FIG_FLOW}}
 <p class="cap">One moment of the clip (the web version of this report plays it; the file is <code>docs/img/video_split_flow.gif</code>). Pictures are decoded from the autoencoder's numbers and the pattern pictures show the change magnified ×3.</p>
 <div class="box ok">Over the clip, the five recovered readings follow the true factors with correlations of 0.91 (cube position), 0.93 (cube colour), 0.98 (light tint), 0.99 (brightness) and 0.98 (camera distance and elevation); the left-over block follows the camera's sideways angle at 0.99. The clip is constructed, and the factors it varies are the ones recovered in section 3.8.</div>
+
+<h3>3.10 The geometry of one rung, and more ways to see the result</h3>
+<p><b>The geometry on a toy with three hidden layers</b> (exact maths, one number per layer, hidden by a rotation). Pairs that share the slower layers differ along one axis; their differences pile up on a line; cutting that line away flattens the cloud; the same again inside the flat cloud leaves the slowest layer. Each point keeps its colour (its value on the slowest layer) through every cut.</p>
+{{FIG_GEO}}
+<p class="cap">Web version: the clip plays (file <code>docs/img/geometry_ladder.gif</code>). Here: the second rung, with the differences on their line.</p>
+<p><b>The only knob is the pair.</b> The same cloud, three kinds of pairs: the layer that comes out is the one the pairs change.</p>
+{{FIG_PAIRKNOB}}
+<p><b>From a tangle to a staircase.</b> The 48 numbers of the image representation, before and after the rotation the ladder finds. Before, every number follows several factors a little; after, the numbers fall into blocks and each block follows one factor, in order.</p>
+{{FIG_TANGLE}}
+<p><b>Peeling the motion out of a video.</b> On the 48-frame clip, each cut removes one pattern and the video gets calmer: the amount of change left falls from 100% to 12% over six cuts, and the scene ends nearly still.</p>
+{{FIG_PEEL}}
 
 <h2>4. Assumptions</h2>
 <ol>

@@ -139,6 +139,10 @@ fig_layers = img(fig, "100%")
 import base64 as _b
 fig_flow_gif = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/video_split_flow.gif", "rb").read()).decode() + '" style="width:100%">'
 fig_flow_strip = '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/video_split_flow_strip.png", "rb").read()).decode() + '" style="width:100%">'
+
+_png = lambda f, w="100%": '<img src="data:image/png;base64,' + _b.b64encode(open(f, "rb").read()).decode() + f'" style="width:{w}">'
+fig_geo = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/geometry_ladder.gif", "rb").read()).decode() + '" style="width:62%">' + '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/geometry_ladder_still.png", "rb").read()).decode() + '" style="width:62%">'
+extra = {"FIG_HERO": _png("docs/img/hero_summary.png"), "FIG_GEO": fig_geo, "FIG_PAIRKNOB": _png("docs/img/pair_changes_layer.png"), "FIG_PEEL": _png("docs/img/peel_motion.png"), "FIG_TANGLE": _png("docs/img/messy_to_blocks.png", "78%")}
 html = open("experiments/full_report_template.html").read()
-for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob, "FIG_DEEP": fig_deep, "FIG_LAYERS": fig_layers, "FIG_FLOW": fig_flow_gif + fig_flow_strip, "FIG_E62": fig_e62}.items(): html = html.replace("{{" + k + "}}", v)
+for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob, "FIG_DEEP": fig_deep, "FIG_LAYERS": fig_layers, "FIG_FLOW": fig_flow_gif + fig_flow_strip, **extra, "FIG_E62": fig_e62}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/FULL.html", "w").write(html); print("ok")

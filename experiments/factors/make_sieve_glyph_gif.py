@@ -61,7 +61,7 @@ def bez(p0, p1, p2, p3, n=60):
 W, H, TH, DY, Y0 = 1280, 720, 92, 104, 96; frames = []
 for t in range(T):
     fig = plt.figure(figsize=(12.8, 7.2), dpi=100); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W); ax.set_ylim(H, 0); ax.axis("off"); ax.imshow(bg, extent=(0, W, H, 0), aspect="auto", zorder=0)
-    ax.text(40, 30, "Sieving patterns out of video data", fontsize=22, fontweight="bold", color="#1e293b", va="center", zorder=5)
+    ax.text(40, 30, "SieveJEPA: Sieving patterns out of video data", fontsize=22, fontweight="bold", color="#1e293b", va="center", zorder=5)
     ax.text(40, 62, "each rung of the sieve catches one hidden pattern (right: that rung's own numbers over time) and lets the rest fall through (down)", fontsize=11, color="#475569", va="center", zorder=5)
     for i in range(6):
         y = Y0 + i * DY; yc = y + TH / 2

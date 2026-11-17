@@ -61,11 +61,13 @@ for t in range(T):
         y = Y0 + i * DY; yc = y + TH / 2
         if i in (0, 5):                                              # real video thumbnails: the whole video, and what is left at the end
             ax.add_patch(FancyBboxPatch((37, y - 3), TH + 6, TH + 6, boxstyle="round,pad=0.5,rounding_size=6", fc="white", ec="#8b5e83" if i == 0 else "#94a3b8", lw=2, zorder=1)); ax.imshow((rem0 if i == 0 else rem5)[t], extent=(40, 40 + TH, y + TH, y), interpolation="bilinear", zorder=2)
-        if i == 5: ax.text(150, yc, "what is left:\nthe camera's sideways swing", fontsize=9.5, color="#475569", va="center", zorder=5)
+        if i == 5: ax.text(150, yc, "WHAT IS LEFT\nonly the camera's sideways swing", fontsize=9.5, color="#475569", fontweight="bold", va="center", zorder=5)
         if i < 5:                                                    # pills: the patterns still mixed together at this level
             for k, j in enumerate(range(i, 5)):
                 ax.add_patch(FancyBboxPatch((150, y + 24 + k * 14 + (0 if i else 6), ) if False else (150, y + 22 + k * 14), 112, 11, boxstyle="round,pad=0.3,rounding_size=5", fc=cols[j], ec="none", alpha=.9, zorder=3)); ax.text(206, y + 27.5 + k * 14, short[j], fontsize=7.6, color="white", ha="center", va="center", zorder=4, fontweight="bold")
-            ax.text(150, y + 10, "still mixed together:" if i else "the video: all mixed together:", fontsize=8.3, color="#64748b", va="center", zorder=4)
+            minus = ["", "minus the cube's position", "minus the cube's colour", "minus the light's colour", "minus the brightness"]
+            if i == 0: ax.text(150, y + 8, "ENTANGLED VIDEO", fontsize=10, color="#8b5e83", fontweight="bold", va="center", zorder=4); ax.text(262, y + 8, "everything changes at once", fontsize=8.5, color="#8b5e83", va="center", zorder=4)
+            else: ax.text(150, y + 8, minus[i], fontsize=9.5, color="#475569", fontweight="bold", va="center", zorder=4)
         if i == 5: continue
         col = cols[i]; nx = 490; n_ = np.array([nx, yc])
         ax.plot(*bez(np.array([290, yc]), np.array([nx - 100, yc]), np.array([nx - 50, yc]), n_).T, color="#8b5e83", lw=2.6, alpha=.8, zorder=3)

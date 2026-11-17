@@ -1,6 +1,6 @@
-"""Flow-style clip (inspired by the layout of the SplitJEPA project page's animations): an entangled video goes through a chain of splitters;
-each splitter peels one pattern out (right) and passes the remainder (down) to the next rung. All videos are decoded from the real E62 blocks.
-    PYTHONPATH=src:experiments/factors python make_flow_gif.py -> docs/img/video_split_flow.gif"""
+"""Flow-style clip (inspired by the layout of the SplitJEPA project page's animations): an entangled video goes through a chain of sieves;
+each sieve catches one pattern (right) and passes the remainder (down) to the next rung. All videos are decoded from the real E62 blocks.
+    PYTHONPATH=src:experiments/factors python make_flow_gif.py -> docs/img/video_sieve_flow.gif"""
 import io, numpy as np, torch, matplotlib
 matplotlib.use("Agg"); import matplotlib.pyplot as plt
 from matplotlib.path import Path
@@ -41,8 +41,8 @@ bg = (BGTOP[None, None, :] * (1 - np.linspace(0, 1, 64)[:, None, None]) + BGBOT[
 frames = []
 for t in range(T):
     fig = plt.figure(figsize=(12.8, 7.2), dpi=100); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W); ax.set_ylim(H, 0); ax.axis("off"); ax.imshow(bg, extent=(0, W, H, 0), aspect="auto", zorder=0)
-    ax.text(40, 30, "Iterated splitting peels patterns out of a video, one rung at a time", fontsize=20, fontweight="bold", color="#1e293b", va="center", zorder=5)
-    ax.text(40, 62, "each rung removes one hidden pattern (right) and passes what remains (down) to the next rung", fontsize=11, color="#475569", va="center", zorder=5)
+    ax.text(40, 30, "Sieving patterns out of video data", fontsize=20, fontweight="bold", color="#1e293b", va="center", zorder=5)
+    ax.text(40, 62, "each rung of the sieve catches one hidden pattern (right) and lets what remains fall through (down) to the next rung", fontsize=11, color="#475569", va="center", zorder=5)
     for i in range(6):
         y = Y0 + i * DY; xl = 40
         ax.add_patch(FancyBboxPatch((xl - 3, y - 3), TH + 6, TH + 6, boxstyle="round,pad=0.5,rounding_size=6", fc="white", ec="#8b5e83" if i == 0 else "#94a3b8", lw=2, zorder=1)); ax.imshow(rem[i][t], extent=(xl, xl + TH, y + TH, y), interpolation="bilinear", zorder=2)
@@ -50,7 +50,7 @@ for t in range(T):
         if i == 5: continue
         col = cols[i]; yc = y + TH / 2; nx = 490
         a_ = np.array([xl + TH + 150, yc]); n_ = np.array([nx, yc]); curve(ax, bez(np.array([xl + TH + 200, yc]), np.array([nx - 70, yc]), np.array([nx - 40, yc]), n_), "#8b5e83")
-        ax.add_patch(Circle((nx, yc), 27, fc="#fdf1d6", ec="#e4c88b", lw=2, zorder=4)); ax.text(nx, yc - 4, "Split", fontsize=9, ha="center", va="center", fontweight="bold", color="#6b4f2a", zorder=5); ax.text(nx, yc + 9, f"rung {EXTR[i]+1}", fontsize=7.5, ha="center", va="center", color="#6b4f2a", zorder=5)
+        ax.add_patch(Circle((nx, yc), 27, fc="#fdf1d6", ec="#e4c88b", lw=2, zorder=4)); ax.text(nx, yc - 4, "Sieve", fontsize=9, ha="center", va="center", fontweight="bold", color="#6b4f2a", zorder=5); ax.text(nx, yc + 9, f"rung {EXTR[i]+1}", fontsize=7.5, ha="center", va="center", color="#6b4f2a", zorder=5)
         up = bez(n_ + [27, -5], n_ + [150, -30], np.array([640, yc - 12]), np.array([700, yc - 2])); curve(ax, up, col)
         down = bez(n_ + [-8, 27], n_ + [-20, 70], np.array([140, y + DY - 6]), np.array([xl + TH / 2, y + DY - 2])); curve(ax, down, "#94a3b8")
         for path, c in ((up, col), (down, "#64748b")):                                    # moving dots along both branches
@@ -63,4 +63,4 @@ for t in range(T):
     ax.text(700, Y0 + 5 * DY + 40, "grey line: true value over time   ·   coloured line: read from this rung's block", fontsize=9, color="#64748b", va="center", zorder=5)
     b_ = io.BytesIO(); fig.savefig(b_, format="png", dpi=100); plt.close(fig); b_.seek(0); frames.append(Image.open(b_).convert("RGB").resize((960, 540), Image.LANCZOS))
 Image.fromarray(np.concatenate([np.array(frames[i]) for i in (0, 20)], 0)).save("/tmp/flow_check.png")
-frames[0].save("docs/img/video_split_flow.gif", save_all=True, append_images=frames[1:], duration=95, loop=0, optimize=True); print(len(frames), "frames")
+frames[0].save("docs/img/video_sieve_flow.gif", save_all=True, append_images=frames[1:], duration=95, loop=0, optimize=True); print(len(frames), "frames")

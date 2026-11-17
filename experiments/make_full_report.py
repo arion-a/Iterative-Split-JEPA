@@ -137,8 +137,8 @@ ax.annotate("", (10.8, 0.1), (0.1, 0.1), arrowprops=dict(arrowstyle="-|>", lw=1.
 fig_layers = img(fig, "100%")
 
 import base64 as _b
-fig_flow_gif = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/video_split_flow.gif", "rb").read()).decode() + '" style="width:100%">'
-fig_flow_strip = '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/video_split_flow_strip.png", "rb").read()).decode() + '" style="width:100%">'
+fig_flow_gif = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/video_sieve_flow.gif", "rb").read()).decode() + '" style="width:100%">'
+fig_flow_strip = '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/video_sieve_flow_strip.png", "rb").read()).decode() + '" style="width:100%">'
 
 _png = lambda f, w="100%": '<img src="data:image/png;base64,' + _b.b64encode(open(f, "rb").read()).decode() + f'" style="width:{w}">'
 fig_geo = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/geometry_ladder.gif", "rb").read()).decode() + '" style="width:62%">' + '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/geometry_ladder_still.png", "rb").read()).decode() + '" style="width:62%">'

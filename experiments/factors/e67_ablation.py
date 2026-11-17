@@ -29,7 +29,10 @@ def run(arm):
     S = sets(arm); h = I; res = {"arm": arm, "rungs": []}
     for k in range(1, 9):
         ru, rv = W(S[k][0]), W(S[k][1]); sw = torch.rand(len(ru)) < 0.5; ru, rv = torch.where(sw[:, None], rv, ru), torch.where(sw[:, None], ru, rv)
-        pr = fit_rung(ru, rv, h, k=k, d_k=1); vals = pr.eigvals.double(); d = select_block_count(vals, 0.1 * float(vals[0])); fb = False
+        pr = fit_rung(ru, rv, h, k=k, d_k=1); vals = pr.eigvals.double()
+        if len(vals) < 2:   # earlier blocks used up the latent: nothing left to split (counted as not aligned, gap 0)
+            res["rungs"].append({"k": k, "d": 0, "gap": 0.0, "fallback": False, "exhausted": True, "reading": [0.0] * 9, "best_retained_factor": 0, "aligned": False}); print(arm, k, "exhausted", flush=True); continue
+        d = select_block_count(vals, 0.1 * float(vals[0])); fb = False
         if d == 0: d = int(torch.argmax(vals[:32] / vals[1:33].clamp_min(1e-12))) + 1; fb = True
         f = fit_rung(ru, rv, h, k=k, d_k=d); h = f.Q.double(); row = [r2g(f.V.double(), g) for g in range(9)]
         best = max(retained, key=lambda g: row[g]); aligned = bool(k - 1 in retained and best == k - 1 and row[k - 1] >= 0.5)

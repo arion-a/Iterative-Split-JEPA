@@ -1,0 +1,241 @@
+{
+ "task": "PushCube",
+ "D": 256,
+ "d_H": 128,
+ "runs": [
+  {
+   "seed": 0,
+   "min_lag": 3,
+   "rung2_d": 19,
+   "content_after_rung2": 109,
+   "d_star": 93,
+   "gap_at_d_star": 12.447444548980691,
+   "gap_registered_rule_d1": 1.0638414743560782,
+   "shuffled_gap_at_d_star": 1.003704375747249,
+   "top_ratios": [
+    [
+     93,
+     12.45
+    ],
+    [
+     94,
+     3.05
+    ],
+    [
+     108,
+     1.83
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7713214942908359,
+     "mlp": 0.8263564109802246
+    },
+    "core": {
+     "linear": 0.0002815341282513817,
+     "mlp": 0.2711782455444336
+    },
+    "random_block_same_size": {
+     "linear": 0.6719110049208146,
+     "mlp": 0.8085532188415527
+    }
+   },
+   "layout_R2_linear_from_core": 0.9330711785488108
+  },
+  {
+   "seed": 0,
+   "min_lag": 10,
+   "rung2_d": 19,
+   "content_after_rung2": 109,
+   "d_star": 93,
+   "gap_at_d_star": 12.009056767485921,
+   "gap_registered_rule_d1": 1.0449012865750624,
+   "shuffled_gap_at_d_star": 1.0020834467412083,
+   "top_ratios": [
+    [
+     93,
+     12.01
+    ],
+    [
+     94,
+     2.89
+    ],
+    [
+     108,
+     1.74
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7714783318018754,
+     "mlp": 0.8053331971168518
+    },
+    "core": {
+     "linear": 0.00018973730812221756,
+     "mlp": 0.2658398747444153
+    },
+    "random_block_same_size": {
+     "linear": 0.6719110049208146,
+     "mlp": 0.8085532188415527
+    }
+   },
+   "layout_R2_linear_from_core": 0.9328556624208852
+  },
+  {
+   "seed": 1,
+   "min_lag": 3,
+   "rung2_d": 22,
+   "content_after_rung2": 106,
+   "d_star": 90,
+   "gap_at_d_star": 17.375382871791746,
+   "gap_registered_rule_d1": 1.1363408339213312,
+   "shuffled_gap_at_d_star": 1.009026800224477,
+   "top_ratios": [
+    [
+     90,
+     17.38
+    ],
+    [
+     91,
+     2.29
+    ],
+    [
+     105,
+     2.07
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7709643385890026,
+     "mlp": 0.8796648383140564
+    },
+    "core": {
+     "linear": 0.00035758596765134154,
+     "mlp": 0.17833465337753296
+    },
+    "random_block_same_size": {
+     "linear": 0.7119885987486008,
+     "mlp": 0.907722532749176
+    }
+   },
+   "layout_R2_linear_from_core": 0.938114703135405
+  },
+  {
+   "seed": 1,
+   "min_lag": 10,
+   "rung2_d": 22,
+   "content_after_rung2": 106,
+   "d_star": 90,
+   "gap_at_d_star": 16.800957029608316,
+   "gap_registered_rule_d1": 1.0195298096875378,
+   "shuffled_gap_at_d_star": 1.004736534513384,
+   "top_ratios": [
+    [
+     90,
+     16.8
+    ],
+    [
+     91,
+     2.3
+    ],
+    [
+     105,
+     1.82
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7711455301686032,
+     "mlp": 0.8892215490341187
+    },
+    "core": {
+     "linear": 0.00016909808006859706,
+     "mlp": 0.1829642653465271
+    },
+    "random_block_same_size": {
+     "linear": 0.7119885987486008,
+     "mlp": 0.907722532749176
+    }
+   },
+   "layout_R2_linear_from_core": 0.9379197490447377
+  },
+  {
+   "seed": 2,
+   "min_lag": 3,
+   "rung2_d": 20,
+   "content_after_rung2": 108,
+   "d_star": 92,
+   "gap_at_d_star": 19.708629430877608,
+   "gap_registered_rule_d1": 1.077586929957304,
+   "shuffled_gap_at_d_star": 1.0010725807257042,
+   "top_ratios": [
+    [
+     92,
+     19.71
+    ],
+    [
+     107,
+     2.15
+    ],
+    [
+     93,
+     1.86
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7711719325494157,
+     "mlp": 0.8743860125541687
+    },
+    "core": {
+     "linear": 0.00019618905198637293,
+     "mlp": 0.1564542055130005
+    },
+    "random_block_same_size": {
+     "linear": 0.6455795230144991,
+     "mlp": 0.831215500831604
+    }
+   },
+   "layout_R2_linear_from_core": 0.936394128739126
+  },
+  {
+   "seed": 2,
+   "min_lag": 10,
+   "rung2_d": 20,
+   "content_after_rung2": 108,
+   "d_star": 92,
+   "gap_at_d_star": 19.182882060327735,
+   "gap_registered_rule_d1": 1.01986891547473,
+   "shuffled_gap_at_d_star": 1.0070804113036917,
+   "top_ratios": [
+    [
+     92,
+     19.18
+    ],
+    [
+     107,
+     1.97
+    ],
+    [
+     93,
+     1.91
+    ]
+   ],
+   "progress_R2": {
+    "block": {
+     "linear": 0.7712129865502082,
+     "mlp": 0.8647669553756714
+    },
+    "core": {
+     "linear": 0.0001424211126712649,
+     "mlp": 0.14289599657058716
+    },
+    "random_block_same_size": {
+     "linear": 0.6455795230144991,
+     "mlp": 0.831215500831604
+    }
+   },
+   "layout_R2_linear_from_core": 0.9363141989766144
+  }
+ ]
+}

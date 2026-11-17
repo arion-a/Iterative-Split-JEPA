@@ -1,0 +1,88 @@
+{
+ "task": "PushCube",
+ "D": 256,
+ "d_H": 128,
+ "runs": [
+  {
+   "seed": 3,
+   "rung2_d": 23,
+   "content_after_rung2": 105,
+   "d95": 82,
+   "gap_ratio_at_d95": 1.0191729162513585,
+   "dynamic_R2_mlp": {
+    "block": 0.6683899164199829,
+    "core": 0.6317144632339478,
+    "random_block": 0.6917149424552917,
+    "random_rest": 0.6775310039520264
+   },
+   "layout_R2_linear": {
+    "block": 0.004849287008476755,
+    "core": 0.9372526869725263,
+    "random_block": 0.676808364632796,
+    "random_rest": 0.25166841087115643
+   },
+   "progress_R2_mlp": {
+    "block": 0.8825851082801819,
+    "core": 0.7425519227981567
+   },
+   "dynamic_separation": 0.036675453186035156,
+   "static_separation": 0.9324033999640495,
+   "control_dynamic_sep": 0.01418393850326538,
+   "control_static_sep": -0.4251399537616396
+  },
+  {
+   "seed": 4,
+   "rung2_d": 23,
+   "content_after_rung2": 105,
+   "d95": 82,
+   "gap_ratio_at_d95": 1.0399731038902773,
+   "dynamic_R2_mlp": {
+    "block": 0.7072029113769531,
+    "core": 0.6681556105613708,
+    "random_block": 0.730682373046875,
+    "random_rest": 0.705578088760376
+   },
+   "layout_R2_linear": {
+    "block": 0.007340312437948304,
+    "core": 0.9371581935465005,
+    "random_block": 0.6931607212861348,
+    "random_rest": 0.23757541585174535
+   },
+   "progress_R2_mlp": {
+    "block": 0.8603795766830444,
+    "core": 0.7594811916351318
+   },
+   "dynamic_separation": 0.039047300815582275,
+   "static_separation": 0.9298178811085522,
+   "control_dynamic_sep": 0.025104284286499023,
+   "control_static_sep": -0.45558530543438946
+  },
+  {
+   "seed": 5,
+   "rung2_d": 20,
+   "content_after_rung2": 108,
+   "d95": 85,
+   "gap_ratio_at_d95": 1.0239556964164471,
+   "dynamic_R2_mlp": {
+    "block": 0.7136417627334595,
+    "core": 0.6808727383613586,
+    "random_block": 0.7481889128684998,
+    "random_rest": 0.7145344018936157
+   },
+   "layout_R2_linear": {
+    "block": 0.002703617244478096,
+    "core": 0.9360584899716955,
+    "random_block": 0.7390238945645464,
+    "random_rest": 0.1901301201318112
+   },
+   "progress_R2_mlp": {
+    "block": 0.8516116142272949,
+    "core": 0.709729790687561
+   },
+   "dynamic_separation": 0.03276902437210083,
+   "static_separation": 0.9333548727272174,
+   "control_dynamic_sep": 0.03365451097488403,
+   "control_static_sep": -0.5488937744327352
+  }
+ ]
+}

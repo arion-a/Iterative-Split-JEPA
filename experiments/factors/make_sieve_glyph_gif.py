@@ -66,14 +66,14 @@ for t in range(T):
             for k, j in enumerate(range(i, 5)):
                 ax.add_patch(FancyBboxPatch((150, y + 24 + k * 14 + (0 if i else 6), ) if False else (150, y + 22 + k * 14), 112, 11, boxstyle="round,pad=0.3,rounding_size=5", fc=cols[j], ec="none", alpha=.9, zorder=3)); ax.text(206, y + 27.5 + k * 14, short[j], fontsize=7.6, color="white", ha="center", va="center", zorder=4, fontweight="bold")
             minus = ["", "minus the cube's position", "minus the cube's colour", "minus the light's colour", "minus the brightness"]
-            if i == 0: ax.text(150, y + 8, "ENTANGLED VIDEO", fontsize=10, color="#8b5e83", fontweight="bold", va="center", zorder=4); ax.text(262, y + 8, "everything changes at once", fontsize=8.5, color="#8b5e83", va="center", zorder=4)
+            if i == 0: ax.text(150, y + 8, "ENTANGLED VIDEO", fontsize=10, color="#8b5e83", fontweight="bold", va="center", zorder=4); ax.text(300, y + 8, "everything changes at once", fontsize=8.5, color="#8b5e83", va="center", zorder=4)
             else: ax.text(150, y + 8, minus[i], fontsize=9.5, color="#475569", fontweight="bold", va="center", zorder=4)
         if i == 5: continue
         col = cols[i]; nx = 490; n_ = np.array([nx, yc])
         ax.plot(*bez(np.array([290, yc]), np.array([nx - 100, yc]), np.array([nx - 50, yc]), n_).T, color="#8b5e83", lw=2.6, alpha=.8, zorder=3)
         ax.add_patch(Circle((nx, yc), 27, fc="#fdf1d6", ec="#e4c88b", lw=2, zorder=4)); ax.text(nx, yc - 4, "Sieve", fontsize=9, ha="center", va="center", fontweight="bold", color="#6b4f2a", zorder=5); ax.text(nx, yc + 9, f"rung {EXTR[i]+1}", fontsize=7.5, ha="center", va="center", color="#6b4f2a", zorder=5)
         up = bez(n_ + [27, -5], n_ + [150, -30], np.array([640, yc - 12]), np.array([700, yc - 2])); ax.plot(up[:, 0], up[:, 1], color=col, lw=2.6, alpha=.85, zorder=3)
-        down = bez(n_ + [-8, 27], n_ + [-20, 70], np.array([200, y + DY - 6]), np.array([150, y + DY + 10])); ax.plot(down[:, 0], down[:, 1], color="#94a3b8", lw=2.6, alpha=.85, zorder=3)
+        down = bez(n_ + [-8, 27], n_ + [-14, 62], np.array([372, y + DY - 6]), np.array([346, y + DY + 8])); ax.plot(down[:, 0], down[:, 1], color="#94a3b8", lw=2.6, alpha=.85, zorder=3)
         for path, c in ((up, col), (down, "#64748b")):
             for ph in (0, .5): p = path[int(((t / T * 3 + ph) % 1) * 59)]; ax.add_patch(Circle(p, 4.5, fc=c, ec="white", lw=1, zorder=6))
         xr = 700; ax.add_patch(FancyBboxPatch((xr - 3, y - 3), TH + 6, TH + 6, boxstyle="round,pad=0.5,rounding_size=6", fc="white", ec=col, lw=2.6, zorder=1)); glyph(ax, i, t, xr, y)

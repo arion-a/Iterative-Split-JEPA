@@ -135,6 +135,10 @@ for r, (name, items, note) in enumerate(rows_l):
         ax.add_patch(FancyBboxPatch((i * w + 0.03, y), w - 0.1, 0.7, boxstyle="round,pad=0.02", fc=cols_l[i % 9] if len(items) > 4 or r == 0 else cols_l[i * 2], ec="white")); ax.text(i * w + w / 2 - 0.03, y + 0.35, it, ha="center", va="center", color="white", fontsize=8.3 if len(items) > 7 else 9)
 ax.annotate("", (10.8, 0.1), (0.1, 0.1), arrowprops=dict(arrowstyle="-|>", lw=1.4, color="#334155")); ax.text(0.1, -0.2, "fastest (cut first)", fontsize=9); ax.text(10.8, -0.2, "slowest (left over)", fontsize=9, ha="right")
 fig_layers = img(fig, "100%")
+
+import base64 as _b
+fig_flow_gif = '<img class="screen-only" src="data:image/gif;base64,' + _b.b64encode(open("docs/img/video_split_flow.gif", "rb").read()).decode() + '" style="width:100%">'
+fig_flow_strip = '<img class="print-only" src="data:image/png;base64,' + _b.b64encode(open("docs/img/video_split_flow_strip.png", "rb").read()).decode() + '" style="width:100%">'
 html = open("experiments/full_report_template.html").read()
-for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob, "FIG_DEEP": fig_deep, "FIG_LAYERS": fig_layers, "FIG_E62": fig_e62}.items(): html = html.replace("{{" + k + "}}", v)
+for k, v in {"FIG_MECH": fig_mech, "FIG_SPEED": fig_speed, "FIG_BENDVIS": fig_bendvis, "FIG_EIG": fig_eig, "FIG_LADDER": fig_ladder, "FIG_BASE": fig_base, "FIG_RES": fig_res, "ROWS6": rows6, "FIG_BEND": fig_bend, "FIG_EQ": fig_eq, "SING": sing_rng, "LADMAX": lad_max, "FIG_PAIRS": fig_pairs, "FIG_ROB": fig_rob, "FIG_DEEP": fig_deep, "FIG_LAYERS": fig_layers, "FIG_FLOW": fig_flow_gif + fig_flow_strip, "FIG_E62": fig_e62}.items(): html = html.replace("{{" + k + "}}", v)
 open("docs/report/FULL.html", "w").write(html); print("ok")

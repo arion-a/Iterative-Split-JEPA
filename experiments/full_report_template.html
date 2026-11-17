@@ -9,7 +9,7 @@ img{display:block;margin:8px auto}.cap{color:#64748b;font-size:13px;margin:2px 0
 table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #e2e8f0;padding:5px 12px;text-align:left;font-size:14px}th{background:#f1f5f9}
 .eq{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:6px 14px;margin:8px 0;text-align:center}
 math{font-family:"DejaVu Serif","STIX Two Math",serif;font-size:1.12em}.eq math{font-size:1.2em}
-.pb{page-break-before:always}ol li,ul li{margin:5px 0}
+.pb{page-break-before:always}.print-only{display:none}@media print{.screen-only{display:none}.print-only{display:block}}ol li,ul li{margin:5px 0}
 </style></head><body><div class="w">
 <h1>Iterated splitting of a learned representation</h1>
 <p class="sub">Method, equations and results.</p>
@@ -113,6 +113,12 @@ The <i>d</i> = 4 directions with the largest <i>λ</i> form the block <i>V</i> o
 <ul><li>Five rungs recover their own factor in order: <b>cube position 0.75, cube colour 0.59, light tint 0.94, brightness 0.97, camera distance and elevation 0.89</b>, with sharp cuts (gaps 2.9 – 49). The left-over core carries the slowest factor, camera azimuth (0.94).</li>
 <li>Moving along each block changes only its factor: the cube slides, recolours, the light shifts colour, brightens, or the camera moves back.</li>
 <li>The three smallest factors in the image (gripper, arm pose, cube yaw) are not kept by this 25-minute autoencoder, and their rungs find no sharp cut.</li></ul>
+
+<h3 class="pb">3.9 Seeing it: one video, split into its patterns</h3>
+<p>The same ladder, applied to a short video in which the cube's position, the cube's colour, the light's colour, the brightness and the camera distance all change at once, each with its own rhythm. Each rung peels one pattern out of what the previous rungs left (right); the video that remains goes down to the next rung (left). The line charts compare each rung's reading with the true value of its factor over time.</p>
+{{FIG_FLOW}}
+<p class="cap">One moment of the clip (the web version of this report plays it; the file is <code>docs/img/video_split_flow.gif</code>). Pictures are decoded from the autoencoder's numbers and the pattern pictures show the change magnified ×3.</p>
+<div class="box ok">Over the clip, the five recovered readings follow the true factors with correlations of 0.91 (cube position), 0.93 (cube colour), 0.98 (light tint), 0.99 (brightness) and 0.98 (camera distance and elevation); the left-over block follows the camera's sideways angle at 0.99. The clip is constructed, and the factors it varies are the ones recovered in section 3.8.</div>
 
 <h2>4. Assumptions</h2>
 <ol>

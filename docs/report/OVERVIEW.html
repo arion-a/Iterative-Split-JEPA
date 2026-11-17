@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SieveJEPA bird's-eye view</title>
+<style>
+body{font:15px/1.5 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#1e293b;max-width:900px;margin:24px auto;padding:0 18px}
+h1{font-size:28px;margin:0 0 4px}h2{font-size:20px;margin:30px 0 8px;border-bottom:2px solid #e2e8f0;padding-bottom:4px}
+.sub{color:#475569;margin-bottom:14px}.eq{background:#f8fafc;border-left:4px solid #6366f1;padding:8px 14px;margin:8px 0;font-size:17px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}td,th{border:1px solid #cbd5e1;padding:5px 8px;vertical-align:top;text-align:left}th{background:#f1f5f9}
+.ok{background:#ecfdf5}.no{background:#fef2f2}.mid{background:#fffbeb}svg{max-width:100%;height:auto}img{max-width:100%}
+.note{color:#475569;font-size:13px}section{break-inside:avoid}
+</style></head><body>
+<h1>SieveJEPA: the whole process at a glance</h1>
+<div class="sub">Sieving a mixed signal into nested layers, fast to slow. Only the parts that carried the result are shown.</div>
+
+<h2>1. The idea in one picture</h2>
+<svg viewBox="0 0 880 275" width="880">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0L8,4L0,8z" fill="#64748b"/></marker></defs>
+<rect x="10" y="85" width="120" height="80" rx="10" fill="#e0e7ff" stroke="#6366f1"/><text x="70" y="120" text-anchor="middle" font-size="14" font-weight="700">Everything</text><text x="70" y="140" text-anchor="middle" font-size="12">mixed together</text>
+<path d="M130 125H175" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/>
+<g font-size="13" text-anchor="middle">
+<rect x="180" y="20" width="130" height="50" rx="8" fill="#fde68a" stroke="#d97706"/><text x="245" y="42">rung 1</text><text x="245" y="60" font-size="11">fastest layer</text>
+<rect x="180" y="85" width="130" height="50" rx="8" fill="#fed7aa" stroke="#ea580c"/><text x="245" y="107">rung 2</text><text x="245" y="125" font-size="11">next layer</text>
+<rect x="180" y="150" width="130" height="50" rx="8" fill="#bbf7d0" stroke="#16a34a"/><text x="245" y="172">rung 3 ...</text><text x="245" y="190" font-size="11">slower still</text>
+</g>
+<path d="M310 45H420" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/><path d="M310 110H420" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/><path d="M310 175H420" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/>
+<g font-size="13" text-anchor="middle"><rect x="425" y="20" width="150" height="50" rx="8" fill="#fef9c3" stroke="#ca8a04"/><text x="500" y="50">block 1 (caught)</text>
+<rect x="425" y="85" width="150" height="50" rx="8" fill="#ffedd5" stroke="#ea580c"/><text x="500" y="115">block 2 (caught)</text>
+<rect x="425" y="150" width="150" height="50" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="500" y="180">block 3 (caught)</text></g>
+<path d="M245 70V84" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/><path d="M245 135V149" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/>
+<path d="M245 200V225H690" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="695" y="195" width="170" height="60" rx="10" fill="#f1f5f9" stroke="#475569"/><text x="780" y="222" text-anchor="middle" font-size="14" font-weight="700">What is left</text><text x="780" y="242" text-anchor="middle" font-size="12">the slowest layer</text>
+<text x="640" y="70" font-size="13" fill="#475569">Each rung looks at pairs that</text><text x="640" y="88" font-size="13" fill="#475569">agree on all slower layers and</text><text x="640" y="106" font-size="13" fill="#475569">differ in its own. What differs</text><text x="640" y="124" font-size="13" fill="#475569">is its layer; what stays</text><text x="640" y="142" font-size="13" fill="#475569">falls through to the next rung.</text>
+</svg>
+
+<h2>2. The process, step by step</h2>
+<svg viewBox="0 0 880 110" width="880"><g font-size="12.5" text-anchor="middle" fill="#1e293b">
+<rect x="5" y="20" width="130" height="70" rx="8" fill="#e0e7ff" stroke="#6366f1"/><text x="70" y="48" font-weight="700">1 Encode</text><text x="70" y="66">images → numbers</text><text x="70" y="80">(trained encoder)</text>
+<rect x="160" y="20" width="130" height="70" rx="8" fill="#e0e7ff" stroke="#6366f1"/><text x="225" y="48" font-weight="700">2 Whiten</text><text x="225" y="66">make the cloud</text><text x="225" y="80">round</text>
+<rect x="315" y="20" width="130" height="70" rx="8" fill="#e0e7ff" stroke="#6366f1"/><text x="380" y="48" font-weight="700">3 Pair + subtract</text><text x="380" y="66">matched pairs →</text><text x="380" y="80">differences D</text>
+<rect x="470" y="20" width="130" height="70" rx="8" fill="#e0e7ff" stroke="#6366f1"/><text x="535" y="48" font-weight="700">4 Eigen-split</text><text x="535" y="66">cut where the</text><text x="535" y="80">gap is large</text>
+<rect x="625" y="20" width="130" height="70" rx="8" fill="#e0e7ff" stroke="#6366f1"/><text x="690" y="48" font-weight="700">5 Repeat</text><text x="690" y="66">inside what</text><text x="690" y="80">is left</text>
+<rect x="780" y="20" width="95" height="70" rx="8" fill="#dcfce7" stroke="#16a34a"/><text x="827" y="48" font-weight="700">6 Check</text><text x="827" y="66">angle to truth,</text><text x="827" y="80">gap size</text></g>
+<g stroke="#64748b" stroke-width="2" marker-end="url(#a)"><path d="M135 55H158"/><path d="M290 55H313"/><path d="M445 55H468"/><path d="M600 55H623"/><path d="M755 55H778"/></g></svg>
+
+<p><b>Whiten</b> (step 2): subtract the mean μ and divide out the covariance C so no direction is stretched.</p>
+<div class="eq"><math><mi>r</mi><mo>=</mo><msup><mi>C</mi><mrow><mo>−</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup><mo>(</mo><mi>e</mi><mo>−</mo><mi>μ</mi><mo>)</mo></math></div>
+<p><b>Pair differences</b> (step 3): for rung k, a pair (u, v) shares every layer slower than k and redraws layers 1…k.</p>
+<div class="eq"><math><mi>D</mi><mo>=</mo><mi>r</mi><mo>(</mo><mi>u</mi><mo>)</mo><mo>−</mo><mi>r</mi><mo>(</mo><mi>v</mi><mo>)</mo><mspace width="2em"/><msub><mi>M</mi><mi>k</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mrow><mi>pairs</mi></mrow></munder><mi>D</mi><msup><mi>D</mi><mi>T</mi></msup></math></div>
+<p><b>The cut</b> (step 4): we want directions Q that the pairs leave untouched, so we minimise the average difference energy. The answer is closed-form: the eigenvectors of M with the smallest eigenvalues (no training needed in this step).</p>
+<div class="eq"><math><munder><mi>min</mi><mrow><msup><mi>Q</mi><mi>T</mi></msup><mi>Q</mi><mo>=</mo><mi>I</mi></mrow></munder><mfrac><mn>1</mn><mi>N</mi></mfrac><munder><mo>∑</mo><mi></mi></munder><msup><mrow><mo>‖</mo><msup><mi>Q</mi><mi>T</mi></msup><mi>D</mi><mo>‖</mo></mrow><mn>2</mn></msup><mspace width="1em"/><mo>⇒</mo><mspace width="1em"/><mi>M</mi><mo>=</mo><munderover><mo>∑</mo><mi>i</mi><mi></mi></munderover><msub><mi>λ</mi><mi>i</mi></msub><msub><mi>e</mi><mi>i</mi></msub><msubsup><mi>e</mi><mi>i</mi><mi>T</mi></msubsup><mo>,</mo><mspace width="1em"/><mi>gap</mi><mo>=</mo><mfrac><msub><mi>λ</mi><mi>d</mi></msub><msub><mi>λ</mi><mrow><mi>d</mi><mo>+</mo><mn>1</mn></mrow></msub></mfrac></math></div>
+<p>The <b>large</b> eigenvalues point along directions that change between the pair (this rung's block, size d). The <b>small</b> ones are what stays the same. A big gap means a real block exists; a gap near 1 means nothing to split.</p>
+<p><b>Repeat</b> (step 5): the next rung works only inside the leftover directions H:</p>
+<div class="eq"><math><msub><mi>M</mi><mi>k</mi></msub><mo>=</mo><msubsup><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow><mi>T</mi></msubsup><mi>M</mi><msub><mi>H</mi><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></msub></math></div>
+<p><b>Score</b> (step 6): the principal angle θ between the found block and the true one (small = good), together with the gap size.</p>
+
+<h2>3. The picture behind the equations</h2>
+<svg viewBox="0 0 880 200" width="880"><g font-size="13" text-anchor="middle">
+<ellipse cx="150" cy="95" rx="95" ry="45" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" transform="rotate(-20 150 95)"/><text x="150" y="165">pair differences form an ellipsoid</text><text x="150" y="183" font-size="11.5" fill="#475569">long axes = what changes,</text><text x="150" y="197" font-size="11.5" fill="#475569">short axes = what stays</text>
+<path d="M250 100H310" stroke="#64748b" stroke-width="2" marker-end="url(#a)"/>
+<rect x="330" y="30" width="150" height="40" fill="#fef9c3" stroke="#ca8a04"/><text x="405" y="55">V₁ block 1 (rung 1)</text>
+<rect x="330" y="70" width="150" height="40" fill="#ffedd5" stroke="#ea580c"/><text x="405" y="95">V₂ block 2 (rung 2)</text>
+<rect x="330" y="110" width="150" height="40" fill="#dcfce7" stroke="#16a34a"/><text x="405" y="135">V₃ block 3 (rung 3)</text>
+<rect x="330" y="150" width="150" height="30" fill="#f1f5f9" stroke="#475569"/><text x="405" y="170">H slowest (left over)</text>
+<text x="700" y="85" font-size="14" font-weight="700">The space is a stack of</text><text x="700" y="105" font-size="14" font-weight="700">orthogonal blocks:</text>
+<text x="700" y="130" font-size="14">ℝᵈ = V₁ ⊕ V₂ ⊕ … ⊕ V_L ⊕ H</text><text x="700" y="152" font-size="12" fill="#475569">each rung peels one block off</text></g></svg>
+<p class="note">A moving version of this picture: <code>docs/img/geometry_ladder.gif</code>.</p>
+
+<h2>4. What carried the result (experiments that mattered)</h2>
+<table><tr><th>Step</th><th>Question</th><th>Result</th></tr>
+<tr class="ok"><td>A: one split</td><td>Does the single eigen-split reproduce the SplitJEPA paper's split?</td><td>Yes, 5 of 5 seeds (invariant R² 0.989 vs the authors' 0.998). The paper's synthetic code does the same closed-form split.</td></tr>
+<tr class="ok"><td>B, E21: iterate</td><td>Can the left-over part be split again (exact pairs)?</td><td>Yes. Both rungs within about 1 degree of truth, gaps about 50.</td></tr>
+<tr class="ok"><td>E34, E39, E61: depth</td><td>Does it keep working deeper?</td><td>Yes, up to 10 rungs on 5 of 5 seeds: angle at most 2.8 degrees, gap at least 72 at every rung, no depth limit found.</td></tr>
+<tr class="ok"><td>E38: pairs, not speed</td><td>What carries the split?</td><td>Matched pairs. A temporal-speed split fails (80–89 degrees) where the pair split is at 0.7–1.1.</td></tr>
+<tr class="mid"><td>E54, E55: encoder</td><td>Does it hold with a learned, generic encoder?</td><td>Yes in the easy world (10 of 10 seeds, 0.2–1.9 degrees). But the easy world passes even with an untrained encoder, so this shows the split, not encoder learning. In a harder world training repairs only the mildest bend (5 of 5), not stronger ones (0 of 5).</td></tr>
+<tr class="mid"><td>E62: scene factors</td><td>Nameable layers in simulated robot images: cube position, colour, light, brightness, camera</td><td>Each factor the encoder keeps is recovered by its own rung, in order (5 of 8 rungs aligned). The three smallest factors (gripper, arm pose, cube yaw) were not kept, so the registered bar (gap line) was missed.</td></tr>
+<tr class="mid"><td>Robot (E59, E63–E65)</td><td>Same method on robot-camera data from the paper's recipe</td><td>The eigen-split beats the paper's fixed halves for viewpoint (5.05 vs 3.69; 7.34 vs 4.49). Layout separates cleanly, but progress is not isolated by a linear cut; the fixes tried (E63–E65) were refuted.</td></tr>
+<tr class="no"><td>D: does it help?</td><td>Payoff over simpler baselines</td><td>Not shown. Equal accuracy to a one-shot split (the ladder adds a visible gap); the robustness gain was below the registered bar.</td></tr>
+<tr class="no"><td>Pairs from data</td><td>Building the pairs without labels</td><td>Works for one rung up to a noise limit; rung 3 and deeper not built.</td></tr>
+<tr><td>E66 (running)</td><td>Three-head encoder to separate progress on the robot</td><td>Training on the GPU pod; no result yet.</td></tr></table>
+
+<h2>5. Seeing the result</h2>
+<img src="../img/hero_summary.png" alt="summary">
+<p class="note">Left: the recipe. Middle: with exact pairs, 10 nested layers each recovered within 3 degrees (unrelated directions would sit near 80). Right: on rendered robot scenes, each rung's block carries its own factor. (This figure still carries the older title "Iterated splitting".)</p>
+<img src="../img/e62_ladder.png" alt="E62 ladder">
+<p class="note">Each rung's block moves one named scene factor (cube position, colour, light tint, brightness, camera distance/elevation); the core keeps camera azimuth.</p>
+
+<h2>6. Bottom line</h2>
+<p><b>Works:</b> repeated closed-form eigen-splitting of matched-pair differences recovers nested layers, in order, to a few degrees, down 10 rungs, where exact pairs and an informative encoder exist. <b>Not yet shown:</b> a payoff over simpler methods, pairs built from data beyond one rung, and a clean progress layer in the robot data.</p>
+</body></html>

@@ -188,17 +188,31 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     h_raw = encode(enc, observe, z_all)
     out_cov_min_eig = float(torch.linalg.eigvalsh(torch.cov(h_raw.T).double()).min())   # health: a dead output direction shows as ~0
     slice_m = None
-    if e.get("slice_measures"):   # E68/E69: read the TRAINED slices directly (raw encoder output, no whitening, no eigen-split)
-        htr, hte = h_raw[:n_tr], h_raw[n_tr:]
-        nb = world.n_blocks
-        pres = [audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(b)], hte[:, world.block_slice(b)], zte[:, world.block_slice(b)], seed=seed) for b in range(1, nb + 1)]
-        leak = [max(audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(c)], hte[:, world.block_slice(b)], zte[:, world.block_slice(c)], seed=seed) for c in range(1, b)) for b in range(2, nb + 1)]
-        dup = [[audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(c)], hte[:, world.block_slice(b)], zte[:, world.block_slice(c)], seed=seed) for c in range(b + 1, nb + 1)] for b in range(1, nb)]
-        slice_m = {"presence": pres, "leakage_faster": leak, "duplication_slower": dup}
+    if e.get("slice_measures"):   # E68/E69/E71: read the TRAINED slices directly (raw encoder output, no whitening, no eigen-split)
+        slices = [world.block_slice(b) for b in range(1, world.n_blocks + 1)]
+        slice_m = slice_measures(h_raw[:n_tr], h_raw[n_tr:], ztr, zte, slices, seed)
+        resid = []
+        for k in range(1, world.n_blocks):
+            pu, pv = world.correspondence_pairs(5000, k); resid.append(invariance_residual(encode(enc, observe, pu), encode(enc, observe, pv), slices[k - 1].stop))
+        slice_m["invariance_residual"] = resid
     return {"slice": slice_m, "output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}
+
+
+def slice_measures(htr, hte, ztr, zte, slices, seed=0):
+    """E68: read each trained slice b of the raw embedding h against the hidden blocks z.
+    presence_b = R2(z_b <- h_b); leakage_b = max over FASTER layers c < b of R2(z_c <- h_b) (b >= 2); duplication_b = R2(z_c <- h_b) for slower c > b (reported only).
+    R2 = the repository's nonlinear-readout audit (audits.mlp_r2), fitted on (htr, ztr) and scored on (hte, zte)."""
+    nb = len(slices); r2 = lambda b, c: audits.mlp_r2(htr[:, slices[b]], ztr[:, slices[c]], hte[:, slices[b]], zte[:, slices[c]], seed=seed)
+    return {"presence": [r2(b, b) for b in range(nb)], "leakage_faster": [max(r2(b, c) for c in range(b)) for b in range(1, nb)],
+            "duplication_slower": [[r2(b, c) for c in range(b + 1, nb)] for b in range(nb - 1)]}
+
+
+def invariance_residual(hu, hv, tail_start):
+    """E71: r_k = mean squared difference of the tail outputs (coordinates tail_start onwards) over rung-k pairs, divided by the mean variance of those outputs: 0 = perfectly invariant, about 2 = independent."""
+    return float((hu[:, tail_start:] - hv[:, tail_start:]).square().mean() / hu[:, tail_start:].var(0).mean())
 
 
 CRITERIA_KEYS = ["rung1_angle", "rung2_angle", "rung1_variant_r2", "rung2_variant_r2", "core_invariant_r2",

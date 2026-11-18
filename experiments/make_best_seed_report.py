@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import make_nested_report as M
 import analyse_e68_e71 as A
 from make_nested_report import Ax, esc, table, heat_col, rho_of, ref_of
+from report_equations import equations_html, CSS as EQ_CSS
 
 OUT = os.path.join(M.ROOT, "docs/report/BEST_SEED.html")
 
@@ -115,7 +116,7 @@ h1{{font-size:27px;margin:0 0 4px}}h2{{font-size:20px;margin:28px 0 8px;border-b
 .sub{{color:#475569;margin-bottom:12px}}table{{border-collapse:collapse;width:100%;font-size:13.5px;margin:8px 0}}td,th{{border:1px solid #cbd5e1;padding:4px 8px;text-align:left}}th{{background:#f1f5f9}}
 td.ok{{background:#ecfdf5}}td.no{{background:#fef2f2}}svg{{max-width:100%;height:auto}}.note{{color:#475569;font-size:13px}}
 .box{{background:#f8fafc;border-left:4px solid #6366f1;padding:8px 14px;margin:10px 0}}.two{{display:flex;gap:10px;flex-wrap:wrap}}.two svg{{flex:1 1 400px}}ul{{margin:6px 0 6px 18px;padding:0}}
-</style></head><body>
+{EQ_CSS}</style></head><body>
 <h1>The best seed, in detail</h1>
 <div class="sub">E71a, K = {K} layers ({K - 1} rungs), coupling strength 0.5, arm A (joint nested loss), seed {seed}. W = {run['W']}, {run['encoder_final']['step'] + 1:,} steps, {run['seconds'] / 3600:.1f} h on the GPU.</div>
 <div class="box"><b>How it was chosen, and what that means.</b> Best = the run with the largest share of clean rungs among the 15 E71a runs: {ncl} of {K - 1} rungs clean (next best: {cands[1][4]} of {cands[1][2] - 1}, K = {cands[1][2]}, seed {cands[1][3]}). It was picked after looking at all runs, so it is the most favourable one, not a typical one; the other four seeds at this K are in the last table. Even this run does not pass the registered test (all rungs clean).</div>
@@ -147,6 +148,7 @@ td.ok{{background:#ecfdf5}}td.no{{background:#fef2f2}}svg{{max-width:100%;height
 <h2>4. The other seeds at this depth</h2>
 {seeds_table()}
 <p class="note">Limits: one run picked as the best of 15 by the rung rule; the measures are those of the registered E71 rule; the trained encoder was not saved, so nothing beyond these stored numbers can be shown for this run.</p>
+{equations_html()}
 </body></html>"""
     return html
 

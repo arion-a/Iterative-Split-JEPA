@@ -5,6 +5,7 @@ import glob, json, os, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(__file__))
 import analyse_e68_e71 as A
+from report_equations import equations_html, CSS as EQ_CSS
 
 ROOT = os.path.join(os.path.dirname(__file__), "..")
 R = os.path.join(ROOT, "results/nested_pod/results/nested/")
@@ -242,9 +243,9 @@ h1{{font-size:27px;margin:0 0 4px}}h2{{font-size:20px;margin:30px 0 8px;border-b
 td.ok{{background:#ecfdf5}}td.no{{background:#fef2f2}}svg{{max-width:100%;height:auto}}.note{{color:#475569;font-size:13px}}
 .box{{background:#f8fafc;border-left:4px solid #6366f1;padding:8px 14px;margin:10px 0}}.two{{display:flex;gap:10px;flex-wrap:wrap}}.two svg{{flex:1 1 400px}}
 section{{break-inside:avoid}}ul{{margin:6px 0 6px 18px;padding:0}}
-</style></head><body>
+{EQ_CSS}</style></head><body>
 <h1>Nested loss: what happened</h1>
-<div class="sub">E68 (hard world, 40 runs) and E71a (10, 12 and 15 rungs, 30 runs). All numbers come from the stored result files (<code>results/nested_pod</code>); 5 seeds per cell.</div>
+<div class="sub">E68 (hard world, 40 runs) and E71a (10, 12 and 15 rungs, 30 runs). All numbers come from the stored result files (<code>results/nested_pod</code>); 5 seeds per cell. The equations behind every number are in section 8.</div>
 
 <h2>Bottom line</h2>
 <div class="box"><ul>
@@ -301,6 +302,7 @@ section{{break-inside:avoid}}ul{{margin:6px 0 6px 18px;padding:0}}
 <li><b>Not measured:</b> (i) whether a recovered block's rate (0.2, 0.6, ...) can be read back; (ii) what the discarded fast slices contain; (iii) whether the slow-rung result holds at a stronger coupling in the deep world (E71b was not run).</li>
 </ul>
 <p class="note"><b>Limits:</b> oracle nested pairs; block sizes given; one world family; 5 seeds; W = 1 in every world (the smaller candidate was healthy); steps 7,500 K (K = 11 to 16) and 30,000 (E68); the trained encoders were not saved, so these are summary measures only. The "reference" for the prediction loss assumes the outputs are whitened and every layer is kept.</p>
+{equations_html()}
 </body></html>"""
     return html
 

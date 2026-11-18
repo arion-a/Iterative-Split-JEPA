@@ -268,23 +268,23 @@ section{{break-inside:avoid}}ul{{margin:6px 0 6px 18px;padding:0}}
 <p>Number of seeds (of 5) in which each rung is clean:</p>
 {fig_clean_heat()}
 <p>The same data against layer speed. Each line is a depth; the grey dashed line is the untrained encoder at K = 16. The three depths fall on one curve: presence is high only for layers slower than about 0.86.</p>
-{legend([("K = 11", COL[11], ""), ("K = 13", COL[13], ""), ("K = 16", COL[16], ""), ("untrained encoder, K = 16", COL["U"], "6 4")])}
-{fig_presence_by_speed()}
+<div class="fig">{legend([("K = 11", COL[11], ""), ("K = 13", COL[13], ""), ("K = 16", COL[16], ""), ("untrained encoder, K = 16", COL["U"], "6 4")])}
+{fig_presence_by_speed()}</div>
 <p>First rung that is clean on all 5 seeds and stays clean: {thr}. The rung just before it is clean on only some seeds ({before}).</p>
 <p><b>Is the loss doing the splitting?</b> Yes, in this world. The untrained encoder reads about {np.mean([presU[K].mean() for K in KS]):.2f} on every slice; the trained one reads {s1[first_clean[16] - 1:].min():.2f} to {s1[first_clean[16] - 1:].max():.2f} on the slices from the cut on at K = 16 (slices {first_clean[16]} to 16). <b>How far:</b> 4, 5 and 6 of the 10, 12 and 15 rungs are clean; the rest fail on presence.</p>
 {t71}
 
 <h2>4. Is the invariance achieved, and is anything leaking?</h2>
-{legend([("K = 11", COL[11], ""), ("K = 13", COL[13], ""), ("K = 16", COL[16], "")])}
-{fig_residual_leak()}
+<div class="fig">{legend([("K = 11", COL[11], ""), ("K = 13", COL[13], ""), ("K = 16", COL[16], "")])}
+{fig_residual_leak()}</div>
 <p>At 10 and 12 rungs the slower slices agree across pairs almost everywhere (residual below about 0.09; most rungs below 0.05) and leakage stays at or below 0.04. At 15 rungs the first four rungs lose both: residual up to {res71[16][:4].max():.2f} against the 0.05 limit, and rungs 2 to 5 reach {np.clip(leak71[16][:4], 0, None).max():.2f} mean leakage (worst seeds above the 0.1 limit). So the fast end gets worse with depth.</p>
 
 <h2>5. E68, the hard world: it does not work, even for the slow slices</h2>
 <p>Mean presence by slice (red = low):</p>
 {fig_e68_heat()}
 <p>Left: the invariance residual (limit 0.05) and right the final prediction loss against the reference, by coupling strength. Blue = arm A, purple = arm B.</p>
-{legend([("arm A (joint)", COL["A"], ""), ("arm B (curriculum)", COL["B"], "")])}
-{fig_e68_lines()}
+<div class="fig">{legend([("arm A (joint)", COL["A"], ""), ("arm B (curriculum)", COL["B"], "")])}
+{fig_e68_lines()}</div>
 <p>Presence falls with strength for every slice, the slowest one included ({', '.join(f'{pres68[("A", s)][3]:.2f}' for s in (1, 2, 4, 8))} for arm A at strengths 1, 2, 4, 8). The residual (mean of the 3 rungs) rises from {np.mean(res68[('A', 1)]):.2f} to {np.mean(res68[('A', 8)]):.2f} for arm A. The curriculum (arm B) is not better: it is worse on slice 2 at every strength. Health stays at {min(eig68.values()):.2f} or above, so this is not a collapse; the loss simply does not find the nested structure as the coupling gets harder.</p>
 
 <h2>6. How the predictive loss performs</h2>

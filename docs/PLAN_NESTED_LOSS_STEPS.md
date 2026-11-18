@@ -66,3 +66,6 @@ The `rhos` line in the runner is written clumsily; it will be replaced by the pl
 2. Tests (done, pass): `tests/test_rate_readout.py` (known AR(1) speeds recovered within 0.01; rotation and scaling inside a slice do not matter; time-shuffled pairs give 0; a monotone nonlinear map keeps the order), `tests/test_analyse_e72.py` (verdict logic on made-up results), the earlier nested-loss tests (unchanged, pass).
 3. Smoke (done): 200-step K = 11 run on CPU writes `rho_hat` (11 values) and `enc_seed290.pt`; the registered training recipe is unchanged.
 4. Batch: 30 runs on a GPU pod (pilots for W first, then K = 16, 13, 11 arm A, then U), results to `results/nested_pod_e72/`; then `python experiments/analyse_e72.py results/nested_pod_e72`, outcome into `EVIDENCE.md`, pod terminated after the download.
+
+## Progress log (E72 finished, 2026-11-18)
+- 30 runs finished, none failed; local copy `results/nested_pod_e72/` (with the 30 saved encoders); analysis `results/nested_pod_e72/REPORT_E72.md`. Outcome recorded in `EVIDENCE.md`: S refuted at K = 16 by one seed (3 of 5, required 4; presence misses of 0.003 to 0.011), rate recovery confirmed (5, 3, 4 of 5), order confirmed (5 of 5 at every K). Pod terminated after the download.

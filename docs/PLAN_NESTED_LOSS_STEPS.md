@@ -2,6 +2,12 @@
 
 **Status (2026-11-18): plan for the owner's review. The registered predictions are in `docs/EVIDENCE.md` (E68, E69) and are unchanged. No E68/E69 run has been made. A GPU pod was created and terminated again (no run on it) so that it would not bill while this plan is reviewed.**
 
+## Progress log
+- **G1 passed (2026-11-18):** old behaviour unchanged, training log and embedding bit-for-bit identical (encoder before my edits = commit fbfbca8).
+- **Tests T1, T2, T5 passed;** the 58 earlier tests pass.
+- **G2 passed (2026-11-18):** the runner reproduces the stored E45 seed-160 result exactly (angles 0.94, 1.66, 1.8; gaps 83.2, 62.5, 97.4; presence 0.846, 0.908, 0.935, 0.965; health 0.92). Slice measures on that run: presence 0.85, 0.91, 0.94, 0.97 (slice 1 is below the registered 0.9 line, so this seed would not be slice-clean even in the mild world: noted, the line is not changed), leakage about 0, invariance residual about 0.02.
+- Next: T3 (CPU against GPU) and the timing check on the pod, then the E68 batch.
+
 ## 0. What is reused and what is new
 **Reused unchanged:** the world (`worlds.py`), the E45 recipe and weights (`configs/deep_mlp_d4_fix.yaml`), the Stage-B1 evaluation (ladder, angles, gaps, presence, health), the E55 "clean" rule.
 **New, all small (made before this plan; to be regression-tested in step 2):** (i) `corr_inv_schedule` in `encoder.py` (curriculum arm); (ii) `device` in `encoder.py` (training on a GPU, encoder returned on the CPU); (iii) slice measures in `stage_b1.py` (new key `slice`); (iv) the runner `experiments/run_nested_loss.py`; (v) the analysis script (step 6, not yet written).

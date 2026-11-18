@@ -195,6 +195,11 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         for k in range(1, world.n_blocks):
             pu, pv = world.correspondence_pairs(5000, k); resid.append(invariance_residual(encode(enc, observe, pu), encode(enc, observe, pv), slices[k - 1].stop))
         slice_m["invariance_residual"] = resid
+        if e.get("rate_readout"):   # E72: read each slice's speed back from held-out transitions (labels not used)
+            z1, z2 = world.transition_pairs(int(e["rate_readout"]))
+            slice_m["rho_hat"] = rho_hat(encode(enc, observe, z1), encode(enc, observe, z2), slices)
+    if e.get("save_encoder"):       # E72: keep the trained encoder (earlier runs did not)
+        torch.save(enc.state_dict(), e["save_encoder"])
     return {"slice": slice_m, "output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
@@ -208,6 +213,16 @@ def slice_measures(htr, hte, ztr, zte, slices, seed=0):
     nb = len(slices); r2 = lambda b, c: audits.mlp_r2(htr[:, slices[b]], ztr[:, slices[c]], hte[:, slices[b]], zte[:, slices[c]], seed=seed)
     return {"presence": [r2(b, b) for b in range(nb)], "leakage_faster": [max(r2(b, c) for c in range(b)) for b in range(1, nb)],
             "duplication_slower": [[r2(b, c) for c in range(b + 1, nb)] for b in range(nb - 1)]}
+
+
+def rho_hat(h1, h2, slices):
+    """E72: estimated speed of each slice = mean over its coordinates of the lag-1 correlation between h_t and h_{t+1} (each coordinate centred over the pairs).
+    h1, h2: encoder outputs for the two ends of held-out transition pairs (n, d)."""
+    out = []
+    for sl in slices:
+        a, b = h1[:, sl].double(), h2[:, sl].double(); a, b = a - a.mean(0), b - b.mean(0)
+        out.append(float(((a * b).sum(0) / (a.square().sum(0) * b.square().sum(0)).sqrt()).mean()))
+    return out
 
 
 def invariance_residual(hu, hv, tail_start):

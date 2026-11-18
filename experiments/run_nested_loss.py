@@ -18,11 +18,12 @@ rhos = cfg0["world"]["rhos"] if K == 4 else [round(float(1 - x), 4) for x in np.
 cfg0["world"].update(block_dims=[4] * K, rhos=rhos, coupling_strength=a.strength, obs_dim=d)
 cfg0["split"]["d_ks"] = [4] * (K - 1)
 e = cfg0["encoder"]; e.update(slice_measures=True, device=a.device, hidden=16 * K)   # E71 scaling rule: hidden 16K (64 at K = 4)
-if a.exp == "e71": e["steps"] = 7500 * K                                                   # E71 scaling rule: steps 7,500 K
-seeds = a.seeds or ([250, 251, 252, 253, 254] if a.exp == "e68" else [280, 281, 282, 283, 284])
+if a.exp in ("e71", "e72"): e["steps"] = 7500 * K                                                   # E71 scaling rule: steps 7,500 K
+seeds = a.seeds or {"e68": [250, 251, 252, 253, 254], "e71": [280, 281, 282, 283, 284], "e72": [290, 291, 292, 293, 294]}[a.exp]
+if a.exp == "e72": e["rate_readout"] = 50000      # E72 (registered): the rate readings, 50,000 held-out transition pairs
 if a.arm == "B": e["corr_inv_schedule"] = [5000 * (k - 1) for k in range(1, K)]
 if a.arm == "U": e.update(corr_inv_weight=0.0, corr_whiten_weight=0.0, lr=0.0, steps=1)   # untrained: the generic MLP at its random start (E69 control; ladder measure only)
-folder = f"{a.out}/{a.exp}/{a.arm}/K{K}_s{a.strength:g}" if a.exp == "e71" else f"{a.out}/{a.exp}/{a.arm}/s{a.strength:g}"; os.makedirs(folder, exist_ok=True)
+folder = f"{a.out}/{a.exp}/{a.arm}/K{K}_s{a.strength:g}" if a.exp in ("e71", "e72") else f"{a.out}/{a.exp}/{a.arm}/s{a.strength:g}"; os.makedirs(folder, exist_ok=True)
 def pilot(W):
     w = cfg0["world"]; world = BlockWorld(list(w["block_dims"]), list(w["rhos"]), seed=0); obs = CouplingMap(world.d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=0)
     ec = EncoderConfig(in_dim=obs.obs_dim, latent_dim=world.d, hidden=e["hidden"], steps=a.smoke or 10000, batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e["cov_weight"],
@@ -48,6 +49,7 @@ if a.smoke: e["steps"] = a.smoke; cfg0["significance"]["n_perm"] = 20
 for s in seeds:
     path = f"{folder}/main_seed{s}.json"
     if os.path.exists(path) and not a.smoke: continue
+    if a.exp == "e72": e["save_encoder"] = f"{folder}/enc_seed{s}.pt"   # E72: keep the trained encoder
     t0 = time.time(); r = run_stage_b1(copy.deepcopy(cfg0), s); r["W"] = W; r["arm"] = a.arm; r["device"] = a.device
-    if a.smoke: print("SMOKE", s, round(time.time() - t0), "s", [round(g["angle_deg"], 1) for g in r["rungs"]], r["slice"]["presence"] if r["slice"] else None); break
+    if a.smoke: print("SMOKE", s, round(time.time() - t0), "s", [round(g["angle_deg"], 1) for g in r["rungs"]], r["slice"]["presence"] if r["slice"] else None, "rho_hat", [round(x, 3) for x in r["slice"].get("rho_hat", [])]); break
     json.dump(r, open(path, "w"), indent=1); print(a.arm, a.strength, s, round(time.time() - t0), "s", "presence", [round(x, 2) for x in (r["slice"] or {}).get("presence", [])], flush=True)

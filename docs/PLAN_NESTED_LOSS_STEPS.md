@@ -60,3 +60,9 @@ The `rhos` line in the runner is written clumsily; it will be replaced by the pl
 - Batch of 70 jobs finished on the pod, none failed. W = 1 in every world (pilot rule). Local copy: `results/nested_pod/`; analysis: `results/nested_pod/REPORT_E68_E71.md`.
 - E68 outcome: refuted (0 of 5 slice-clean in both arms at every strength). E71a outcome: refuted (0 of 5 all-rungs-clean at 10, 12 and 15 rungs; clean-rung fraction 0.44 at 15 rungs, required 0.9). Both recorded with the gaps in `docs/EVIDENCE.md`.
 - E71b not run (needs E68 (b)); E69 not run (superseded by E71). Pod terminated after the download.
+
+## E72 steps (registered in `EVIDENCE.md`; owner go-ahead 2026-11-18)
+1. Code (done): `rho_hat` in `src/isj/stage_b1.py` (lag-1 correlation per slice on 50,000 held-out transition pairs), encoder weights saved per run (`enc_seed<seed>.pt`), runner experiment `e72` (seeds 290-294, E71a worlds, arms A and U), supervisor mode `e72`, verdicts in `experiments/analyse_e72.py`.
+2. Tests (done, pass): `tests/test_rate_readout.py` (known AR(1) speeds recovered within 0.01; rotation and scaling inside a slice do not matter; time-shuffled pairs give 0; a monotone nonlinear map keeps the order), `tests/test_analyse_e72.py` (verdict logic on made-up results), the earlier nested-loss tests (unchanged, pass).
+3. Smoke (done): 200-step K = 11 run on CPU writes `rho_hat` (11 values) and `enc_seed290.pt`; the registered training recipe is unchanged.
+4. Batch: 30 runs on a GPU pod (pilots for W first, then K = 16, 13, 11 arm A, then U), results to `results/nested_pod_e72/`; then `python experiments/analyse_e72.py results/nested_pod_e72`, outcome into `EVIDENCE.md`, pod terminated after the download.

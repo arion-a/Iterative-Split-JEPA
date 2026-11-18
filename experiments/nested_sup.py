@@ -5,11 +5,13 @@ import itertools, json, os, subprocess, sys, time
 OUT = "results/nested"; os.makedirs("logs", exist_ok=True)
 E68 = [("e68", arm, s, 4, seed) for arm in "AB" for s in (1, 2, 4, 8) for seed in range(250, 255)]
 E72 = [("e72", arm, 0.5, K, seed) for arm in "AU" for K in (11, 13, 16) for seed in range(290, 295)]
+E71B = [("e71b", arm, 1, K, seed) for arm in "AU" for K in (11, 13, 16) for seed in range(300, 305)]
 E71 = [("e71", arm, 0.5, K, seed) for arm in "AU" for K in (11, 13, 16) for seed in range(280, 285)]
 order = [j for j in E71 if j[1] == "A"][::-1] + E68 + [j for j in E71 if j[1] == "U"]
-if len(sys.argv) > 1 and sys.argv[1] == "e72": order = [j for j in E72 if j[1] == "A"][::-1] + [j for j in E72 if j[1] == "U"]   # E72 only: K = 16, 13, 11 (A) first, then the untrained controls      # slowest first: K = 16, 13, 11 (A), then E68, then the untrained controls
+if len(sys.argv) > 1 and sys.argv[1] == "e72": order = [j for j in E72 if j[1] == "A"][::-1] + [j for j in E72 if j[1] == "U"]   # E72 only: K = 16, 13, 11 (A) first, then the untrained controls
+if len(sys.argv) > 1 and sys.argv[1] == "e71b": order = [j for j in E71B if j[1] == "A"][::-1] + [j for j in E71B if j[1] == "U"]   # E71b only (strength 1)      # slowest first: K = 16, 13, 11 (A), then E68, then the untrained controls
 def path(j):
-    exp, arm, s, K, seed = j; folder = f"{OUT}/{exp}/{arm}/K{K}_s{s:g}" if exp in ("e71", "e72") else f"{OUT}/{exp}/{arm}/s{s:g}"; return f"{folder}/main_seed{seed}.json"
+    exp, arm, s, K, seed = j; folder = f"{OUT}/{exp}/{arm}/K{K}_s{s:g}" if exp in ("e71", "e72", "e71b") else f"{OUT}/{exp}/{arm}/s{s:g}"; return f"{folder}/main_seed{seed}.json"
 def cmd(j, extra=()):
     exp, arm, s, K, seed = j; return ["python3", "-W", "ignore", "experiments/run_nested_loss.py", exp, "--arm", arm, "--strength", str(s), "--depth", str(K), "--seeds", str(seed), "--device", "cuda", *extra]
 env = dict(os.environ, OMP_NUM_THREADS="1", MKL_NUM_THREADS="1", PYTHONPATH="src")

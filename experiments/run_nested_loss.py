@@ -10,7 +10,7 @@ from isj.stage_b1 import run_stage_b1
 from isj.worlds import BlockWorld, CouplingMap
 ap = argparse.ArgumentParser(); ap.add_argument("exp"); ap.add_argument("--arm", required=True); ap.add_argument("--strength", type=float, required=True)
 ap.add_argument("--depth", type=int, default=4); ap.add_argument("--seeds", type=int, nargs="*"); ap.add_argument("--device", default="cpu"); ap.add_argument("--smoke", type=int)
-ap.add_argument("--out", default="results/nested"); ap.add_argument("--W", type=float)   # --W fixes the whitening weight (gate runs only); a = ap.parse_args()
+ap.add_argument("--out", default="results/nested"); ap.add_argument("--W", type=float, help="fix the whitening weight (gate runs only)"); a = ap.parse_args()
 cfg0 = yaml.safe_load(open("configs/deep_mlp_d4_fix.yaml"))
 K = a.depth; d = 4 * K
 rhos = cfg0["world"]["rhos"] if K == 4 else [round(float(1 - x), 4) for x in np.geomspace(0.8, 0.04, K)]   # K > 4: rho_b = 1 - geomspace(0.8, 0.04, K)_b (as in E61)

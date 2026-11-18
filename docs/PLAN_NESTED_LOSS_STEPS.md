@@ -55,3 +55,8 @@ presence_b = R^2( z_b <- h_b ); leakage_b = max_{c < b} R^2( z_c <- h_b ) (b = 2
 
 ## 4. Known rough edge to fix before step 2
 The `rhos` line in the runner is written clumsily; it will be replaced by the plain rule: K = 4 uses the config's speeds; K > 4 uses rho_b = 1 - geomspace(0.8, 0.04, K)_b (as in E61).
+
+## Progress log (2026-11-18, batch finished)
+- Batch of 70 jobs finished on the pod, none failed. W = 1 in every world (pilot rule). Local copy: `results/nested_pod/`; analysis: `results/nested_pod/REPORT_E68_E71.md`.
+- E68 outcome: refuted (0 of 5 slice-clean in both arms at every strength). E71a outcome: refuted (0 of 5 all-rungs-clean at 10, 12 and 15 rungs; clean-rung fraction 0.44 at 15 rungs, required 0.9). Both recorded with the gaps in `docs/EVIDENCE.md`.
+- E71b not run (needs E68 (b)); E69 not run (superseded by E71). Pod terminated after the download.

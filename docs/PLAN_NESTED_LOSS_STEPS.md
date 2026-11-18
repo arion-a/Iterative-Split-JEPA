@@ -41,5 +41,11 @@ presence_b = R^2( z_b <- h_b ); leakage_b = max_{c < b} R^2( z_c <- h_b ) (b = 2
 - *Verdict logic wrong* -> T4 before any run.
 - *Pod cost* (this pod type bills 0.50 USD/h, not the earlier 0.22): about 40 runs in parallel; the time per run is measured in G1/G2 on the pod and reported before the main batch starts.
 
+## 3b. Update (owner, same day): depth to 10, 12, 15 rungs (E71 replaces E69's depths)
+- **New experiment E71 (registered in `EVIDENCE.md`):** K = 11, 13, 16 blocks (10, 12, 15 rungs; d = 44, 52, 64), hidden width 16K, steps 7,500 K, speeds 1 - geomspace(0.8, 0.04, K); E71a at the mild strength 0.5 (depth alone), E71b at the hard strength s9 (only if E68 (b) holds).
+- **New per-rung measure (math):** r_k = mean_{rung-k pairs} || tail_k(u) - tail_k(v) ||^2 / mean variance(tail_k); rung k is clean if presence_k >= 0.9, leakage_k <= 0.1, r_k <= 0.05. This is computed in `stage_b1.py` (to be added in step 3 and covered by T2 and a new test T5: r_k is 0 for an embedding whose tail ignores the pair difference, and about 2 for random outputs).
+- **Plan changes:** step 5 (pilots) and step 7 (runs) now include the E71 cells; step 9 is replaced by "E71a runs (independent of E68), E71b only if E68 (b) holds"; the pod runs the K = 16 cell first because it is the slowest.
+- **Cost check before the batch:** a timed 300-step run per K on the pod, from which the total pod hours are computed and reported to the owner before the batch starts.
+
 ## 4. Known rough edge to fix before step 2
 The `rhos` line in the runner is written clumsily; it will be replaced by the plain rule: K = 4 uses the config's speeds; K > 4 uses rho_b = 1 - geomspace(0.8, 0.04, K)_b (as in E61).

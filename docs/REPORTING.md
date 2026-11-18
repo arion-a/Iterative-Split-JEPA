@@ -94,3 +94,6 @@ definition at first use, flagged "(addition)". No silent new concepts.
 Raw JSON per run in results/<stage>/<condition>/<seed>.json, the rendered
 report as results/<stage>/REPORT.md, one line appended to docs/STATUS.md.
 Never overwrite; failed runs are kept and labeled.
+
+## Standing rule (owner, 2026-11-18): every pass/fail statement gives the deviation
+When a result is judged against a threshold or expected standard, a **failure** is reported with the gap (observed value, required value, and the difference, in the threshold's own units). A pass needs only "met". This applies to chat replies, EVIDENCE.md outcomes and reports.

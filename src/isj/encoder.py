@@ -126,6 +126,8 @@ class EncoderConfig:
     corr_whiten_weight: float = 0.0  # E43: the whitening constraint of Lemma 3.1 / Thm 4.2 enforced as a penalty: Cov(h) = I on all outputs, and Cov(r_k(u) - r_k(v)) = 2 I on each family's own block
     corr_var_weight: float = 0.0  # E42: the variance term where Theorem 4.2 needs it: block k's outputs must vary across the pairs of its own family D_k (hinge on the pair-difference std, target sqrt(2) = two independent unit-variance draws)
     corr_inv_weight: float = 0.0  # E40: invariance on every correspondence family (monograph eq. 3 / Thm 5.1); 0 = off ("predict" objective only)
+    corr_inv_schedule: tuple | None = None  # E68 arm B (curriculum): step at which family k's invariance term switches on (entry k-1); None = all on from step 0
+    device: str = "cpu"           # E68/E69: training device; the returned encoder is always moved back to the CPU
     horizon: int = 1              # E11a: alignment at lags 1..horizon (lejepa objective, worlds with transition_chain); 1 = the original objective
 
 
@@ -142,6 +144,9 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
     else:
         enc = mlp(cfg.in_dim, cfg.hidden, cfg.latent_dim)
     pred = mlp(cfg.latent_dim, cfg.hidden, cfg.latent_dim)
+    dev = torch.device(cfg.device); enc, pred = enc.to(dev), pred.to(dev)
+    if cfg.device != "cpu":   # the world and the observation map stay on the CPU; batches are moved to the device
+        _obs, observe = observe, (lambda z: _obs(z).to(dev))
     sig = SIGReg()
     assert cfg.objective == "predict" or not (cfg.corr_inv_weight or cfg.corr_var_weight or cfg.corr_whiten_weight), "the correspondence terms are implemented for the predict objective only"
     params = list(enc.parameters()) + (list(pred.parameters()) if cfg.objective == "predict" else [])
@@ -187,6 +192,8 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
         loss = cfg.pred_weight * l_pred
         if cfg.corr_inv_weight > 0:     # outputs are ordered by block; for family D_k the coordinates of every slower block must not move
             for k in range(1, world.n_blocks):
+                if cfg.corr_inv_schedule is not None and step < cfg.corr_inv_schedule[k - 1]:
+                    continue     # E68 arm B: this family's term is not on yet
                 u, v = world.correspondence_pairs(cfg.batch_size, k)
                 hk = enc(observe(torch.cat([u, v])))
                 tail = slice(world.block_slice(k).stop, cfg.latent_dim)
@@ -194,13 +201,13 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
                 if cfg.corr_whiten_weight > 0:
                     dk = hk[: cfg.batch_size, world.block_slice(k)] - hk[cfg.batch_size:, world.block_slice(k)]
                     cd = torch.cov(dk.T) if dk.shape[1] > 1 else dk.var(0, keepdim=True).reshape(1, 1)
-                    loss = loss + cfg.corr_whiten_weight * (cd - 2 * torch.eye(cd.shape[0])).square().sum() / (cd.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
+                    loss = loss + cfg.corr_whiten_weight * (cd - 2 * torch.eye(cd.shape[0], device=cd.device)).square().sum() / (cd.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
                 if cfg.corr_var_weight > 0:
                     dk = hk[: cfg.batch_size, world.block_slice(k)] - hk[cfg.batch_size:, world.block_slice(k)]
                     loss = loss + cfg.corr_var_weight * F.relu(math.sqrt(2.0) - dk.std(0)).mean()
         if cfg.corr_whiten_weight > 0:
             cf = torch.cov(h.T)
-            loss = loss + cfg.corr_whiten_weight * (cf - torch.eye(cf.shape[0])).square().sum() / (cf.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
+            loss = loss + cfg.corr_whiten_weight * (cf - torch.eye(cf.shape[0], device=cf.device)).square().sum() / (cf.shape[0] if cfg.corr_whiten_norm == "dim" else 1)
         l_reg = torch.zeros(())
         if cfg.reg == "hinge":
             l_reg = cfg.var_weight * variance_hinge(h) + cfg.cov_weight * covariance_penalty(h)
@@ -216,7 +223,7 @@ def train_encoder(world: BlockWorld, observe: CouplingMap, cfg: EncoderConfig,
             log.append(rec)
             if verbose:
                 print(rec, flush=True)
-    enc.eval()
+    enc = enc.cpu().eval()
     for p in enc.parameters():
         p.requires_grad_(False)
     return enc, log

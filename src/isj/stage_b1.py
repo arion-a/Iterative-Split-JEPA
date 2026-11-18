@@ -33,7 +33,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
     observe = CouplingMap(d, w["coupling_layers"], w["coupling_strength"], w.get("obs_dim"), seed=seed)
 
     ecfg = EncoderConfig(in_dim=observe.obs_dim, latent_dim=d, hidden=e["hidden"], steps=e["steps"],
-                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), corr_whiten_weight=e.get("corr_whiten_weight", 0.0), corr_whiten_norm=e.get("corr_whiten_norm", "dim"), enc_layers=e.get("enc_layers", 6), stop_grad=e.get("stop_grad", True),
+                         batch_size=e["batch_size"], lr=e["lr"], reg=e["reg"], var_weight=e["var_weight"], cov_weight=e.get("cov_weight", 0.0), corr_inv_weight=e.get("corr_inv_weight", 0.0), corr_var_weight=e.get("corr_var_weight", 0.0), corr_whiten_weight=e.get("corr_whiten_weight", 0.0), corr_whiten_norm=e.get("corr_whiten_norm", "dim"), enc_layers=e.get("enc_layers", 6), stop_grad=e.get("stop_grad", True), corr_inv_schedule=(tuple(e["corr_inv_schedule"]) if e.get("corr_inv_schedule") else None), device=e.get("device", "cpu"),
                          sigreg_weight=e["sigreg_weight"], arch=e["arch"], objective=e["objective"],
                          coupling_layers=w["coupling_layers"])
     if ablation == "no_pred":
@@ -187,7 +187,15 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         rate = {str(n): [audits.max_angle_deg(f.V, rf.V) for f, rf in zip(ladder_at(n), ref)] for n in rc["ns"]}
     h_raw = encode(enc, observe, z_all)
     out_cov_min_eig = float(torch.linalg.eigvalsh(torch.cov(h_raw.T).double()).min())   # health: a dead output direction shows as ~0
-    return {"output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
+    slice_m = None
+    if e.get("slice_measures"):   # E68/E69: read the TRAINED slices directly (raw encoder output, no whitening, no eigen-split)
+        htr, hte = h_raw[:n_tr], h_raw[n_tr:]
+        nb = world.n_blocks
+        pres = [audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(b)], hte[:, world.block_slice(b)], zte[:, world.block_slice(b)], seed=seed) for b in range(1, nb + 1)]
+        leak = [max(audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(c)], hte[:, world.block_slice(b)], zte[:, world.block_slice(c)], seed=seed) for c in range(1, b)) for b in range(2, nb + 1)]
+        dup = [[audits.mlp_r2(htr[:, world.block_slice(b)], ztr[:, world.block_slice(c)], hte[:, world.block_slice(b)], zte[:, world.block_slice(c)], seed=seed) for c in range(b + 1, nb + 1)] for b in range(1, nb)]
+        slice_m = {"presence": pres, "leakage_faster": leak, "duplication_slower": dup}
+    return {"slice": slice_m, "output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}

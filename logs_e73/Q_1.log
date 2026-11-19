@@ -1,0 +1,8 @@
+/home/user/Iterative-Split-JEPA/src/isj/encoder.py:222: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  "min_std": float(h.std(0).min())}
+Q 1.0 310 29 s angles [16.6, 43.5] block_rho_hat [0.564, 0.659, 0.727]
+Q 1.0 311 28 s angles [31.7, 87.9] block_rho_hat [0.417, 0.548, 0.677]
+Q 1.0 312 27 s angles [8.1, 75.4] block_rho_hat [0.471, 0.584, 0.697]
+Q 1.0 313 28 s angles [56.3, 10.1] block_rho_hat [0.601, 0.685, 0.74]
+Q 1.0 314 26 s angles [33.2, 5.1] block_rho_hat [0.641, 0.682, 0.751]

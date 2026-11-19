@@ -74,3 +74,6 @@ The `rhos` line in the runner is written clumsily; it will be replaced by the pl
 1. Code (done): runner and supervisor mode `e71b` (strength 1, seeds 300-304, rate readout and saved encoders as in E72), `experiments/analyse_e72.py ROOT e71b 1` (same S, R, order definitions; line (a) needs 3 of 5; all-rungs-clean reported).
 2. Tests: the E72 tests and earlier nested-loss tests pass; the E72 analysis reproduces its earlier verdicts; a 200-step smoke run of `e71b` writes its result path and encoder.
 3. Batch: 30 runs on a GPU pod (pilots for W at strength 1, then K = 16, 13, 11 arm A, then U), results to `results/nested_pod_e71b/`; analysis, outcome into `EVIDENCE.md`, pod terminated after the download.
+
+## Progress log (E71b finished, 2026-11-19)
+- 30 runs finished, none failed; local copy `results/nested_pod_e71b/` (30 saved encoders); analysis `results/nested_pod_e71b/REPORT_E71B.md`. Outcome in `EVIDENCE.md`: S refuted (0 of 5 at every K, mainly the invariance residual), R refuted (0 of 5 at every K, speeds read about 0.04 to 0.06 too low), order confirmed (5 of 5 at every K). Pod terminated after the download.

@@ -1,0 +1,13 @@
+experiment: "E55 (coupling-strength sweep: where does the world become hard enough that encoder training matters)"
+folder: results/minimal/e55
+strengths: [1, 2, 4, 8]
+reference_strength: "0.5 (existing: untrained 6 of 6 clean on seeds 240-242; E54 trained 20 of 20)"
+arms: {untrained: "the invertible coupling encoder at its identity start, learning rate 0 (the raw observation)", trained: "the E54 configuration: the same encoder, the paper's objective, 10,000 steps"}
+seeds: [250, 251, 252, 253, 254]
+blocks: 4
+thresholds: {angle_max_deg: 5.0, gap_min: 10.0, presence_min: 0.95}
+clean_seed: "every rung has angle under 5 and gap over 10, and every block's presence is at least 0.95"
+untrained_fails_if: "clean on at most 2 of the 5 seeds"
+s_star: "the smallest tested strength at which the untrained arm fails"
+pass: "(a) the untrained arm fails at some tested strength (otherwise the test is not informative: the world is easy at every tested strength); (b) at s_star the trained arm is clean on at least 4 of the 5 seeds"
+verdict: "confirmed if (a) and (b) hold; refuted if (a) holds and (b) fails (training does not repair a world the identity cannot handle); not informative if (a) fails; the full table is reported either way"

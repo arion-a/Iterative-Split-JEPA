@@ -117,6 +117,10 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
         })
     last = rungs[-1]
     core = last.Q if last.applied else last.H_prev
+    block_rates = None
+    if e.get("rate_readout"):   # E73: speed of each block found by the eigen-split (V1, V2, ..., core), from held-out transition pairs
+        z1, z2 = world.transition_pairs(int(e["rate_readout"]))
+        block_rates = block_rho_hat(wh(encode(enc, observe, z1)), wh(encode(enc, observe, z2)), [r.V for r in rungs] + [core])
     core_r2 = audits.linear_r2(rtr @ core, ztr[:, world.block_slice(world.n_blocks)], rte @ core, zte[:, world.block_slice(world.n_blocks)])
     span = torch.cat([image[j] for j in range(2, world.n_blocks + 1)], dim=1)
     nesting = float(audits.principal_angles_deg(rungs[1].V, span).max())
@@ -200,7 +204,7 @@ def run_stage_b1(cfg: dict, seed: int, ablation: str = "none", control: str = "n
             slice_m["rho_hat"] = rho_hat(encode(enc, observe, z1), encode(enc, observe, z2), slices)
     if e.get("save_encoder"):       # E72: keep the trained encoder (earlier runs did not)
         torch.save(enc.state_dict(), e["save_encoder"])
-    return {"slice": slice_m, "output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
+    return {"slice": slice_m, "block_rho_hat": block_rates, "output_cov_min_eig": out_cov_min_eig, "stage_d": stage_d, "rate": rate, "seed": seed, "ablation": ablation, "control": control, "label": "ground-truth pairs", "presence": presence, "payoff": payoff, "predictive": predictive,
             "rungs": out, "nesting_angle_deg": nesting, **extra, "core_invariant_r2": core_r2,
             "global_r2": audits.r2(w_glob, zte, rte), "encoder_final": train_log[-1],
             "seconds": round(time.time() - t0, 1)}
@@ -221,6 +225,16 @@ def rho_hat(h1, h2, slices):
     out = []
     for sl in slices:
         a, b = h1[:, sl].double(), h2[:, sl].double(); a, b = a - a.mean(0), b - b.mean(0)
+        out.append(float(((a * b).sum(0) / (a.square().sum(0) * b.square().sum(0)).sqrt()).mean()))
+    return out
+
+
+def block_rho_hat(r1, r2, bases):
+    """E73: estimated speed of each block = mean over the block's directions b of the lag-1 correlation between r_t . b and r_t+1 . b (centred over the pairs).
+    r1, r2: whitened outputs for the two ends of held-out transition pairs (n, d); bases: list of (d, k) matrices."""
+    out = []
+    for B in bases:
+        a, b = (r1.double() @ B.double()), (r2.double() @ B.double()); a, b = a - a.mean(0), b - b.mean(0)
         out.append(float(((a * b).sum(0) / (a.square().sum(0) * b.square().sum(0)).sqrt()).mean()))
     return out
 

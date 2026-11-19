@@ -77,3 +77,5 @@ The `rhos` line in the runner is written clumsily; it will be replaced by the pl
 
 ## Progress log (E71b finished, 2026-11-19)
 - 30 runs finished, none failed; local copy `results/nested_pod_e71b/` (30 saved encoders); analysis `results/nested_pod_e71b/REPORT_E71B.md`. Outcome in `EVIDENCE.md`: S refuted (0 of 5 at every K, mainly the invariance residual), R refuted (0 of 5 at every K, speeds read about 0.04 to 0.06 too low), order confirmed (5 of 5 at every K). Pod terminated after the download.
+
+## E73 (small-world speed read-back, 2026-11-19): registered, run locally (20 runs, CPU, about 25 minutes), outcome recorded in `EVIDENCE.md`: recipe P (paper recipe) reads the three layer speeds back to within 0.002 to 0.013 at strength 0.5; recipe Q (predictive loss MLP) did not recover the blocks. Code: `block_rho_hat` in `src/isj/stage_b1.py`, `experiments/run_e73.py`, `experiments/analyse_e73.py`, `tests/test_block_rate.py` (3 pass).

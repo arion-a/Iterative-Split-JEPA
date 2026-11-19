@@ -22,8 +22,12 @@ def main(root):
     pa, pb = passes("P", "0.5"), passes("Q", "1")
     ok_a, ok_b = pa >= 4, pb >= 3
     def worst(rec, st): return max(np.max(np.abs(np.array(r["block_rho_hat"]) - RHO)) for r in cells[(rec, st)])
-    md += ["## Registered lines", "", f"- (a) recipe P, strength 0.5: every block within {TOL} on {pa} of 5 seeds, required 4: **{'met' if ok_a else f'NOT met, short by {4 - pa} seed(s); largest error on any seed {worst(\"P\", \"0.5\"):.3f}, over by {worst(\"P\", \"0.5\") - TOL:.3f}'}**",
-           f"- (b) recipe Q, strength 1: every block within {TOL} on {pb} of 5 seeds, required 3: **{'met' if ok_b else f'NOT met, short by {3 - pb} seed(s); largest error on any seed {worst(\"Q\", \"1\"):.3f}, over by {worst(\"Q\", \"1\") - TOL:.3f}'}**",
-           f"- E73 verdict: **{'CONFIRMED' if ok_a and ok_b else 'REFUTED'}**", ""]
+    wa, wb = worst("P", "0.5"), worst("Q", "1")
+    la = "met" if ok_a else "NOT met, short by %d seed(s); largest error on any seed %.3f, over by %.3f" % (4 - pa, wa, wa - TOL)
+    lb = "met" if ok_b else "NOT met, short by %d seed(s); largest error on any seed %.3f, over by %.3f" % (3 - pb, wb, wb - TOL)
+    md += ["## Registered lines", "",
+           "- (a) recipe P, strength 0.5: every block within %g on %d of 5 seeds, required 4: **%s**" % (TOL, pa, la),
+           "- (b) recipe Q, strength 1: every block within %g on %d of 5 seeds, required 3: **%s**" % (TOL, pb, lb),
+           "- E73 verdict: **%s**" % ("CONFIRMED" if ok_a and ok_b else "REFUTED"), ""]
     open(f"{root}/REPORT_E73.md", "w").write("\n".join(md)); print("\n".join(md))
 if __name__ == "__main__": main(sys.argv[1])

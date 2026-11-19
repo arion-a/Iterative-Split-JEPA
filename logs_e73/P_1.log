@@ -2,3 +2,7 @@
 Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
   "min_std": float(h.std(0).min())})
 P 1.0 310 181 s angles [2.1, 1.5] block_rho_hat [0.203, 0.685, 0.907]
+P 1.0 311 173 s angles [3.1, 1.3] block_rho_hat [0.198, 0.688, 0.898]
+P 1.0 312 173 s angles [2.4, 1.6] block_rho_hat [0.202, 0.68, 0.907]
+P 1.0 313 176 s angles [2.0, 2.7] block_rho_hat [0.202, 0.673, 0.904]
+P 1.0 314 169 s angles [1.4, 1.2] block_rho_hat [0.203, 0.692, 0.922]

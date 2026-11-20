@@ -5,3 +5,4 @@ __pycache__/
 # large generated data (Stage C robot trajectories, extracted features)
 data/
 logs_supervisor/
+results/e76/out/*.npy

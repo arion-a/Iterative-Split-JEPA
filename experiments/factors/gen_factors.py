@@ -13,7 +13,7 @@ def env():
     global _env
     if _env is None:
         pose = sapien_utils.look_at(eye=[0.32, 0.0, 0.32], target=[0.0, 0.0, 0.02])
-        e = gym.make("PickCube-v1", obs_mode="rgb", num_envs=1, sensor_configs=dict(width=96, height=96, base_camera=dict(pose=pose, fov=0.75))); e.reset(seed=0)
+        e = gym.make("PickCube-v1", obs_mode="rgb", num_envs=1, sensor_configs=dict(width=96, height=96, base_camera=dict(pose=pose, fov=0.75)), **(dict(sim_backend="cpu", render_backend="cpu") if os.environ.get("CPU_RENDER") else {})); e.reset(seed=0)   # CPU_RENDER=1: software rendering on a pod whose GPU has no Vulkan driver
         u = e.unwrapped; rb = u.cube._objs[0].find_component_by_type(sapien.render.RenderBodyComponent)
         _env = (u, u.scene.sensors["base_camera"].camera, rb, u.agent.robot.get_qpos().clone())
     return _env

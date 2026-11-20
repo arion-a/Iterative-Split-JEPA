@@ -6,3 +6,4 @@ __pycache__/
 data/
 logs_supervisor/
 results/e76/out/*.npy
+results/e77/out/*.npy

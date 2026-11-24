@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="900" height="380" rx="14" fill="#0f172a"/>
+<defs><marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs>
+<text x="450" y="34" fill="#f1f5f9" font-size="20" font-weight="700" text-anchor="middle">The new idea: repeat the split on what stayed the same</text>
+<g font-size="13" text-anchor="middle">
+<text x="130" y="76" fill="#94a3b8" font-weight="700">THE WORLD (hidden)</text>
+<rect x="30" y="90" width="200" height="56" rx="8" fill="#7c2d12" stroke="#fb923c"/><text x="130" y="123" fill="#fed7aa" font-weight="700">texture (fastest)</text>
+<rect x="30" y="156" width="200" height="56" rx="8" fill="#713f12" stroke="#fbbf24"/><text x="130" y="189" fill="#fde68a" font-weight="700">identity</text>
+<rect x="30" y="222" width="200" height="56" rx="8" fill="#064e3b" stroke="#34d399"/><text x="130" y="255" fill="#a7f3d0" font-weight="700">category (slowest)</text>
+<text x="130" y="306" fill="#94a3b8">+ one factor cutting across levels</text>
+<text x="450" y="76" fill="#94a3b8" font-weight="700">RUNG 1</text>
+<rect x="350" y="90" width="200" height="56" rx="8" fill="#7c2d12" stroke="#fb923c"/><text x="450" y="113" fill="#fed7aa" font-weight="700">variant: texture</text><text x="450" y="132" fill="#fed7aa">split off first</text>
+<rect x="350" y="156" width="200" height="122" rx="8" fill="#1e293b" stroke="#64748b" stroke-dasharray="5 4"/><text x="450" y="182" fill="#e2e8f0" font-weight="700">invariant content</text><text x="450" y="202" fill="#cbd5e1">identity + category</text><text x="450" y="222" fill="#cbd5e1">(stayed the same)</text>
+<text x="450" y="262" fill="#94a3b8" font-size="12">build rung-2 pairs by clustering</text>
+<text x="770" y="76" fill="#94a3b8" font-weight="700">RUNG 2 (inside rung 1 invariant)</text>
+<rect x="670" y="156" width="200" height="56" rx="8" fill="#713f12" stroke="#fbbf24"/><text x="770" y="189" fill="#fde68a" font-weight="700">variant: identity</text>
+<rect x="670" y="222" width="200" height="56" rx="8" fill="#064e3b" stroke="#34d399"/><text x="770" y="255" fill="#a7f3d0" font-weight="700">core: category</text>
+</g>
+<g stroke="#94a3b8" stroke-width="2" marker-end="url(#b)" fill="none">
+<path d="M232 118 H348"/><path d="M232 220 H348"/><path d="M552 217 H668"/><path d="M552 190 C600 190 620 185 668 185"/></g>
+<text x="450" y="340" fill="#cbd5e1" font-size="14" text-anchor="middle">Each rung's variant block must lie inside the previous rung's invariant content ("nesting").</text>
+<text x="450" y="362" fill="#94a3b8" font-size="13" text-anchor="middle">Stages: A one split (done) · B second split (in progress) · C deeper ladder + scaling · D does it help?</text>
+</svg>

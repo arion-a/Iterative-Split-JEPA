@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="900" height="300" rx="14" fill="#0f172a"/>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs>
+<text x="450" y="34" fill="#f1f5f9" font-size="20" font-weight="700" text-anchor="middle">One split: what changes vs. what stays the same</text>
+<g font-size="13" text-anchor="middle">
+<rect x="24" y="70" width="150" height="110" rx="10" fill="#1e293b" stroke="#38bdf8"/>
+<text x="99" y="98" fill="#38bdf8" font-weight="700">1. Matched pairs</text>
+<text x="99" y="122" fill="#cbd5e1">two observations</text><text x="99" y="140" fill="#cbd5e1">same slow facts,</text><text x="99" y="158" fill="#cbd5e1">different fast facts</text>
+<rect x="206" y="70" width="150" height="110" rx="10" fill="#1e293b" stroke="#a78bfa"/>
+<text x="281" y="98" fill="#a78bfa" font-weight="700">2. Encoder</text>
+<text x="281" y="122" fill="#cbd5e1">small network,</text><text x="281" y="140" fill="#cbd5e1">trained to predict,</text><text x="281" y="158" fill="#cbd5e1">no reconstruction</text>
+<rect x="388" y="70" width="150" height="110" rx="10" fill="#1e293b" stroke="#34d399"/>
+<text x="463" y="98" fill="#34d399" font-weight="700">3. Whiten + compare</text>
+<text x="463" y="122" fill="#cbd5e1">how much does each</text><text x="463" y="140" fill="#cbd5e1">direction differ</text><text x="463" y="158" fill="#cbd5e1">within a pair?</text>
+<rect x="570" y="70" width="150" height="110" rx="10" fill="#1e293b" stroke="#fbbf24"/>
+<text x="645" y="98" fill="#fbbf24" font-weight="700">4. Spectral split</text>
+<text x="645" y="122" fill="#cbd5e1">sort directions;</text><text x="645" y="140" fill="#cbd5e1">biggest gap in the</text><text x="645" y="158" fill="#cbd5e1">spectrum = the cut</text>
+<rect x="752" y="52" width="130" height="62" rx="10" fill="#7c2d12" stroke="#fb923c"/>
+<text x="817" y="78" fill="#fed7aa" font-weight="700">Variant block</text><text x="817" y="98" fill="#fed7aa">changes a lot</text>
+<rect x="752" y="136" width="130" height="62" rx="10" fill="#064e3b" stroke="#34d399"/>
+<text x="817" y="162" fill="#a7f3d0" font-weight="700">Invariant block</text><text x="817" y="182" fill="#a7f3d0">stays the same</text>
+</g>
+<g stroke="#94a3b8" stroke-width="2" marker-end="url(#a)" fill="none">
+<path d="M174 125 H204"/><path d="M356 125 H386"/><path d="M538 125 H568"/><path d="M720 110 L750 88"/><path d="M720 140 L750 166"/></g>
+<text x="450" y="236" fill="#cbd5e1" font-size="14" text-anchor="middle">Check against the truth (the worlds are synthetic): R², angle, gap ratio, leakage, with controls that must fail.</text>
+<text x="450" y="262" fill="#94a3b8" font-size="13" text-anchor="middle">Stage A passes this on all 5 seeds: R² 0.99, angle about 1°, gap ratio 59–138.</text>
+</svg>

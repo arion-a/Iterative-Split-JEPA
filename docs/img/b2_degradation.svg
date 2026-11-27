@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="Segoe UI,Helvetica,Arial,sans-serif"><rect width="900" height="380" rx="14" fill="#0f172a"/>
+<text x="450" y="34" fill="#f1f5f9" font-size="20" font-weight="700" text-anchor="middle">Stage B2: rung-2 angle error vs. how messy the categories are</text>
+<line x1="70" x2="860" y1="320.0" y2="320.0" stroke="#334155"/><text x="62" y="324.0" fill="#94a3b8" font-size="12" text-anchor="end">0°</text>
+<line x1="70" x2="860" y1="236.66666666666669" y2="236.66666666666669" stroke="#334155"/><text x="62" y="240.66666666666669" fill="#94a3b8" font-size="12" text-anchor="end">30°</text>
+<line x1="70" x2="860" y1="153.33333333333334" y2="153.33333333333334" stroke="#334155"/><text x="62" y="157.33333333333334" fill="#94a3b8" font-size="12" text-anchor="end">60°</text>
+<line x1="70" x2="860" y1="70.0" y2="70.0" stroke="#334155"/><text x="62" y="74.0" fill="#94a3b8" font-size="12" text-anchor="end">90°</text>
+<line x1="70" x2="860" y1="306.1111111111111" y2="306.1111111111111" stroke="#34d399" stroke-dasharray="6 4"/><text x="860" y="300.1111111111111" fill="#34d399" font-size="12" text-anchor="end">gate: below 5°</text>
+<polyline points="70,291 228,292 386,293 544,293 702,293 860,293" fill="none" stroke="#38bdf8" stroke-width="3"/>
+<circle cx="70" cy="291" r="4.5" fill="#38bdf8"/>
+<circle cx="228" cy="292" r="4.5" fill="#38bdf8"/>
+<circle cx="386" cy="293" r="4.5" fill="#38bdf8"/>
+<circle cx="544" cy="293" r="4.5" fill="#38bdf8"/>
+<circle cx="702" cy="293" r="4.5" fill="#38bdf8"/>
+<circle cx="860" cy="293" r="4.5" fill="#38bdf8"/>
+<polyline points="70,288 228,291 386,288 544,261 702,151 860,88" fill="none" stroke="#fb923c" stroke-width="3"/>
+<circle cx="70" cy="288" r="4.5" fill="#fb923c"/>
+<circle cx="228" cy="291" r="4.5" fill="#fb923c"/>
+<circle cx="386" cy="288" r="4.5" fill="#fb923c"/>
+<circle cx="544" cy="261" r="4.5" fill="#fb923c"/>
+<circle cx="702" cy="151" r="4.5" fill="#fb923c"/>
+<circle cx="860" cy="88" r="4.5" fill="#fb923c"/>
+<text x="70" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">0.1</text>
+<text x="228" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">0.4</text>
+<text x="386" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">0.6</text>
+<text x="544" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">0.8</text>
+<text x="702" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">1.0</text>
+<text x="860" y="342" fill="#94a3b8" font-size="12" text-anchor="middle">1.5</text>
+<text x="450" y="366" fill="#cbd5e1" font-size="13" text-anchor="middle">category spread σ_cat (larger = categories overlap more, clusters get less pure)</text>
+<rect x="90" y="56" width="14" height="4" fill="#38bdf8"/><text x="110" y="62" fill="#e2e8f0" font-size="12">B1 true pairs</text><rect x="210" y="56" width="14" height="4" fill="#fb923c"/><text x="230" y="62" fill="#e2e8f0" font-size="12">B2 discovered clusters</text>
+<text x="450" y="370" fill="#94a3b8" font-size="12" text-anchor="middle">Mean of 3 seeds per point. Source: docs/STATUS.md and results/B2/REPORT.md</text></svg>
